@@ -1,0 +1,1195 @@
+
+
+\section{Introduction}
+\label{sec:introduction}
+
+
+In this paper we study the languages  $\mathfrak{L}^{[\mathfrak{p}]}\subset
+\{0,1\}^*$ of binary words avoiding a given binary pattern $\mathfrak{p}$,
+having the property that $|w|_0\leq |w|_1$ for any word $w\in
+\mathfrak{L}^{[\mathfrak{p}]},$ where  $|w|_0$ and $|w|_1$ correspond to the
+number of $1$-bits  and $0$-bits in the word $w$, respectively.  The notion of a
+pattern can be formalized in several ways and in this paper we consider
+\textit{factor patterns}, that is, patterns whose  letters must appear in an
+exact order and contiguously in the sequence under observation.  The set of
+binary words avoiding a pattern, without the restriction $|w|_0\leq |w|_1,$ is
+defined by a regular language and can be enumerated in terms of the number of
+$1$-bits  and $0$-bits  by using classical results  (see, e.g.,
+\cite{GO80,GO81,SF96}).  However, when we consider the additional restriction
+that the words have no more $0$-bits  than $1$-bits, the language is no longer
+regular and enumerating it is a harder problem.
+
+In this paper we are interested in \textit{Riordan patterns}, a concept which
+has been defined in \cite{MS11} in terms of the \textit{autocorrelation
+polynomial} $C^{[\mathfrak{p}]}(x,y)$ of pattern $\mathfrak{p}=p_{0}\cdots
+p_{h-1}$. The coefficients of this polynomial are given by the
+\textit{autocorrelation vector} associated to $\mathfrak{p}$, that is, the
+vector $c=(c_0,\ldots ,c_{h-1})$ of bits defined in terms of Iverson's bracket
+notation (for a predicate $P$, the expression $[\![P]\!]$ has value $1$ if $P$
+is true and $0$ otherwise) as follows:
+$$c_i=[\![p_0p_1\cdots p_{h-1-i}=p_{i}p_{i+1}\cdots p_{h-1}]\!];$$
+in words, the bit $c_i$ is determined by shifting $\mathfrak{p}$ to the right by
+$i$ positions, setting $c_i=1$ if and only if the remaining letters match the
+original. For example, when $\mathfrak{p}= 10101$ the autocorrelation vector is
+$c=(1,0,1,0,1)$, as illustrated in Table \ref{auto}, and
+$C^{[\mathfrak{p}]}(x,y)=1+xy+x^2y^2$, namely we add a term $x^jy^i$ for each
+tail of the pattern with $j$ $1$-bits  and $i$ $0$-bits, where $c_{j+i}=1$ (see
+\cite{GO80,GO81,SF96}).
+\begin{table}
+    \begin{center}
+        \begin{tabular}{ccccc|ccccccc}
+          $1$ & $0$ & $1$ & $0$& $1$ &   \multicolumn{6}{l}{Tails} & $c_{i}$  \\
+          \hline
+          $1$ & $0$ & $1$ & $0$ & $1$ & &   &   &   &   &   &    $1$ \\
+            & $1$ & $0$ & $1$ & $0$ & $1$ &  &   &   &   &   &    $0$ \\
+            &   & $1$ & $0$ & $1$ & $0$ & $1$ &  &   &   &   &    $1$ \\
+            &   &   & $1$ & $0$ & $1$ & $0$ & $1$ &  &   &   &    $0$ \\
+            &   &   &   & $1$ & $0$ & $1$ & $0$ & $1$ &  &   &    $1$ \\
+        \end{tabular}
+    \end{center}
+\caption{\label{auto}The autocorrelation vector for  $\mathfrak{p}= 10101$.}
+\end{table}
+For each pattern $\mathfrak{p},$  we can compute the \textit{complement} pattern
+$\mathfrak{\bar{p}}$  by changing every $1$ to $0$ and every $0$ to $1$; for
+example, if $\mathfrak{p}= 10101$ then $\mathfrak{\bar{p}}=01010$, therefore
+$C^{[\mathfrak{p}]}(x,y)=C^{[\mathfrak{\bar{p}}]}(y,x)$.
+
+Addition of constraints to the nature of a pattern $\mathfrak{p}$ yields
+the following definition:
+\begin{defi}[Riordan pattern]
+\label{defrp}
+We say that $\mathfrak{p}=p_0\cdots p_{h-1}$ is a Riordan pattern if and only
+if
+\begin{displaymath}
+C^{[\mathfrak{p}]}(x,y)=C^{[\mathfrak{\bar{p}}]}(y,x)=\sum_{i=0}^{\lfloor(h-1)/2\rfloor}c_{2i}x^iy^i,
+\quad \mbox{with} \quad |n_1^{[\mathfrak{p}]}-n_0^{[\mathfrak{p}]}|\in
+\left\{0,1 \right\}
+\end{displaymath}
+where $n_1^{[\mathfrak{p}]}$ and  $n_0^{[\mathfrak{p}]}$ correspond to the
+number of $1$-bits  and $0$-bits  in the pattern, respectively.
+\end{defi}
+
+For example, Table \ref{auto} corresponds to a Riordan pattern and $\mathfrak{p}= 1100110110011000$ is another Riordan pattern having
+$n_1^{[\mathfrak{p}]}=n_0^{[\mathfrak{p}]}=8$ and
+$C^{[\mathfrak{p}]}(x,y)=1.$ Moreover, in Table \ref{tutti7} we give all the Riordan  patterns of length 7 with first bit equal to $1$ and their correlation polynomials,
+the corresponding complement patterns can be easily determined.
+
+
+
+\begin{table}
+$$
+{\displaystyle
+\begin{array}{|c|c|}
+  \hline
+  \mathfrak{p} & C^{[\mathfrak{p}]}(x,y)\\
+  \hline
+{\displaystyle {1010100, 1011000 \atop 1011100, 1100010}} & \\  [0.3cm]
+{\displaystyle {1100100, 1101000 \atop 1101010, 1101100}} &  1\\  [0.3cm]
+{\displaystyle {1110000, 1110010 \atop 1110100, 1111000}} & \\  [0.3cm] \hline
+1001100, 1100110 &  1+x^2y^2 \\ \hline
+{\displaystyle {1000111, 1001011 \atop 1001101, 1010011 }} & 1+x^3y^3 \\  [0.3cm]
+{\displaystyle {1011001, 1100101 \atop 1101001, 1110001}} &  \\  [0.3cm] \hline
+1010101 &  1+xy+x^2y^2+x^3y^3 \\ \hline
+\end{array}
+}
+$$
+\caption{\label{tutti7}The Riordan patterns of length 7 with first bit equal to $1$ and their correlation polynomials}
+\end{table}
+
+
+
+The name \textit{Riordan} in the above definition is due to the connection with
+the well-known concept of \textit{Riordan arrays}.  We briefly recall that a
+Riordan array is an infinite lower triangular array  $(d_{n,k} )_{n,k \in
+\mathbb{N}},$ defined by a pair of formal power series $(d(t),h(t)),$ such that
+$d(0)\neq 0, h(0)=0, h^\prime(0)\neq0$ and the generic element $d_{n,k}$ is the
+coefficient of monomial $t^{n}$ in the series expansion of $d(t)h(t)^{k}$, formally
+\begin{displaymath}
+    d_{n,k}=[t^n]d(t)h(t)^k, \qquad n,k \geq 0
+\end{displaymath}
+where $d_{n,k}=0$ for $k>n.$ These arrays were introduced in 1991 by Shapiro,
+Getu, Woan and Woodson \cite{SGWW91}, with the aim of defining a class of
+infinite lower triangular arrays with properties analogous to those of the
+Pascal triangle and since then they have attracted, and continue to attract,
+a lot of attention in the literature. Some of their properties  and recent
+applications can be found in \cite{LMMS14,MRSV97}. In particular, we recall
+that the bivariate generating function enumerating the sequence
+$(d_{n,k} )_{n,k \in\mathbb{N}}$ is
+\begin{equation}
+    \label{bgf}
+    R(t,w) = \sum_{n,k \in\mathbb{N}}{d_{n,k} t^n w^k} = {d(t) \over 1-wh(t)}
+\end{equation}
+
+An important property of Riordan array concerns the computation of
+combinatorial sums.  In particular we have the following result (see, e.g.,
+\cite{LMMS12,MSV09,Spr94}):
+\begin{equation}
+    \label{somme}
+    \sum_{k=0}^n d_{n,k}f_k=[t^n]d(t)f(h(t))
+\end{equation}
+that is, every combinatorial sum involving a Riordan array can be computed by
+extracting the coefficient of $t^n$ from the series expansion of $d(t)f(h(t))$,
+where $f(t)=\mathcal{G}(f_k)=\sum_{k\geq 0}f_kt^k$ is the generating function of the
+sequence $(f_k)_{k \in\mathbb{N}}$ and the symbol $\mathcal{G}$ denotes the generating function
+operator. Due to its importance, relation (\ref{somme}) is often called the
+\textit{fundamental rule} of Riordan arrays.  Along the paper, the notation
+$(f_k)_{k}$ will be used as an abbreviation of $(f_k)_{k\in\mathbb{N}}.$
+
+Coming back to the languages $\mathfrak{L}^{[\mathfrak{p}]}\subset \{0,1\}^*$
+of binary words avoiding a pattern $\mathfrak{p}$, let
+$R_{n,k}^{[\mathfrak{p}]}$ be the number of words avoiding $\mathfrak{p}$ and
+having $n$ $1$-bits  and $n-k$  $0$-bits; additionally, let
+$\mathcal{R}^{[\mathfrak{p}]}=\left(R_{n,k}^{[\mathfrak{p}]}\right)_{n,k\in\mathbb{N}}$
+the enclosing matrix. The following theorem, which is proved in \cite{MS11},
+shows the importance of Riordan patterns:
+\begin{teo}
+\label{main}
+Matrices ${\cal{R}^{[\mathfrak{p}]}}$ and ${\cal{R}^{[\bar{\mathfrak{p}]}}}$
+are Riordan arrays if and only if  $\mathfrak{p}$ is a Riordan pattern.
+\end{teo}
+
+By previous theorem, matrices ${\cal{R}^{[\mathfrak{p}]}}$ and
+${\cal{R}^{[\bar{\mathfrak{p}]}}}$ can be defined as
+$${\cal{R}^{[\mathfrak{p}]}}=(d^{[\mathfrak{p}]}(t),h^{[\mathfrak{p}]}(t)) \text{ and }
+{\cal{R}^{[\bar{\mathfrak{p}]}}}=(d^{[\bar{\mathfrak{p}}]}(t),h^{[\bar{\mathfrak{p}}]}(t))$$
+for the appropriate $d^{[\mathfrak{p}]},$ $h^{[\mathfrak{p}]},$ $d^{[\bar{\mathfrak{p}}]},$
+$h^{[\bar{\mathfrak{p}}]},$ given a Riordan pattern $\mathfrak{p}$; moreover, they represent the lower and
+upper part of the array
+${\cal{F}^{[\mathfrak{p}]}}=(F_{n,k}^{[\mathfrak{p}]})_{n,k \in \mathbb{N}}$,
+where $F_{n,k}^{[\mathfrak{p}]}$ denotes the number of words avoiding pattern
+$\mathfrak{p}$ and having $n$ $1$-bits  and $k$ $0$-bits . For the sake of
+clarity, Tables \ref{Fprimo}, \ref{Rprimoa} and \ref{Rprimob} illustrate some
+rows for the matrices ${\cal{F}^{[\mathfrak{p}]}},$
+${\cal{R}^{[\mathfrak{p}]}}$ and ${\cal{R}^{[\bar{\mathfrak{p}]}}}$, where
+$\mathfrak{p}=10101$.
+
+\begin{rem}
+ Riordan patterns are not the only patterns
+related to Riordan arrays; for example, given the pattern $\mathfrak{p}=0100100$
+corresponding to $C^{[\mathfrak{p}]}(x,y)=1+xy^2+x^2y^4$, matrix
+${\cal{R}^{[\mathfrak{p}]}}$ is still a Riordan array but ${\cal{R}^{[\bar{\mathfrak{p}}]}}$
+%is not, as illustrated in \cite[Example 5.4]{BMS07a}. However, in these situations it is not
+is not, as illustrated in Example 5.4 of \cite{BMS07a}. However, in these situations it is not
+easy to find functions $d^{[\mathfrak{p}]}(t)$ and $h^{[\mathfrak{p}]}(t)$ while for
+Riordan patterns it is always possible, as shown in Theorems \ref{main} and \ref{teo1}.
+\end{rem}
+
+\begin{table}[htb]
+$$
+\begin{array}{c|cccccccc}
+n/k  & 0 & 1 & 2 & 3 & 4 &5 &6 &7  \\ \cline{1-9}
+0 & 1 & 1 & 1 & 1& 1 &  1 & 1 & 1\\
+1 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+2 & 1 & 3 & 6 & 10 & 15 & 21 & 28 & 36\\
+3 & 1 & 4 & 9 & 18 & 32 & 52& 79 & 114\\
+4 & 1& 5 & 13 & 30 & 60 & 109& 184 & 293\\
+5 & 1 & 6 & 18 & 46 & 102 & 204 & 377 & 654\\
+6 & 1 & 7 & 24 & 67 & 163 & 354& 708 & 1324\\
+7 & 1 & 8 & 31 & 94 & 248 &580& 1245 &2490\\
+\end{array}
+$$
+\caption{\label{Fprimo}The  matrix  ${\cal{F}^{[\mathfrak{p}]}}$ for $\mathfrak{p}=10101$}
+\end{table}
+
+\begin{table}[htb]
+\hspace{-.5cm}
+\parbox{.47\textwidth}{
+\centering
+$$
+\begin{array}{c|cccccccc}
+n/k  & 0 & 1 & 2 & 3 & 4 &5 &6 &7  \\ \cline{1-9}
+0 & 1 & & & & & & &\\
+1 & 2 & 1 & & &  & & &\\
+2 & 6& 3 & 1 & & & &  &\\
+3 & 18 & 9 & 4 & 1 & & &  &\\
+4 & 60 & 30 & 13 & 5 & 1& & & \\
+5 & 204 & 102 & 46 & 18 & 6 &1 & &\\
+6 & 708 & 354 & 163 & 67 & 24 & 7& 1 &\\
+7 & 2490 & 1245 &  580 &248 & 94 & 31 &  8 &1\\
+\end{array}
+$$
+\caption{\label{Rprimoa} ${\cal{R}^{[\mathfrak{p}]}}$ for $\mathfrak{p}=10101$}
+}
+\hfill
+%\end{table}
+%\begin{table}[htb]
+\parbox{.47\textwidth}{
+\centering
+$$
+\begin{array}{c|cccccccc}
+n/k  & 0 & 1 & 2 & 3 & 4 &5 &6 &7  \\ \cline{1-9}
+0 & 1 & & & & & & &\\
+1 & 2 & 1 & & &  & & &\\
+2 & 6& 3 & 1 & & & &  &\\
+3 & 18 & 10 & 4 & 1 & & &  &\\
+4 & 60 & 32 & 15 & 5 & 1& & & \\
+5 & 204 & 109 & 52 & 21 & 6 &1 & &\\
+6 & 708 & 377 & 184 & 79 & 28 & 7& 1 &\\
+7 & 2490 & 1324 &  654 &293 & 114 & 36 &  8 &1\\
+\end{array}
+$$
+\caption{\label{Rprimob} ${\cal{R}^{[\bar{\mathfrak{p}]}}}$ for $\mathfrak{p}=10101$}
+}
+\end{table}
+
+As already observed, the enumeration of the set of binary words avoiding a
+pattern, without the restriction about the number of $1$-bits  and $0$-bits can be
+done by using classical results (see, e.g., \cite{GO80,GO81,SF96}) and gives
+the following rational bivariate generating function for the sequence
+$(F_{n,k}^{[\mathfrak{p}]})_{n,k \in \mathbb{N}}:$ $$F^{[\mathfrak{p}]}(x,y)
+=\genfrac{}{}{1pt}{0}{C^{[\mathfrak{p}]}(x,y)}{(1-x-y)C^{[\mathfrak{p}]}(x,y)
++x^{n_1^{[\mathfrak{p}]}}y^{n_0^{[\mathfrak{p}]}}},$$ where
+$n_1^{[\mathfrak{p}]}$ and  $n_0^{[\mathfrak{p}]}$ correspond to the number of
+$1$-bits  and $0$-bits, respectively, and $C^{[\mathfrak{p}]}(x,y)$ is the
+autocorrelation polynomial, all relative to pattern $\mathfrak{p}$.
+Consequently, $F^{[\mathfrak{p}]}(t,1)$ and $F^{[\mathfrak{p}]}(t,t)$ count the
+words avoiding $\mathfrak{p}$ according to the number of $1$-bits  and to length
+of each word, respectively.
+
+Using the theory of Riordan arrays and the results in \cite{MS11}, we give
+explicit algebraic generating functions enumerating the set of binary words
+avoiding a Riordan pattern with the restriction $|w|_0\leq |w|_1$ according to
+various parameters, in particular to the number of $1$-bits  and to the words length.
+Most of the corresponding sequences are new in the On-Line Encyclopedia of
+Integer Sequences\footnote{We attach a label $Axxxxxx$ to a
+sequence if it appears in the OEIS with that identifier.} (OEIS) \cite{OEIS};
+moreover, we also give explicit formulas for the coefficients of some
+particular patterns by providing algebraic and combinatorial proofs.
+
+Finally, our results can be interpreted in the theory of paths and codes in
+light of the bijection among binary words and paths, which maps a $0$-bit to a
+south-east step $\diagdown$ and a $1$-bit  to a north-east step $\diagup$. From
+this point of view, a coefficient $R_{n,k}^{[\mathfrak{p}]} \in
+\mathcal{R}^{[\mathfrak{p}]}$ counts the number of paths containing $n$ steps
+of $\diagup$ kind and $n-k$ steps of $\diagdown$ kind, avoiding the subpath
+corresponding to pattern $\mathfrak{p}$, allowed to cross the $x$ axis but
+required to end at coordinate $(2n-k, k)$ such that $0 \leq k \leq n$.
+In particular, $d^{[\mathfrak{p}]}(t)$ is the generating function of paths which avoid
+ $\mathfrak{p}$ and end on the $x$ axis.
+
+
+\section{Riordan arrays for Riordan patterns}
+
+We start with a result which is a direct consequence of  Theorems 2.3 and 3.3
+in \cite{MS11}:
+\begin{teo}
+\label{teo1}
+Let  $R_{n,k}^{[\mathfrak{p}]}$ be the number of binary words with $n$ $1$-bits
+and $n-k$  $0$-bits, avoiding a Riordan pattern $\mathfrak{p}.$  Then the
+triangle ${\cal{R}^{[\mathfrak{p}]}}=(R_{n, k}^{[\mathfrak{p}]})$ is a Riordan
+array
+${\cal{R}^{[\mathfrak{p}]}}=(d^{[\mathfrak{p}]}(t),h^{[\mathfrak{p}]}(t)).$ In
+particular, if  $n_1^{[\mathfrak{p}]}$ and  $n_0^{[\mathfrak{p}]}$ correspond
+to the number of $1$-bits  and  $0$-bits in the pattern, $C^{[\mathfrak{p}]}(x,y)$ is
+the autocorrelation polynomial of $\mathfrak{p}$ and
+$C^{[\mathfrak{p}]}(t)=C^{[\mathfrak{p}]}(\sqrt{t},\sqrt{t}),$ then:
+\begin{itemize}
+
+\item if $n_1^{[\mathfrak{p}]}-n_0^{[\mathfrak{p}]}=1$ we have:
+$$d^{[\mathfrak{p}]}(t)={C^{[\mathfrak{p}]}(t)
+\over \sqrt{C^{[\mathfrak{p}]}(t)^2-4tC^{[\mathfrak{p}]}(t)(C^{[\mathfrak{p}]}(t)-t^{n_0^{[\mathfrak{p}]}})}}, $$
+$$h^{[\mathfrak{p}]}(t)={C^{[\mathfrak{p}]}(t) -\sqrt{C^{[\mathfrak{p}]}(t)^2-4tC^{[\mathfrak{p}]}(t)(C^{[\mathfrak{p}]}(t)-t^{n_0^{[\mathfrak{p}]}})}
+\over 2 C^{[\mathfrak{p}]}(t)};$$
+
+\item if $n_1^{[\mathfrak{p}]}-n_0^{[\mathfrak{p}]}=0$ we have:
+$$d^{[\mathfrak{p}]}(t)={C^{[\mathfrak{p}]}(t)
+\over \sqrt{( C^{[\mathfrak{p}]}(t)+t^{n_0^{[\mathfrak{p}]}})^2-4tC^{[\mathfrak{p}]}(t)^2}},$$
+$$h^{[\mathfrak{p}]}(t)=
+{C^{[\mathfrak{p}]}(t)+ t^{n_0^{[\mathfrak{p}]}} - \sqrt{( C^{[\mathfrak{p}]}(t)+t^{n_0^{[\mathfrak{p}]}})^2-4tC^{[\mathfrak{p}]}(t)^2}
+\over 2 C^{[\mathfrak{p}]}(t)};$$
+
+\item if $n_0^{[\mathfrak{p}]}-n_1^{[\mathfrak{p}]}=1$ we have:
+$$d^{[\mathfrak{p}]}(t)={C^{[\mathfrak{p}]}(t)
+\over \sqrt{C^{[\mathfrak{p}]}(t)^2-4tC^{[\mathfrak{p}]}(t)(C^{[\mathfrak{p}]}(t)-t^{n_1^{[\mathfrak{p}]}})}},$$
+$$h^{[\mathfrak{p}]}(t)={C^{[\mathfrak{p}]}(t) -\sqrt{C^{[\mathfrak{p}]}(t)^2-4tC^{[\mathfrak{p}]}(t)(C^{[\mathfrak{p}]}(t)-t^{n_1^{[\mathfrak{p}]}})}
+\over 2 (C^{[\mathfrak{p}]}(t)- t^{n_1^{[\mathfrak{p}]}})}.$$
+
+\end{itemize}
+\end{teo}
+
+If $R^{[\mathfrak{p}]}(t,w)$ denotes the bivariate generating function of the
+Riordan array ${\cal{R}^{[\mathfrak{p}]}},$ as already mentioned in the
+\nameref{sec:introduction}, we have:
+$$R^{[\mathfrak{p}]}(t,w)=\sum_{n,k\in\mathbb{N}} R_{n, k}^{[\mathfrak{p}]}t^n
+w^k={d^{[\mathfrak{p}]}(t) \over 1-wh^{[\mathfrak{p}]}(t)}$$ and Theorem
+\ref{teo1} allow us to state the following results.
+
+\begin{teo}
+\label{teo2}
+Let $\mathfrak{p}$ be  a Riordan pattern and $S^{[\mathfrak{p}]}(t)=\sum_{n\geq
+0}S_n^{[\mathfrak{p}]}t^n$ the generating function enumerating the set of binary words $\left\lbrace w\in
+\lbrace 0,1 \rbrace^{*}: |w|_0\leq |w|_1\right\rbrace$ avoiding  a Riordan
+pattern $\mathfrak{p}$ according to the number of $1$-bits. Then we have:
+
+\begin{itemize}
+
+\item if $n_1^{[\mathfrak{p}]}=n_0^{[\mathfrak{p}]}+1:$
+$$S^{[\mathfrak{p}]}(t)={2C^{[\mathfrak{p}]}(t) \over \sqrt{Q(t)}\left(\sqrt{C^{[\mathfrak{p}]}(t)}+ \sqrt{Q(t)} \right)} $$
+    where $Q(t)={(1-4t)C^{[\mathfrak{p}]}(t)^2+4t^{n_1^{[\mathfrak{p}]}}};$
+
+\item if $n_0^{[\mathfrak{p}]}=n_1^{[\mathfrak{p}]}+1:$
+$$S^{[\mathfrak{p}]}(t)={2C^{[\mathfrak{p}]}(t)(C^{[\mathfrak{p}]}(t)-t^{n_1^{[\mathfrak{p}]}}
+) \over \sqrt{Q(t)} \left(C^{[\mathfrak{p}]}(t)-2t^{n_1^{[\mathfrak{p}]}}+ \sqrt{Q(t)} \right) }$$
+    where $Q(t)={ (1-4t)C^{[\mathfrak{p}]}(t)^2+4t^{n_0^{[\mathfrak{p}]}}C^{[\mathfrak{p}]}(t)};$
+
+\item if $n_1^{[\mathfrak{p}]}=n_0^{[\mathfrak{p}]}:$
+$$S^{[\mathfrak{p}]}(t)={2C^{[\mathfrak{p}]}(t)^2 \over \sqrt{Q(t)}
+    \left(C^{[\mathfrak{p}]}(t)-t^{n_0^{[\mathfrak{p}]}}+ \sqrt{Q(t)} \right) }$$
+where $Q(t)=(1-4t)C^{[\mathfrak{p}]}(t)^2+2t^{n_0^{[\mathfrak{p}]}}C^{[\mathfrak{p}]}(t)+t^{2n_0^{[\mathfrak{p}]}}.$
+
+\end{itemize}
+\end{teo}
+\begin{proof}
+For the proof we can observe that $S^{[\mathfrak{p}]}(t)=\sum_{n\geq
+0}S_n^{[\mathfrak{p}]}t^n=R^{[\mathfrak{p}]}(t,1),$ or, equivalently, that
+$S_n^{[\mathfrak{p}]}=\sum_{k=0}^nR_{n, k}^{[\mathfrak{p}]}$ and apply the
+fundamental rule (\ref{somme}) with $f_k=1.$ The statement of the theorem can
+be found after some algebraic simplification.
+\end{proof}
+
+\begin{teo}
+\label{teo3}
+Let $\mathfrak{p}$ be  a Riordan pattern and $L^{[\mathfrak{p}]}(t)=\sum_{n\geq
+0}L_n^{[\mathfrak{p}]}t^n$ the generating function enumerating the set of binary words $\left\lbrace w\in
+\lbrace 0,1 \rbrace^{*}: |w|_0\leq |w|_1\right\rbrace$ avoiding  a Riordan
+pattern $\mathfrak{p}$ according to the length. Then we
+have:
+\begin{itemize}
+
+\item if $n_1^{[\mathfrak{p}]}=n_0^{[\mathfrak{p}]}+1:$
+$$L^{[\mathfrak{p}]}(t)= {2tC^{[\mathfrak{p}]}(t^2)^2 \over \sqrt{Q(t)}\left((2t-1)C(t^2)+ \sqrt{ Q(t) } \right)}, $$
+where $Q(t)=C^{[\mathfrak{p}]}(t^2)\left( (1-4t^2)C^{[\mathfrak{p}]}(t^2)+4t^{2n_1^{[\mathfrak{p}]}}\right);$
+
+\item if $n_0^{[\mathfrak{p}]}=n_1^{[\mathfrak{p}]}+1:$
+$$L^{[\mathfrak{p}]}(t)={2t\sqrt{C^{[\mathfrak{p}]}(t^2)}(t^{2n_1^{[\mathfrak{p}]}}-C^{[\mathfrak{p}]}(t^2))
+\over \sqrt{ Q(t) }\left((1-2t)C^{[\mathfrak{p}]}(t^2)+2t^{n_0^{[\mathfrak{p}]} +n_1^{[\mathfrak{p}]}}
+- \sqrt{C^{[\mathfrak{p}]}(t^2) Q(t) } \right)}, $$
+where $Q(t)=(1-4t^2)C^{[\mathfrak{p}]}(t^2)+4t^{2n_0^{[\mathfrak{p}]}};$
+
+\item if $n_1^{[\mathfrak{p}]}=n_0^{[\mathfrak{p}]}:$ $$L^{[\mathfrak{p}]}(t)=
+{2tC^{[\mathfrak{p}]}(t^2)^2 \over \sqrt{ Q(t)
+}\left((2t-1)C(t^2)-t^{2n_0^{[\mathfrak{p}]}} + \sqrt{ Q(t) } \right)}, $$
+where
+$Q(t)=(1-4t^2)C^{[\mathfrak{p}]}(t^2)^2+2t^{2n_0^{[\mathfrak{p}]}}C^{[\mathfrak{p}]}(t^2)+t^{4n_0^{[\mathfrak{p}]}}.$
+
+\end{itemize}
+\end{teo}
+\begin{proof}
+For the proof we can observe that the application of generating function $R^{[\mathfrak{p}]}(t, w)$ as
+\begin{displaymath}
+ R^{[\mathfrak{p}]}\left(tw,{1 \over w}\right)=\sum_{n,k\in\mathbb{N}} R_{n, k}^{[\mathfrak{p}]}t^n w^{n-k}
+\end{displaymath}
+entails that $[t^{r}w^{s}]R^{[\mathfrak{p}]}\left(tw,{1 \over w}\right)=R_{r,
+r-s}^{[\mathfrak{p}]}$ which is the number of binary words with $r$ $1$-bits
+and $s$ $0$-bits.  To enumerate according to the length let $t=w$, therefore
+$L^{[\mathfrak{p}]}(t)=\sum_{n\geq
+0}L_n^{[\mathfrak{p}]}t^n=R^{[\mathfrak{p}]}(t^2,1/t)$. The statement of the
+theorem can be found after some algebraic simplification.
+\end{proof}
+
+Theorems \ref{teo2} and \ref{teo3} allows us to find the generating functions $S^{[\mathfrak{p}]}(t)$ and $L^{[\mathfrak{p}]}(t)$
+ in terms of the autocorrelation polynomial for any Riordan pattern $\mathfrak{p}.$
+ In what follows, we study some special classes of patterns characterized by an autocorrelation polynomial which can be easily computed, as
+ in the case $C^{[\mathfrak{p}]}(x,y)=1.$
+For such particular patterns, Theorem \ref{teo1} simplifies as follows.
+
+\begin{coro}
+\label{corodh}
+Let  ${\cal{R}^{[\mathfrak{p}]}}=(R_{n, k}^{[\mathfrak{p}]})_{n,k\in\mathbb{N}}=(d^{[\mathfrak{p}]}(t),h^{[\mathfrak{p}]}(t))$  be the
+Riordan array corresponding to the number of binary words with $n$ $1$-bits  and
+$n-k$  $0$-bits  which avoid the Riordan pattern $\mathfrak{p}.$ Then we have
+the following particular cases:
+\begin{itemize}
+
+\item for $\mathfrak{p}=1^{j+1}0^j$ we have the Riordan array:
+$$ d^{[\mathfrak{p}]}(t)={1 \over \sqrt{1-4t+4t^{j+1}}}, \quad h^{[\mathfrak{p}]}(t)={1 -\sqrt{1-4t+4t^{j+1}} \over 2 };$$
+
+\item $\mathfrak{p}=0^{j+1}1^j$ we have the Riordan array:
+$$ d^{[\mathfrak{p}]}(t)={1 \over \sqrt{1-4t+4t^{j+1}}}, \quad h^{[\mathfrak{p}]}(t)={1 -\sqrt{1-4t+4t^{j+1}} \over 2(1-t^j) };$$
+
+\item $\mathfrak{p}=1^{j}0^j$ and $\mathfrak{p}=0^{j}1^j$ we have the Riordan array:
+$$ d^{[\mathfrak{p}]}(t)={1 \over \sqrt{1-4t+2t^j+t^{2j}}}, \quad h^{[\mathfrak{p}]}(t)={{1+t^j -\sqrt{1-4t+2t^j+t^{2j}} } \over 2 };$$
+
+\item $\mathfrak{p}=(10)^j1$ we have the Riordan array:
+\begin{displaymath}
+\begin{split}
+d^{[\mathfrak{p}]}(t) &= { \sum_{i=0}^j t^i \over \sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2}},\\
+h^{[\mathfrak{p}]}(t) &= {\sum_{i=0}^jt^i -\sqrt{1-2\sum_{i=1}^jt^i-3\left( \sum_{i=1}^j t^i \right)^2} \over 2 \sum_{i=0}^jt^i};
+\end{split}
+\end{displaymath}
+
+\item $\mathfrak{p}=(01)^j0$ we have the Riordan array:
+\begin{displaymath}
+\begin{split}
+d^{[\mathfrak{p}]}(t) &= { \sum_{i=0}^j t^i \over \sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2}},\\
+h^{[\mathfrak{p}]}(t) &= {\sum_{i=0}^jt^i -\sqrt{1-2\sum_{i=1}^jt^i-3\left( \sum_{i=1}^j t^i \right)^2} \over 2 \sum_{i=0}^{j-1}t^i}.
+\end{split}
+\end{displaymath}
+
+\end{itemize}
+\end{coro}
+
+As a peculiar instance, observe that when we instantiate a pattern from family
+$\mathfrak{p}=1^{j}0^{j}$ with $j=1$ we get a Riordan array
+${\mathcal{R}^{[10]}} = \left(d^{[10]}(t), h^{[10]}(t)\right)$ such that
+\begin{displaymath} d^{[10]}(t)=\frac{1}{1-t} \quad \text{and} \quad
+h^{[10]}(t) = t, \end{displaymath} so the number $R_{n, 0}^{[10]}$ of words
+containing $n$ $1$-bits  and $n$ $0$-bits, avoiding pattern $\mathfrak{p}=10$, is
+$[t^{n}] d^{[10]}(t) = 1$ for $n\in\mathbb{N}$. If we consider the
+combinatorial interpretation of $R_{n,0}^{[\mathfrak{p}]}$ as lattice paths as
+illustrated in the last paragraph of \nameref{sec:introduction}, this
+corresponds to the fact that there is exactly one \emph{valley}-shaped path having $n$ steps of both
+kinds $\diagup$ and $\diagdown$, avoiding $\mathfrak{p}=10$ and terminating at
+coordinate $(2n, 0)$ for each $n\in\mathbb{N}$, formally the path $0^{n}1^{n}$.
+%for $n\in\mathbb{N}$.
+
+By applying Theorem \ref{teo2} to the same patterns as before, we get the following corollary.
+
+\begin{coro}
+\label{coroS}
+Let  $S^{[\mathfrak{p}]}(t)=\sum_{n\geq 0}S_n^{[\mathfrak{p}]}t^n$ the
+generating function enumerating the set of binary words $\left\lbrace w\in
+\lbrace 0,1 \rbrace^{*}: |w|_0\leq |w|_1\right\rbrace$ avoiding  a Riordan
+pattern $\mathfrak{p}$ according to the number of $1$-bits. We have the
+following particular cases:
+
+\begin{itemize}
+
+\item for $\mathfrak{p}=1^{j+1}0^j$ we have:
+$$ S^{[\mathfrak{p}]}(t)={2 \over \sqrt{1-4t+4t^{j+1}}\left(1+ \sqrt{1-4t+4t^{j+1}}\right) }$$
+
+\item for $\mathfrak{p}=0^{j+1}1^j$ we have:
+$$ S^{[\mathfrak{p}]}(t)={2(1-t^j) \over \sqrt{1-4t+4t^{j+1}} \left(1-2t^j+ \sqrt{1-4t+4t^{j+1}}\right)}$$
+
+\item for $\mathfrak{p}=1^{j}0^j$ and $\mathfrak{p}=0^{j}1^j$ we have:
+$$ S^{[\mathfrak{p}]}(t)={2 \over \sqrt{1-4t+2t^j+t^{2j}} \left(1-t^j+\sqrt{1-4t+2t^j+t^{2j}}  \right)}$$
+
+\item for $\mathfrak{p}=(10)^j1$ we have:
+$$ S^{[\mathfrak{p}]}(t)={2 (1-t^{j+1})\over 1-4t+3t^{j+1}+\sqrt{1-4t+2t^{j+1}+4t^{j+2}-3t^{2j+2}}};$$
+%$$S^{[\mathfrak{p}]}(t)={
+%2\left(\sum_{i=0}^j t^i \right)^2 \over \sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2}
+%\left(\sum_{i=0}^jt^i+ \sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2}\right)}$$
+
+\item for $\mathfrak{p}=(01)^j0$ we have:
+$$ S^{[\mathfrak{p}]}(t)={2 (1-t^j-t^{j+1}+t^{2j+1})\over \sqrt{Q(t)} \left(1-2t^j+t^{j+1}+\sqrt{Q(t)}  \right)}$$
+where $Q(t)={1-4t+2t^{j+1}+4t^{j+2}-3t^{2j+2}}$.
+%$$S^{[\mathfrak{p}]}(t)={2\sum_{i=0}^j t^i\sum_{i=0}^{j-1} t^i
+%\over
+%\sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2} \left(\sum_{i=0}^{j-1}t^i-t^j+\sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2}\right) }$$
+
+\end{itemize}
+\end{coro}
+We observe that the case $\mathfrak{p}=(10)^j1$ in Corollary \ref{coroS}
+corresponds to the sequence studied in \cite{BGP13}; moreover, in
+\autoref{tbl:S1_j1:0_j}, \autoref{tbl:S0_j1:1_j}, \autoref{tbl:S0_j:1_j},
+\autoref{tbl:S10_j:1} and \autoref{tbl:S01_j:0} we report some series
+developments and some set of words related to the $S^{[\mathfrak{p}]}(t)$
+functions just defined, respectively.
+
+% S tables {{{
+
+% p = 1^{j+1}0^{j}
+\begin{table}
+\begin{equation*}\begin{array}{c|cccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\\hline0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 3 & 7 & 15 & 31 & 63 & 127 & 255 & 511 & 1023 & 2047 & 4095\\2 & 1 & 3 & 10 & 32 & 106 & 357 & 1222 & 4230 & 14770 & 51918 & 183472 & 651191\\3 & 1 & 3 & 10 & 35 & 123 & 442 & 1611 & 5931 & 22010 & 82187 & 308427 & 1162218\\4 & 1 & 3 & 10 & 35 & 126 & 459 & 1696 & 6330 & 23806 & 90068 & 342430 & 1307138\\5 & 1 & 3 & 10 & 35 & 126 & 462 & 1713 & 6415 & 24205 & 91874 & 350406 & 1341782\\6 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6432 & 24290 & 92273 & 352212 & 1349768\\7 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24307 & 92358 & 352611 & 1351574\\8 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24310 & 92375 & 352696 & 1351973\end{array}\end{equation*}
+
+\begin{displaymath}
+\begin{split}
+[t^{3}]S^{[110]}(t) &= \big|\lbrace 111, 0111, 1011, 00111, 01011, 10011, 10101, 000111, \\
+& 001011, 010011, 010101, 100011, 100101, 101001, 101010\rbrace\big| = 15
+\end{split}
+\end{displaymath}
+
+\caption{Some series developments for $S^{[1^{j+1}0^j]}(t)$ and the set of
+words with $n=3$ $1$-bits, avoiding pattern $\mathfrak{p}=110$, so $j=1$ in the
+family; moreover, for $j=1$ the sequence corresponds to $A000225$, for $j=2$ the
+sequence corresponds to $A261058$.}
+\label{tbl:S1_j1:0_j}
+\end{table}
+
+% p = 0^{j+1}1^{j}
+\begin{table}
+\begin{equation*}\begin{array}{c|cccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\\hline0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 3 & 8 & 20 & 48 & 112 & 256 & 576 & 1280 & 2816 & 6144 & 13312\\2 & 1 & 3 & 10 & 33 & 111 & 378 & 1302 & 4525 & 15841 & 55783 & 197389 & 701286\\3 & 1 & 3 & 10 & 35 & 124 & 447 & 1632 & 6015 & 22336 & 83439 & 313216 & 1180511\\4 & 1 & 3 & 10 & 35 & 126 & 460 & 1701 & 6351 & 23890 & 90398 & 343713 & 1312108\\5 & 1 & 3 & 10 & 35 & 126 & 462 & 1714 & 6420 & 24226 & 91958 & 350736 & 1343069\\6 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6433 & 24295 & 92294 & 352296 & 1350098\\7 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24308 & 92363 & 352632 & 1351658\\8 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24310 & 92376 & 352701 & 1351994\end{array}\end{equation*}
+
+\begin{displaymath}
+    \hspace{-1.5cm}
+    \begin{split}
+    [t^{3}]S^{[001]}(t) &= \big|\lbrace 111, 0111, 1011, 1101, 1110, 01011, 01101, 01110, 10101, 10110, 11010, 11100,\\
+    & 010101, 010110, 011010, 011100, 101010, 101100, 110100, 111000\rbrace\big| = 20
+    \end{split}
+\end{displaymath}
+
+\caption{Some series developments for $S^{[0^{j+1}1^j]}(t)$ and the set of
+words with $n=3$ $1$-bits, avoiding pattern $\mathfrak{p}=001$, so $j=1$ in the
+family; moreover, for $j=1$ the sequence corresponds to $A001792$.}
+\label{tbl:S0_j1:1_j}
+\end{table}
+
+% p = 0^{j}1^{j}
+\begin{table}
+\begin{equation*}\begin{array}{c|cccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\\hline0 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24310 & 92378 & 352716 & 1352078\\1 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12\\2 & 1 & 3 & 9 & 27 & 82 & 253 & 791 & 2499 & 7960 & 25520 & 82248 & 266221\\3 & 1 & 3 & 10 & 34 & 118 & 417 & 1493 & 5400 & 19684 & 72196 & 266122 & 985003\\4 & 1 & 3 & 10 & 35 & 125 & 454 & 1671 & 6211 & 23261 & 87641 & 331821 & 1261398\\5 & 1 & 3 & 10 & 35 & 126 & 461 & 1708 & 6390 & 24086 & 91328 & 347965 & 1331072\\6 & 1 & 3 & 10 & 35 & 126 & 462 & 1715 & 6427 & 24265 & 92154 & 351666 & 1347326\\7 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6434 & 24302 & 92333 & 352492 & 1351028\\8 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24309 & 92370 & 352671 & 1351854\end{array}\end{equation*}
+
+\begin{displaymath}
+    \hspace{-1.5cm}
+    \begin{split}
+    [t^{8}]S^{[01]}(t) &= \big|\lbrace 11111111, 111111110, 1111111100, 11111111000, 111111110000,\\
+    & 1111111100000, 11111111000000, 111111110000000, 1111111100000000\rbrace\big| = 9
+    \end{split}
+\end{displaymath}
+
+\caption{Some series developments for $S^{[0^{j}1^j]}(t)$ (or, equivalently,
+$S^{[1^{j}0^{j}]}(t)$) and the set of words with $n=8$ $1$-bits, avoiding pattern
+$\mathfrak{p}=01$ (or, equivalently, $\mathfrak{p}=10$), so $j=1$ in the family; moreover,
+for $j=0$ the sequence corresponds to $A001700$, for $j=1$ the sequence corresponds to  $A001477$.}
+\label{tbl:S0_j:1_j}
+\end{table}
+
+% p = (10)^{j}1
+\begin{table}
+\begin{equation*}\begin{array}{c|cccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\\hline0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 3 & 7 & 18 & 48 & 131 & 363 & 1017 & 2873 & 8169 & 23349 & 67024\\2 & 1 & 3 & 10 & 32 & 109 & 377 & 1324 & 4697 & 16795 & 60425 & 218485 & 793259\\3 & 1 & 3 & 10 & 35 & 123 & 445 & 1631 & 6036 & 22511 & 84460 & 318438 & 1205457\\4 & 1 & 3 & 10 & 35 & 126 & 459 & 1699 & 6350 & 23911 & 90572 & 344737 & 1317397\\5 & 1 & 3 & 10 & 35 & 126 & 462 & 1713 & 6418 & 24225 & 91979 & 350910 & 1344092\\6 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6432 & 24293 & 92293 & 352317 & 1350272\\7 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24307 & 92361 & 352631 & 1351679\\8 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24310 & 92375 & 352699 & 1351993\end{array}\end{equation*}
+
+\begin{displaymath}
+    \hspace{-1.5cm}
+    \begin{split}
+    [t^{3}]S^{[101]}(t) &= \big|\lbrace 111, 0111, 1110, 00111, 01110, 10011, 11001, 11100, 000111, 001110,\\
+    & 010011, 011001, 011100, 100011, 100110, 110001, 110010, 111000 \rbrace\big| = 18
+    \end{split}
+\end{displaymath}
+
+\caption{Some series developments for $S^{[(10)^{j}1]}(t)$ and the set of words
+with $n=3$ $1$-bits, avoiding pattern $\mathfrak{p}=101$, so $j=1$ in the family;
+moreover, for $j=1$ the sequence corresponds to $A225034$.}
+\label{tbl:S10_j:1}
+\end{table}
+
+% p = (01)^{j}0
+\begin{table}
+\begin{equation*}\begin{array}{c|cccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\\hline0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 3 & 8 & 22 & 61 & 171 & 483 & 1373 & 3923 & 11257 & 32418 & 93644\\2 & 1 & 3 & 10 & 33 & 113 & 393 & 1384 & 4920 & 17618 & 63456 & 229642 & 834342\\3 & 1 & 3 & 10 & 35 & 124 & 449 & 1647 & 6099 & 22754 & 85394 & 322022 & 1219205\\4 & 1 & 3 & 10 & 35 & 126 & 460 & 1703 & 6366 & 23974 & 90818 & 345691 & 1321092\\5 & 1 & 3 & 10 & 35 & 126 & 462 & 1714 & 6422 & 24241 & 92042 & 351156 & 1345049\\6 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6433 & 24297 & 92309 & 352380 & 1350518\\7 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24308 & 92365 & 352647 & 1351742\\8 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24310 & 92376 & 352703 & 1352009\end{array}\end{equation*}
+
+\begin{displaymath}
+    \hspace{-1.5cm}
+    \begin{split}
+    [t^{3}]S^{[010]}(t) &= \big|\lbrace 111, 0111, 1011, 1101, 1110, 00111, 01101, 01110, \\
+            & 10011, 10110, 11001, 11100, 000111, 001101, 001110, 011001, \\
+            & 011100, 100011, 100110, 101100, 110001, 111000 \rbrace\big| = 22
+    \end{split}
+\end{displaymath}
+
+\caption{Some series developments for $S^{[(01)^{j}0]}(t)$ and the set of words
+with $n=3$ $1$-bits, avoiding pattern $\mathfrak{p}=010$, so $j=1$ in the family;
+moreover, for $j=1$ the sequence corresponds to $A025566$.}
+\label{tbl:S01_j:0}
+\end{table}
+
+% }}}
+
+Finally, by applying Theorem \ref{teo3} to the pattern families already examined, we find the following result.
+\begin{coro}
+\label{coroL}
+Let  $L^{[\mathfrak{p}]}(t)=\sum_{n\geq 0}L_n^{[\mathfrak{p}]}t^n$ the
+generating function enumerating the set of binary words $\left\lbrace w\in
+\lbrace 0,1 \rbrace^{*}: |w|_0\leq |w|_1\right\rbrace$ avoiding  a Riordan
+pattern $\mathfrak{p}$ according to the length. We have the following
+particular cases:
+\begin{itemize}
+
+\item for $\mathfrak{p}=1^{j+1}0^j$ we have:
+$$ L^{[\mathfrak{p}]}(t)={2t \over \sqrt{1-4t^2+4t^{2(j+1)}}\left(2t-1+ \sqrt{1-4t^2+4t^{2(j+1)}}\right) }$$
+
+\item for $\mathfrak{p}=0^{j+1}1^j$ we have:
+$$ L^{[\mathfrak{p}]}(t)={2t(t^{2j}-1) \over \sqrt{1-4t^2+4t^{2(j+1)}} \left(1-2t+2t^{2j+1} -\sqrt{1-4t^2+4t^{2(j+1)}}\right)}$$
+
+\item for $\mathfrak{p}=1^{j}0^j$ and $\mathfrak{p}=0^{j}1^j$ we have:
+$$ L^{[\mathfrak{p}]}(t)={2 t \over \sqrt{1-4t^2+2t^{2j}+t^{4j}} \left(-1+2t-t^{2j}+\sqrt{1-4t^{2}+2t^{2j}+t^{4j}}  \right)}$$
+
+\item for $\mathfrak{p}=(10)^j1$ we have:
+$$ L^{[\mathfrak{p}]}(t)={2 t (t^{2j+2}-1)\over 1-4t^2+3t^{2j+2}+(2t-1)\sqrt{Q(t)} }$$
+%$$L^{[\mathfrak{p}]}(t)={
+%2\left(\sum_{i=0}^j t^i \right)^2 \over \sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2}
+%\left(\sum_{i=0}^jt^i+ \sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2}\right)}$$
+
+\item for $\mathfrak{p}=(01)^j0$ we have:
+$$ L^{[\mathfrak{p}]}(t)={2 t (t^{2j+2}-1)(t^{2j}-1)\over  \sqrt{Q(t)} (t^{2j+2}-2t^{2j+1}+2t-1+ \sqrt{Q(t)}) }$$
+%$$S^{[\mathfrak{p}]}(t)={2\sum_{i=0}^j t^i\sum_{i=0}^{j-1} t^i
+%\over
+%\sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2} \left(\sum_{i=0}^{j-1}t^i-t^j+\sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2}\right) }$$
+
+\end{itemize}
+where $Q(t)={1-4t^2+2t^{2j+2}+4t^{2j+4}-3t^{4j+4}}$.
+\end{coro}
+
+In \autoref{tbl:L1_j1:0_j}, \autoref{tbl:L0_j1:1_j}, \autoref{tbl:L0_j:1_j},
+\autoref{tbl:L10_j:1} and \autoref{tbl:L01_j:0} we report some series
+developments related to the $L^{[\mathfrak{p}]}(t)$ functions just defined,
+respectively.
+
+% L tables {{{
+
+% p = 1^{j+1}0^{j}
+\begin{table}
+\begin{equation*}\begin{array}{c|ccccccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\\hline0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 3 & 3 & 7 & 7 & 15 & 15 & 31 & 31 & 63 & 63 & 127 & 127 & 255\\2 & 1 & 1 & 3 & 4 & 11 & 15 & 38 & 55 & 135 & 201 & 483 & 736 & 1742 & 2699 & 6313\\3 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 63 & 159 & 247 & 610 & 969 & 2354 & 3802 & 9117\\4 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 255 & 634 & 1015 & 2482 & 4041 & 9752\\5 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1023 & 2506 & 4087 & 9880\\6 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4095 & 9904\\7 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9908\end{array}\end{equation*}
+\caption{Some series developments for $L^{[1^{j+1}0^j]}(t)$; moreover, for
+$j=1$ the sequence corresponds to $A052551$.}
+\label{tbl:L1_j1:0_j}
+\end{table}
+
+% p = 0^{j+1}1^{j}
+\begin{table}
+\begin{equation*}\begin{array}{c|ccccccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\\hline0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 1 & 3 & 4 & 9 & 13 & 26 & 39 & 73 & 112 & 201 & 313 & 546 & 859 & 1469\\2 & 1 & 1 & 3 & 4 & 11 & 16 & 40 & 61 & 147 & 231 & 542 & 870 & 2004 & 3269 & 7423\\3 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 161 & 253 & 622 & 999 & 2414 & 3942 & 9396\\4 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 636 & 1021 & 2494 & 4071 & 9812\\5 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2508 & 4093 & 9892\\6 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9906\\7 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9908\end{array}\end{equation*}
+\caption{Some series developments for $L^{[0^{j+1}1^j]}(t)$; moreover, for
+$j=1$ the sequence corresponds to $A079284$.}
+\label{tbl:L0_j1:1_j}
+\end{table}
+
+% p = 0^{j}1^{j}
+\begin{table}
+\begin{equation*}\begin{array}{c|ccccccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\\hline0 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9908\\1 & 1 & 1 & 2 & 2 & 3 & 3 & 4 & 4 & 5 & 5 & 6 & 6 & 7 & 7 & 8\\2 & 1 & 1 & 3 & 4 & 10 & 14 & 33 & 48 & 109 & 163 & 362 & 552 & 1207 & 1868 & 4036\\3 & 1 & 1 & 3 & 4 & 11 & 16 & 41 & 62 & 154 & 240 & 583 & 928 & 2217 & 3587 & 8459\\4 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 162 & 254 & 629 & 1008 & 2455 & 4000 & 9614\\5 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 637 & 1022 & 2501 & 4080 & 9853\\6 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2509 & 4094 & 9899\\7 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9907\end{array}\end{equation*}
+\caption{Some series developments for $L^{[0^{j}1^j]}(t)$ (or, equivalently,
+$L^{[1^{j}0^j]}(t)$); moreover, for $j=0$ the sequence corresponds to $A027306$,
+for $j=1$ the sequence corresponds to $A008619$.}
+\label{tbl:L0_j:1_j}
+\end{table}
+
+% p = (10)^{j}1
+\begin{table}
+\begin{equation*}\begin{array}{c|ccccccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\\hline0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 3 & 3 & 7 & 8 & 19 & 23 & 53 & 66 & 150 & 191 & 429 & 555 & 1235\\2 & 1 & 1 & 3 & 4 & 11 & 15 & 38 & 56 & 139 & 210 & 511 & 790 & 1892 & 2973 & 7034\\3 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 63 & 159 & 248 & 614 & 978 & 2382 & 3857 & 9273\\4 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 255 & 634 & 1016 & 2486 & 4050 & 9780\\5 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1023 & 2506 & 4088 & 9884\\6 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4095 & 9904\\7 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9908\end{array}\end{equation*}
+\caption{Some series developments for $L^{[(10)^{j}1]}(t)$; moreover, no
+sequence is known in the literature, except for $j=0$.}
+\label{tbl:L10_j:1}
+\end{table}
+
+% p = (01)^{j}0
+\begin{table}
+\begin{equation*}\begin{array}{c|ccccccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\\hline0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 1 & 3 & 4 & 9 & 13 & 28 & 42 & 87 & 134 & 271 & 425 & 844 & 1342 & 2628\\2 & 1 & 1 & 3 & 4 & 11 & 16 & 40 & 61 & 149 & 234 & 558 & 895 & 2098 & 3420 & 7909\\3 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 161 & 253 & 624 & 1002 & 2430 & 3967 & 9492\\4 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 636 & 1021 & 2496 & 4074 & 9828\\5 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2508 & 4093 & 9894\\6 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9906\\7 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9908\end{array}\end{equation*}
+\caption{Some series developments for $L^{[(01)^{j}0]}(t)$; moreover, no
+sequence is known in literature, except for $j=0$.}
+\label{tbl:L01_j:0}
+\end{table}
+
+
+
+% }}}
+
+\section{Some combinatorial interpretations}
+
+In the previous section we proved results about the enumeration of words
+avoiding patterns from an algebraic point of view. The aim of this section is
+to analyze in more details some particular cases of the various pattern
+families. We approach these problems either combinatorially by providing an interpretation, or algebraically by
+computing the coefficients of the involved generating functions explicitly.
+
+\subsection{Enumeration with respect to the number of $1$-bits}
+
+\begin{coro}
+\label{coro:1_j1_0_j}
+Consider pattern $\mathfrak{p}=1^{j+1}0^{j}$, there is only one word in
+$\mathfrak{L}^{[\mathfrak{p}]}$ for $j=0$; on the other hand, there are
+$S_{n}^{[\mathfrak{p}]} = 2^{n+1}-1$ words for $j=1$.
+\end{coro}
+
+\begin{proof}
+When $j=0$ the pattern to avoid is $\mathfrak{p}=1$, therefore only words
+$w$ in $ \lbrace \varepsilon \rbrace\cup\lbrace 0 \rbrace^{+}$ are suitable choices;
+however, the constraint $|w|_{0} \leq |w|_{1}$ makes $w = \varepsilon$ the only one.
+
+When $j=1$ the pattern to avoid is $\mathfrak{p}=110$ and we observe that the
+generic binomial ${{ {r}\choose{k}}}$ can be interpreted as the number of
+binary words with $r$ $0$-bits  containing $k$ occurrences of the substring
+$10$, which we call an \emph{inversion} with respect to pattern $\mathfrak{p}=110$.
+In order to build a word in the language we start from the substring $0^{r}$ for
+$r\in\lbrace 0,\cdots,n\rbrace$ and select $k\in \lbrace 0, \ldots,r
+\rbrace$ $0$-bits, transforming each one using the mapping $0 \mapsto 10$,
+while preventing the transformation of the $0$-bit in the $10$ just introduced. This
+maneuver introduces $k$ inversions and the selection can be done in ${{
+{r}\choose{k}}}$ ways; finally, we pad on the right with a strip $1^{n-k}$,  because it is mandatory for a word to have $n$
+$1$-bits, hence there is one padding for each set of inversions and there is no other way to avoid $\mathfrak{p}$. Therefore
+\begin{displaymath}
+     \sum_{r=0}^{n}{\sum_{k=0}^{r}{{ {r}\choose{k}}}} = 2^{n+1}-1 = S_{n}^{[\mathfrak{p}]},
+\end{displaymath}
+as can be verified algebraically by extracting the coefficient of the generating function
+$$S^{[\mathfrak{p}]}(t)={1 \over 1-3t+2t^2}={2 \over 1-2t}-{1 \over 1-t}$$
+as required.
+\end{proof}
+
+
+The same argument can be rewritten in term of sets which allows us give a constructive approach.
+Let $\mathcal{S}_{n, k, i}$ be the set of binary words containing
+$n$ and $k$ occurrences of $1$-bits  and $0$-bits, respectively, with $i$ inversions,
+namely an occurrence of the subsequence $10$.
+By union respect to $i$ and $k$ we get sets $\mathcal{S}_{n,
+k}^{[\mathfrak{p}]}$ and $\mathcal{S}_{n}^{[\mathfrak{p}]}$, formally:
+\begin{displaymath}
+    \mathcal{S}_{n}^{[\mathfrak{p}]} =
+        \bigcup_{k\in \lbrace 0,\ldots,n \rbrace} {\mathcal{S}_{n, k}^{[\mathfrak{p}]}} =
+        \bigcup_{i\in \lbrace 0,\ldots,k \rbrace} {\mathcal{S}_{n, k, i}^{[\mathfrak{p}]}} =
+         {\left(\bigcup_{i\in \lbrace 0,\ldots,k \rbrace}{
+                    \mathcal{S}_{k, k, i}^{[\mathfrak{p}]}}\right)\times \left\lbrace 1^{n-k} \right\rbrace}
+\end{displaymath}
+For the sake of clarity, we enumerate all binary words avoiding $\mathfrak{p}=110$
+containing $n=3$ $1$-bits, formally we partition $\mathcal{S}_{3}^{[\mathfrak{p}]}$ as follows
+\begin{displaymath}
+    \begin{split}
+        \mathcal{S}_{3}^{[\mathfrak{p}]} &= \mathcal{S}_{0, 0, 0}^{[\mathfrak{p}]}\times\lbrace 111 \rbrace\\
+            &\cup{\left(\mathcal{S}_{1, 1, 0}^{[\mathfrak{p}]}\cup\mathcal{S}_{1, 1, 1}^{[\mathfrak{p}]}\right)\times \lbrace 11 \rbrace}\\
+            &\cup{\left(\mathcal{S}_{2, 2, 0}^{[\mathfrak{p}]}\cup\mathcal{S}_{2, 2, 1}^{[\mathfrak{p}]}\cup\mathcal{S}_{2, 2, 2}^{[\mathfrak{p}]}\right)\times \lbrace 1 \rbrace}\\
+            &\cup{\left(\mathcal{S}_{3, 3, 0}^{[\mathfrak{p}]}\cup\mathcal{S}_{3, 3, 1}^{[\mathfrak{p}]}\cup\mathcal{S}_{3, 3, 2}^{[\mathfrak{p}]}\cup\mathcal{S}_{3, 3, 3}^{[\mathfrak{p}]}\right)\times \lbrace \varepsilon \rbrace}\\
+    \end{split}
+\end{displaymath}
+where
+\begin{displaymath}
+\begin{split}
+    \mathcal{S}_{3, 0}^{[\mathfrak{p}]}=\mathcal{S}_{0, 0, 0}^{[\mathfrak{p}]}\times\lbrace 111 \rbrace &= \lbrace \varepsilon \rbrace\times\lbrace 111 \rbrace= \{111\}\\
+    \mathcal{S}_{3, 1}^{[\mathfrak{p}]}={\left(\mathcal{S}_{1, 1, 0}^{[\mathfrak{p}]}\cup\mathcal{S}_{1, 1, 1}^{[\mathfrak{p}]}\right)\times \lbrace 11 \rbrace} &= \{0111\}\cup\{1011\}\\
+    \mathcal{S}_{3, 2}^{[\mathfrak{p}]}={\left(\mathcal{S}_{2, 2, 0}^{[\mathfrak{p}]}\cup\mathcal{S}_{2, 2, 1}^{[\mathfrak{p}]}\cup\mathcal{S}_{2, 2, 2}^{[\mathfrak{p}]}\right)\times \lbrace 1 \rbrace} &=\{00111\}\cup\{10011, 01011\}\cup\{10101\}\\
+    \mathcal{S}_{3, 3}^{[\mathfrak{p}]}={\left(\mathcal{S}_{3, 3, 0}^{[\mathfrak{p}]}\cup\mathcal{S}_{3, 3, 1}^{[\mathfrak{p}]}\cup\mathcal{S}_{3, 3, 2}^{[\mathfrak{p}]}\cup\mathcal{S}_{3, 3, 3}^{[\mathfrak{p}]}\right)\times \lbrace \varepsilon \rbrace} &= \{000111\}\cup\{001011, 100011, 010011\} \\
+            &\cup\{101001, 100101, 010101\}\cup\{101010\}
+\end{split}
+\end{displaymath}
+the same set of words shown in \autoref{tbl:S1_j1:0_j}.
+
+\begin{coro}
+\label{coro:0_j1_1_j}
+Consider pattern $\mathfrak{p}=0^{j+1}1^{j}$, there is one word
+$S_{n}^{[\mathfrak{p}]} = 1$ for each $n\in\mathbb{N}$ in
+$\mathfrak{L}^{[\mathfrak{p}]}$ when $j=0$; on the other hand, there are
+$(n+2)2^{n-1}$ words for $j=1$.
+\end{coro}
+
+\begin{proof}
+When $j=0$ the pattern to avoid is $\mathfrak{p}=0$, therefore only words
+$w = 1^{n}$ are suitable, hence there is one of them for each $n\in\mathbb{N}$.
+
+When $j=1$ the pattern to avoid is $\mathfrak{p}=001$, therefore we
+extract the $n$-th coefficient after instantiation of the corresponding
+generating function:
+\begin{displaymath}
+[t^{n}] S_{n}^{[\mathfrak{p}]}(t) = [t^{n}]\frac{1-t}{(1-2t)^{2}} = (n+2)2^{n-1}
+\end{displaymath}
+as required.
+
+We also provide a combinatorial interpretation of the theorem; first of all,
+we observe that sequence $S_{n}^{[\mathfrak{p}]}$ is the binomial transform of
+the sequence of the positive integers $(n+1)_{n\in\mathbb{N}}$, formally
+\begin{displaymath}
+    S_{n}^{[\mathfrak{p}]} =(n+2)2^{n-1}= \sum_{k=0}^{n}{{ {n}\choose{k}}(k+1)}
+\end{displaymath}
+where the generic summand ${{ {n}\choose{k}}(k+1)}$ can be interpreted as the number
+of binary words with $n$ $1$-bits  containing $n-k$ occurrences of the substring $01$,
+which we call an \emph{inversion} respect to pattern $\mathfrak{p}=001$. We construct the set of
+words avoiding $\mathfrak{p}$ to show the bijection with the previous assert as follows:
+if in a word $w$ there are $n-k$ occurrences of the substring $01$ then $w$ contains
+$2n-2k$ bits in total, $n-k$ of both kind. Since it is mandatory that the number
+of $1$ is $n$, we add $k$ $1$-bits  to it, resulting in a new word $w'$ of length $2n-k$
+which can be augmented with at most $k$ additional $0$-bits,
+according to the constraint $|w'|_{0}\leq |w'|_{1}$. In order to build a word with the structure of $w'$,
+we start from the substring $1^{n}$ and select $n-k$ $1$-bits, transforming each one using
+the mapping $1 \mapsto 01$, simultaneously to prevent transforming $1$-bit  in $01$ just introduced. This
+maneuver introduces $n-k$ inversions and the selection can be done in ${{ {n}\choose{k}}}$ ways;
+moreover, we are free to pad on the right with $0^{i}$ strips, for $i\in\lbrace 0,\cdots,k\rbrace,$
+hence there are $k+1$ paddings for each set of inversions. Therefore, since there can be up to $n$ inversions,
+\begin{displaymath}
+    \sum_{k=0}^{n}{{ {n}\choose{n-k}}(k+1)} = (n+2)2^{n-1}
+\end{displaymath}
+concludes the proof by symmetry of binomial coefficients.
+\end{proof}
+
+\begin{coro}
+Consider pattern $\mathfrak{p}=0^{j}1^{j}$ (or, equivalently,
+$\mathfrak{p}=1^{j}0^{j}$), there are
+\begin{displaymath}
+S_{n}^{[\mathfrak{p}]}=\sum_{k=0}^{n}{{{n+k}\choose{k}}}={{2n+1}\choose{n}}
+\end{displaymath}
+words in $\mathfrak{L}^{[\mathfrak{p}]}$ for $j=0$; on the other hand, there
+are $S_{n}^{[\mathfrak{p}]} = n+1$ words for $j=1$.
+\end{coro}
+
+\begin{proof}
+When $j=0$ there is no pattern to avoid and this situation corresponds to the
+enumeration of binary words $\left\lbrace w\in \lbrace 0,1 \rbrace^{*}: |w|_{0}
+\leq |w|_{1}=n\right\rbrace$.  After instantiating the generating function
+$S^{[\mathfrak{p}]}(t)$, we extract the $n$-th coefficient as follows
+\begin{displaymath}
+[t^{n}] S_{n}^{[\mathfrak{p}]}(t) =[t^{n}]\frac{1-\sqrt{1-4t}}{2t\sqrt{1-4t}}
+= \frac{1}{2}{{2(n+1)}\choose{n+1}}
+= {{2n+1}\choose{n+1}}
+= {{2n+1}\choose{n}}
+\end{displaymath}
+which simplifies by the identity
+\begin{displaymath}
+{{r+s+1}\choose{s}} = \sum_{q=0}^{s}{{{r+q}\choose{q}}}
+\end{displaymath}
+as desired. It is possible to state the following combinatorial interpretation:
+since the maximum number of $0$-bits  is $n$, we reserve $n$ boxes for them. To the
+left of each box reserve one more box and, finally, another one to the right of
+the very last box. In this way we have reserved $2n+1$ boxes where we can put
+$n$ $1$-bits  in ${{2n+1}\choose{n}}$ ways, as required.
+
+When $j=1$ the pattern to avoid is $\mathfrak{p}=01$ (or, equivalently,
+$\mathfrak{p}=10$), therefore only words $w \in   \lbrace 1^{n}
+\rbrace\times\bigcup_{s\in \lbrace 0,\ldots,n \rbrace}\lbrace 0^{s} \rbrace$
+are suitable, which are $n+1$, one for each value that $s$ can take.
+\end{proof}
+
+Last two patterns $\mathfrak{p}=(10)^{j}1$ and $\mathfrak{p}=(01)^{j}0$ are
+harder to study: for $j=0$ there are $S_{n}^{[\mathfrak{p}]}=[\![n=0]\!]$ and
+$S_{n}^{[\mathfrak{p}]}=1$ words, respectively.  On the other hand, when $j=1$
+we report only the instantiated generating functions
+\begin{displaymath}
+\begin{split}
+    S^{[\mathfrak{101}]}(t) &=\frac{(1+t)\left(1-3t-\sqrt{1-2t-3t^{2}}\right)}{2t(3t-1)}, \\
+    S^{[\mathfrak{010}]}(t) &=\frac{1-2t-3t^{2}-(1-t)\sqrt{1-2t-3t^{2}}}{2t^{2}(3t-1)}.
+\end{split}
+\end{displaymath}
+As pointed out by an anonymous referee, previous functions can be rewritten as
+\begin{displaymath}
+\begin{split}
+    S^{[\mathfrak{101}]}(t) &=\frac{(1+t)(1- t M(t))}{1-3t},\\
+    S^{[\mathfrak{010}]}(t) &=\frac{(1+t M(t))(1-t M(t))}{1-3t}
+\end{split}
+\end{displaymath}
+respectively, where $M(t)=\frac{1 - t - \sqrt{1-2t-3t^{2}} }{2t^{2}}$ is the
+Motzkin numbers' generating function. Such rewriting shows a relation among Motzkin numbers
+and powers of $3$; however, a combinatorial argument is not easy to state to
+the best of our knowledge.
+
+\subsection{Enumeration with respect to the length}
+
+\begin{coro}
+Consider pattern $\mathfrak{p}=1^{j+1}0^{j}$, there is one word in
+$\mathfrak{L}^{[\mathfrak{p}]}$ for $j=0$; on the other hand, there are
+$2^{m+1}-1$ words, where $n=2m +  [\![\text{n is odd}]\!]$,  for $j=1$.
+\end{coro}
+
+\begin{proof}
+When $j=0$ the pattern to avoid is $\mathfrak{p}=1$, therefore
+instantiating the generating function we have $L^{[\mathfrak{p}]}(t) = 1$, as
+required.
+
+When $j=1$ the pattern to avoid is $\mathfrak{p}=110$, therefore we instantiate
+and extract the $n$-th coefficient
+\begin{displaymath}
+L_{n}^{[\mathfrak{p}]} = [t^{n}]\frac{2}{1-2t^{2}} + [t^{n-1}]\frac{2}{1-2t^{2}} - [t^{n}]\frac{1}{1-t}
+\end{displaymath}
+and proceed by cases on the parity of $n$. If $n=2m$ then the second term in
+the rhs disappears, otherwise if $n=2m+1$ the first term disappears; in both
+cases it is required to perform $[u^{m}]\frac{2}{1-2u} = 2^{m+1}$ where
+$u=t^{2}$, as required.
+
+It is possible to state a combinatorial interpretation using an argument
+similar to the one given in the proof of Corollary \autoref{coro:1_j1_0_j}.
+Let $n=2m$, therefore a word $w$ needs to have $m+j$ $1$-bits, where $j\in
+\lbrace 0,\ldots,m \rbrace$; conversely, $w$ needs to have $n-m-j=m-j$ $0$-bits.
+Fixing $j$ in the given range, from the substring $0^{m-j}$ we select $i\in
+\lbrace 0,\ldots,m-j \rbrace$ $0$-bits  to introduce $i$ inversions, namely $i$
+occurrences of $10$, applying the mapping $0\mapsto 10$ simultaneously.  This
+maneuver keeps the original $0$-bits  and introduces at most $m-j$ $1$-bits, so
+we pad with $1$-bits  on the right in order to have the required $m+j$ $1$-bits
+in the entire word; finally, selections can be done in
+\begin{displaymath}
+    \sum_{j=0}^{m}{\sum_{i=0}^{m-j}{ {{m-j}\choose{i}}} } =
+    \sum_{j=0}^{m}{2^{m-j}} =
+    2^{m+1}-1
+\end{displaymath}
+ways, because padding can be done in only one way,
+completing the case for $n$ even.
+
+Let $n=2m+1$, therefore a word $w$ needs to have $m+1+j$ $1$-bits, where $j\in
+\lbrace 0,\ldots,m \rbrace$; conversely, $w$ needs to have $n-m-1-j=m-j$ $0$-bits.
+Fixing $j$ in the given range, from the substring $0^{m-j}$ we select $i\in
+\lbrace 0,\ldots,m-j \rbrace$ $0$-bits  to introduce $i$ inversions as done in
+the even case, introducing at most $m-j$ $1$-bits,  and padding as necessary to have $m+1+j$
+$1$-bits, the total number of selections
+%\begin{displaymath}
+    %\sum_{j=0}^{m}{\sum_{i=0}^{m-j}{ {{m-j}\choose{i}}} } =
+    %\sum_{j=0}^{m}{2^{m-j}} =
+    %2^{m+1}-1
+%\end{displaymath}
+equals the one given for the even case, completing the case for $n$ odd.
+\end{proof}
+
+
+\begin{coro}
+Consider pattern $\mathfrak{p}=0^{j+1}1^{j}$, there is one word
+$L_{n}^{[\mathfrak{p}]} = 1$ for each $n\in\mathbb{N}$ in
+$\mathfrak{L}^{[\mathfrak{p}]}$ when $j=0$; on the other hand, there are
+$L_{n}^{[\mathfrak{p}]} = F_{n+3}-2^{m}$ words if $n=2m$ else
+$L_{n}^{[\mathfrak{p}]} = F_{n+3}-2^{m+1}$ words if $n=2m+1$, for $j=1$, where
+$F_{n}$ is the $n$-th Fibonacci number.
+\end{coro}
+
+\begin{proof}
+When $j=0$ the pattern to avoid is $\mathfrak{p}=0$, therefore suitable
+words of length $n$ are of the form $w=1^{n}$, hence $L_{n}^{[\mathfrak{p}]} =
+1$ for each $n\in\mathbb{N}$.
+
+When $j=1$ the pattern to avoid is $\mathfrak{p}=001$, therefore we instantiate and
+extract the $n$-th coefficient
+\begin{displaymath}
+L_{n}^{[\mathfrak{p}]} = 2[t^{n+1}]\frac{t}{1-t-t^{2}} + [t^{n}]\frac{t}{1-t-t^{2}}
+- [t^{n}]\frac{1}{1-2t^{2}} - 2[t^{n-1}]\frac{1}{1-2t^{2}}
+\end{displaymath}
+in order to have $L_{n}^{[\mathfrak{p}]} = 2F_{n+1} + F_{n} - a_{n} = F_{n+3} - a_{n}$,
+where $a_{2m}=2^{m}$ and $a_{2m+1}=2^{m+1}$.
+
+It is possible to state a combinatorial interpretation using an argument
+similar to the one given in the proof of Corollary \ref{coro:0_j1_1_j}.
+Let $n=2m$, therefore a word $w$ needs to have $m+j$ $1$-bits, where $j\in
+\lbrace 0,\ldots,m \rbrace$; conversely, $w$ needs to have $n-m-j=m-j$ $0$-bits.
+Fixing $j$ in the given range, from the substring $1^{m+j}$ we select $i\in
+\lbrace 0,\ldots,m-j \rbrace$ $1$-bits  to introduce $i$ inversions, namely $i$
+occurrences of $01$, applying the mapping $1\mapsto 01$ simultaneously.  This
+maneuver keeps the original $1$-bits  and introduces at most $m-j$ $0$-bits;
+finally, selections can be done in $\sum_{j=0}^{m}{\sum_{i=0}^{m-j}{
+{{m+j}\choose{i}}} } $ ways. In order to find a closed form for the double
+summation, we inspect the region of the Pascal triangle taken into account;
+marking with $\circ$ the involved binomials
+\begin{displaymath}
+\begin{array}{c|cccccccccc}
+n/j     & 0 & 1 & \ldots & m-1 & m & m+1 & \ldots & 2m-1 & 2m &  \ldots\\
+\hline
+0       & \\
+\vdots  & \\
+m-1     & \\
+m       & \circ & \circ & \ldots & \circ & \circ \\
+m+1     & \circ & \circ & \ldots & \circ \\
+\vdots  & \vdots & \vdots & \iddots \\
+2m-1    & \circ & \circ \\
+2m      & \circ \\
+2m+1    & \\
+\vdots  & \\
+\end{array}
+\end{displaymath}
+and using identity ${ {r+1}\choose{k+1} }-{ {s}\choose{k+1} } = \sum_{i=s}^{r}{{ {i}\choose{k} }}$ for rearranging the summation and identities
+$2^{n}=\sum_{i=0}^{n}{{ {n}\choose{i} }}$ and
+$F_{n+1}=\sum_{i=0}^{n}{{ {n-i}\choose{i} }}$ to collect terms, we obtain
+\begin{displaymath}
+    \sum_{j=0}^{m}{\sum_{i=0}^{m-j}{ {{m+j}\choose{i}}} }
+    = \sum_{k=0}^{m}{{ {2m+1-k}\choose{k+1} }-{ {m}\choose{k+1} }}
+    = F_{2m+3}-2^{m} = L_{2m}^{[\mathfrak{p}]},
+\end{displaymath}
+completing the case for $n$ even.
+
+Let $n=2m+1$, therefore a word $w$ needs to have $m+1+j$ $1$-bits, where $j\in
+\lbrace 0,\ldots,m \rbrace$; conversely, $w$ needs to have $n-m-1-j=m-j$ $0$-bits.
+Fixing $j$ in the given range, from the substring $1^{m+1+j}$ select
+$i\in \lbrace 0,\ldots,m-j \rbrace$ $1$-bits  to introduce $i$ inversions as
+done for the even case; in parallel, selections can be done in $
+\sum_{j=0}^{m}{\sum_{i=0}^{m-j}{ {{m+1+j}\choose{i}}} } $ ways. The involved
+region in the Pascal triangle has the same shape as the one shown for the even
+case translated one row to the bottom, so binomials lying on row $m$ are
+excluded and binomials ${ {2m+1-k}\choose{k} }$ are included, for $k\in \lbrace
+0, \ldots, m \rbrace$.  Therefore we rewrite
+\begin{displaymath}
+    \sum_{j=0}^{m}{\sum_{i=0}^{m-j}{ {{m+1+j}\choose{i}}} }
+    = \sum_{k=0}^{m}{{ {2m+2-k}\choose{k+1} }-{ {m+1}\choose{k+1} }}
+    = F_{2m+4}-2^{m+1} = L_{2m+1}^{[\mathfrak{p}]},
+\end{displaymath}
+completing the case for $n$ odd.
+\end{proof}
+
+\begin{coro}
+Consider pattern $\mathfrak{p}=0^{j}1^{j}$ (or, equivalently,
+$\mathfrak{p}=1^{j}0^{j}$), there are $2^{n-1}$ words in
+$\mathfrak{L}^{[\mathfrak{p}]}$ if $n$ is odd else $2^{n-1}
++\frac{1}{2}{{2m}\choose{m}}$ where $n=2m$, for $j=0$; on the other hand, there
+are $L_{n}^{[\mathfrak{p}]} = m+1$ words, where $n=2m +  [\![\text{n is
+odd}]\!]$, for $j=1$.
+\end{coro}
+
+\begin{proof}
+When $j=0$ the pattern to avoid is $\mathfrak{p}=\varepsilon $, namely the
+empty word, therefore instantiating the generating function we have
+\begin{displaymath}
+L^{[\mathfrak{p}]}(t) =\frac{1}{2(1-2t)} +\frac{1}{2\sqrt{1-4t^{2}}}
+\end{displaymath}
+we extract the coefficient $L_{n}^{[\mathfrak{p}]} = 2^{n-1} + \frac{a_{n}}{2}$,
+where $a_{2m+1}=0$ and $a_{2m}={{2m}\choose{m}}$, as required. We observe that these values
+correspond to the summation $\sum_{i=0}^m {n \choose i}$ for $n=2m,2m+1,\cdots,$
+where the binomial coefficient computes the number of ways to choose $i$  $0$-bits among $n$ bits,
+and this gives the combinatorial interpretation.
+
+When $j=1$ the pattern to avoid is $\mathfrak{p}=01$ (or, equivalently,
+$\mathfrak{p}=10$), therefore after instantiation
+\begin{displaymath}
+L^{[\mathfrak{p}]}(t) =\frac{1}{4(1-t)} + \frac{1}{2(1-t)^{2}} +\frac{1}{4(1+t)}
+\end{displaymath}
+we extract the $n$-th coefficient $L_{n}^{[\mathfrak{p}]} = \frac{1}{4} + \frac{(-1)^{n}}{4} +\frac{n+1}{2} $,
+so either $n=2m$ or $n=2m+1$ entails $L_{n}^{[\mathfrak{p}]} = m+1$, as required.
+
+A combinatorial interpretation can be given as follows. If $n=2m$ then suitable
+words have structure $1^{m}1^{j}0^{m-j}$ for $j\in \lbrace 0, \ldots,m \rbrace$,
+and there are $m+1$ of them. On the contrary, if $n=2m+1$ holds then suitable
+words have structure $1^{m+1}1^{j}0^{m-j}$ for $j\in \lbrace 0, \ldots,m
+\rbrace$, they are $m+1$ in number again, as required.
+\end{proof}
+
+As before, last two patterns $\mathfrak{p}=(01)^{j}0$ and
+$\mathfrak{p}=(10)^{j}1$ are harder to study and we avoid to report formulas
+about $L^{[\mathfrak{p}]}(t)$ functions because we have not a meaningful
+combinatorial interpretation: we only point out that these functions can be
+expressed in terms of $M(t^{2})$, where $M(t)$ is the generating function of
+Motzkin numbers, similarly to the corresponding $S^{[\mathfrak{p}]}(t)$ functions.
+
+\section{Conclusions}
+
+As a final remark, we observe a structural properties of matrices
+$\mathcal{R}^{[\mathfrak{p}]}$ against the studied families of patterns.
+As it is well-known (see, e.g., \cite{LMMS14,MRSV97,SGWW91}),
+Riordan arrays constitute a group with respect to the usual row-by-column product between matrices,
+and the product of two Riordan arrays $D_1$ and $D_2$ is defined as follows:
+$$
+  D_1 \ast D_2 = (d_1(t),\ h_1(t)) \ast (d_2(t),\ h_2(t)) =(d_1(t)d_2(h_1(t)),\ h_2(h_1(t))).
+$$
+Moreover, the Riordan array $I = (1,\ t)$ acts as the identity and the inverse of $D =(d(t), h(t))$ is the Riordan array:
+$$
+D^{-1} = \left( \frac{1}{d(\overline{h}(t))},
+  \overline{h}(t) \right)
+$$
+where $\overline{h}(t)$ is the compositional inverse of $h(t)$.
+
+The Pascal triangle and its inverse correspond to the Riordan arrays $$P
+=\left(\frac{1}{1-t},\frac{t}{1-t}\right) \quad\quad
+P^{-1}=\left(\frac{1}{1+t},\frac{t}{1+t}\right)$$ respectively.  Therefore, for
+any Riordan array $\mathcal{R}^{[\mathfrak{p}]}$ we can compute
+$B^{[\mathfrak{p}]}= P^{-1} \ast \mathcal{R}^{[\mathfrak{p}]},$ which is
+equivalent to say that  $\mathcal{R}^{[\mathfrak{p}]}$ is the binomial
+transform of $B^{[\mathfrak{p}]},$ or $\mathcal{R}^{[\mathfrak{p}]}=P \ast
+B^{[\mathfrak{p}]}$.
+
+For the sake of clarity, consider the pattern family $\mathfrak{p}=1^{j+1}0^{j}$,
+so for $j=1$ we have the minor
+\begin{displaymath}
+\mathcal{R}^{[110]} = \left[\begin{array}{ccccccccccc}1 &  &  &  &  &  &  &  &  &  & \\2 & 1 &  &  &  &  &  &  &  &  & \\4 & 2 & 1 &  &  &  &  &  &  &  & \\8 & 4 & 2 & 1 &  &  &  &  &  &  & \\16 & 8 & 4 & 2 & 1 &  &  &  &  &  & \\32 & 16 & 8 & 4 & 2 & 1 &  &  &  &  & \\64 & 32 & 16 & 8 & 4 & 2 & 1 &  &  &  & \\128 & 64 & 32 & 16 & 8 & 4 & 2 & 1 &  &  & \\256 & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1 &  & \\512 & 256 & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1 & \\1024 & 512 & 256 & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1\end{array}\right]
+\end{displaymath}
+which corresponds to
+\begin{displaymath}
+B^{[110]} = \left[\begin{array}{ccccccccccc}
+1 &  &  &  &  &  &  &  &  &  & \\
+1 & 1 &  &  &  &  &  &  &  &  & \\
+1 & 0 & 1 &  &  &  &  &  &  &  & \\
+1 & 1 & -1 & 1 &  &  &  &  &  &  & \\
+1 & 0 & 2 & -2 & 1 &  &  &  &  &  & \\
+1 & 1 & -2 & 4 & -3 & 1 &  &  &  &  & \\
+1 & 0 & 3 & -6 & 7 & -4 & 1 &  &  &  & \\
+1 & 1 & -3 & 9 & -13 & 11 & -5 & 1 &  &  & \\
+1 & 0 & 4 & -12 & 22 & -24 & 16 & -6 & 1 &  & \\
+1 & 1 & -4 & 16 & -34 & 46 & -40 & 22 & -7 & 1 & \\
+1 & 0 & 5 & -20 & 50 & -80 & 86 & -62 & 29 & -8 & 1\end{array}\right]
+\end{displaymath}
+defined by functions $d^{[110]}(t)=\frac{1}{1-t}$ and
+$h^{[110]}(t)=\frac{t}{1+t}$ which expands to $h^{[110]}(t) = t - t^{2} + t^{3} - t^{4} + t^{5} - t^{6} + t^{7} -
+t^{8} + t^{9} - t^{10} + \mathcal{O}\left(t^{11}\right)$.
+
+On the other hand, the Riordan array $\mathcal{R}^{[11100]}$, that is $j=2$ in
+the family, is the binomial transform of
+\begin{displaymath}
+B^{[11100]} =\left[\begin{array}{ccccccccccc}1 &  &  &  &  &  &  &  &  &  & \\1 & 1 &  &  &  &  &  &  &  &  & \\3 & 1 & 1 &  &  &  &  &  &  &  & \\5 & 3 & 1 & 1 &  &  &  &  &  &  & \\15 & 7 & 3 & 1 & 1 &  &  &  &  &  & \\31 & 16 & 9 & 3 & 1 & 1 &  &  &  &  & \\87 & 43 & 17 & 11 & 3 & 1 & 1 &  &  &  & \\201 & 101 & 55 & 18 & 13 & 3 & 1 & 1 &  &  & \\543 & 271 & 119 & 67 & 19 & 15 & 3 & 1 & 1 &  & \\1331 & 666 & 341 & 141 & 79 & 20 & 17 & 3 & 1 & 1 & \\3533 & 1766 & 826 & 411 & 167 & 91 & 21 & 19 & 3 & 1 & 1\end{array}\right]
+\end{displaymath}
+defined by functions $d^{[11100]}(t)=\sqrt\frac{1+t}{1-t-5t^{2}+t^{3}}$ and
+$h^{[11100]}(t)=\frac{1+2t+t^{2}-\sqrt{(1-t-5t^{2}+t^{3})(1+t)}}{2(1+t)^{2}}$
+which expands to $h^{[11100]}(t)=t + 2 t^{4} - t^{5} + 7 t^{6} + 24 t^{8} + 17 t^{9} + 98 t^{10} +
+\mathcal{O}\left(t^{11}\right)$.
+
+\iffalse
+Furthermore, the Riordan array $\mathcal{R}^{[1111000]}$, that is $j=3$ in the
+family, is the binomial transform of
+\begin{displaymath}
+B^{[1111000]} =\left[\begin{array}{ccccccccccc}1 &  &  &  &  &  &  &  &  &  & \\1 & 1 &  &  &  &  &  &  &  &  & \\3 & 1 & 1 &  &  &  &  &  &  &  & \\7 & 4 & 1 & 1 &  &  &  &  &  &  & \\17 & 8 & 5 & 1 & 1 &  &  &  &  &  & \\49 & 25 & 9 & 6 & 1 & 1 &  &  &  &  & \\123 & 61 & 34 & 10 & 7 & 1 & 1 &  &  &  & \\351 & 176 & 74 & 44 & 11 & 8 & 1 & 1 &  &  & \\945 & 472 & 242 & 88 & 55 & 12 & 9 & 1 & 1 &  & \\2641 & 1321 & 610 & 322 & 103 & 67 & 13 & 10 & 1 & 1 & \\7363 & 3681 & 1811 & 766 & 417 & 119 & 80 & 14 & 11 & 1 & 1\end{array}\right]
+\end{displaymath}
+\fi
+
+Riordan arrays $B^{[\mathfrak{p}]}$ can be completely defined by using the results of Theorem \ref{teo1} and the product rule of the Riordan group.
+Doing so, for each pattern family studied in this work with $j>1$,
+the Riordan array $\mathcal{R}^{[\mathfrak{p}]}$  appears to be the binomial transform of another Riordan array $B^{[\mathfrak{p}]}$
+ with non-negative integer coefficients, although
+it is not easy to spot this property looking at the corresponding $h$ functions because their
+series expansions might contain negative coefficients, as shown for matrices
+$B^{[110]}$ and $B^{[11100]}$.  This fact could  be further investigated from an algebraic and combinatorial point of view and
+possibly yield interesting combinatorial interpretations also in the
+case $j>1.$
+
+
+\iffalse
+% Bibliography {{{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{plain}
+%\bibliography{../../tex/bibliogr}
+%\bibliography{c:/DATI/Articoli/Biblio/bibliogr}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{10}
+
+\bibitem{BMS07a}
+D. Baccherini and D. Merlini and R. Sprugnoli.
+\newblock Binary words excluding a pattern and proper {R}iordan arrays
+\newblock {\em Discrete Mathematics}, 307:1021--1037, 2007.
+
+\bibitem{BGP13}
+S.~Bilotta, E.~Grazzini, and E.~Pergola.
+\newblock Counting binary words avoiding alternating patterns.
+\newblock {\em Journal of Integer Sequences}, 16, 2013.
+
+\bibitem{GO80}
+L.~J. Guibas and M.~Odlyzko.
+\newblock Long repetitive patterns in random sequences.
+\newblock {\em Zeitschrift f\"{u}r Wahrscheinlichkeitstheorie}, 53:241--262,
+  1980.
+
+\bibitem{GO81}
+L.~J. Guibas and M.~Odlyzko.
+\newblock String overlaps, pattern matching, and nontransitive games.
+\newblock {\em Journal of Combinatorial Theory, Series A}, 30:183--208, 1981.
+
+\bibitem{OEIS}
+OEIS~Foundation Inc.
+\newblock The On-Line {E}ncyclopedia of {I}nteger {S}equences.
+\newblock \url{https://oeis.org/}.
+
+\bibitem{LMMS12}
+A.~Luzon, D.~Merlini, M.~A. Moron, and R.~Sprugnoli.
+\newblock Identities induced by {R}iordan arrays.
+\newblock {\em Linear Algebra and its Applications}, 436(3):631--647, 2012.
+
+\bibitem{LMMS14}
+A.~Luzon, D.~Merlini, M.~A. Moron, and R.~Sprugnoli.
+\newblock Complementary {R}iordan arrays.
+\newblock {\em Discrete Applied Mathematics}, 172:75--87, 2014.
+
+\bibitem{MRSV97}
+D.~Merlini, D.~G. Rogers, R.~Sprugnoli, and M.~C. Verri.
+\newblock On some alternative characterizations of {R}iordan arrays.
+\newblock {\em Canadian Journal of Mathematics}, 49(2):301--320, 1997.
+
+\bibitem{MS11}
+D.~Merlini and R.~Sprugnoli.
+\newblock {Algebraic aspects of some Riordan arrays related to binary words
+  avoiding a pattern}.
+\newblock {\em Theoretical Computer Science}, 412 (27):2988--3001, 2011.
+
+\bibitem{MSV09}
+D.~Merlini, R.~Sprugnoli, and M.~C. Verri.
+\newblock Combinatorial sums and implicit {R}iordan arrays.
+\newblock {\em Discrete Mathematics}, 309(2):475--486, 2009.
+
+\bibitem{SF96}
+R.~Sedgewick and P.~Flajolet.
+\newblock {\em An {I}ntroduction to the {A}nalysis of {A}lgorithms}.
+\newblock Addison-Wesley, Reading, MA, 1996.
+
+\bibitem{SGWW91}
+L.~W. Shapiro, S.~Getu, W.-J. Woan, and L.~Woodson.
+\newblock The {R}iordan group.
+\newblock {\em Discrete Applied Mathematics}, 34:229--239, 1991.
+
+\bibitem{Spr94}
+R.~Sprugnoli.
+\newblock Riordan arrays and combinatorial sums.
+\newblock {\em Discrete Mathematics}, 132:267--290, 1994.
+
+
+
+
+\end{thebibliography}
+
+\fi
+
+

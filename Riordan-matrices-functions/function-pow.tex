@@ -1,0 +1,97 @@
+
+\begin{theorem}
+\label{thm:pow-Hermite-interpolating-poly-implicit}
+Let $f(z)=z^{r}$, where $r\in\mathbb{Q}$, and $\mathcal{R}$ be a Riordan array; then
+\begin{equation}
+  \label{eq:pow-Hermite-interpolating-poly}
+  P_{m}(z) = \sum_{j=0}^{m-1}{\binom{r}{j}}{(z-1)^{j} }
+  \quad\text{and, explicitly,}\quad
+  P_{m}(z) = \sum_{k=0}^{m-1}{\left(\sum_{j=k}^{m-1}{(-1)^{j}{{r}\choose{j}}{{j}\choose{k}}}\right)(-z)^{k}}
+\end{equation}
+are both Hermite interpolating polynomials of the $r$-th power function for the
+minor $\mathcal{R}_{m}, m\in\mathbb{N}$.
+\end{theorem}
+
+\begin{proof}
+The closed form of the $j$-th derivative of function $f$ is 
+$$\frac{\partial^{(j)}{f}(z)}{\partial{z}} = (r)_{(j)} z^{r-j}, \quad j\in\mathbb{N}$$ 
+where $(r)_{(j)} = r(r-1)\cdots(r-j+1)$ denotes the falling factorial; therefore,
+\begin{displaymath}
+\begin{split}
+  P_{m}(z)  = \sum_{j=1}^{m}{ \left. (r)_{(j-1)} z^{r-j+1} \right|_{z=1}\Phi_{1,j}(z)}
+            = \sum_{j=1}^{m}{\frac{(r)_{(j-1)}}{(j-1)_{(j-1)}}\left(z-\lambda_{1}\right)^{j-1}}
+            = \sum_{j=0}^{m-1}{{r \choose j}\left(z-\lambda_{1}\right)^{j}}
+\end{split}
+\end{displaymath}
+restoring $\lambda_{1}=1$ proves the first identity. On the other hand,
+\begin{displaymath}
+\begin{split}
+  P_{m}(z) &= \sum_{j=1}^{m}{\sum_{k=0}^{j-1}{\frac{(r)_{(j-1)}}{(j-1)_{(j-1)}}\frac{(j-1)!(-1)^{j-1-k}}{(j-1-k)!}\frac{z^{k}}{k!}}}
+        = \sum_{j=1}^{m}{\sum_{k=0}^{j-1}{(-1)^{j-1}{{r}\choose{j-1}}{{j-1}\choose{k}}(-z)^{k}}} \\
+       &= \sum_{k=0}^{m-1}{\left(\sum_{j=k+1}^{m}{(-1)^{j-1}{{r}\choose{j-1}}{{j-1}\choose{k}}}\right)(-z)^{k}}
+        = \sum_{k=0}^{m-1}{\left(\sum_{j=k}^{m-1}{(-1)^{j}{{r}\choose{j}}{{j}\choose{k}}}\right)(-z)^{k}}\\
+\end{split}
+\end{displaymath}
+proves the explicit one.
+\end{proof}
+
+\iffalse % expansion of inner binomial coefficients yields {{{
+\begin{displaymath}
+\begin{split}
+g{\left (z \right )} &= - \frac{r^{7}}{5040} + \frac{r^{6}}{180} - \frac{23 r^{5}}{360} + \frac{7 r^{4}}{18} - \frac{967 r^{3}}{720} + \frac{469 r^{2}}{180} - \frac{363 r}{140} \\
+&+ z^{7} \left(\frac{r^{7}}{5040} - \frac{r^{6}}{240} + \frac{5 r^{5}}{144} - \frac{7 r^{4}}{48} + \frac{29 r^{3}}{90} - \frac{7 r^{2}}{20} + \frac{r}{7}\right) \\
+&+ z^{6} \left(- \frac{r^{7}}{720} + \frac{11 r^{6}}{360} - \frac{19 r^{5}}{72} + \frac{41 r^{4}}{36} - \frac{1849 r^{3}}{720} + \frac{1019 r^{2}}{360} - \frac{7 r}{6}\right) \\
+&+ z^{5} \left(\frac{r^{7}}{240} - \frac{23 r^{6}}{240} + \frac{69 r^{5}}{80} - \frac{185 r^{4}}{48} + \frac{134 r^{3}}{15} - \frac{201 r^{2}}{20} + \frac{21 r}{5}\right) \\
+&+ z^{4} \left(- \frac{r^{7}}{144} + \frac{r^{6}}{6} - \frac{113 r^{5}}{72} + \frac{22 r^{4}}{3} - \frac{2545 r^{3}}{144} + \frac{41 r^{2}}{2} - \frac{35 r}{4}\right) \\
+&+ z^{3} \left(\frac{r^{7}}{144} - \frac{25 r^{6}}{144} + \frac{247 r^{5}}{144} - \frac{1219 r^{4}}{144} + \frac{389 r^{3}}{18} - \frac{949 r^{2}}{36} + \frac{35 r}{3}\right) \\
+&+ z^{2} \left(- \frac{r^{7}}{240} + \frac{13 r^{6}}{120} - \frac{9 r^{5}}{8} + \frac{71 r^{4}}{12} - \frac{3929 r^{3}}{240} + \frac{879 r^{2}}{40} - \frac{21 r}{2}\right) \\
+&+ z \left(\frac{r^{7}}{720} - \frac{3 r^{6}}{80} + \frac{59 r^{5}}{144} - \frac{37 r^{4}}{16} + \frac{319 r^{3}}{45} - \frac{223 r^{2}}{20} + 7 r\right) + 1
+\end{split}
+\end{displaymath}
+\fi
+% }}}
+
+\iffalse % Moreover, using last two equations and requiring $r \geq 8$, we have: {{{
+\begin{displaymath}
+\begin{split}
+g{\left (z \right )} &= 8 {\binom{r}{8}} \left( \frac{z^{7}}{r - 7} - \frac{7 z^{6}}{r - 6} + \frac{21 z^{5}}{r - 5}\right. \left. - \frac{35 z^{4}}{r - 4} + \frac{35 z^{3}}{r - 3} - \frac{21 z^{2}}{r - 2} + \frac{7 z}{r - 1} - \frac{1}{r} \right) \\
+&= 8 {\binom{7-r}{8}} \left( \frac{z^{7}}{r - 7} - \frac{7 z^{6}}{r - 6} + \frac{21 z^{5}}{r - 5}\right. \left. - \frac{35 z^{4}}{r - 4} + \frac{35 z^{3}}{r - 3} - \frac{21 z^{2}}{r - 2} + \frac{7 z}{r - 1} - \frac{1}{r} \right) \\
+\end{split}
+\end{displaymath}
+respectively.
+\fi
+% }}}
+
+\iffalse % Using Riordan array characterization we have  {{{
+\begin{displaymath}
+D_{{z}^{r}}E_{\lambda_{1}} = \left[\begin{matrix}\frac{{\left(r\right)}_{0} \lambda_{1}^{r}}{{\left(0\right)}_{0}} & 0 & 0 & 0 & 0 & 0 & 0 & 0\\- \frac{{\left(r\right)}_{1} \lambda_{1}^{r}}{{\left(1\right)}_{1}} & \frac{{\left(r\right)}_{1}}{{\left(0\right)}_{0}} \lambda_{1}^{r - 1} & 0 & 0 & 0 & 0 & 0 & 0\\\frac{{\left(r\right)}_{2} \lambda_{1}^{r}}{{\left(2\right)}_{2}} & - \frac{{\left(r\right)}_{2}}{{\left(1\right)}_{1}} \lambda_{1}^{r - 1} & \frac{{\left(r\right)}_{2}}{{\left(0\right)}_{0}} \lambda_{1}^{r - 2} & 0 & 0 & 0 & 0 & 0\\- \frac{{\left(r\right)}_{3} \lambda_{1}^{r}}{{\left(3\right)}_{3}} & \frac{{\left(r\right)}_{3}}{{\left(2\right)}_{2}} \lambda_{1}^{r - 1} & - \frac{{\left(r\right)}_{3}}{{\left(1\right)}_{1}} \lambda_{1}^{r - 2} & \frac{{\left(r\right)}_{3}}{{\left(0\right)}_{0}} \lambda_{1}^{r - 3} & 0 & 0 & 0 & 0\\\frac{{\left(r\right)}_{4} \lambda_{1}^{r}}{{\left(4\right)}_{4}} & - \frac{{\left(r\right)}_{4}}{{\left(3\right)}_{3}} \lambda_{1}^{r - 1} & \frac{{\left(r\right)}_{4}}{{\left(2\right)}_{2}} \lambda_{1}^{r - 2} & - \frac{{\left(r\right)}_{4}}{{\left(1\right)}_{1}} \lambda_{1}^{r - 3} & \frac{{\left(r\right)}_{4}}{{\left(0\right)}_{0}} \lambda_{1}^{r - 4} & 0 & 0 & 0\\- \frac{{\left(r\right)}_{5} \lambda_{1}^{r}}{{\left(5\right)}_{5}} & \frac{{\left(r\right)}_{5}}{{\left(4\right)}_{4}} \lambda_{1}^{r - 1} & - \frac{{\left(r\right)}_{5}}{{\left(3\right)}_{3}} \lambda_{1}^{r - 2} & \frac{{\left(r\right)}_{5}}{{\left(2\right)}_{2}} \lambda_{1}^{r - 3} & - \frac{{\left(r\right)}_{5}}{{\left(1\right)}_{1}} \lambda_{1}^{r - 4} & \frac{{\left(r\right)}_{5}}{{\left(0\right)}_{0}} \lambda_{1}^{r - 5} & 0 & 0\\\frac{{\left(r\right)}_{6} \lambda_{1}^{r}}{{\left(6\right)}_{6}} & - \frac{{\left(r\right)}_{6}}{{\left(5\right)}_{5}} \lambda_{1}^{r - 1} & \frac{{\left(r\right)}_{6}}{{\left(4\right)}_{4}} \lambda_{1}^{r - 2} & - \frac{{\left(r\right)}_{6}}{{\left(3\right)}_{3}} \lambda_{1}^{r - 3} & \frac{{\left(r\right)}_{6}}{{\left(2\right)}_{2}} \lambda_{1}^{r - 4} & - \frac{{\left(r\right)}_{6}}{{\left(1\right)}_{1}} \lambda_{1}^{r - 5} & \frac{{\left(r\right)}_{6}}{{\left(0\right)}_{0}} \lambda_{1}^{r - 6} & 0\\- \frac{{\left(r\right)}_{7} \lambda_{1}^{r}}{{\left(7\right)}_{7}} & \frac{{\left(r\right)}_{7}}{{\left(6\right)}_{6}} \lambda_{1}^{r - 1} & - \frac{{\left(r\right)}_{7}}{{\left(5\right)}_{5}} \lambda_{1}^{r - 2} & \frac{{\left(r\right)}_{7}}{{\left(4\right)}_{4}} \lambda_{1}^{r - 3} & - \frac{{\left(r\right)}_{7}}{{\left(3\right)}_{3}} \lambda_{1}^{r - 4} & \frac{{\left(r\right)}_{7}}{{\left(2\right)}_{2}} \lambda_{1}^{r - 5} & - \frac{{\left(r\right)}_{7}}{{\left(1\right)}_{1}} \lambda_{1}^{r - 6} & \frac{{\left(r\right)}_{7}}{{\left(0\right)}_{0}} \lambda_{1}^{r - 7}\end{matrix}\right]
+\end{displaymath}
+generated by the production matrix
+\begin{displaymath}
+\left[\begin{matrix}- r & \frac{r}{\lambda_{1}} & 0 & 0 & 0 & 0 & 0\\- \frac{\lambda_{1}}{2} \left(r + 1\right) & 1 & \frac{1}{\lambda_{1}} \left(r - 1\right) & 0 & 0 & 0 & 0\\- \frac{\lambda_{1}^{2}}{6} \left(r + 1\right) & 0 & 1 & \frac{1}{\lambda_{1}} \left(r - 2\right) & 0 & 0 & 0\\- \frac{\lambda_{1}^{3}}{24} \left(r + 1\right) & 0 & 0 & 1 & \frac{1}{\lambda_{1}} \left(r - 3\right) & 0 & 0\\- \frac{\lambda_{1}^{4}}{120} \left(r + 1\right) & 0 & 0 & 0 & 1 & \frac{1}{\lambda_{1}} \left(r - 4\right) & 0\\- \frac{\lambda_{1}^{5}}{720} \left(r + 1\right) & 0 & 0 & 0 & 0 & 1 & \frac{1}{\lambda_{1}} \left(r - 5\right)\\- \frac{\lambda_{1}^{6}}{5040} \left(r + 1\right) & 0 & 0 & 0 & 0 & 0 & 1\end{matrix}\right]
+\end{displaymath}
+so the matrix satisfies the recurrence relation 
+\begin{displaymath}
+\begin{split}
+d_{0,0}&=\lambda_{1}^{r}\\
+d_{n,0}&=-\left(r d_{n-1, 0} + (r+1)\sum_{k=1}^{n-1}{d_{n-1, k}\frac{\lambda_{1}^{k}}{(k+1)!}}\right), \quad n>0 \\
+d_{n,k}&=\frac{r+1-k}{\lambda_{1}}d_{n-1, k-1} + d_{n-1,k}, \quad n,k > 0\\
+\end{split}
+\end{displaymath}
+\fi
+% }}}
+
+\iffalse % finally, {{{
+\begin{displaymath}
+D_{{z}^{r}}E_{\lambda_{1}}\boldsymbol{z} = \left[\begin{matrix}\frac{{\left(r\right)}_{0} \lambda_{1}^{r}}{{\left(0\right)}_{0}}\\\frac{{\left(r\right)}_{1}}{{\left(1\right)}_{1}} \left(z - \lambda_{1}\right) \lambda_{1}^{r - 1}\\\frac{{\left(r\right)}_{2}}{{\left(2\right)}_{2}} \left(z - \lambda_{1}\right)^{2} \lambda_{1}^{r - 2}\\\frac{{\left(r\right)}_{3}}{{\left(3\right)}_{3}} \left(z - \lambda_{1}\right)^{3} \lambda_{1}^{r - 3}\\\frac{{\left(r\right)}_{4}}{{\left(4\right)}_{4}} \left(z - \lambda_{1}\right)^{4} \lambda_{1}^{r - 4}\\\frac{{\left(r\right)}_{5}}{{\left(5\right)}_{5}} \left(z - \lambda_{1}\right)^{5} \lambda_{1}^{r - 5}\\\frac{{\left(r\right)}_{6}}{{\left(6\right)}_{6}} \left(z - \lambda_{1}\right)^{6} \lambda_{1}^{r - 6}\\\frac{{\left(r\right)}_{7}}{{\left(7\right)}_{7}} \left(z - \lambda_{1}\right)^{7} \lambda_{1}^{r - 7}\end{matrix}\right]
+ = \left[\begin{matrix}{\binom{r}{0}} \lambda_{1}^{r}\\\left(z - \lambda_{1}\right) {\binom{r}{1}} \lambda_{1}^{r - 1}\\\left(z - \lambda_{1}\right)^{2} {\binom{r}{2}} \lambda_{1}^{r - 2}\\\left(z - \lambda_{1}\right)^{3} {\binom{r}{3}} \lambda_{1}^{r - 3}\\\left(z - \lambda_{1}\right)^{4} {\binom{r}{4}} \lambda_{1}^{r - 4}\\\left(z - \lambda_{1}\right)^{5} {\binom{r}{5}} \lambda_{1}^{r - 5}\\\left(z - \lambda_{1}\right)^{6} {\binom{r}{6}} \lambda_{1}^{r - 6}\\\left(z - \lambda_{1}\right)^{7} {\binom{r}{7}} \lambda_{1}^{r - 7}\end{matrix}\right]
+\end{displaymath}
+hence we generalize for $m\in\mathbb{N}$:
+\begin{displaymath}
+\mathcal{R}_{m}^{r} = g{\left (\mathcal{R}_{m} \right )} = \sum_{j=0}^{m-1}{\binom{r}{j}}{\left(Z_{1,2}^{[\mathcal{R}_{m}]}\right)^{j} } = \left(1+Z_{1,2}^{[\mathcal{R}_{m}]}\right)^{r}
+\end{displaymath}
+moreover, the limit for $m \rightarrow \infty$ yields $ g{\left (\mathcal{R} \right )} = \mathcal{R}^{r} $ for the whole Riordan array $\mathcal{R}$.
+\fi
+% }}}
+
+

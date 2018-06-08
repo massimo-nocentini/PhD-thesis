@@ -1,0 +1,78 @@
+
+This work started as an educational effort to construct a practical framework
+that allows us to lift a scalar function $f: \mathbb{R}\rightarrow\mathbb{R}$
+to a matrix function $g_{f}: \mathbb{R}^{m\times
+m}\rightarrow\mathbb{R}^{m\times m}, m\in\mathbb{N}$. Although many books
+\cite{Gantmacher1959, GL1996, HJ1991, LT1985} study this argument, our approach
+is in the spirit of \cite{Higham2008}, thus it does not include elementwise
+operations, functions producing a scalar  result (such as the trace, the
+determinant, the spectral radius, the condition number) and matrix
+transformations (such as the transpose, the adjugate, the slice of a
+submatrix).
+
+We provide two equivalent characterizations of the lifting process: let $f$ be
+the function to be applied to a square matrix $A$, then the former is based on
+$A$'s eigenvalues, its \textit{algebraic} multiplicities and $f$'s derivatives,
+according to \cite{RUNCKEL1983161, VERDESTAR2005285}; the latter is
+based on $A$'s \textit{Jordan canonical form}, an established approach to
+apply a function to a matrix.
+
+We restrict ourselves to a class of matrices belonging to the \textit{Riordan
+group} \cite{MRSV97, SGWW91, Spr94, HE201515}, namely lower triangular infinite
+matrices that can be also manipulated algebraically using generating functions.
+Riordan arrays are powerful tools in combinatorics and in the analysis of
+algorithms, but here we focus on common properties arising from their structure to
+build polynomials interpolating desired functions; in fact, each minor $m\times
+m$ of a Riordan array $\mathcal{R}$ shares the \textit{same and unique}
+eigenvalue $\lambda_{1}$ with algebraic multiplicity $m$.
+
+We report application of a class of differentiable  functions
+to the matrices of binomial coefficients, Catalan and Stirling numbers; for
+example, starting with $8 \times 8$ minors of the Pascal and Catalan triangles
+\begin{displaymath}
+\mathcal{P}_{8}=\left[\begin{matrix}1 &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &  \\1 & 2 & 1 &   &   &   &   &  \\1 & 3 & 3 & 1 &   &   &   &  \\1 & 4 & 6 & 4 & 1 &   &   &  \\1 & 5 & 10 & 10 & 5 & 1 &   &  \\1 & 6 & 15 & 20 & 15 & 6 & 1 &  \\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1\end{matrix}\right]
+\quad\text{and}\quad
+\mathcal{C}_{8}=\left[\begin{matrix}1 &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &  \\2 & 2 & 1 &   &   &   &   &  \\5 & 5 & 3 & 1 &   &   &   &  \\14 & 14 & 9 & 4 & 1 &   &   &  \\42 & 42 & 28 & 14 & 5 & 1 &   &  \\132 & 132 & 90 & 48 & 20 & 6 & 1 &  \\429 & 429 & 297 & 165 & 75 & 27 & 7 & 1\end{matrix}\right]
+\end{displaymath}
+respectively, which are two of the most commonly known Riordan arrays, we find matrices
+\begin{displaymath}
+    %\sqrt{\mathcal{P}_{8}} = \left[\begin{matrix}1 &   &   &   &   &   &   &  \\\frac{1}{2} & 1 &   &   &   &   &   &  \\\frac{1}{4} & 1 & 1 &   &   &   &   &  \\\frac{1}{8} & \frac{3}{4} & \frac{3}{2} & 1 &   &   &   &  \\\frac{1}{16} & \frac{1}{2} & \frac{3}{2} & 2 & 1 &   &   &  \\\frac{1}{32} & \frac{5}{16} & \frac{5}{4} & \frac{5}{2} & \frac{5}{2} & 1 &   &  \\\frac{1}{64} & \frac{3}{16} & \frac{15}{16} & \frac{5}{2} & \frac{15}{4} & 3 & 1 &  \\\frac{1}{128} & \frac{7}{64} & \frac{21}{32} & \frac{35}{16} & \frac{35}{8} & \frac{21}{4} & \frac{7}{2} & 1\end{matrix}\right]
+    \sqrt[3]{\mathcal{P}_{8}}= \left[\begin{matrix}1 &  &  &  &  &  &  & \\\frac{1}{3} & 1 &  &  &  &  &  & \\\frac{1}{9} & \frac{2}{3} & 1 &  &  &  &  & \\\frac{1}{27} & \frac{1}{3} & 1 & 1 &  &  &  & \\\frac{1}{81} & \frac{4}{27} & \frac{2}{3} & \frac{4}{3} & 1 &  &  & \\\frac{1}{243} & \frac{5}{81} & \frac{10}{27} & \frac{10}{9} & \frac{5}{3} & 1 &  & \\\frac{1}{729} & \frac{2}{81} & \frac{5}{27} & \frac{20}{27} & \frac{5}{3} & 2 & 1 & \\\frac{1}{2187} & \frac{7}{729} & \frac{7}{81} & \frac{35}{81} & \frac{35}{27} & \frac{7}{3} & \frac{7}{3} & 1\end{matrix}\right]
+    \quad\text{and}\quad
+    e^{\mathcal{C}_{8}} = e \left[\begin{matrix}1 &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &  \\3 & 2 & 1 &   &   &   &   &  \\\frac{23}{2} & 8 & 3 & 1 &   &   &   &  \\\frac{154}{3} & 37 & 15 & 4 & 1 &   &   &  \\\frac{1 27}{4} & \frac{572}{3} & \frac{163}{2} & 24 & 5 & 1 &   &  \\\frac{7 46}{5} & \frac{6439}{6} & 478 & 15  & 35 & 6 & 1 &  \\\frac{5 2481}{6 } & \frac{39 899}{6 } & \frac{12  5}{4} & \frac{2965}{3} & \frac{495}{2} & 48 & 7 & 1\end{matrix}\right]
+\end{displaymath}
+such that %$\sqrt{\mathcal{P}_8} \cdot \sqrt{\mathcal{P}_8} =\mathcal{P}_8$ and
+$\sqrt[3]{\mathcal{P}_8} \cdot \sqrt[3]{\mathcal{P}_8} \cdot
+\sqrt[3]{\mathcal{P}_8} =\mathcal{P}_8$ and
+$L_{8}\left({e^{\mathcal{C}_{8}}}\right) = \mathcal{C}_{8}$, where polynomial
+\begin{displaymath}
+\operatorname{L_{ 8 }}{\left (z \right )} = \frac{z^{7}}{7 e^{7}} - \frac{7 z^{6}}{6 e^{6}} + \frac{21 z^{5}}{5 e^{5}} - \frac{35 z^{4}}{4 e^{4}} + \frac{35 z^{3}}{3 e^{3}} - \frac{21 z^{2}}{2 e^{2}} + \frac{7 z}{e} - \frac{223}{140}
+\end{displaymath}
+interpolates the $\log$ function. Other matrices $sin(\mathcal{P}_8)$ and
+$cos(\mathcal{P}_8)$ are illustrated in Section \ref{subsec:sines-cosines},
+satisfying the classic identity $sin(\mathcal{P}_8)\cdot sin(\mathcal{P}_8)+
+cos(\mathcal{P}_8)\cdot cos(\mathcal{P}_8)=I_{8}$, where $I$ is the identity
+matrix; also, the $r$-th power with $r\in\mathbb{Q}$ and the $\log$ functions
+are studied in details.
+
+Moreover, we show how to build matrices $X$ and $Y$ to factor pairs of Riordan
+matrices $\mathcal{R}$ and $\mathcal{S}$ in  Jordan canonical forms
+$\mathcal{R}\,X=X\,J$ and $\mathcal{S}\,Y=Y\,J$ respectively, both sharing
+matrix $J$ which has a simple and interesting structure. First, we study the
+application of a function $f$ to matrix $J$  to ease the computation of
+$f(\mathcal{R})$ and $f(\mathcal{S})$; second, we prove that it is always
+possible to write a Riordan array $\mathcal{R}$ as a linear transformation of
+any other Riordan array $\mathcal{S}$ by means of matrices $X$ and $Y$
+appearing in their Jordan canonical forms (in particular, there are
+\textit{uncountably many} such transformations since $X$ and $Y$ are defined on
+top of arbitrary vectors $\boldsymbol{v},\boldsymbol{w}\in\mathbb{R}^{m}$).
+
+
+Finally, to compare and contrast the study of a matrix with a single eigenvalue
+with the study of a matrix with at least two different eigenvalues, we add an
+appendix where we study powers of the Fibonacci numbers' generator matrix;
+all theorems and facts have been tested and confirmed by reproducible artifacts
+using a symbolic module on top of the Python programming language, fully
+available online at the URL\\ {\small\url{https://massimo-nocentini.github.io/simulation-methods/build/html/index.html}}.
+
+

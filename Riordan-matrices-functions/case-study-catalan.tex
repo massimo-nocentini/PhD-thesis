@@ -1,0 +1,36 @@
+
+\begin{example}
+Let $\mathcal{C}$ be the matrix of Catalan numbers,
+\begin{displaymath}
+%\mathcal{C}_{m}=\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\2 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\5 & 5 & 3 & 1 & 0 & 0 & 0 & 0\\14 & 14 & 9 & 4 & 1 & 0 & 0 & 0\\42 & 42 & 28 & 14 & 5 & 1 & 0 & 0\\132 & 132 & 90 & 48 & 20 & 6 & 1 & 0\\429 & 429 & 297 & 165 & 75 & 27 & 7 & 1\end{matrix}\right]
+\mathcal{C}_{8}=\left[\begin{matrix}1 &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &  \\2 & 2 & 1 &   &   &   &   &  \\5 & 5 & 3 & 1 &   &   &   &  \\14 & 14 & 9 & 4 & 1 &   &   &  \\42 & 42 & 28 & 14 & 5 & 1 &   &  \\132 & 132 & 90 & 48 & 20 & 6 & 1 &  \\429 & 429 & 297 & 165 & 75 & 27 & 7 & 1\end{matrix}\right]
+\quad \text{where} \quad \mathcal{C} = \left(\frac{1-\sqrt{1-4t}}{2t}, \frac{1-\sqrt{1-4t}}{2} \right).
+\end{displaymath}
+Then, the application of Hermite interpolating polynomials yields matrices
+\begin{displaymath}
+%\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\r & 1 & 0 & 0 & 0 & 0 & 0 & 0\\r \left(r + 1\right) & 2 r & 1 & 0 & 0 & 0 & 0 & 0\\\frac{r}{2} \left(2 r^{2} + 5 r + 3\right) & r \left(3 r + 2\right) & 3 r & 1 & 0 & 0 & 0 & 0\\\frac{r}{3} \left(3 r^{3} + 13 r^{2} + 18 r + 8\right) & r \left(4 r^{2} + 7 r + 3\right) & 3 r \left(2 r + 1\right) & 4 r & 1 & 0 & 0 & 0\\\frac{r}{12} \left(12 r^{4} + 77 r^{3} + 178 r^{2} + 175 r + 62\right) & \frac{r}{3} \left(15 r^{3} + 47 r^{2} + 48 r + 16\right) & \frac{r}{2} \left(20 r^{2} + 27 r + 9\right) & 2 r \left(5 r + 2\right) & 5 r & 1 & 0 & 0\\\frac{r}{30} \left(30 r^{5} + 261 r^{4} + 875 r^{3} + 1405 r^{2} + 1075 r + 314\right) & \frac{r}{6} \left(36 r^{4} + 171 r^{3} + 298 r^{2} + 225 r + 62\right) & r \left(15 r^{3} + 37 r^{2} + 30 r + 8\right) & 2 r \left(10 r^{2} + 11 r + 3\right) & 5 r \left(3 r + 1\right) & 6 r & 1 & 0\\\frac{r}{60} \left(60 r^{6} + 669 r^{5} + 3002 r^{4} + 6900 r^{3} + 8510 r^{2} + 5301 r + 1298\right) & \frac{r}{60} \left(420 r^{5} + 2754 r^{4} + 7075 r^{3} + 8860 r^{2} + 5375 r + 1256\right) & \frac{r}{4} \left(84 r^{4} + 319 r^{3} + 448 r^{2} + 275 r + 62\right) & \frac{r}{3} \left(105 r^{3} + 214 r^{2} + 144 r + 32\right) & \frac{5 r}{2} \left(14 r^{2} + 13 r + 3\right) & 3 r \left(7 r + 2\right) & 7 r & 1\end{matrix}\right]
+\mathcal{C}_{8}^{r}\boldsymbol{e}_{1} = P_{8}\left( \mathcal{C}_{8}\right)\boldsymbol{e}_{1} = \left[\begin{matrix}1 \\r \\r \left(r + 1\right) \\\frac{r}{2} \left(2 r^{2} + 5 r + 3\right) \\\frac{r}{3} \left(3 r^{3} + 13 r^{2} + 18 r + 8\right) \\\frac{r}{12} \left(12 r^{4} + 77 r^{3} + 178 r^{2} + 175 r + 62\right) \\\frac{r}{30} \left(30 r^{5} + 261 r^{4} + 875 r^{3} + 1405 r^{2} + 1075 r + 314\right) \\\frac{r}{60} \left(60 r^{6} + 669 r^{5} + 3002 r^{4} + 6900 r^{3} + 8510 r^{2} + 5301 r + 1298\right) \end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+%\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\-1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\0 & -2 & 1 & 0 & 0 & 0 & 0 & 0\\0 & 1 & -3 & 1 & 0 & 0 & 0 & 0\\0 & 0 & 3 & -4 & 1 & 0 & 0 & 0\\0 & 0 & -1 & 6 & -5 & 1 & 0 & 0\\0 & 0 & 0 & -4 & 10 & -6 & 1 & 0\\0 & 0 & 0 & 1 & -10 & 15 & -7 & 1\end{matrix}\right]
+\mathcal{C}_{8}^{-1} = I_{8}\left( \mathcal{C}_{8}\right) = \left[\begin{matrix}1 &   &   &   &   &   &   &  \\-1 & 1 &   &   &   &   &   &  \\  & -2 & 1 &   &   &   &   &  \\  & 1 & -3 & 1 &   &   &   &  \\  &   & 3 & -4 & 1 &   &   &  \\  &   & -1 & 6 & -5 & 1 &   &  \\  &   &   & -4 & 1  & -6 & 1 &  \\  &   &   & 1 & -1  & 15 & -7 & 1\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+%\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\\frac{1}{2} & 1 & 0 & 0 & 0 & 0 & 0 & 0\\\frac{3}{4} & 1 & 1 & 0 & 0 & 0 & 0 & 0\\\frac{3}{2} & \frac{7}{4} & \frac{3}{2} & 1 & 0 & 0 & 0 & 0\\\frac{55}{16} & \frac{15}{4} & 3 & 2 & 1 & 0 & 0 & 0\\\frac{545}{64} & \frac{143}{16} & \frac{55}{8} & \frac{9}{2} & \frac{5}{2} & 1 & 0 & 0\\\frac{709}{32} & \frac{727}{32} & \frac{273}{16} & 11 & \frac{25}{4} & 3 & 1 & 0\\\frac{15249}{256} & \frac{3855}{64} & \frac{2853}{64} & \frac{455}{16} & \frac{65}{4} & \frac{33}{4} & \frac{7}{2} & 1\end{matrix}\right]
+\sqrt{\mathcal{C}_{8}} = R_{8}\left( \mathcal{C}_{8}\right) = \left[\begin{matrix}1 &   &   &   &   &   &   &  \\\frac{1}{2} & 1 &   &   &   &   &   &  \\\frac{3}{4} & 1 & 1 &   &   &   &   &  \\\frac{3}{2} & \frac{7}{4} & \frac{3}{2} & 1 &   &   &   &  \\\frac{55}{16} & \frac{15}{4} & 3 & 2 & 1 &   &   &  \\\frac{545}{64} & \frac{143}{16} & \frac{55}{8} & \frac{9}{2} & \frac{5}{2} & 1 &   &  \\\frac{7 9}{32} & \frac{727}{32} & \frac{273}{16} & 11 & \frac{25}{4} & 3 & 1 &  \\\frac{15249}{256} & \frac{3855}{64} & \frac{2853}{64} & \frac{455}{16} & \frac{65}{4} & \frac{33}{4} & \frac{7}{2} & 1\end{matrix}\right]
+\quad\text{and}
+\end{displaymath}
+\iffalse % \begin{displaymath} {{{
+%e \left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\3 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\\frac{23}{2} & 8 & 3 & 1 & 0 & 0 & 0 & 0\\\frac{154}{3} & 37 & 15 & 4 & 1 & 0 & 0 & 0\\\frac{1027}{4} & \frac{572}{3} & \frac{163}{2} & 24 & 5 & 1 & 0 & 0\\\frac{7046}{5} & \frac{6439}{6} & 478 & 150 & 35 & 6 & 1 & 0\\\frac{502481}{60} & \frac{390899}{60} & \frac{12005}{4} & \frac{2965}{3} & \frac{495}{2} & 48 & 7 & 1\end{matrix}\right]
+e^{\mathcal{C}_{8}} = E_{8}\left( \mathcal{C}_{8}\right) = e \left[\begin{matrix}1 &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &  \\3 & 2 & 1 &   &   &   &   &  \\\frac{23}{2} & 8 & 3 & 1 &   &   &   &  \\\frac{154}{3} & 37 & 15 & 4 & 1 &   &   &  \\\frac{1 27}{4} & \frac{572}{3} & \frac{163}{2} & 24 & 5 & 1 &   &  \\\frac{7 46}{5} & \frac{6439}{6} & 478 & 15  & 35 & 6 & 1 &  \\\frac{5 2481}{6 } & \frac{39 899}{6 } & \frac{12  5}{4} & \frac{2965}{3} & \frac{495}{2} & 48 & 7 & 1\end{matrix}\right]
+\end{displaymath}
+\fi
+% }}}
+\begin{displaymath}
+%\left[\begin{matrix}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 2 & 0 & 0 & 0 & 0 & 0 & 0\\\frac{3}{2} & 2 & 3 & 0 & 0 & 0 & 0 & 0\\\frac{8}{3} & 3 & 3 & 4 & 0 & 0 & 0 & 0\\\frac{31}{6} & \frac{16}{3} & \frac{9}{2} & 4 & 5 & 0 & 0 & 0\\\frac{157}{15} & \frac{31}{3} & 8 & 6 & 5 & 6 & 0 & 0\\\frac{649}{30} & \frac{314}{15} & \frac{31}{2} & \frac{32}{3} & \frac{15}{2} & 6 & 7 & 0\end{matrix}\right]
+\log{\mathcal{C}_{8}} = L_{8}\left( \mathcal{C}_{8}\right) = \left[\begin{matrix}  0 &   &   &   &   &   &   &  \\1 & 0  &   &   &   &   &   &  \\1 & 2 & 0  &   &   &   &   &  \\\frac{3}{2} & 2 & 3 & 0  &   &   &   &  \\\frac{8}{3} & 3 & 3 & 4 & 0  &   &   &  \\\frac{31}{6} & \frac{16}{3} & \frac{9}{2} & 4 & 5 & 0  &   &  \\\frac{157}{15} & \frac{31}{3} & 8 & 6 & 5 & 6 & 0  &  \\\frac{649}{3 } & \frac{314}{15} & \frac{31}{2} & \frac{32}{3} & \frac{15}{2} & 6 & 7 & 0 \end{matrix}\right],
+\end{displaymath}
+where the $r$-th power $\mathcal{C}_{8}^{r}$ is a rather complex matrix of which
+we report the first column only, formally multiplying on the right by indicator
+vector $\boldsymbol{e}_{1}=\left[1,0,\ldots, 0\right]$.
+\end{example}

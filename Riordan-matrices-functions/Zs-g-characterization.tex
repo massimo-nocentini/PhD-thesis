@@ -1,0 +1,36 @@
+
+Evaluating polynomial $g$ on matrix $A$ yield:
+\begin{displaymath}
+g(A) = \sum_{i=1}^{\nu}{\sum_{j=1}^{m_{i}}{ \left.  \frac{\partial^{(j-1)}{f}}{\partial{z}} \right|_{z=\lambda_{i}}\Phi_{i,j}(A) }}
+     = \sum_{i=1}^{\nu}{\sum_{j=1}^{m_{i}}{ \left.  \frac{\partial^{(j-1)}{f}}{\partial{z}} \right|_{z=\lambda_{i}}Z_{ij}^{[A]} }}
+\end{displaymath}
+where matrix $Z_{ij}^{[A]}=\Phi_{i,j}(A)$, for $i\in \lbrace 1, \ldots, \nu \rbrace$
+and $j \in \lbrace 0, \ldots, m_{i}-1 \rbrace$, is a \textit{component matrix}
+of $A$. Moreover, we can rewrite it according to facts reported in the appendix:
+\begin{displaymath}
+g(A) = \sum_{i=1}^{\nu}{\sum_{j=1}^{m_{i}}{ \left.  \frac{\partial^{(j-1)}{f}}{\partial{z}} \right|_{z=\lambda_{i}}\frac{1}{(j-1)!}{Z_{i1}^{[A]}(A-\lambda_{i}I)^{j-1}} }}
+\end{displaymath}
+
+Polynomials $\Phi_{ 1, 1 }$ and $\Phi_{ 1, 2 }$ have interesting properties
+when evaluated at a Riordan array $\mathcal{R}_{m}$, formally
+\begin{displaymath}
+ Z_{1,1}^{[\mathcal{R}_{m}]} = \Phi_{ 1, 1 }{\left (\mathcal{R}_{m} \right )} = I \quad\quad\quad
+ Z_{1,2}^{[\mathcal{R}_{m}]} = \Phi_{ 1, 2 }{\left (\mathcal{R}_{m} \right )} = \mathcal{R}_{m} - I
+\end{displaymath}
+According to these facts, consider again the definition of polynomial $g$ that takes the same values of a function $f$:
+\begin{displaymath}
+\begin{split}
+    g(\mathcal{R}_{m}) &= \sum_{j=1}^{m}{ \left. \frac{\partial^{(j-1)}{f}}{\partial{z}} \right|_{z=\lambda_{1}}\frac{1}{(j-1)!}{Z_{1,1}^{[\mathcal{R}_{m}]} (\mathcal{R}_{m}-\lambda_{1}I)^{j-1}} }\\
+                       &= \sum_{j=1}^{m}{ \left. \frac{\partial^{(j-1)}{f}}{\partial{z}} \right|_{z=1}\frac{1}{(j-1)!}{(\mathcal{R}_{m}-I)^{j-1}} }\\
+                       &= \sum_{j=1}^{m}{ \left. \frac{\partial^{(j-1)}{f}}{\partial{z}} \right|_{z=1}\frac{1}{(j-1)!}{\left(Z_{1,2}^{[\mathcal{R}_{m}]}\right)^{j-1}} }\\
+                       &= g_{e}\left(Z_{1,2}^{[\mathcal{R}_{m}]}\right)\\
+\end{split}
+\end{displaymath}
+where polynomial $g_{e}$ is a kind of exponential generating function
+\begin{displaymath}
+    g_{e}\left(z\right) = \sum_{j=1}^{m}{ \left. \frac{\partial^{(j-1)}{f}}{\partial{z}} \right|_{z=1}\frac{z^{j-1}}{(j-1)!}}
+\end{displaymath}
+here the difficult part lies on the nature of matrix $\mathcal{R}_{m}-I$
+because \textit{subtraction} is not a well defined operation in the Riordan
+group; therefore, how can it be defined?  Moreover, is it a Riordan matrix in
+all cases?

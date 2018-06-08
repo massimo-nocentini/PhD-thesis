@@ -1,0 +1,73 @@
+
+% article example for classicthesis.sty
+\documentclass[10pt,a4paper,onecolumn]{article} % KOMA-Script article scrartcl
+\usepackage[T1]{fontenc}
+\usepackage{lipsum}
+\usepackage{url}
+%\usepackage[nochapters]{classicthesis} % nochapters
+\usepackage{newtxtext}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%\usepackage{concrete}
+\usepackage{euler}
+%\usepackage{caption}
+\usepackage{acronym}
+%\usepackage{bm}
+%\usepackage{bbold}
+\usepackage[english]{babel}
+%\usepackage{minted}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tabu}
+\usepackage{rotating}
+
+\textwidth 16cm \textheight 23cm \topmargin -1cm \oddsidemargin 0cm
+
+\newcommand{\Ra}{\mbox{$\mathcal{R}$}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\begin{document}
+
+    \pagestyle{plain}
+    \title{\rmfamily\normalfont{Functions and Jordan canonical forms of Riordan matrices}}
+    \author{Massimo Nocentini, Donatella Merlini\\
+            Dipartimento di Statistica, Informatica, Applicazioni Universit\`a di Firenze\\
+            Viale Morgagni 65, 50134 Firenze, Italia,\\
+            \url{massimo.nocentini@unifi.it}, \url{donatella.merlini@unifi.it}}
+    \date{} % no date
+    \maketitle
+    
+    \begin{abstract}
+
+        \noindent This paper collects results about Riordan arrays in the
+        framework of \textit{matrix functions};  actually, the following
+        methodology applies to any square matrix $m\times m$ with
+        \textit{exactly one} eigenvalue $\lambda$ of \textit{algebraic}
+        multiplicity $m \in\mathbb{N}$.  Generalized Lagrange bases are used to
+        construct Hermite polynomials that interpolate a family of functions;
+        moreover, we show a parallel application of such functions via Jordan
+        canonical forms and case studies are given.
+
+
+    \end{abstract}
+       
+    \input{content.tex}
+    
+    \iffalse % % bib stuff {{{
+    \nocite{*}
+    \addtocontents{toc}{\protect\vspace{\beforebibskip}}
+    \addcontentsline{toc}{section}{\refname}    
+    \bibliographystyle{plain}
+    \bibliography{../Bibliography}
+    \fi
+    % }}}
+
+\end{document}

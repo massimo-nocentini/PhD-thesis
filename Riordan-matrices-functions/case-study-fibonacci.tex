@@ -1,0 +1,63 @@
+
+We reserve this section to a short case study about the \textit{generation
+matrix of Fibonacci numbers}, which \textit{isn't} a Riordan array; on the
+other hand, its two eigenvalues are distinct and its shape is simple enough to
+compare and contrast $\Phi_{i,j}$ polynomials, component matrices and Jordan
+normal form with respect to the main track.
+
+Let $\mathcal{F}$ be a matrix having two eigenvalues $\lambda_{1}\neq
+\lambda_{2}$ defined as
+\begin{displaymath}
+\mathcal{F} = \left[\begin{matrix}1 & 1\\1 & 0\end{matrix}\right],
+\quad  \lambda_{1} =  \frac{1}{2}- \frac{\sqrt{5}}{2}
+\quad\text{and}\quad \lambda_{2} = \frac{1}{2} + \frac{\sqrt{5}}{2},
+\end{displaymath}
+respectively; we need to use the generalized Lagrange base composed of
+\begin{displaymath}
+\Phi_{ 1, 1 }{\left (z \right )} = \frac{z}{\lambda_{1} - \lambda_{2}} - \frac{\lambda_{2}}{\lambda_{1} - \lambda_{2}} 
+\quad\text{and}\quad \Phi_{ 2, 1 }{\left (z \right )} = - \frac{z}{\lambda_{1} - \lambda_{2}} + \frac{\lambda_{1}}{\lambda_{1} - \lambda_{2}}
+\end{displaymath}
+to define the polynomial
+\begin{displaymath}
+g{\left (z \right )} = z \left(\frac{\lambda_{1}^{r}}{\lambda_{1} - \lambda_{2}} - \frac{\lambda_{2}^{r}}{\lambda_{1} - \lambda_{2}}\right) + \frac{\lambda_{1} \lambda_{2}^{r}}{\lambda_{1} - \lambda_{2}} - \frac{\lambda_{1}^{r} \lambda_{2}}{\lambda_{1} - \lambda_{2}}
+\end{displaymath}
+interpolating $f(z)=z^{r}$. Therefore $\mathcal{F}^{r} = g(\mathcal{F})$, in
+matrix notation
+\begin{displaymath}
+\mathcal{F}^{r} = \left[\begin{matrix}f_{r+1} & f_{r}\\f_{r} & f_{r-1}\end{matrix}\right] =\left[\begin{matrix}\frac{1}{\lambda_{1} - \lambda_{2}} \left(\lambda_{1} \lambda_{2}^{r} - \lambda_{1}^{r} \lambda_{2} + \lambda_{1}^{r} - \lambda_{2}^{r}\right) & \frac{\lambda_{1}^{r} - \lambda_{2}^{r}}{\lambda_{1} - \lambda_{2}}\\\frac{\lambda_{1}^{r} - \lambda_{2}^{r}}{\lambda_{1} - \lambda_{2}} & \frac{\lambda_{1} \lambda_{2}^{r} - \lambda_{1}^{r} \lambda_{2}}{\lambda_{1} - \lambda_{2}}\end{matrix}\right]
+\end{displaymath}
+where $f_{n}$ is the $n$-th Fibonacci number within sequence $A000045$ in the
+OEIS; choosing $r=8$ yields
+\begin{displaymath}
+\mathcal{F}^{8} = \left[\begin{matrix}f_{9} & f_{8}\\f_{8} & f_{7}\end{matrix}\right] = \left[\begin{matrix}34 & 21\\21 & 13\end{matrix}\right].
+\end{displaymath}
+
+In order to find the Jordan normal form, we use the following component matrices
+\begin{displaymath}
+Z_{1,1} = \left[\begin{matrix}- \frac{\lambda_{2} - 1}{\lambda_{1} - \lambda_{2}} & \frac{1}{\lambda_{1} - \lambda_{2}}\\\frac{1}{\lambda_{1} - \lambda_{2}} & - \frac{\lambda_{2}}{\lambda_{1} - \lambda_{2}}\end{matrix}\right], \quad Z_{2,1} = \left[\begin{matrix}\frac{\lambda_{1} - 1}{\lambda_{1} - \lambda_{2}} & - \frac{1}{\lambda_{1} - \lambda_{2}}\\- \frac{1}{\lambda_{1} - \lambda_{2}} & \frac{\lambda_{1}}{\lambda_{1} - \lambda_{2}}\end{matrix}\right]
+\end{displaymath}
+which, in turn, generates subspaces $\mathcal{M}_{1}$ and $\mathcal{M}_{2}$ of
+generalized eigenvectors
+\begin{displaymath}
+\boldsymbol{x}_{1,1} = \left[\begin{matrix}- \frac{\left(\lambda_{2} - 1\right) \alpha_{0}}{\lambda_{1} - \lambda_{2}} + \frac{\alpha_{1}}{\lambda_{1} - \lambda_{2}}\\\frac{\alpha_{0}}{\lambda_{1} - \lambda_{2}} - \frac{\alpha_{1} \lambda_{2}}{\lambda_{1} - \lambda_{2}}\end{matrix}\right], \quad \boldsymbol{x}_{2,1} = \left[\begin{matrix}\frac{\left(\lambda_{1} - 1\right) \alpha_{0}}{\lambda_{1} - \lambda_{2}} - \frac{\alpha_{1}}{\lambda_{1} - \lambda_{2}}\\- \frac{\alpha_{0}}{\lambda_{1} - \lambda_{2}} + \frac{\alpha_{1} \lambda_{1}}{\lambda_{1} - \lambda_{2}}\end{matrix}\right]
+\end{displaymath}
+respectively, both depending on vector $\boldsymbol{v} = \left[\begin{array}{c}\alpha_{0}\\\alpha_{1}\end{array}\right]$;
+so $\mathcal{F}X=XJ$ is the Jordan normal form of matrix $\mathcal{F}$, where
+\begin{displaymath}
+X = \left[\begin{matrix}- \frac{\left(\lambda_{2} - 1\right) \alpha_{0}}{\lambda_{1} - \lambda_{2}} + \frac{\alpha_{1}}{\lambda_{1} - \lambda_{2}} & \frac{\left(\lambda_{1} - 1\right) \alpha_{0}}{\lambda_{1} - \lambda_{2}} - \frac{\alpha_{1}}{\lambda_{1} - \lambda_{2}}\\\frac{\alpha_{0}}{\lambda_{1} - \lambda_{2}} - \frac{\alpha_{1} \lambda_{2}}{\lambda_{1} - \lambda_{2}} & - \frac{\alpha_{0}}{\lambda_{1} - \lambda_{2}} + \frac{\alpha_{1} \lambda_{1}}{\lambda_{1} - \lambda_{2}}\end{matrix}\right]
+\quad\text{and}\quad J = \left[\begin{matrix}\lambda_{1} & 0\\0 & \lambda_{2}\end{matrix}\right].
+\end{displaymath}
+Let $\boldsymbol{v} = \left[\begin{array}{c}1\\1\end{array}\right]$ in
+\begin{displaymath}
+\mathcal{F}^{r} = \left(X\,J\,X^{-1}\right)^{r} = X\,J^{r}\,X^{-1} = X\,\left[\begin{matrix}\lambda_{1}^{r} & 0\\0 & \lambda_{2}^{r}\end{matrix}\right]\,X^{-1}
+\quad\text{and}\quad X = \left[\begin{matrix}\frac{- \lambda_{2} + 2}{\lambda_{1} - \lambda_{2}} & \frac{\lambda_{1} - 2}{\lambda_{1} - \lambda_{2}}\\\frac{- \lambda_{2} + 1}{\lambda_{1} - \lambda_{2}} & \frac{\lambda_{1} - 1}{\lambda_{1} - \lambda_{2}}\end{matrix}\right],
+\end{displaymath}
+so matrices $\mathcal{F}^{r}$ and
+\begin{displaymath}
+X\,J^{r}\,X^{-1} = \left[\begin{matrix}\frac{2^{- r} \left(\left(1 + \sqrt{5}\right)^{r} \left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(- \sqrt{5} + 1\right)^{r} \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)} & \frac{2^{- r} \left(- \left(1 + \sqrt{5}\right)^{r} + \left(- \sqrt{5} + 1\right)^{r}\right) \left(\lambda_{1} - 2\right) \left(\lambda_{2} - 2\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)}\\\frac{2^{- r} \left(\left(1 + \sqrt{5}\right)^{r} - \left(- \sqrt{5} + 1\right)^{r}\right) \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 1\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)} & \frac{2^{- r} \left(- \left(1 + \sqrt{5}\right)^{r} \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right) + \left(- \sqrt{5} + 1\right)^{r} \left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right)\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)}\end{matrix}\right]
+\end{displaymath}
+are \textit{similar}; by the way, substitution $r=8$ yields
+\begin{displaymath}
+X J^{8} X^{-1} = \left[\begin{matrix}34 & 21\\21 & 13\end{matrix}\right]
+\end{displaymath}
+as required.

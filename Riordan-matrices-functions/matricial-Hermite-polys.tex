@@ -1,0 +1,105 @@
+
+Before showing explicit Hermite interpolating polynomials, we point out that
+evaluation of a polynomial $\Phi_{i,j}\in\prod_{m-1}$ belonging to a
+generalized Lagrange base will be carried out using the Horner algorithm for
+the sake of efficiency. Let $m=8$, each polynomial can be written in abstract
+form as
+\begin{displaymath}
+\Phi_{i,j}{\left (z \right )} = z^{7} \phi_{i,j,0} + z^{6} \phi_{i,j,1} + z^{5} \phi_{i,j,2} + z^{4} \phi_{i,j,3} + z^{3} \phi_{i,j,4} + z^{2} \phi_{i,j,5} + z \phi_{i,j,6} + \phi_{i,j,7}
+\end{displaymath}
+and can be computed as
+\begin{displaymath}
+\Phi_{i,j}{\left (z \right )} = z \left(z \left(z \left(z \left(z \left(z \left(z \phi_{i,j,0} + \phi_{i,j,1}\right) + \phi_{i,j,2}\right) + \phi_{i,j,3}\right) + \phi_{i,j,4}\right) + \phi_{i,j,5}\right) + \phi_{i,j,6}\right) + \phi_{i,j,7},
+\end{displaymath}
+where each coefficient $\phi_{i,j,k}\in\mathbb{R}$ has to be interpreted as
+$\phi_{i,j,k}\,I$, namely a $0$-filled matrix with $\phi_{i,j,k}$ on the main
+diagonal. Such approach requires $m-2$ matrix products and $m-1$ additions.  We
+use this scheme in all subsequent polynomial evaluations to a Riordan matrix.
+\\
+First of all, we list Hermite interpolating polynomials for the following functions:
+\begin{description}
+\item[$r$-th power function]
+\begin{displaymath}
+\footnotesize
+    \begin{split}
+        P_{8}\left (z \right )  &= \left(z - 1\right)^{7} {\binom{r}{7}} + \left(z - 1\right)^{6} {\binom{r}{6}} + \left(z - 1\right)^{5} {\binom{r}{5}} + \left(z - 1\right)^{4} {\binom{r}{4}}
+                            + \left(z - 1\right)^{3} {\binom{r}{3}} + \left(z - 1\right)^{2} {\binom{r}{2}} + \left(z - 1\right) {\binom{r}{1}} + {\binom{r}{0}} \\
+                            &= z^{7} {\binom{r}{7}} \\
+                            &+ z^{6} \left({\binom{r}{6}} - 7 {\binom{r}{7}}\right) \\
+                            &+ z^{5} \left({\binom{r}{5}} - 6 {\binom{r}{6}} + 21 {\binom{r}{7}}\right) \\
+                            &+ z^{4} \left({\binom{r}{4}} - 5 {\binom{r}{5}} + 15 {\binom{r}{6}} - 35 {\binom{r}{7}}\right) \\
+                            &+ z^{3} \left({\binom{r}{3}} - 4 {\binom{r}{4}} + 10 {\binom{r}{5}} - 20 {\binom{r}{6}} + 35 {\binom{r}{7}}\right) \\
+                            &+ z^{2} \left({\binom{r}{2}} - 3 {\binom{r}{3}} + 6 {\binom{r}{4}} - 10 {\binom{r}{5}} + 15 {\binom{r}{6}} - 21 {\binom{r}{7}}\right) \\
+                            &+ z \left({\binom{r}{1}} - 2 {\binom{r}{2}} + 3 {\binom{r}{3}} - 4 {\binom{r}{4}} + 5 {\binom{r}{5}} - 6 {\binom{r}{6}} + 7 {\binom{r}{7}}\right) \\
+                            &- {\binom{r}{1}} + {\binom{r}{2}} - {\binom{r}{3}} + {\binom{r}{4}} - {\binom{r}{5}} + {\binom{r}{6}} - {\binom{r}{7}} + 1;
+    \end{split}
+\end{displaymath}
+\item[inverse function]
+\begin{displaymath}
+\footnotesize
+    \begin{split} 
+        I_{8}{\left (z \right )} &= - \left(z - 1\right)^{7} + \left(z - 1\right)^{6} - \left(z - 1\right)^{5} + \left(z - 1\right)^{4} - \left(z - 1\right)^{3} + \left(z - 1\right)^{2} - (z-1) + 1\\
+                             &= - z^{7} + 8 z^{6} - 28 z^{5} + 56 z^{4} - 70 z^{3} + 56 z^{2} - 28 z + 8;
+    \end{split}
+\end{displaymath}
+\item[square root function]
+\begin{displaymath}
+\footnotesize
+    \begin{split}
+        R_{8}{\left (z \right )}  &= \frac{33}{2048} \left(z - 1\right)^{7} - \frac{21}{1024} \left(z - 1\right)^{6} + \frac{7}{256} \left(z - 1\right)^{5} - \frac{5}{128} \left(z - 1\right)^{4}
+                              + \frac{1}{16} \left(z - 1\right)^{3} - \frac{1}{8} \left(z - 1\right)^{2} + \frac{1}{2}(z-1) + 1 \\
+                              &= \frac{33 z^{7}}{2048} - \frac{273 z^{6}}{2048} + \frac{1001 z^{5}}{2048} - \frac{2145 z^{4}}{2048} + \frac{3003 z^{3}}{2048} - \frac{3003 z^{2}}{2048} + \frac{3003 z}{2048} + \frac{429}{2048};
+    \end{split}
+\end{displaymath}
+\item[exponential function]
+\begin{displaymath}
+\footnotesize
+    \begin{split}
+        E_{8}{\left (z \right )}    &= e^{\alpha} \left(\frac{\alpha^{7} }{5040} \left(z - 1\right)^{7} + \frac{\alpha^{6} }{720} \left(z - 1\right)^{6} + \frac{\alpha^{5} }{120} \left(z - 1\right)^{5} + \frac{\alpha^{4} }{24} \left(z - 1\right)^{4}\right.
+                                + \left. \frac{\alpha^{3} }{6} \left(z - 1\right)^{3} + \frac{\alpha^{2} }{2} \left(z - 1\right)^{2} + \alpha \left(z - 1\right)  + 1\right)\\
+                                &= e^{\alpha}\left(\frac{\alpha^{7} z^{7}}{5040}\right. \\
+                                &+ \frac{\alpha^{6} z^{6}}{720} \left(- \alpha + 1\right) \\
+                                &+ \frac{\alpha^{5} z^{5}}{240} \left(\alpha^{2} - 2 \alpha + 2\right) \\
+                                &+ \frac{\alpha^{4} z^{4}}{144} \left(- \alpha^{3} + 3 \alpha^{2} - 6 \alpha + 6\right) \\
+                                &+ \frac{\alpha^{3} z^{3}}{144} \left(\alpha^{4} - 4 \alpha^{3} + 12 \alpha^{2} - 24 \alpha + 24\right) \\
+                                &+ \frac{\alpha^{2} z^{2}}{240} \left(- \alpha^{5} + 5 \alpha^{4} - 20 \alpha^{3} + 60 \alpha^{2} - 120 \alpha + 120\right) \\
+                                &+ \frac{\alpha z}{720} \left(\alpha^{6} - 6 \alpha^{5} + 30 \alpha^{4} - 120 \alpha^{3} + 360 \alpha^{2} - 720 \alpha + 720\right) \\
+                                &- \left.\frac{\alpha^{7}}{5040} + \frac{\alpha^{6}}{720} - \frac{\alpha^{5}}{120} + \frac{\alpha^{4}}{24} - \frac{\alpha^{3}}{6} + \frac{\alpha^{2}}{2} -\alpha + 1\right) \\
+        \left.E_{8}{\left (z \right )}\right|_{\alpha=1} &= e \left(\frac{z^{7}}{5040} + \frac{z^{5}}{240} + \frac{z^{4}}{72} + \frac{z^{3}}{16} + \frac{11 z^{2}}{60} + \frac{53 z}{144} + \frac{103}{280}\right)\\
+        \left.E_{8}{\left (z \right )}\right|_{\alpha=-1} &=\frac{1}{e} \left( - \frac{z^{7}}{5040} + \frac{z^{6}}{360} - \frac{z^{5}}{48} + \frac{z^{4}}{9}\right. - \left.\frac{65 z^{3}}{144} + \frac{163 z^{2}}{120} - \frac{1957 z}{720} + \frac{685}{252}\right);
+    \end{split}
+\end{displaymath}
+\item[logarithm function]
+\begin{displaymath}
+\footnotesize
+    \begin{split}
+        L_{8}{\left (z \right )}    &= \frac{1}{7} \left(z - 1\right)^{7} - \frac{1}{6} \left(z - 1\right)^{6} + \frac{1}{5} \left(z - 1\right)^{5} - \frac{1}{4} \left(z - 1\right)^{4} + \frac{1}{3} \left(z - 1\right)^{3} - \frac{1}{2} \left(z - 1\right)^{2} + (z - 1)\\
+                                &= \frac{z^{7}}{7} - \frac{7 z^{6}}{6} + \frac{21 z^{5}}{5} - \frac{35 z^{4}}{4} + \frac{35 z^{3}}{3} - \frac{21 z^{2}}{2} + 7 z - \frac{363}{140};
+    \end{split}
+\end{displaymath}
+\item[sine function]
+\begin{displaymath}
+    \footnotesize
+    \begin{split}
+        S_{8}{\left (z \right )} &= - \frac{1}{5040} \left(z - 1\right)^{7} \cos{\left (1 \right )} - \frac{1}{720} \left(z - 1\right)^{6} \sin{\left (1 \right )} + \frac{1}{120} \left(z - 1\right)^{5} \cos{\left (1 \right )} + \frac{1}{24} \left(z - 1\right)^{4} \sin{\left (1 \right )} \\
+                             &- \frac{1}{6} \left(z - 1\right)^{3} \cos{\left (1 \right )} - \frac{1}{2} \left(z - 1\right)^{2} \sin{\left (1 \right )} + \left(z - 1\right) \cos{\left (1 \right )} + \sin{\left (1 \right )}\\
+                             &= \frac{1}{720} \left(- z^{6} + 6 z^{5} + 15 z^{4} - 100 z^{3} - 195 z^{2} + 606 z + 389\right) \sin{\left (1 \right )} \\
+                             &+ \frac{1}{5040} \left(- z^{7} + 7 z^{6} + 21 z^{5} - 175 z^{4} - 455 z^{3} + 2121 z^{2} + 2723 z - 4241\right) \cos{\left (1 \right )} \\
+                             &= - \frac{z^{7}}{5040} \cos{\left (1 \right )} + z^{6} \left(- \frac{1}{720} \sin{\left (1 \right )} + \frac{1}{720} \cos{\left (1 \right )}\right) + z^{5} \left(\frac{1}{120} \sin{\left (1 \right )} + \frac{1}{240} \cos{\left (1 \right )}\right) \\
+                             &+ z^{4} \left(\frac{1}{48} \sin{\left (1 \right )} - \frac{5}{144} \cos{\left (1 \right )}\right) + z^{3} \left(- \frac{5}{36} \sin{\left (1 \right )} - \frac{13}{144} \cos{\left (1 \right )}\right) + z^{2} \left(- \frac{13}{48} \sin{\left (1 \right )} + \frac{101}{240} \cos{\left (1 \right )}\right) \\
+                             &+ z \left(\frac{101}{120} \sin{\left (1 \right )} + \frac{389}{720} \cos{\left (1 \right )}\right) + \frac{389}{720} \sin{\left (1 \right )} - \frac{4241}{5040} \cos{\left (1 \right )};
+    \end{split}
+\end{displaymath}
+\item[cosine function]
+\begin{displaymath}
+    \footnotesize
+    \begin{split}
+        C_{8}{\left (z \right )} &= \frac{1}{5040} \left(z - 1\right)^{7} \sin{\left (1 \right )} - \frac{1}{720} \left(z - 1\right)^{6} \cos{\left (1 \right )} - \frac{1}{120} \left(z - 1\right)^{5} \sin{\left (1 \right )} + \frac{1}{24} \left(z - 1\right)^{4} \cos{\left (1 \right )} \\ &+ \frac{1}{6} \left(z - 1\right)^{3} \sin{\left (1 \right )} - \frac{1}{2} \left(z - 1\right)^{2} \cos{\left (1 \right )} - \left(z - 1\right) \sin{\left (1 \right )} + \cos{\left (1 \right )} \\
+                             &= \frac{1}{720} \left(- z^{6} + 6 z^{5} + 15 z^{4} - 100 z^{3} - 195 z^{2} + 606 z + 389\right) \cos{\left (1 \right )} \\
+                             &+ \frac{1}{5040} \left(z^{7} - 7 z^{6} - 21 z^{5} + 175 z^{4} + 455 z^{3} - 2121 z^{2} - 2723 z + 4241\right) \sin{\left (1 \right )}\\
+                             &= \frac{z^{7}}{5040} \sin{\left (1 \right )} + z^{6} \left(- \frac{1}{720} \sin{\left (1 \right )} - \frac{1}{720} \cos{\left (1 \right )}\right) + z^{5} \left(- \frac{1}{240} \sin{\left (1 \right )} + \frac{1}{120} \cos{\left (1 \right )}\right) \\
+                             &+ z^{4} \left(\frac{5}{144} \sin{\left (1 \right )} + \frac{1}{48} \cos{\left (1 \right )}\right) + z^{3} \left(\frac{13}{144} \sin{\left (1 \right )} - \frac{5}{36} \cos{\left (1 \right )}\right) + z^{2} \left(- \frac{101}{240} \sin{\left (1 \right )} - \frac{13}{48} \cos{\left (1 \right )}\right) \\
+                             &+ z \left(- \frac{389}{720} \sin{\left (1 \right )} + \frac{101}{120} \cos{\left (1 \right )}\right) + \frac{4241}{5040} \sin{\left (1 \right )} + \frac{389}{720} \cos{\left (1 \right )}.
+    \end{split}
+\end{displaymath}
+\end{description}

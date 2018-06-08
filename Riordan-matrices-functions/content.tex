@@ -1,0 +1,160 @@
+
+\section{Introduction}
+
+\label{sec:introduction}
+\input{Riordan-matrices-functions/introduction.tex}
+
+\section{Basic definitions and notations}
+
+\input{Riordan-matrices-functions/matrix-functions.tex}
+
+We are now ready to apply this framework to matrices in the Riordan group.
+
+\section{Riordan matrices}
+
+\input{Riordan-matrices-functions/riordan-group.tex}
+
+\iffalse % \subsection{A Riordan array characterization of Hermite interpolating polynomials} {{{
+
+\input{Riordan-matrices-functions/Ra-g-characterization.tex}
+
+\subsection{A component matrices characterization of Hermite interpolating polynomials}
+
+\input{Riordan-matrices-functions/Zs-g-characterization.tex}
+\fi
+% }}}
+
+\section{Functions and polynomials}
+
+In this section we instantiate the abstract framework just described to functions
+\begin{displaymath}
+f(z)=z^{r},\,{f(z)=\frac{1}{z}},\,{f(z)=\sqrt{z}},\,{f(z)=e^{\alpha z}},\,
+{f(z)=\log{z}},\,{f(z)=\sin{z}},\,{f(z)=\cos{z}}; 
+\end{displaymath}
+where $r,\alpha\in\mathbb{R}$; in parallel, we construct and show corresponding
+Hermite interpolating polynomials in a sequence of theorems, respectively.
+From now on, we use $m$ and $\lambda$ instead of $m_{1}$ and $\lambda_{1}$ to
+simplify the notation; moreover, we instantiate $\lambda=1$ which is the
+natural eigenvalue for Riordan arrays.
+
+We start by generalizing the $r$-th power $A^{r}$, usually carried out
+as $\underbrace{A\cdots A}_{r\text{ times}}$, to \textit{non-naturals} powers
+$r\in\mathbb{Q}$.
+
+\input{Riordan-matrices-functions/function-pow.tex}
+
+Instantiation $r=-1$ in the previous theorem yields a Hermite interpolating
+polynomial for the inverse function which, in the explicit form, reduces to
+a binomial transform.
+
+\input{Riordan-matrices-functions/function-inverse.tex}
+
+Instantiation $r=\frac{1}{2}$ yields the interpolation of the square root function,
+we report its derivation for completeness.
+
+\input{Riordan-matrices-functions/function-sqrt.tex}
+
+Matrix exponentiation is a well studied problem \cite{MOLERLOAN2003}, here
+we show another way in the Riordan arrays domain. 
+
+\input{Riordan-matrices-functions/function-exp.tex}
+
+We show a dual theorem of the previous one concerning the interpolation of the
+logarithm function.
+
+\input{Riordan-matrices-functions/function-log.tex}
+
+Finally, we show two theorem concerning trigonometric functions $\sin$ and
+$\cos$, respectively.
+
+\input{Riordan-matrices-functions/function-sin.tex}
+
+\input{Riordan-matrices-functions/function-cos.tex}
+
+\subsection{Case studies}
+
+In this section we apply the functions described in the previous arguments to
+Riordan arrays $\mathcal{P}_{8}, \mathcal{C}_{8}$ and $\mathcal{S}_{8}$
+concerning binomial coefficients, Catalan and Stirling numbers, respectively.
+
+\input{Riordan-matrices-functions/matricial-Hermite-polys.tex}
+
+\input{Riordan-matrices-functions/case-study-pascal.tex}
+
+\input{Riordan-matrices-functions/case-study-catalan.tex}
+
+\input{Riordan-matrices-functions/case-study-stirling-II.tex}
+
+The matrix $\mathcal{S}_{8}$ is related to matrix $e^{\mathcal{P}_{8}}$ known as
+$A056857$ in the Online Encyclopedia of Integer Sequences \cite{OEIS} by the
+identity $ e^{\mathcal{P}_{8}}=e\cdot\left(\mathcal{S}_{8}\cdot
+\mathcal{P}_{8}\cdot \mathcal{S}_{8}^{-1}\right)$, more connections
+involving these matrices can be found in \cite{CHEON200149}; additionally, we report
+sine and cosine function applications in Section \ref{subsec:sines-cosines}.
+
+For the sake of completeness, an Hermite interpolating polynomial $g$ could
+also be studied by relaxing the condition $\lambda=1$ thus considering
+$\hat{g}(z,\lambda)$ which subsumes $g(z)=\hat{g}(z,1)$. Here are two of these
+augmented polynomials interpolating the inverse and logarithm functions, respectively
+\begin{displaymath}
+\small
+\begin{tabu}{cc}
+\begin{split}
+\hat{I}_{8}{\left (z, \lambda \right )} &= - \frac{z^{7}}{\lambda^{8}} \\
+&+ z^{6} \left(\frac{1}{\lambda^{7}} + \frac{7}{\lambda^{8}}\right) \\
+&+ z^{5} \left(- \frac{1}{\lambda^{6}} - \frac{6}{\lambda^{7}} - \frac{21}{\lambda^{8}}\right) \\
+&+ z^{4} \left(\frac{1}{\lambda^{5}} + \frac{5}{\lambda^{6}} + \frac{15}{\lambda^{7}} + \frac{35}{\lambda^{8}}\right) \\
+&+ z^{3} \left(- \frac{1}{\lambda^{4}} - \frac{4}{\lambda^{5}} - \frac{10}{\lambda^{6}} - \frac{20}{\lambda^{7}} - \frac{35}{\lambda^{8}}\right) \\
+&+ z^{2} \left(\frac{1}{\lambda^{3}} + \frac{3}{\lambda^{4}} + \frac{6}{\lambda^{5}} + \frac{10}{\lambda^{6}} + \frac{15}{\lambda^{7}} + \frac{21}{\lambda^{8}}\right) \\
+&+ z \left(- \frac{1}{\lambda^{2}} - \frac{2}{\lambda^{3}} - \frac{3}{\lambda^{4}} - \frac{4}{\lambda^{5}} - \frac{5}{\lambda^{6}} - \frac{6}{\lambda^{7}} - \frac{7}{\lambda^{8}}\right) \\
+&+ \frac{1}{\lambda} + \frac{1}{\lambda^{2}} + \frac{1}{\lambda^{3}} + \frac{1}{\lambda^{4}} + \frac{1}{\lambda^{5}} + \frac{1}{\lambda^{6}} + \frac{1}{\lambda^{7}} + \frac{1}{\lambda^{8}},
+\end{split}
+&
+\begin{split}
+\hat{L}_{8}{\left (z,\lambda \right )} &= \frac{z^{7}}{7 \lambda^{7}} \\
+&+ z^{6} \left(- \frac{1}{6 \lambda^{6}} - \frac{1}{\lambda^{7}}\right) \\
+&+ z^{5} \left(\frac{1}{5 \lambda^{5}} + \frac{1}{\lambda^{6}} + \frac{3}{\lambda^{7}}\right) \\
+&+ z^{4} \left(- \frac{1}{4 \lambda^{4}} - \frac{1}{\lambda^{5}} - \frac{5}{2 \lambda^{6}} - \frac{5}{\lambda^{7}}\right) \\
+&+ z^{3} \left(\frac{1}{3 \lambda^{3}} + \frac{1}{\lambda^{4}} + \frac{2}{\lambda^{5}} + \frac{10}{3 \lambda^{6}} + \frac{5}{\lambda^{7}}\right) \\
+&+ z^{2} \left(- \frac{1}{2 \lambda^{2}} - \frac{1}{\lambda^{3}} - \frac{3}{2 \lambda^{4}} - \frac{2}{\lambda^{5}} - \frac{5}{2 \lambda^{6}} - \frac{3}{\lambda^{7}}\right) \\
+&+ z \left(\frac{1}{\lambda} + \frac{1}{\lambda^{2}} + \frac{1}{\lambda^{3}} + \frac{1}{\lambda^{4}} + \frac{1}{\lambda^{5}} + \frac{1}{\lambda^{6}} + \frac{1}{\lambda^{7}}\right) \\
+&+ \log{\left (\lambda \right )} - \frac{1}{\lambda} - \frac{1}{2 \lambda^{2}} - \frac{1}{3 \lambda^{3}} - \frac{1}{4 \lambda^{4}} - \frac{1}{5 \lambda^{5}} - \frac{1}{6 \lambda^{6}} - \frac{1}{7 \lambda^{7}}.
+\end{split}\\
+\end{tabu}
+\end{displaymath}
+
+\section{Jordan canonical form}
+
+\input{Riordan-matrices-functions/jordan-form.tex}
+
+\section{Conclusions}
+
+\input{Riordan-matrices-functions/conclusions.tex}
+
+
+\section{Appendix}
+
+\subsection{$\sin{\mathcal{P}_{8}},\cos{\mathcal{P}_{8}},\sin{\mathcal{C}_{8}},\cos{\mathcal{C}_{8}} ,\sin{\mathcal{S}_{8}} ,\cos{\mathcal{S}_{8}}  $}
+\label{subsec:sines-cosines}
+
+\newpage
+\vspace*{-1cm}
+\input{Riordan-matrices-functions/sines-and-cosines.tex}
+
+\subsection{Fibonacci numbers}
+
+\input{Riordan-matrices-functions/case-study-fibonacci.tex}
+
+\subsection{$\mathcal{P}_{8}$'s component matrices and generalized eigenvectors}
+\label{subsec:Pascal-component-matrices-generalized-eigenvectors}
+
+\input{Riordan-matrices-functions/appendix-pascal.tex}
+
+\iffalse % \subsection{Facts about RAs and component matrices} {{{
+
+\input{Riordan-matrices-functions/facts.tex}
+\fi
+% }}}
+
+
+

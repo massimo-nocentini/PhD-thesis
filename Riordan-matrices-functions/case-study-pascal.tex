@@ -1,0 +1,44 @@
+
+\begin{example}
+Let $\mathcal{P}$ be the matrix of binomial coefficients, also known as the \textit{Pascal matrix},
+\begin{displaymath}
+%\mathcal{P}_{m}=\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\1 & 3 & 3 & 1 & 0 & 0 & 0 & 0\\1 & 4 & 6 & 4 & 1 & 0 & 0 & 0\\1 & 5 & 10 & 10 & 5 & 1 & 0 & 0\\1 & 6 & 15 & 20 & 15 & 6 & 1 & 0\\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1\end{matrix}\right]
+\mathcal{P}_{8}=\left[\begin{matrix}1 &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &  \\1 & 2 & 1 &   &   &   &   &  \\1 & 3 & 3 & 1 &   &   &   &  \\1 & 4 & 6 & 4 & 1 &   &   &  \\1 & 5 & 10 & 10 & 5 & 1 &   &  \\1 & 6 & 15 & 20 & 15 & 6 & 1 &  \\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1\end{matrix}\right]
+\quad \text{where} \quad \mathcal{P} = \left(\frac{1}{1-t}, \frac{t}{1-t} \right).
+\end{displaymath}
+Then, the application of Hermite interpolating polynomials yields the following matrices:
+\begin{displaymath}
+%\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\r & 1 & 0 & 0 & 0 & 0 & 0 & 0\\r^{2} & 2 r & 1 & 0 & 0 & 0 & 0 & 0\\r^{3} & 3 r^{2} & 3 r & 1 & 0 & 0 & 0 & 0\\r^{4} & 4 r^{3} & 6 r^{2} & 4 r & 1 & 0 & 0 & 0\\r^{5} & 5 r^{4} & 10 r^{3} & 10 r^{2} & 5 r & 1 & 0 & 0\\r^{6} & 6 r^{5} & 15 r^{4} & 20 r^{3} & 15 r^{2} & 6 r & 1 & 0\\r^{7} & 7 r^{6} & 21 r^{5} & 35 r^{4} & 35 r^{3} & 21 r^{2} & 7 r & 1\end{matrix}\right]
+\mathcal{P}_{8}^{r} = P_{8}\left( \mathcal{P}_{8}\right) = \left[\begin{matrix}1 &   &   &   &   &   &   &  \\r & 1 &   &   &   &   &   &  \\r^{2} & 2 r & 1 &   &   &   &   &  \\r^{3} & 3 r^{2} & 3 r & 1 &   &   &   &  \\r^{4} & 4 r^{3} & 6 r^{2} & 4 r & 1 &   &   &  \\r^{5} & 5 r^{4} & 10 r^{3} & 10 r^{2} & 5 r & 1 &   &  \\r^{6} & 6 r^{5} & 15 r^{4} & 20 r^{3} & 15 r^{2} & 6 r & 1 &  \\r^{7} & 7 r^{6} & 21 r^{5} & 35 r^{4} & 35 r^{3} & 21 r^{2} & 7 r & 1\end{matrix}\right]
+\end{displaymath}
+the special cases $r=\frac{1}{2}$ and $r=\frac{1}{3}$ have been illustrated
+in Section \ref{sec:introduction} while $r=2$ and $r=-1$ yield
+\begin{displaymath}
+%\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\2 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\4 & 4 & 1 & 0 & 0 & 0 & 0 & 0\\8 & 12 & 6 & 1 & 0 & 0 & 0 & 0\\16 & 32 & 24 & 8 & 1 & 0 & 0 & 0\\32 & 80 & 80 & 40 & 10 & 1 & 0 & 0\\64 & 192 & 240 & 160 & 60 & 12 & 1 & 0\\128 & 448 & 672 & 560 & 280 & 84 & 14 & 1\end{matrix}\right]
+\mathcal{P}_{8}^{2} = \left[\begin{matrix}1 &  &  &  &  &  &  & \\2 & 1 &  &  &  &  &  & \\4 & 4 & 1 &  &  &  &  & \\8 & 12 & 6 & 1 &  &  &  & \\16 & 32 & 24 & 8 & 1 &  &  & \\32 & 80 & 80 & 40 & 10 & 1 &  & \\64 & 192 & 240 & 160 & 60 & 12 & 1 & \\128 & 448 & 672 & 560 & 280 & 84 & 14 & 1\end{matrix}\right]
+\quad\text{where}\quad\mathcal{P}^{2} = \Ra\left(\frac{1}{1-2\,t},\frac{t}{1-2\,t} \right),
+\quad\text{and}
+\end{displaymath}
+\begin{displaymath}
+%\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\-1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\1 & -2 & 1 & 0 & 0 & 0 & 0 & 0\\-1 & 3 & -3 & 1 & 0 & 0 & 0 & 0\\1 & -4 & 6 & -4 & 1 & 0 & 0 & 0\\-1 & 5 & -10 & 10 & -5 & 1 & 0 & 0\\1 & -6 & 15 & -20 & 15 & -6 & 1 & 0\\-1 & 7 & -21 & 35 & -35 & 21 & -7 & 1\end{matrix}\right]
+\mathcal{P}_{8}^{-1} = I_{8}\left( \mathcal{P}_{8}\right) = \left[\begin{matrix}1 &   &   &   &   &   &   &  \\-1 & 1 &   &   &   &   &   &  \\1 & -2 & 1 &   &   &   &   &  \\-1 & 3 & -3 & 1 &   &   &   &  \\1 & -4 & 6 & -4 & 1 &   &   &  \\-1 & 5 & -10 & 10 & -5 & 1 &   &  \\1 & -6 & 15 & -20 & 15 & -6 & 1 &  \\-1 & 7 & -21 & 35 & -35 & 21 & -7 & 1\end{matrix}\right]
+\quad\text{where}\quad\mathcal{P}^{-1} = \Ra\left(\frac{1}{1+t},\frac{t}{1+t} \right),
+\end{displaymath}
+correspond to the product and inverse operations in the Riordan group defined
+in Equation \ref{eq:Riordan-group-ops}, respectively. Additionally, matrices
+$e^{\mathcal{P}_{8}}= E_{8}\left( \mathcal{P}_{8}\right) $ and
+$\log{\mathcal{P}_{8}}= L_{8}\left( \mathcal{P}_{8}\right) $, defined by
+\begin{displaymath}
+%e \left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\2 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\5 & 6 & 3 & 1 & 0 & 0 & 0 & 0\\15 & 20 & 12 & 4 & 1 & 0 & 0 & 0\\52 & 75 & 50 & 20 & 5 & 1 & 0 & 0\\203 & 312 & 225 & 100 & 30 & 6 & 1 & 0\\877 & 1421 & 1092 & 525 & 175 & 42 & 7 & 1\end{matrix}\right]
+e^{\mathcal{P}_{8}} = e \left[\begin{matrix}1 &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &  \\2 & 2 & 1 &   &   &   &   &  \\5 & 6 & 3 & 1 &   &   &   &  \\15 & 20 & 12 & 4 & 1 &   &   &  \\52 & 75 & 50 & 20 & 5 & 1 &   &  \\203 & 312 & 225 & 100 & 30 & 6 & 1 &  \\877 & 1421 & 1092 & 525 & 175 & 42 & 7 & 1\end{matrix}\right]
+\quad\text{and}\quad
+%log = \left[\begin{matrix}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 2 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 3 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 4 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 5 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 6 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 7 & 0\end{matrix}\right]
+\log{\mathcal{P}_{8}} = \left[\begin{matrix} 0 &   &   &   &   &   &   &  \\1 & 0   &   &   &   &   &   &  \\  & 2 &  0  &   &   &   &   &  \\  &   & 3 &  0  &   &   &   &  \\  &   &   & 4 &  0  &   &   &  \\  &   &   &   & 5 &  0  &   &  \\  &   &   &   &   & 6 &  0  &  \\  &   &   &   &   &   & 7 &  0 \end{matrix}\right],
+\end{displaymath}
+have eigenvalues $e$ and $0$; therefore, in order to check (expected)
+identities $\log{e^{\mathcal{P}_{8}}} = e^{\log{\mathcal{P}_{8}}} =
+\mathcal{P}_{8}$ it is required to compute new Hermite interpolating
+polynomials  using Theorem \ref{thm:Hermite-interpolating-polynomial-Riordan} on
+eigenvalues $\lambda_{1}=0$ and $\lambda_{1}=e$, in place of $L_{8}(z)$ and
+$E_{8}(z)$ which depend on eigenvalue $\lambda=1$ instead.
+\end{example}
