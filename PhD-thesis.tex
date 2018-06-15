@@ -4,9 +4,9 @@
 
 %%
 % Book metadata
-\title{On Recursion\thanks{Thanks to John McCarthy for his inspiration.}}
-\author{Massimo Nocentini}
-\publisher{Universit\`a degli Studi di Firenze}
+%\title{On Recursion\thanks{Thanks to John McCarthy for his inspiration.}}
+%\author{Massimo Nocentini}
+%\publisher{Universit\`a degli Studi di Firenze}
 
 %%
 % If they're installed, use Bergamo and Chantilly from www.fontsite.com.
@@ -219,6 +219,42 @@
 
 \setcitestyle{square, comma, numbers}
 
+
+
+\newsavebox{\logounifi}
+\savebox{\logounifi}{\includegraphics[height=7\baselineskip]{logos/logo_unifi}}
+\newsavebox{\logounipg}
+\savebox{\logounipg}{\includegraphics[height=7\baselineskip]{logos/logo_unipg}}
+\newsavebox{\logoindam}
+\savebox{\logoindam}{\includegraphics[height=7\baselineskip]{logos/logo_indam}}
+
+\title[On Recursion]{\setlength{\parindent}{0pt} On Recursion}
+
+\author[Massimo Nocentini]{\usebox{\logounifi}\hfill\usebox{\logoindam}\hfill\usebox{\logounipg} \\
+ \vspace{7mm}
+ {\small Universit\`{a} di Firenze, Universit\`{a} di Perugia, INdAM  consorziate nel CIAFM}\\
+ \vspace{-3mm}
+ {\small Sede amministrativa Universit\`a degli Studi di Firenze}\\
+ \vspace{5mm}
+ {\small \textbf{DOTTORATO DI RICERCA IN MATEMATICA, INFORMATICA, STATISTICA}}\\
+ \vspace{-3mm}
+ {\small CURRICULUM IN INFORMATICA, CICLO XXXI}\\
+ \vspace{5mm}
+ {\small Settore Scientifico Disciplinare \textbf{INF/01}}\\
+ \vspace{-3mm}
+ {\small Anni accademici $2015/2018$}\\
+ %\vspace{-0.5cm} % for splitting at half
+ \vspace{-2cm}
+ }
+
+\date{Accademic years from $2015$ to $2018$}
+
+\publisher{ \par
+            {\small Candidato: \indent\indent\indent dott. \textbf{Massimo Nocentini}}\\
+            {\small Tutor: \indent\indent\indent\indent\indent prof. \textbf{Donatella Merlini}}\\
+            {\small Coordinatore: \indent prof. \textbf{Graziano Gentili}}\\
+}
+
 \makeindex
 
 \begin{document}
@@ -233,31 +269,112 @@
 \newpage\thispagestyle{empty}
 \openepigraph{%
 The public is more familiar with bad design than good design.
-It is, in effect, conditioned to prefer bad design, 
-because that is what it lives with. 
+It is, in effect, conditioned to prefer bad design,
+because that is what it lives with.
 The new becomes threatening, the old reassuring.
 }{Paul Rand%, {\itshape Design, Form, and Chaos}
 }
 \vfill
 \openepigraph{%
-A designer knows that he has achieved perfection 
-not when there is nothing left to add, 
+A designer knows that he has achieved perfection
+not when there is nothing left to add,
 but when there is nothing left to take away.
 }{Antoine de Saint-Exup\'{e}ry}
 \vfill
 \openepigraph{%
-\ldots the designer of a new system must not only be the implementor and the first 
-large-scale user; the designer should also write the first user manual\ldots 
-If I had not participated fully in all these activities, 
-literally hundreds of improvements would never have been made, 
-because I would never have thought of them or perceived 
+\ldots the designer of a new system must not only be the implementor and the first
+large-scale user; the designer should also write the first user manual\ldots
+If I had not participated fully in all these activities,
+literally hundreds of improvements would never have been made,
+because I would never have thought of them or perceived
 why they were important.
 }{Donald E. Knuth}
 
 
 % r.3 full title page
+
 \maketitle
 
+%\iffalse
+\begin{center}
+\begin{minipage}{0.14\linewidth}
+\includegraphics[scale=0.45]{logos/logo_unifi}
+\end{minipage}
+\begin{minipage}{0.01\linewidth}
+\rule[-1mm]{0.8mm}{2.5cm}%
+\end{minipage}
+\begin{minipage}{0.18\linewidth}
+\textsc{UNIVERSIT\`{A}\\DEGLI STUDI\\\large FIRENZE}
+\end{minipage}
+\begin{minipage}{0.15\linewidth}
+\includegraphics[scale=0.67]{logos/logo_unipg}
+\end{minipage}
+\begin{minipage}{0.20\linewidth}
+\textsc{UNIVERSIT\`{A}\\DEGLI STUDI\\\large PERUGIA}
+\end{minipage}
+\begin{minipage}{0.20\linewidth}
+\includegraphics[scale=0.5]{logos/logo_indam}
+\footnotesize Istituto Nazionale\\ di Alta Matematica
+\end{minipage}
+
+\vskip .8cm
+\par
+{Universit\`{a} di Firenze, Universit\`{a} di Perugia, INdAM  consorziate nel {\small CIAFM}\\}
+\vspace{5mm}
+\vskip .8cm
+\par
+\vspace{2mm}
+\large \textbf{DOTTORATO DI RICERCA\\ IN MATEMATICA, INFORMATICA, STATISTICA}\\
+\vskip.2cm
+CURRICULUM IN INFORMATICA\\ CICLO XXXI
+\par
+\vspace{5mm}
+\large{\bf Sede amministrativa Universit\`{a} degli Studi di Firenze}\\ Coordinatore Prof.~Graziano Gentili
+\par
+\vspace{6mm}
+\huge
+\textbf{On Recursion}
+\par
+\vspace{4mm}
+\large Settore Scientifico Disciplinare INF/01
+\end{center}
+
+\par
+\vspace{20mm}
+
+\normalsize
+%\hspace{1cm}
+\begin{minipage}{0.42\linewidth}
+\textbf{Dottorando}:
+\\
+{Massimo Nocentini}
+\end{minipage}
+\hspace{3.5cm}
+\begin{minipage}{0.42\linewidth}
+\textbf{Tutore:}
+\\
+{Prof. Donatella Merlini}
+\end{minipage}
+\par
+\vspace{10mm}
+\begin{center}
+\hspace{1.5cm}
+\begin{minipage}{0.3\linewidth}
+\textbf{Coordinatore:}
+\\
+{Prof.~Graziano Gentili}
+\end{minipage}
+\end{center}
+\par \vspace{9mm}
+\begin{center}
+\hrule
+\par
+\vspace{5mm}
+Anni 2014/2017
+\end{center}
+\restoregeometry
+
+%\fi
 
 % v.4 copyright page
 \newpage
@@ -266,22 +383,18 @@ why they were important.
 \thispagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{\baselineskip}
-Copyright \copyright\ \the\year\ \thanklessauthor
+\iffalse % commented out because included in the LICENSE file
+Copyright \copyright\ \the\year\ Massimo Nocentini
+\fi
 
-\par\smallcaps{Published by \thanklesspublisher}
+%\par\smallcaps{Published by \thanklesspublisher}
 
-\par\smallcaps{tufte-latex.github.io/tufte-latex/}
+\par\smallcaps{\url{https://github.com/massimo-nocentini/}}
 
-\par Licensed under the Apache License, Version 2.0 (the ``License''); you may not
-use this file except in compliance with the License. You may obtain a copy
-of the License at \url{http://www.apache.org/licenses/LICENSE-2.0}. Unless
-required by applicable law or agreed to in writing, software distributed
-under the License is distributed on an \smallcaps{``AS IS'' BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND}, either express or implied. See the
-License for the specific language governing permissions and limitations
-under the License.\index{license}
+\par \input{LICENSE}\index{license}
 
-\par\textit{First printing, \monthyear}
+%\par\textit{First printing, \monthyear}
+
 \end{fullwidth}
 
 % r.5 contents
@@ -297,8 +410,8 @@ under the License.\index{license}
 \begin{doublespace}
 \noindent\fontsize{18}{22}\selectfont\itshape
 \nohyphenation
-Dedicated to those who appreciate \LaTeX{} 
-and the work of \mbox{Edward R.~Tufte} 
+Dedicated to those who appreciate \LaTeX{}
+and the work of \mbox{Edward R.~Tufte}
 and \mbox{Donald E.~Knuth}.
 \end{doublespace}
 \vfill
