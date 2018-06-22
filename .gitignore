@@ -1,9 +1,12 @@
 
-PhD-thesis.aux
-PhD-thesis.idx
-PhD-thesis.lof
-PhD-thesis.log
-PhD-thesis.lot
-PhD-thesis.out
-PhD-thesis.pdf
-PhD-thesis.toc
+*.aux
+*.idx
+*.lof
+*.log
+*.lot
+*.out
+*.pdf
+*.toc
+
+_minted-PhD-thesis/
+*/__pycache__/

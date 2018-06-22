@@ -50,6 +50,7 @@
 \usepackage{xspace}
 
 %%
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{url}
 %\usepackage[nochapters]{classicthesis} % nochapters
@@ -64,11 +65,12 @@
 %\usepackage{bm}
 %\usepackage{bbold}
 \usepackage[english]{babel}
-%\usepackage{minted}
 \usepackage{hyperref}
 \usepackage{tabu}
 \usepackage{rotating}
 \usepackage{mathdots}
+
+\usepackage{minted}
 
 %%
 % Some shortcuts for Tufte's book titles.  The lowercase commands will
@@ -441,6 +443,11 @@ and the use of the \doccls{tufte-book} and \doccls{tufte-handout} document class
 \label{ch:algebraic-gfs-languages-avoiding-Riordan-patterns}
 
 \input{algebraic-gf-for-languages-avoiding-Riordan-patterns/upstream.tex}
+
+\chapter{Queens, tilings and polyominoes}
+\label{ch:queens-tilings-polyominoes}
+
+\input{backtracking/backtracking.tex}
 
 %%
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.

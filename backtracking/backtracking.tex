@@ -1,0 +1,131 @@
+
+\section*{Bitwise programming techniques}
+
+First of all, we introduce basic bitwise tricks and programming idioms that
+will be useful for the understanding of the upcoming content, which lies heavy
+on those techniques for the sake of efficency.
+
+\inputminted[fontsize=\small,stripnl=false, firstline=193,lastline=206]{python}{backtracking/bits.py}
+\inputminted[fontsize=\small,stripnl=false, firstline=208,lastline=221]{python}{backtracking/bits.py}
+\inputminted[fontsize=\small,stripnl=false, firstline=268,lastline=280]{python}{backtracking/bits.py}
+
+\section{The $n$-Queens problem}
+
+In this section we provide a pythonic implementation of the $n$-Queens problem,
+using the approach described by Ruskey \sidenote{\url{http://webhome.cs.uvic.ca/~ruskey/}}
+in Chapter 3 of his unpublished book
+\textit{Combinatorial Generation}
+\sidenote{\url{http://www.1stworks.com/ref/RuskeyCombGen.pdf}}.
+
+We use three \textit{bit masks}, namely integers, to
+represent whether a row, a raising $\nearrow$ and a falling $\searrow$ diagonal
+are "under attack" by an already placed queen, instead of three boolean arrays.
+It is sufficient to use \textit{one} bit only to represent that a cell on a diagonal
+is under attack, namely to each diagonal is associated one bit according to:
+\begin{itemize}
+\item if such diagonal is raising, call it $d_\nearrow$, then $a_{r_{1}, c_{1}}\in
+  d_\nearrow \wedge a_{r_{2}, c_{2}} \in d_\nearrow$ if and only if
+  $r_{1}+c_{1}=r_{2}+c_{2}$; in words, the sum of the row and column indices is
+  constant along raising diagonals; therefore, diagonal $d_\nearrow$ is
+  associated to the bit in position $r_{1}+c_{1}$ of a suitable bitmask.
+\item if such diagonal is falling, call it $d_\searrow$, then $a_{r_{1},
+  c_{1}}\in d_\searrow \wedge a_{r_{2}, c_{2}} \in d_\searrow$ if and only if
+  $c_{1}-r_{1}=c_{2}-r_{2}$; in words, the difference of the column and row
+  indices is constant along falling diagonals; therefore, diagonal $d_\searrow$
+  is associated to the bit in position  $c_{1}-r_{1}$, of a suitable bitmask $p$.
+  In order to be consistent, if $c_{1}-r_{1} < 0$ then take the difference modulo
+  $2n-1$, where $n$ is the number of rows (and columns), namely:
+  \begin{displaymath}
+  \begin{split}
+  &p_{n-1}\,p_{n-2}\,\ldots\,p_{0}p_{-1}\,p_{-2}\,\ldots\,p_{-(n-1)} \rightarrow \\
+  &p_{-1 mod(2n-1)}\,p_{-2 mod(2n-1)}\,\ldots\,p_{-(n-1) mod(2n-1)}p_{n-1}\,p_{n-2}\,\ldots\,p_{0} \rightarrow \\
+  &p_{2n-2}\,p_{2n-3}\,\ldots\,p_{n}p_{n-1}\,p_{n-2}\,\ldots\,p_{0}\\
+  \end{split}
+  \end{displaymath}
+\end{itemize}
+where rows and cols indexes range in $\lbrace 0,\ldots,n-1 \rbrace$; in both
+cases, it is necessary a bitmask $2n-1$ bits long. Here's the code:
+\newpage
+\inputminted[fontsize=\small,firstline=3,lastline=33]{python}{backtracking/queens.py}
+
+\begin{margintable}
+Using the following pretty printer
+\inputminted[fontsize=\footnotesize,firstline=35, lastline=44]{python}{backtracking/queens.py}
+\noindent we show solutions for $5$-Queens with
+%\inputminted[fontsize=\footnotesize,stripnl=false,firstline=49, lastline=50]{python}{backtracking/queens.py}
+\inputminted[fontsize=\footnotesize,]{python}{backtracking/5queens-enumeration-snippet.py}
+\begin{verbatim}
+|Q| | | | |  |Q| | | | |
+| | | |Q| |  | | |Q| | |
+| |Q| | | |  | | | | |Q|
+| | | | |Q|  | |Q| | | |
+| | |Q| | |  | | | |Q| |
+
+| | |Q| | |  | | | |Q| |
+|Q| | | | |  |Q| | | | |
+| | | |Q| |  | | |Q| | |
+| |Q| | | |  | | | | |Q|
+| | | | |Q|  | |Q| | | |
+
+| |Q| | | |  | | | | |Q|
+| | | |Q| |  | | |Q| | |
+|Q| | | | |  |Q| | | | |
+| | |Q| | |  | | | |Q| |
+| | | | |Q|  | |Q| | | |
+
+| |Q| | | |  | | | | |Q|
+| | | | |Q|  | |Q| | | |
+| | |Q| | |  | | | |Q| |
+|Q| | | | |  |Q| | | | |
+| | | |Q| |  | | |Q| | |
+
+| | | |Q| |  | | |Q| | |
+| |Q| | | |  | | | | |Q|
+| | | | |Q|  | |Q| | | |
+| | |Q| | |  | | | |Q| |
+|Q| | | | |  |Q| | | | |
+\end{verbatim}
+\caption{Enumeration of $5$-Queens problem's solutions.}
+\end{margintable}
+
+Enumerating all solutions for different integers $n$ we get the known sequence
+\url{http://oeis.org/A000170}, which starts with
+\begin{minted}[fontsize=\small]{python}
+>>> [len(list(queens(i))) for i in range(1,13)]
+[1, 0, 0, 2, 10, 4, 40, 92, 352, 724, 2680, 14200]
+\end{minted}
+%\inputminted[fontsize=\footnotesize,firstline=117, lastline=119]{python}{backtracking/queens.py}
+
+Moreover, we can tackle the more complex $24$-Queens problem, providing a
+solution as follows
+\newpage
+\begin{minted}[fontsize=\small]{python}
+>>> more_queens = queens(24)
+>>> print(pretty(next(more_queens)))
+|Q| | | | | | | | | | | | | | | | | | | | | | | |
+| | | |Q| | | | | | | | | | | | | | | | | | | | |
+| |Q| | | | | | | | | | | | | | | | | | | | | | |
+| | | | |Q| | | | | | | | | | | | | | | | | | | |
+| | |Q| | | | | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | |Q| | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | |Q| | |
+| | | | | | | | | | | | | | | | | |Q| | | | | | |
+| | | | | |Q| | | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | |Q| | | | | | | | | |
+| | | | | | |Q| | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | |Q| | | | | |
+| | | | | | | | | | | | | | | | | | | | |Q| | | |
+| | | | | | | |Q| | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | | | | | | | |Q|
+| | | | | | | | | | | | | | | | | | | |Q| | | | |
+| | | | | | | | | | | | | | | | | | | | | | |Q| |
+| | | | | | | | |Q| | | | | | | | | | | | | | | |
+| | | | | | | | | | |Q| | | | | | | | | | | | | |
+| | | | | | | | | | | | |Q| | | | | | | | | | | |
+| | | | | | | | | | | | | | | |Q| | | | | | | | |
+| | | | | | | | | |Q| | | | | | | | | | | | | | |
+| | | | | | | | | | | |Q| | | | | | | | | | | | |
+| | | | | | | | | | | | | |Q| | | | | | | | | | |
+\end{minted}
+
+
