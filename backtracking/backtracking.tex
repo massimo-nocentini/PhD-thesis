@@ -8,6 +8,7 @@ on those techniques for the sake of efficency.
 \inputminted[fontsize=\small,stripnl=false, firstline=193,lastline=206]{python}{backtracking/bits.py}
 \inputminted[fontsize=\small,stripnl=false, firstline=208,lastline=221]{python}{backtracking/bits.py}
 \inputminted[fontsize=\small,stripnl=false, firstline=268,lastline=280]{python}{backtracking/bits.py}
+\inputminted[fontsize=\small,stripnl=false, firstline=265,lastline=266]{python}{backtracking/bits.py}
 
 \section{The $n$-Queens problem}
 
@@ -128,4 +129,157 @@ solution as follows
 | | | | | | | | | | | | | |Q| | | | | | | | | | |
 \end{minted}
 
+\section{Polyominoes}
+
+
+In this section we play with some problems concerning
+\textit{polyominoes}\sidenote{\url{https://en.wikipedia.org/wiki/Polyomino}},
+formalized and introduced by prof. Solomon Golomb and extended in various
+directions; we got interest in this topic after reading the chapter about
+backtracking in the volume of Ruskey, cited in the previous section.
+
+\subsection{Backtracking machanism}
+
+Maybe the hardest part in understanding concerns how to represent the board and
+the state (free/occupied) of each cell; moreover, the question about how a
+shape, and its orientation, is interesting too. We answer to each question in
+turns:
+\begin{itemize}
+    \item a board with $r$ rows and $c$ columns is represented by an
+    \textit{integer} with $rc$ bits; this is because we want to use bit masking
+    techniques and it is efficient to find the \textit{next free} cell (using
+    the utility function \verb|low_bit|), which correspond to the position of
+    the first bit $1$ from the right, namely the right-most $1$ in the least
+    significant part.
+    \begin{margintable}[-2cm]
+        \begin{displaymath}
+        \begin{array}{c|c|c|c|c}
+        0 & r & 2r & \ldots & (c-1)r \\
+        \hline
+        1 & r+1 & 2r+1 & \ldots & (c-1)r+1 \\
+        \hline
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        \hline
+        r-1 & 2r-1 & 3r-1 & \ldots & rc-1\\
+        \end{array}
+        \end{displaymath}
+    \end{margintable}
+
+    \item a \textit{shape} is a collection of cells, usually sharing an edge
+    pairwise. We choose to represent a shape as a \verb|namedtuple| object: it
+    has an \textit{hashable} component and a collection of
+    \textit{isomorphisms} to represent rotations and mirroring, coded as a
+    lambda expression which consumes the \textit{anchor} position as a pair of row
+    and column indices, and returns a list of isomorphic shapes, namely
+    positions coding symmetry, reflection or rotation of the shape; therefore,
+    \textit{each isomorphism is a sequence of positions too}.
+\end{itemize}
+By \textit{anchor} we mean the position in which the top-left cell of a shape
+orientation will be placed in the next \textit{free} cell in the board; every
+orientation should be relative to the anchor provided.
+\begin{margintable}
+The anchor is \textit{always} given with respect to position \verb|(r,c)|:
+\begin{verbatim}
+    *                     (r-2,c+2)
+    *   ->                (r-1,c+2)
+* * *       (r,c) (r,c+1) (r, c+2)
+\end{verbatim}
+so the orientation is coded as the \textit{tuple}
+\begin{verbatim}
+((r,c), (r,c+1), (r-2,c+2), 
+ (r-1,c+2), (r, c+2))
+\end{verbatim}
+\end{margintable}
+Observe how pairs are listed according to the order \textit{top to bottom} and,
+when rows are exausted go up to the top of the next column and repeat, so then
+\textit{left to right}.  The following section contains many examples of
+manually-coded shapes.
+
+\subsection{Pentominoes}
+
+In order to structure our thoughts, we start with the definition of the shape
+concept as a \verb|namedtuple| object:
+\inputminted[fontsize=\small,stripnl=false,firstline=4, lastline=6]{python}{backtracking/polyominoes.py}
+we are now ready to define the backtracking algorithm:
+\newpage
+\inputminted[fontsize=\small,stripnl=false,firstline=8, lastline=57]{python}{backtracking/polyominoes.py}
+
+Now, we introduce shapes with their orientations according to the given rules;
+for example, here is the definition of \verb|V_shape|:
+\inputminted[fontsize=\small,stripnl=false,firstline=190, lastline=202]{python}{backtracking/polyominoes.py}
+
+With the current setup we can define the set of shapes and, consequently, the
+generator over the solution space with 
+\begin{minted}[fontsize=\small]{python}
+>>> '''
+... X:      I:  V:      U:    W:      T:
+...   *     *   *       * *   *       * * *
+... * * *   *   *       *     * *       *
+...   *     *   * * *   * *     * *     *
+...         *
+...         *
+...
+... Z:      N:    L:    Y:    F:      P:
+... *       *     *     *     *       *
+... * * *   * *   *     * *   * * *   * *
+...     *     *   *     *       *     * *
+...           *   * *   *
+... '''
+>>> shapes = [X_shape, I_shape, V_shape, U_shape, W_shape, T_shape,
+...           Z_shape, N_shape, L_shape, Y_shape, F_shape, P_shape]
+>>> tilings = polyominoes(dim=(6,10), shapes, availables="ones")
+\end{minted}
+\begin{margintable}[-5cm]
+\inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
+\begin{verbatim}
+┌─────────────────────┐
+│ β δ δ δ ε ε ι ι ι ι │
+│ β δ θ δ α ε ε λ λ ι │
+│ β θ θ α α α ε η λ λ │
+│ β θ γ μ α η η η λ ζ │
+│ β θ γ μ μ η κ ζ ζ ζ │
+│ γ γ γ μ μ κ κ κ κ ζ │
+└─────────────────────┘
+┌─────────────────────┐
+│ β δ δ δ η η α ζ ζ ζ │
+│ β δ θ δ η α α α ζ κ │
+│ β θ θ η η λ α ε ζ κ │
+│ β θ γ λ λ λ ε ε κ κ │
+│ β θ γ ι λ ε ε μ μ κ │
+│ γ γ γ ι ι ι ι μ μ μ │
+└─────────────────────┘
+┌─────────────────────┐
+│ β δ δ δ η η ι ι ι ι │
+│ β δ θ δ η ε ε λ λ ι │
+│ β θ θ η η α ε ε λ λ │
+│ β θ γ μ α α α ε λ ζ │
+│ β θ γ μ μ α κ ζ ζ ζ │
+│ γ γ γ μ μ κ κ κ κ ζ │
+└─────────────────────┘
+┌─────────────────────┐
+│ β ε ε ζ ζ ζ ι ι ι ι │
+│ β κ ε ε ζ λ θ θ θ ι │
+│ β κ κ ε ζ λ λ λ θ θ │
+│ β κ γ δ δ α λ η η μ │
+│ β κ γ δ α α α η μ μ │
+│ γ γ γ δ δ α η η μ μ │
+└─────────────────────┘
+┌─────────────────────┐
+│ β ε ε ζ ζ ζ ι ι ι ι │
+│ β κ ε ε ζ λ θ θ θ ι │
+│ β κ κ ε ζ λ λ λ θ θ │
+│ β κ γ μ η η λ α δ δ │
+│ β κ γ μ μ η α α α δ │
+│ γ γ γ μ μ η η α δ δ │
+└─────────────────────┘
+┌─────────────────────┐
+│ β ε ε μ μ μ ζ δ δ δ │
+│ β κ ε ε μ μ ζ δ θ δ │
+│ β κ κ ε α ζ ζ ζ θ θ │
+│ β κ γ α α α λ η η θ │
+│ β κ γ ι α λ λ λ η θ │
+│ γ γ γ ι ι ι ι λ η η │
+└─────────────────────┘
+\end{verbatim}
+\end{margintable}
 
