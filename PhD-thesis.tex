@@ -2,19 +2,6 @@
 
 \hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
 
-%%
-% Book metadata
-%\title{On Recursion\thanks{Thanks to John McCarthy for his inspiration.}}
-%\author{Massimo Nocentini}
-%\publisher{Universit\`a degli Studi di Firenze}
-
-%%
-% If they're installed, use Bergamo and Chantilly from www.fontsite.com.
-% They're clones of Bembo and Gill Sans, respectively.
-%\IfFileExists{bergamo.sty}{\usepackage[osf]{bergamo}}{}% Bembo
-%\IfFileExists{chantill.sty}{\usepackage{chantill}}{}% Gill Sans
-
-%\usepackage{microtype}
 
 %%
 % Just some sample text
@@ -38,54 +25,58 @@
 %%
 % Prints argument within hanging parentheses (i.e., parentheses that take
 % up no horizontal space).  Useful in tabular environments.
-\newcommand{\hangp}[1]{\makebox[0pt][r]{(}#1\makebox[0pt][l]{)}}
+%\newcommand{\hangp}[1]{\makebox[0pt][r]{(}#1\makebox[0pt][l]{)}}
 
 %%
 % Prints an asterisk that takes up no horizontal space.
 % Useful in tabular environments.
-\newcommand{\hangstar}{\makebox[0pt][l]{*}}
+%\newcommand{\hangstar}{\makebox[0pt][l]{*}}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{euler}
+\usepackage{textcomp}
+%\usepackage{unicode-math}
 
 %%
 % Prints a trailing space in a smart way.
 \usepackage{xspace}
 
 %%
-%\usepackage{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{url}
-%\usepackage[nochapters]{classicthesis} % nochapters
 %\usepackage{newtxtext}
+\usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
 %\usepackage{concrete}
-\usepackage{euler}
 %\usepackage{caption}
 \usepackage{acronym}
 %\usepackage{bm}
 %\usepackage{bbold}
-\usepackage[english]{babel}
 \usepackage{hyperref}
 \usepackage{tabu}
 \usepackage{rotating}
 \usepackage{mathdots}
-
 \usepackage{minted}
+
+
+
 
 %%
 % Some shortcuts for Tufte's book titles.  The lowercase commands will
 % produce the initials of the book title in italics.  The all-caps commands
 % will print out the full title of the book in italics.
-\newcommand{\vdqi}{\textit{VDQI}\xspace}
-\newcommand{\ei}{\textit{EI}\xspace}
-\newcommand{\ve}{\textit{VE}\xspace}
-\newcommand{\be}{\textit{BE}\xspace}
-\newcommand{\VDQI}{\textit{The Visual Display of Quantitative Information}\xspace}
-\newcommand{\EI}{\textit{Envisioning Information}\xspace}
-\newcommand{\VE}{\textit{Visual Explanations}\xspace}
-\newcommand{\BE}{\textit{Beautiful Evidence}\xspace}
+%\newcommand{\vdqi}{\textit{VDQI}\xspace}
+%\newcommand{\ei}{\textit{EI}\xspace}
+%\newcommand{\ve}{\textit{VE}\xspace}
+%\newcommand{\be}{\textit{BE}\xspace}
+%\newcommand{\VDQI}{\textit{The Visual Display of Quantitative Information}\xspace}
+%\newcommand{\EI}{\textit{Envisioning Information}\xspace}
+%\newcommand{\VE}{\textit{Visual Explanations}\xspace}
+%\newcommand{\BE}{\textit{Beautiful Evidence}\xspace}
 
-\newcommand{\TL}{Tufte-\LaTeX\xspace}
+%\newcommand{\TL}{Tufte-\LaTeX\xspace}
 
 % Prints the month name (e.g., January) and the year (e.g., 2008)
 \newcommand{\monthyear}{%
@@ -116,17 +107,18 @@
 \newcommand{\measure}[3]{#1/#2$\times$\unit[#3]{pc}}
 
 % Macros for typesetting the documentation
-\newcommand{\hlred}[1]{\textcolor{Maroon}{#1}}% prints in red
-\newcommand{\hangleft}[1]{\makebox[0pt][r]{#1}}
-\newcommand{\hairsp}{\hspace{1pt}}% hair space
-\newcommand{\hquad}{\hskip0.5em\relax}% half quad space
-\newcommand{\TODO}{\textcolor{red}{\bf TODO!}\xspace}
-\newcommand{\na}{\quad--}% used in tables for N/A cells
-\providecommand{\XeLaTeX}{X\lower.5ex\hbox{\kern-0.15em\reflectbox{E}}\kern-0.1em\LaTeX}
-\newcommand{\tXeLaTeX}{\XeLaTeX\index{XeLaTeX@\protect\XeLaTeX}}
+%\newcommand{\hlred}[1]{\textcolor{Maroon}{#1}}% prints in red
+%\newcommand{\hangleft}[1]{\makebox[0pt][r]{#1}}
+%\newcommand{\hairsp}{\hspace{1pt}}% hair space
+%\newcommand{\hquad}{\hskip0.5em\relax}% half quad space
+%\newcommand{\TODO}{\textcolor{red}{\bf TODO!}\xspace}
+%\newcommand{\na}{\quad--}% used in tables for N/A cells
+%\providecommand{\XeLaTeX}{X\lower.5ex\hbox{\kern-0.15em\reflectbox{E}}\kern-0.1em\LaTeX}
+%\newcommand{\tXeLaTeX}{\XeLaTeX\index{XeLaTeX@\protect\XeLaTeX}}
 % \index{\texttt{\textbackslash xyz}@\hangleft{\texttt{\textbackslash}}\texttt{xyz}}
-\newcommand{\tuftebs}{\symbol{'134}}% a backslash in tt type in OT1/T1
-\newcommand{\doccmdnoindex}[2][]{\texttt{\tuftebs#2}}% command name -- adds backslash automatically (and doesn't add cmd to the index)
+%\newcommand{\tuftebs}{\symbol{'134}}% a backslash in tt type in OT1/T1
+%\newcommand{\doccmdnoindex}[2][]{\texttt{\tuftebs#2}}% command name -- adds backslash automatically (and doesn't add cmd to the index)
+\iffalse
 \newcommand{\doccmddef}[2][]{%
   \hlred{\texttt{\tuftebs#2}}\label{cmd:#2}%
   \ifthenelse{\isempty{#1}}%
@@ -161,8 +153,8 @@
 \newcommand{\docmsg}[2]{\bigskip\begin{fullwidth}\noindent\ttfamily#1\end{fullwidth}\medskip\par\noindent#2}
 \newcommand{\docfilehook}[2]{\texttt{#1}\index{file hooks!#2}\index{#1@\texttt{#1}}}
 \newcommand{\doccounter}[1]{\texttt{#1}\index{#1 counter@\texttt{#1} counter}}
+\fi
 
-\newcommand{\Ra}{\mbox{$\mathcal{R}$}}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -173,6 +165,8 @@
 \newtheorem{example}[theorem]{Example}
 
 % from Donatella's stuff
+
+\newcommand{\Ra}{\mbox{$\mathcal{R}$}}
 
 \def \theequation{\thesection.\arabic{equation}}
 \def \thefigure{\thesection.\arabic{figure}}
@@ -216,6 +210,7 @@
 
 %  ______________________________________________________________________________
 
+
 % Generates the index
 \usepackage{makeidx}
 
@@ -251,11 +246,32 @@
 
 \date{Accademic years from $2015$ to $2018$}
 
-\publisher{ \par
+\publisher{ %\par
             {\small Candidato: \indent\indent\indent dott. \textbf{Massimo Nocentini}}\\
             {\small Tutor: \indent\indent\indent\indent\indent prof. \textbf{Donatella Merlini}}\\
             {\small Coordinatore: \indent prof. \textbf{Graziano Gentili}}\\
 }
+
+\DeclareUnicodeCharacter{221E}{$\infty$}
+\DeclareUnicodeCharacter{250C}{ }
+\DeclareUnicodeCharacter{2500}{ }
+\DeclareUnicodeCharacter{2510}{ }
+\DeclareUnicodeCharacter{2502}{ }
+\DeclareUnicodeCharacter{2514}{ }
+\DeclareUnicodeCharacter{2518}{ }
+\DeclareUnicodeCharacter{03B2}{$\beta$}
+\DeclareUnicodeCharacter{03B4}{$\delta$}
+\DeclareUnicodeCharacter{03B5}{$\epsilon$}
+\DeclareUnicodeCharacter{03B9}{$\iota$}
+\DeclareUnicodeCharacter{03B8}{$\theta$}
+\DeclareUnicodeCharacter{03B1}{$\alpha$}
+\DeclareUnicodeCharacter{03BB}{$\lambda$}
+\DeclareUnicodeCharacter{03B7}{$\eta$}
+\DeclareUnicodeCharacter{03B3}{$\gamma$}
+\DeclareUnicodeCharacter{03BC}{$\mu$}
+\DeclareUnicodeCharacter{03B6}{$\zeta$}
+\DeclareUnicodeCharacter{03BA}{$\kappa$}
+\DeclareUnicodeCharacter{25A2}{$\square$}
 
 \makeindex
 
@@ -269,7 +285,7 @@
 
 % v.2 epigraphs
 \newpage\thispagestyle{empty}
-\openepigraph{%
+\paragraph{%
 The public is more familiar with bad design than good design.
 It is, in effect, conditioned to prefer bad design,
 because that is what it lives with.
@@ -277,13 +293,13 @@ The new becomes threatening, the old reassuring.
 }{Paul Rand%, {\itshape Design, Form, and Chaos}
 }
 \vfill
-\openepigraph{%
+\paragraph{%
 A designer knows that he has achieved perfection
 not when there is nothing left to add,
 but when there is nothing left to take away.
 }{Antoine de Saint-Exup\'{e}ry}
 \vfill
-\openepigraph{%
+\paragraph{%
 \ldots the designer of a new system must not only be the implementor and the first
 large-scale user; the designer should also write the first user manual\ldots
 If I had not participated fully in all these activities,
@@ -295,9 +311,9 @@ why they were important.
 
 % r.3 full title page
 
-\maketitle
+%\maketitle
 
-%\iffalse
+\iffalse
 \begin{center}
 \begin{minipage}{0.14\linewidth}
 \includegraphics[scale=0.45]{logos/logo_unifi}
@@ -376,7 +392,7 @@ Anni 2014/2017
 \end{center}
 \restoregeometry
 
-%\fi
+\fi
 
 % v.4 copyright page
 \newpage
@@ -391,9 +407,9 @@ Copyright \copyright\ \the\year\ Massimo Nocentini
 
 %\par\smallcaps{Published by \thanklesspublisher}
 
-\par\smallcaps{\url{https://github.com/massimo-nocentini/}}
+\par{\url{https://github.com/massimo-nocentini/}}
 
-\par \input{LICENSE}\index{license}
+\par\include{LICENSE}\index{license}
 
 %\par\textit{First printing, \monthyear}
 
@@ -424,9 +440,7 @@ and \mbox{Donald E.~Knuth}.
 \cleardoublepage
 \chapter*{Introduction}
 
-This sample book discusses the design of Edward Tufte's
-books\cite{Tufte2001,Tufte1990,Tufte1997,Tufte2006}
-and the use of the \doccls{tufte-book} and \doccls{tufte-handout} document classes.
+simple introduction.
 
 
 %%

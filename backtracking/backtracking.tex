@@ -186,7 +186,7 @@ The anchor is \textit{always} given with respect to position \verb|(r,c)|:
 \end{verbatim}
 so the orientation is coded as the \textit{tuple}
 \begin{verbatim}
-((r,c), (r,c+1), (r-2,c+2), 
+((r,c), (r,c+1), (r-2,c+2),
  (r-1,c+2), (r, c+2))
 \end{verbatim}
 \end{margintable}
@@ -209,7 +209,7 @@ for example, here is the definition of \verb|V_shape|:
 \inputminted[fontsize=\small,stripnl=false,firstline=190, lastline=202]{python}{backtracking/polyominoes.py}
 
 With the current setup we can define the set of shapes and, consequently, the
-generator over the solution space with 
+generator over the solution space with
 \begin{minted}[fontsize=\small]{python}
 >>> '''
 ... X:      I:  V:      U:    W:      T:
@@ -227,59 +227,307 @@ generator over the solution space with
 ... '''
 >>> shapes = [X_shape, I_shape, V_shape, U_shape, W_shape, T_shape,
 ...           Z_shape, N_shape, L_shape, Y_shape, F_shape, P_shape]
->>> tilings = polyominoes(dim=(6,10), shapes, availables="ones")
+>>> dim = (6,10)
+>>> tilings = polyominoes(dim, shapes, availables="ones")
 \end{minted}
 \begin{margintable}[-5cm]
 \inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
-\begin{verbatim}
-┌─────────────────────┐
-│ β δ δ δ ε ε ι ι ι ι │
-│ β δ θ δ α ε ε λ λ ι │
-│ β θ θ α α α ε η λ λ │
-│ β θ γ μ α η η η λ ζ │
-│ β θ γ μ μ η κ ζ ζ ζ │
-│ γ γ γ μ μ κ κ κ κ ζ │
-└─────────────────────┘
-┌─────────────────────┐
-│ β δ δ δ η η α ζ ζ ζ │
-│ β δ θ δ η α α α ζ κ │
-│ β θ θ η η λ α ε ζ κ │
-│ β θ γ λ λ λ ε ε κ κ │
-│ β θ γ ι λ ε ε μ μ κ │
-│ γ γ γ ι ι ι ι μ μ μ │
-└─────────────────────┘
-┌─────────────────────┐
-│ β δ δ δ η η ι ι ι ι │
-│ β δ θ δ η ε ε λ λ ι │
-│ β θ θ η η α ε ε λ λ │
-│ β θ γ μ α α α ε λ ζ │
-│ β θ γ μ μ α κ ζ ζ ζ │
-│ γ γ γ μ μ κ κ κ κ ζ │
-└─────────────────────┘
-┌─────────────────────┐
-│ β ε ε ζ ζ ζ ι ι ι ι │
-│ β κ ε ε ζ λ θ θ θ ι │
-│ β κ κ ε ζ λ λ λ θ θ │
-│ β κ γ δ δ α λ η η μ │
-│ β κ γ δ α α α η μ μ │
-│ γ γ γ δ δ α η η μ μ │
-└─────────────────────┘
-┌─────────────────────┐
-│ β ε ε ζ ζ ζ ι ι ι ι │
-│ β κ ε ε ζ λ θ θ θ ι │
-│ β κ κ ε ζ λ λ λ θ θ │
-│ β κ γ μ η η λ α δ δ │
-│ β κ γ μ μ η α α α δ │
-│ γ γ γ μ μ η η α δ δ │
-└─────────────────────┘
-┌─────────────────────┐
-│ β ε ε μ μ μ ζ δ δ δ │
-│ β κ ε ε μ μ ζ δ θ δ │
-│ β κ κ ε α ζ ζ ζ θ θ │
-│ β κ γ α α α λ η η θ │
-│ β κ γ ι α λ λ λ η θ │
-│ γ γ γ ι ι ι ι λ η η │
-└─────────────────────┘
-\end{verbatim}
+{
+\setlength{\tabcolsep}{4pt}
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+β & δ & δ & δ & ε & ε & ι & ι & ι & ι \\
+β & δ & θ & δ & α & ε & ε & λ & λ & ι \\
+β & θ & θ & α & α & α & ε & η & λ & λ \\
+β & θ & γ & μ & α & η & η & η & λ & ζ \\
+β & θ & γ & μ & μ & η & κ & ζ & ζ & ζ \\
+γ & γ & γ & μ & μ & κ & κ & κ & κ & ζ \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+β & δ & δ & δ & η & η & α & ζ & ζ & ζ \\
+β & δ & θ & δ & η & α & α & α & ζ & κ \\
+β & θ & θ & η & η & λ & α & ε & ζ & κ \\
+β & θ & γ & λ & λ & λ & ε & ε & κ & κ \\
+β & θ & γ & ι & λ & ε & ε & μ & μ & κ \\
+γ & γ & γ & ι & ι & ι & ι & μ & μ & μ \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+β & δ & δ & δ & η & η & ι & ι & ι & ι \\
+β & δ & θ & δ & η & ε & ε & λ & λ & ι \\
+β & θ & θ & η & η & α & ε & ε & λ & λ \\
+β & θ & γ & μ & α & α & α & ε & λ & ζ \\
+β & θ & γ & μ & μ & α & κ & ζ & ζ & ζ \\
+γ & γ & γ & μ & μ & κ & κ & κ & κ & ζ \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+β & ε & ε & ζ & ζ & ζ & ι & ι & ι & ι \\
+β & κ & ε & ε & ζ & λ & θ & θ & θ & ι \\
+β & κ & κ & ε & ζ & λ & λ & λ & θ & θ \\
+β & κ & γ & δ & δ & α & λ & η & η & μ \\
+β & κ & γ & δ & α & α & α & η & μ & μ \\
+γ & γ & γ & δ & δ & α & η & η & μ & μ \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+β & ε & ε & ζ & ζ & ζ & ι & ι & ι & ι \\
+β & κ & ε & ε & ζ & λ & θ & θ & θ & ι \\
+β & κ & κ & ε & ζ & λ & λ & λ & θ & θ \\
+β & κ & γ & μ & η & η & λ & α & δ & δ \\
+β & κ & γ & μ & μ & η & α & α & α & δ \\
+γ & γ & γ & μ & μ & η & η & α & δ & δ \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+β & ε & ε & μ & μ & μ & ζ & δ & δ & δ \\
+β & κ & ε & ε & μ & μ & ζ & δ & θ & δ \\
+β & κ & κ & ε & α & ζ & ζ & ζ & θ & θ \\
+β & κ & γ & α & α & α & λ & η & η & θ \\
+β & κ & γ & ι & α & λ & λ & λ & η & θ \\
+γ & γ & γ & ι & ι & ι & ι & λ & η & η \\
+\hline
+\end{tabular}
+}
 \end{margintable}
 
+\newpage
+\subsection{With forbidden cells and limited shapes availability}
+
+\begin{minted}[fontsize=\small]{python}
+>>> dim = (6,10)
+>>> tilings = polyominoes(
+...     dim, shapes,
+...     availables={s.name:3 for s in shapes},
+...     forbidden=[(0,0), (1,0), (2,0), (3,0), (4,0),
+...                (1,9),(2,9),(3,9),(4,9), (5,9),
+...                (1,5), (2, 4), (2, 5), (3, 4), (3,5)])
+\end{minted}
+
+\begin{margintable}%[-5cm]
+\inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
+{
+\setlength{\tabcolsep}{4pt}
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+  & γ & γ & γ & δ & δ & δ & ζ & ζ & ζ \\
+  & ι & ι & γ & δ &   & δ & λ & ζ & \\
+  & ι & μ & γ &   &   & λ & λ & ζ & \\
+  & ι & μ & μ &   &   & η & λ & λ & \\
+  & ι & μ & μ & θ & θ & η & η & η & \\
+β & β & β & β & β & θ & θ & θ & η & \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+  & γ & γ & γ & ι & ι & ι & ι & λ & λ \\
+  & μ & μ & γ & ι &   & ε & λ & λ & \\
+  & μ & μ & γ &   &   & ε & ε & λ & \\
+  & δ & μ & δ &   &   & η & ε & ε & \\
+  & δ & δ & δ & θ & θ & η & η & η & \\
+β & β & β & β & β & θ & θ & θ & η & \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+  & γ & γ & γ & ι & ι & ι & ι & λ & λ \\
+  & γ & μ & μ & ι &   & ε & λ & λ & \\
+  & γ & μ & μ &   &   & ε & ε & λ & \\
+  & δ & μ & δ &   &   & η & ε & ε & \\
+  & δ & δ & δ & θ & θ & η & η & η & \\
+β & β & β & β & β & θ & θ & θ & η & \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+  & γ & γ & γ & θ & θ & δ & δ & λ & λ \\
+  & γ & θ & θ & θ &   & δ & λ & λ & \\
+  & γ & ε & ε &   &   & δ & δ & λ & \\
+  & ε & ε & κ &   &   & ζ & μ & μ & \\
+  & ε & κ & κ & κ & κ & ζ & μ & μ & \\
+β & β & β & β & β & ζ & ζ & ζ & μ & \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+  & γ & γ & γ & θ & θ & δ & δ & λ & λ \\
+  & γ & θ & θ & θ &   & δ & λ & λ & \\
+  & γ & ε & ε &   &   & δ & δ & λ & \\
+  & ε & ε & κ &   &   & η & η & μ & \\
+  & ε & κ & κ & κ & κ & η & μ & μ & \\
+β & β & β & β & β & η & η & μ & μ & \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+  & γ & γ & γ & θ & θ & δ & δ & λ & λ \\
+  & γ & θ & θ & θ &   & δ & λ & λ & \\
+  & γ & ε & ε &   &   & δ & δ & λ & \\
+  & ε & ε & κ &   &   & μ & μ & μ & \\
+  & ε & κ & κ & κ & κ & μ & μ & ι & \\
+β & β & β & β & β & ι & ι & ι & ι & \\
+\hline
+\end{tabular}
+$\quad$\\
+$\quad$\\
+}
+\end{margintable}
+
+\subsection{Polyomino's order}
+
+In the exercise 7 of his book, Ruskey asks to find the \textit{order} of some
+polyomino, defined according to
+
+\begin{definition}
+The order of a polyomino $P$ is the smallest number of $P$ copies that will
+perfectly fit into a rectangle board, where rotations and reflections of $P$
+are allowed.
+\end{definition}
+
+We reproduce the tiling using the \verb|Y| polyomino and we check that its order is
+actually 10; in order to show this fact we give 10 copies of the \verb|Y_shape| object,
+each one with one piece available, respectively:
+\begin{minted}[fontsize=\small]{python}
+>>> Y_shapes = [
+...     shape_spec(name="{}_{}".format(Y_shape.name, i), 
+...                isomorphisms=Y_shape.isomorphisms)
+...     for i in range(10)
+... ]
+>>> dim = (5,10)
+>>> Y_tilings = polyominoes(dim, Y_shapes, availables='ones')
+\end{minted}
+
+\begin{margintable}
+\mintinline[fontsize=\footnotesize]{python}{>>> print(pretty(next(Y_tilings)))}
+
+{
+\setlength{\tabcolsep}{4pt}
+$\quad$\\
+\begin{tabular}{|cccccccccc|}
+\hline
+α & γ & γ & γ & γ & ζ & ι & ι & ι & ι \\
+α & α & δ & γ & ζ & ζ & ζ & ζ & ι & κ \\
+α & δ & δ & δ & δ & η & η & η & η & κ \\
+α & β & ε & ε & ε & ε & θ & η & κ & κ \\
+β & β & β & β & ε & θ & θ & θ & θ & κ \\
+\hline
+\end{tabular}
+}
+\end{margintable}
+
+\subsection{Fibonacci's tilings}
+
+\inputminted[fontsize=\small,stripnl=false, firstline=511,lastline=525]{python}{backtracking/polyominoes.py}
+
+The classic sequence of Fibonacci's numbers, \marginnote{\url{https://oeis.org/A000045}}
+\begin{minted}[fontsize=\small]{python}
+>>> [len(list(polyominoes(dim=(1,i), 
+...                       shapes=fibonacci_shapes, 
+...                       availables='inf')))
+...  for i in range(13)]
+[0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233]
+\end{minted}
+Number of matchings in ladder graph $L_n = P_2 \times P_n$, \marginnote{\url{https://oeis.org/A030186}}
+\begin{minted}[fontsize=\small]{python}
+>>> [len(list(polyominoes(dim=(2,i), 
+...                       shapes=fibonacci_shapes, 
+...                       availables='inf')))
+...  for i in range(13)]
+[0, 2, 7, 22, 71, 228, 733, 2356, 7573, 24342, 78243, 251498, 808395]
+\end{minted}
+Number of matchings in graph $P_{3} \times P_{n}$, \marginnote{\url{https://oeis.org/A033506}}
+\begin{minted}[fontsize=\small]{python}
+>>> [len(list(polyominoes(dim=(3,i), 
+...                       shapes=fibonacci_shapes, 
+...                       availables='inf')))
+...  for i in range(7)]
+[0, 3, 22, 131, 823, 5096, 31687]
+\end{minted}
+Number of matchings in graph $P_{4} \times P_{n}$, \marginnote{\url{https://oeis.org/A033507}}
+\begin{minted}[fontsize=\small]{python}
+>>> [len(list(polyominoes(dim=(4,i), 
+...                       shapes=fibonacci_shapes, 
+...                       availables='inf')))
+...  for i in range(7)]
+[0, 5, 71, 823, 10012, 120465, 1453535]
+\end{minted}
+Number of matchings in graph $P_{5} \times P_{n}$, \marginnote{\url{https://oeis.org/A033508}}
+\begin{minted}[fontsize=\small]{python}
+>>> [len(list(polyominoes(dim=(5,i), 
+...                       shapes=fibonacci_shapes, 
+...                       availables='inf')))
+...  for i in range(6)]
+[0, 8, 228, 5096, 120465, 2810694]
+\end{minted}
+
+\newpage
+
+{
+\footnotesize
+\begin{Verbatim}
+ ▢ ▢ ▢          ▢ ▢ ▢          ▢ ▢            ▢ ▢            ▢ ▢ ▢ ▢        ▢ ▢ ▢
+ ▢ ▢ ▢          ▢ ▢ ▢          ▢ ▢ ▢          ▢ ▢            ▢ ▢ ▢ ▢        ▢ ▢ ▢
+ ▢ ▢ ▢            ▢ ▢          ▢ ▢ ▢          ▢ ▢                               ▢
+                                              ▢ ▢                          
+                                                                           
+ ▢ ▢ ▢          ▢ ▢            ▢ ▢            ▢              ▢              ▢ ▢
+   ▢ ▢          ▢ ▢            ▢ ▢ ▢          ▢ ▢ ▢          ▢ ▢            ▢ ▢
+   ▢ ▢          ▢ ▢ ▢            ▢ ▢          ▢ ▢ ▢          ▢ ▢            ▢ ▢
+                                                             ▢ ▢              ▢
+                                                                           
+ ▢ ▢ ▢ ▢        ▢ ▢ ▢          ▢ ▢            ▢ ▢ ▢          ▢ ▢            ▢
+   ▢ ▢ ▢        ▢ ▢ ▢ ▢        ▢ ▢              ▢ ▢          ▢ ▢ ▢          ▢ ▢
+                                 ▢ ▢              ▢              ▢          ▢ ▢ ▢
+                                                                           
+                                                                           
+ ▢              ▢ ▢            ▢              ▢ ▢ ▢          ▢ ▢            ▢ ▢ ▢ ▢
+ ▢ ▢ ▢            ▢ ▢          ▢ ▢              ▢ ▢ ▢        ▢ ▢ ▢ ▢            ▢ ▢
+   ▢ ▢            ▢ ▢          ▢ ▢                                         
+                                 ▢                                         
+                                                                           
+ ▢ ▢            ▢              ▢ ▢ ▢          ▢              ▢              ▢ ▢
+ ▢ ▢            ▢                  ▢          ▢ ▢            ▢ ▢ ▢            ▢
+   ▢            ▢ ▢                ▢            ▢ ▢              ▢            ▢ ▢
+   ▢            ▢ ▢                                                        
+                                                                           
+ ▢ ▢            ▢              ▢              ▢ ▢            ▢              ▢ ▢ ▢
+   ▢ ▢          ▢              ▢ ▢ ▢ ▢          ▢            ▢                  ▢ ▢
+     ▢          ▢ ▢ ▢                           ▢            ▢             
+                                                ▢            ▢ ▢           
+                                                                           
+ ▢              ▢ ▢ ▢ ▢        ▢              ▢ ▢            ▢              ▢ ▢ ▢ ▢ ▢
+ ▢                    ▢        ▢ ▢              ▢ ▢ ▢        ▢             
+ ▢ ▢                             ▢                           ▢             
+   ▢                             ▢                           ▢             
+                                                             ▢             
+
+\end{Verbatim}
+}

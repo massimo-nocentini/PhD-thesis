@@ -1,5 +1,5 @@
 
-do: unittests
+do: #unittests
 	pdflatex -shell-escape PhD-thesis.tex
 
 dependencies:
@@ -7,3 +7,6 @@ dependencies:
 
 unittests:
 	cd backtracking && python3 -m doctest queens.py polyominoes.py
+
+clean:
+	rm -f *.aux *.idx *.lof *.log *.lot *.out *.pdf *.toc
