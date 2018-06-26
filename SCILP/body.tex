@@ -1,0 +1,469 @@
+
+\section{Introduction}
+\label{sec:introduction}
+
+Theorem provers are employed to construct logically verified truths.
+In this work, we propose an extended language of tactics which support
+the derivation of formally verified theorems in the spirit of the
+logic programming paradigm.
+
+Our setup, is based on the HOL Light theorem prover, in which we
+extend the currently available tactic mechanism with three basic
+features: (i)~the explicit use of meta variables, (ii)~the ability to
+backtrack during the proof search, (iii)~a layer of tools and
+facilities to interface with the underlying proof mechanism.
+
+The basic building block of our framework are ML procedures that we
+call \emph{solvers}, which are a generalization of HOL tactics and
+are~--as well as tactics-- meant to be used compositionally to define
+arbitrarily complex proof search strategies.
+
+We say that our approach is \emph{semi-certified} because the produced
+solutions are formally proved theorems, hence their validity is
+guaranteed by construction; however, the completeness of the search
+procedure has to be ensured by a meta reasoning.
+
+At the present stage, our implementation is intended to be a test bed
+for experiments and further investigation on this reasoning paradigm.
+
+Our code is available from in a shared
+repository\footnote{\url{https://github.com/massimo-nocentini/kanren-light}}.
+
+\section{An simple example}
+\label{sec:an-simple-example}
+
+To give the flavor of our framework, we show how to perform simple
+computations on lists.
+
+Consider first the problem of computing the concatenation of two lists
+\verb|[1; 2]| and \verb|[3]|.  One natural way to approach this
+problem is by using rewriting.  In HOL Light, this can be done using
+\emph{conversions} with the command
+\begin{verbatim}
+# REWRITE_CONV [APPEND_NIL; APPEND_CONS] `APPEND [1;2] [3]`;;
+\end{verbatim}
+where the two theorems
+\begin{verbatim}
+# APPEND_NIL;;
+val it : thm = |- !l. APPEND [] l = l
+
+# APPEND_CONS;;
+val it : thm =
+  |- !x xs ys zs. APPEND xs ys = zs
+                  ==> APPEND (x :: xs) ys = x :: zs
+\end{verbatim}
+characterize the concatenation operator \verb|APPEND|.
+
+Our implementation allows us to address the same problem from a
+logical point of view.  We start by defining the following
+\emph{solver}
+\begin{verbatim}
+let APPEND_SLV : solver =
+  REPEAT_SLV (CONCAT_SLV (ACCEPT_SLV APPEND_NIL)
+                         (RULE_SLV APPEND_CONS));;
+\end{verbatim}
+which implements the most obvious strategy for proving a relation of
+the form \verb|`APPEND x y = z`| by structural analysis on the list
+\verb|`x`|.  The precise meaning of the above code will be clear later
+in this note; however, this can be seen as the direct translation of
+the Prolog program
+\begin{verbatim}
+append([],X,X).
+append([X|Xs],Ys,[X|Zs]) :- append(Xs,Ys,Zs).
+\end{verbatim}
+
+Then, the problem of concatenating the two lists is described by the
+term
+\begin{verbatim}
+`??x. APPEND [1;2] [3] = x`
+\end{verbatim}
+where the binder \verb|`(??)`| is a syntactic variant of the usual
+existential quantifier \verb|`(?)`|, which introduces the meta
+variables of the \emph{query}.
+
+The following command
+\begin{verbatim}
+list_of_stream
+  (solve APPEND_SLV
+         `??x. APPEND [1; 2] [3] = x`);;
+\end{verbatim}
+runs the search process where the \verb|solve| function starts the
+proof search and produces a stream (i.e., a lazy list) of
+\emph{solutions} and the outermost \verb|list_of_stream| transform the
+stream into a list.
+
+The output of the previous command is a single solution which is
+represented by a pair where the first element is the instantiation for
+the meta variable \verb|`x`|and the second element is a HOL theorem
+\begin{verbatim}
+val it : (term list * thm) list =
+  [([`x = [1; 2; 3]`], |- APPEND [1; 2] [3] = [1; 2; 3])]
+\end{verbatim}
+
+Now comes the interesting part: as in logic programs, our search
+strategy (i.e., the \verb|APPEND_SLV| solver) can be used for backward
+reasoning.
+
+Consider the variation of the above problem where we want to enumerate
+all possible splits of the list \verb|[1; 2; 3]|.  This can be done by
+simply changing the goal term in the previous query:
+\begin{verbatim}
+# list_of_stream
+    (solve APPEND_SLV
+           `??x y. APPEND x y = [1;2;3]`);;
+
+val it : (term list * thm) list =
+  [([`x = []`; `y = [1; 2; 3]`],
+    |- APPEND [] [1; 2; 3] = [1; 2; 3]);
+   ([`x = [1]`; `y = [2; 3]`],
+    |- APPEND [1] [2; 3] = [1; 2; 3]);
+   ([`x = [1; 2]`; `y = [3]`],
+    |- APPEND [1; 2] [3] = [1; 2; 3]);
+   ([`x = [1; 2; 3]`; `y = []`],
+    |- APPEND [1; 2; 3] [] = [1; 2; 3])]
+\end{verbatim}
+
+\section{A library of solvers}
+\label{sec:library-solvers}
+
+Our framework is based on ML procedures called \emph{solvers}.
+Solvers generalizes classical HOL tactics in two ways: (i) they
+facilitate the manipulation of meta variables in the goal\footnote{The
+  tactic mechanism currently implemented in HOL Light already provides
+  basic support for meta variables in goals.  However, it seems to be
+  used only internally in the implementation of the intuitionistic
+  tautology prover \texttt{ITAUT\_TAC}.}; (ii) they allows to backtrack
+during the proof search.
+
+We provide a library of basic solvers.  They usually have a name that
+ends in \verb|_SLV| as, for instance, \verb|CONJ_SLV|.
+
+Every HOL tactic can be `promoted' into a solver using the ML function
+\begin{verbatim}
+TACTIC_SLV : tactic -> solver
+\end{verbatim}
+A partial list of solvers corresponding to classical HOL tactics is
+\verb|ACCEPT_SLV|, \verb|ALL_SLV|, \verb|ASSUME_SLV|, \verb|CONJ_SLV|,
+\verb|CONTR_SLV|, \verb|CONV_SLV|, \verb|DISCH_SLV|, \verb|DISJ1_SLV|,
+\verb|DISJ2_SLV|, \verb|EQ_SLV|, \verb|GEN_SLV|, \verb|LABEL_SLV|,
+\verb|NO_SLV|, \verb|REFL_SLV|, \verb|RULE_SLV| (corresponding to
+\verb|MATCH_MP_TAC|).
+
+However, whenever it make sense, solvers use term unification instead
+of term matching.  For instance, the \verb|REFL_SLV| solver, applied
+to the goal
+\begin{verbatim}
+?- x + 1 = 1 + x
+\end{verbatim}
+where \verb|x| is a metavariable, closes the goal by augmenting the
+instantiation with the substitution $\mathtt{1}/\mathtt{x}$ and
+producing the theorem \verb!|- 1 + 1 = 1 + 1!.
+
+As for tactics, we have a collection of higher-order solvers.  Some of
+them, are the analogous of the corresponding tacticals:
+\verb|ASSUM_LIST_SLV|,
+\verb|CHANGE_SLV|,
+\verb|EVERY_SLV|,
+\verb|MAP_EVERY_SLV|,
+\verb|POP_ASSUM_LIST_SLV|,
+\verb|POP_ASSUM_SLV|,
+\verb|REPEAT_SLV|,
+\verb|RULE_ASSUM_SLV|,
+\verb|THENL_SLV|,
+\verb|THEN_SLV|,
+\verb|TRY_SLV|,
+\verb|UNDISCH_THEN_SLV|.
+
+
+Given two solvers $s_1$ and $s_2$ the solver combinator
+\verb|CONCAT_SLV| make a new solver that collect sequentially all
+solutions of $s_1$ followed by all solution of $s_2$.  This is the
+most basic construction for introducing backtracking into the proof
+strategy.
+
+From \verb|CONCAT_SLV|, a number of derived combinators are defined to
+capture the most common enumerating pattern.  In this synthetic note,
+we give here a brief list of those combinators without an explicit
+description.  However, we hope that the reader can guess the actual
+behaviour from both their name and their ML type:\\
+\verb|COLLECT_SLV : solver list -> solver|\\
+\verb|MAP_COLLECT_SLV : ('a->solver) -> 'a list -> solver|\\
+\verb|COLLECT_ASSUM_SLV : thm_solver -> solver|\\
+\verb|COLLECT_X_ASSUM_SLV : thm_solver -> solver|.
+
+%% Solver 'bilanciati'?
+%% % let MPLUS_SLV (slv1:solver) (slv2:solver) : solver =
+%% %   fun g -> mplusf (slv1 g) (fun _ -> slv2 g);;
+%% 
+%% % let INTERLEAVE_SLV (slvl:solver list) : solver =
+%% %   if slvl = [] then NO_SLV else end_itlist MPLUS_SLV slvl;;
+%% 
+%% % let MAP_INTERLEAVE_SLV (slvf:'a->solver) (lst:'a list) : solver =
+%% %   INTERLEAVE_SLV (map slvf lst);;
+%% 
+%% % let INTERLEAVE_ASSUM_SLV (tslv:thm_solver) : solver =
+%% %   fun (mvs,(asl,w) as g) -> MAP_INTERLEAVE_SLV (tslv o snd) asl g;;
+%% 
+%% % let INTERLEAVE_X_ASSUM_SLV (tslv:thm_solver) : solver =
+%% %   INTERLEAVE_ASSUM_SLV (fun th -> UNDISCH_THEN_SLV (concl th) tslv);;
+
+Solvers can be used interactively.  Typically, we can start a new goal
+with the command \verb|gg| and execute solvers with \verb|ee|.  The
+command \verb|bb| restore the previous proof state and \verb|pp|
+prints the current goal state.  The stream of results is produced by
+a call to \verb|top_thms()|.
+
+Here is an example of interaction.  We first introduce the goal,
+notice the use of the binder \verb|(??)| for the metavariable \verb|x|:
+\begin{verbatim}
+# gg `??x. 2 + 2 = x`;;
+val it : mgoalstack = 
+`2 + 2 = x`
+\end{verbatim}
+one possible solution is by using reflexivity, closing the proof
+\begin{verbatim}
+# ee REFL_SLV;;
+val it : mgoalstack = 
+\end{verbatim}
+we can now form the resulting theorem
+\begin{verbatim}
+# list_of_stream(top_thms());;
+val it : thm list = [|- 2 + 2 = 2 + 2]
+\end{verbatim}
+
+Now, if one want to find a different solution, we can restore the
+initial state
+\begin{verbatim}
+# bb();;
+val it : mgoalstack = 
+`2 + 2 = x`
+\end{verbatim}
+then use a different solver, for instance by unifying with the
+equation \verb?|- 2 + 2 = 4?
+\begin{verbatim}
+# ee (ACCEPT_SLV(ARITH_RULE `2 + 2 = 4`));;
+val it : mgoalstack = 
+\end{verbatim}
+and, again, take the resulting theorem
+\begin{verbatim}
+# list_of_stream(top_thms());;
+val it : thm list = [|- 2 + 2 = 4]
+\end{verbatim}
+
+Finally, we can change the proof strategy to find both solutions by
+using backtracking
+\begin{verbatim}
+# bb();;
+val it : mgoalstack = 
+`2 + 2 = x`
+
+# ee (CONCAT_SLV REFL_SLV (ACCEPT_SLV(ARITH_RULE `2 + 2 = 4`)));;
+val it : mgoalstack = 
+# list_of_stream(top_thms());;
+val it : thm list = [|- 2 + 2 = 2 + 2; |- 2 + 2 = 4]
+\end{verbatim}
+
+The function
+\begin{verbatim}
+solve : solver -> term -> (term list * thm) stream
+\end{verbatim}
+runs the proof search non interactively and produces a list of
+solutions as already shown in Section~\ref{sec:an-simple-example}.  In
+this last case it would be
+\begin{verbatim}
+# list_of_stream
+    (solve (CONCAT_SLV REFL_SLV (ACCEPT_SLV(ARITH_RULE `2 + 2 = 4`)))
+           `??x. 2 + 2 = x`);;
+val it : (term list * thm) list =
+  [([`x = 2 + 2`], |- 2 + 2 = 2 + 2);
+   ([`x = 4`], |- 2 + 2 = 4)]
+\end{verbatim}
+
+\section{Advanced solvers}
+\label{sec:advanced-solvers}
+
+% - PROLOG_SLV (come chiamarla pero'?)
+% - ITAUT_SLV (bug di ITAUT_TAC)
+
+\section{Case study: Evaluation for a lisp-like language}
+\label{sec:lisp-eval}
+
+The material in this section is strongly inspired from the ingenious
+work of Byrd, Holk and Friedman about the miniKanren system
+\cite{Byrd:2012:MLU:2661103.2661105}, where the authors work with the
+semantics of the scheme language.  Here we target a lisp-like
+language, implemented as an object language inside the HOL prover.
+Our language is substantially simpler than the scheme language.  In
+particular, it uses dynamic (instead of lexical) scope for variables.
+Nonetheless, we believe that this example can suffice to illustrate
+the general methodology.
+
+First, we need to extend our HOL Light environment with an object
+datatype \verb|sexp| for encoding S-expressions.
+\begin{verbatim}
+let sexp_INDUCT,sexp_RECUR = define_type
+  "sexp = Symbol string
+        | List (sexp list)";;
+\end{verbatim}
+For instance the sexp \verb|(list a (quote b))| is represented as HOL
+term with
+\begin{verbatim}
+`List [Symbol "list";
+       Symbol "a";
+       List [Symbol "quote";
+             Symbol "b"]]`
+\end{verbatim}
+This syntactic representation can be hard to read and gets quickly
+cumbersome as the size of the terms grow.  Hence, we also introduce a
+notation for concrete sexp terms, which is activated by the syntactic
+pattern \verb|'(|\ldots\verb|)|.  For instance, the above example
+is written in the HOL concrete syntax for terms as
+\begin{verbatim}
+`'(list a (quote b))`
+\end{verbatim}
+
+With this setup, we can easily specify the evaluation rules for our
+minimal lisp-like language.  This is an inductive predicate with rules
+for: (i) quoted expressions; (ii) variables; (iii) lambda
+abstractions; (iv) lists; (v) unary applications.  We define a ternary
+predicate \verb|`|$\mathtt{EVAL}\ e\ x\ y\mathtt{}$\verb|`|, where $e$
+is a variable environment expressed as associative list, $x$ is the
+input program and $y$ is the result of the evaluation.
+\begin{verbatim}
+let EVAL_RULES,EVAL_INDUCT,EVAL_CASES = new_inductive_definition
+  `(!e q. EVAL e (List [Symbol "quote"; q]) q) /\
+   (!e a x. RELASSOC a e x ==> EVAL e (Symbol a) x) /\
+   (!e l. EVAL e (List (CONS (Symbol "lambda") l))
+                 (List (CONS (Symbol "lambda") l))) /\
+   (!e l l'. ALL2 (EVAL e) l l'
+             ==> EVAL e (List (CONS (Symbol "list") l)) (List l')) /\
+   (!e f x x' v b y.
+      EVAL e f (List [Symbol "lambda"; List[Symbol v]; b]) /\
+      EVAL e x x' /\ EVAL (CONS (x',v) e) b y
+      ==> EVAL e (List [f; x]) y)`;;
+\end{verbatim}
+
+We now use our framework for running a certified evaluation process
+for this language.  First, we define a solver for a single step of
+computation.
+\begin{verbatim}
+let STEP_SLV : solver =
+  COLLECT_SLV
+    [CONJ_SLV;
+     ACCEPT_SLV EVAL_QUOTED;
+     THEN_SLV (RULE_SLV EVAL_SYMB) RELASSOC_SLV;
+     ACCEPT_SLV EVAL_LAMBDA;
+     RULE_SLV EVAL_LIST;
+     RULE_SLV EVAL_APP;
+     ACCEPT_SLV ALL2_NIL;
+     RULE_SLV ALL2_CONS];;
+\end{verbatim}
+In the above code, we collect the solutions of several different
+solvers.  Other than the five rules of the \verb|EVAL| predicate, we
+include specific solvers for conjunctions and for the two predicates
+\verb|REL_ASSOC| and \verb|ALL2|.
+
+The top-level recursive solver for the whole evaluation predicate is now easy to define:
+\begin{verbatim}
+let rec EVAL_SLV : solver =
+   fun g -> CONCAT_SLV ALL_SLV (THEN_SLV STEP_SLV EVAL_SLV) g;;
+\end{verbatim}
+
+Let us make a simple test.  The evaluation of the expression
+\begin{verbatim}
+((lambda (x) (list x x x)) (list))
+\end{verbatim}
+can by obtained as follows:
+\begin{verbatim}
+# get (solve EVAL_SLV
+             `??ret. EVAL []
+                          '((lambda (x) (list x x x)) (list))
+                          ret`);;
+
+val it : term list * thm =
+  ([`ret = '(() () ())`],
+   |- EVAL [] '((lambda (x) (list x x x)) (list)) '(() () ()))
+\end{verbatim}
+
+Again, we can use the declarative nature of logic programs to run the
+computation backwards.  For instance, one interesting exercise is the
+generation of quine programs, that is, programs that evaluates to
+themselves.  In our formalization, they are those terms $q$ satisfying
+the relation \verb|`EVAL| $q\ q$\verb|`|.  The following command
+computes the first two quines found by our solver.
+\begin{verbatim}
+# let sols = solve EVAL_SLV `??q. EVAL [] q q`);;
+# take 2 sols;;
+
+val it : (term list * thm) list =
+  [([`q = List (Symbol "lambda" :: _3149670)`],
+    |- EVAL [] (List (Symbol "lambda" :: _3149670))
+       (List (Symbol "lambda" :: _3149670)));
+   ([`q =
+      List
+      [List
+       [Symbol "lambda"; List [Symbol _3220800];
+        List [Symbol "list"; Symbol _3220800; Symbol _3220800]];
+       List
+       [Symbol "lambda"; List [Symbol _3220800];
+        List [Symbol "list"; Symbol _3220800; Symbol _3220800]]]`],
+    |- EVAL []
+       (List
+       [List
+        [Symbol "lambda"; List [Symbol _3220800];
+         List [Symbol "list"; Symbol _3220800; Symbol _3220800]];
+        List
+        [Symbol "lambda"; List [Symbol _3220800];
+         List [Symbol "list"; Symbol _3220800; Symbol _3220800]]])
+       (List
+       [List
+        [Symbol "lambda"; List [Symbol _3220800];
+         List [Symbol "list"; Symbol _3220800; Symbol _3220800]];
+        List
+        [Symbol "lambda"; List [Symbol _3220800];
+         List [Symbol "list"; Symbol _3220800; Symbol _3220800]]]))]
+\end{verbatim}
+
+One can easily observe that any lambda expression is trivially a quine
+for our language.  This is indeed the first solution found by our
+search:
+\begin{verbatim}
+([`q = List (Symbol "lambda" :: _3149670)`],
+ |- EVAL []
+         (List (Symbol "lambda" :: _3149670))
+         (List (Symbol "lambda" :: _3149670)))
+\end{verbatim}
+
+The second solution is more interesting.  Unfortunately it is
+presented in a form that is hard to decipher.  A simple trick can help
+us to present this term as a concrete sexp term: it is enough to
+replace the HOL generated variable (\verb|`_3149670`|) with a concrete
+string.  This can be done by an ad hoc substitution.
+\begin{verbatim}
+# let [_; i2,s2] = take 2 sols;;
+# vsubst [`"x"`,hd (frees (rand (hd i2)))] (hd i2);;
+
+val it : term =
+  `q = '((lambda (x) (list x x)) (lambda (x) (list x x)))`
+\end{verbatim}
+
+If we take one more solution from \verb|sols| stream, we get a new
+quine, which, interestingly enough, is precisely the one obtained in
+\cite{Byrd:2012:MLU:2661103.2661105}.
+\begin{verbatim}
+val it : term =
+  `q =
+   '((quote (lambda (x) (list x (list (quote quote) x))))
+     (quote (quote (lambda (x) (list x (list (quote quote) x))))))`
+\end{verbatim}
+
+\section{Conclusions and future work}
+\label{sec:conclusions}
+
+% Citare altri esperimenti
+% - quick sort
+% - cassaforte
+
+% Sviluppi futuri:
+% - constraints
+% - higher-order unification (\lambda Prolog)

@@ -8,5 +8,7 @@
 *.pdf
 *.toc
 
+*.swp
+
 _minted-PhD-thesis/
 */__pycache__/

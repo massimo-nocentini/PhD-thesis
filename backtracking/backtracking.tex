@@ -1,14 +1,13 @@
 
-\section*{Bitwise programming techniques}
 
 First of all, we introduce basic bitwise tricks and programming idioms that
 will be useful for the understanding of the upcoming content, which lies heavy
 on those techniques for the sake of efficency.
+\begin{margintable}[2cm]
+\inputminted[fontsize=\footnotesize]{python}{backtracking/bits_clean.py}
+\caption{Basic bitwise operators.}
+\end{margintable}
 
-\inputminted[fontsize=\small,stripnl=false, firstline=193,lastline=206]{python}{backtracking/bits.py}
-\inputminted[fontsize=\small,stripnl=false, firstline=208,lastline=221]{python}{backtracking/bits.py}
-\inputminted[fontsize=\small,stripnl=false, firstline=268,lastline=280]{python}{backtracking/bits.py}
-\inputminted[fontsize=\small,stripnl=false, firstline=265,lastline=266]{python}{backtracking/bits.py}
 
 \section{The $n$-Queens problem}
 
@@ -195,18 +194,18 @@ when rows are exausted go up to the top of the next column and repeat, so then
 \textit{left to right}.  The following section contains many examples of
 manually-coded shapes.
 
-\subsection{Pentominoes}
 
 In order to structure our thoughts, we start with the definition of the shape
 concept as a \verb|namedtuple| object:
 \inputminted[fontsize=\small,stripnl=false,firstline=4, lastline=6]{python}{backtracking/polyominoes.py}
-we are now ready to define the backtracking algorithm:
-\newpage
-\inputminted[fontsize=\small,stripnl=false,firstline=8, lastline=57]{python}{backtracking/polyominoes.py}
+we define the backtracking algorithm: \newpage
+\inputminted[fontsize=\small,stripnl=false,firstline=8, lastline=60]{python}{backtracking/polyominoes.py}
+
+\subsection{Pentominoes}
 
 Now, we introduce shapes with their orientations according to the given rules;
 for example, here is the definition of \verb|V_shape|:
-\inputminted[fontsize=\small,stripnl=false,firstline=190, lastline=202]{python}{backtracking/polyominoes.py}
+\inputminted[fontsize=\small,stripnl=false,firstline=193, lastline=205]{python}{backtracking/polyominoes.py}
 
 With the current setup we can define the set of shapes and, consequently, the
 generator over the solution space with
@@ -232,79 +231,57 @@ generator over the solution space with
 \end{minted}
 \begin{margintable}[-5cm]
 \inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
-{
-\setlength{\tabcolsep}{4pt}
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-β & δ & δ & δ & ε & ε & ι & ι & ι & ι \\
-β & δ & θ & δ & α & ε & ε & λ & λ & ι \\
-β & θ & θ & α & α & α & ε & η & λ & λ \\
-β & θ & γ & μ & α & η & η & η & λ & ζ \\
-β & θ & γ & μ & μ & η & κ & ζ & ζ & ζ \\
-γ & γ & γ & μ & μ & κ & κ & κ & κ & ζ \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-β & δ & δ & δ & η & η & α & ζ & ζ & ζ \\
-β & δ & θ & δ & η & α & α & α & ζ & κ \\
-β & θ & θ & η & η & λ & α & ε & ζ & κ \\
-β & θ & γ & λ & λ & λ & ε & ε & κ & κ \\
-β & θ & γ & ι & λ & ε & ε & μ & μ & κ \\
-γ & γ & γ & ι & ι & ι & ι & μ & μ & μ \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-β & δ & δ & δ & η & η & ι & ι & ι & ι \\
-β & δ & θ & δ & η & ε & ε & λ & λ & ι \\
-β & θ & θ & η & η & α & ε & ε & λ & λ \\
-β & θ & γ & μ & α & α & α & ε & λ & ζ \\
-β & θ & γ & μ & μ & α & κ & ζ & ζ & ζ \\
-γ & γ & γ & μ & μ & κ & κ & κ & κ & ζ \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-β & ε & ε & ζ & ζ & ζ & ι & ι & ι & ι \\
-β & κ & ε & ε & ζ & λ & θ & θ & θ & ι \\
-β & κ & κ & ε & ζ & λ & λ & λ & θ & θ \\
-β & κ & γ & δ & δ & α & λ & η & η & μ \\
-β & κ & γ & δ & α & α & α & η & μ & μ \\
-γ & γ & γ & δ & δ & α & η & η & μ & μ \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-β & ε & ε & ζ & ζ & ζ & ι & ι & ι & ι \\
-β & κ & ε & ε & ζ & λ & θ & θ & θ & ι \\
-β & κ & κ & ε & ζ & λ & λ & λ & θ & θ \\
-β & κ & γ & μ & η & η & λ & α & δ & δ \\
-β & κ & γ & μ & μ & η & α & α & α & δ \\
-γ & γ & γ & μ & μ & η & η & α & δ & δ \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-β & ε & ε & μ & μ & μ & ζ & δ & δ & δ \\
-β & κ & ε & ε & μ & μ & ζ & δ & θ & δ \\
-β & κ & κ & ε & α & ζ & ζ & ζ & θ & θ \\
-β & κ & γ & α & α & α & λ & η & η & θ \\
-β & κ & γ & ι & α & λ & λ & λ & η & θ \\
-γ & γ & γ & ι & ι & ι & ι & λ & η & η \\
-\hline
-\end{tabular}
+{\footnotesize
+\begin{verbatim}
+┌─────────────────────┐
+│ β δ δ δ ε ε ι ι ι ι │
+│ β δ θ δ α ε ε λ λ ι │
+│ β θ θ α α α ε η λ λ │
+│ β θ γ μ α η η η λ ζ │
+│ β θ γ μ μ η κ ζ ζ ζ │
+│ γ γ γ μ μ κ κ κ κ ζ │
+└─────────────────────┘
+┌─────────────────────┐
+│ β δ δ δ η η α ζ ζ ζ │
+│ β δ θ δ η α α α ζ κ │
+│ β θ θ η η λ α ε ζ κ │
+│ β θ γ λ λ λ ε ε κ κ │
+│ β θ γ ι λ ε ε μ μ κ │
+│ γ γ γ ι ι ι ι μ μ μ │
+└─────────────────────┘
+┌─────────────────────┐
+│ β δ δ δ η η ι ι ι ι │
+│ β δ θ δ η ε ε λ λ ι │
+│ β θ θ η η α ε ε λ λ │
+│ β θ γ μ α α α ε λ ζ │
+│ β θ γ μ μ α κ ζ ζ ζ │
+│ γ γ γ μ μ κ κ κ κ ζ │
+└─────────────────────┘
+┌─────────────────────┐
+│ β ε ε ζ ζ ζ ι ι ι ι │
+│ β κ ε ε ζ λ θ θ θ ι │
+│ β κ κ ε ζ λ λ λ θ θ │
+│ β κ γ δ δ α λ η η μ │
+│ β κ γ δ α α α η μ μ │
+│ γ γ γ δ δ α η η μ μ │
+└─────────────────────┘
+┌─────────────────────┐
+│ β ε ε ζ ζ ζ ι ι ι ι │
+│ β κ ε ε ζ λ θ θ θ ι │
+│ β κ κ ε ζ λ λ λ θ θ │
+│ β κ γ μ η η λ α δ δ │
+│ β κ γ μ μ η α α α δ │
+│ γ γ γ μ μ η η α δ δ │
+└─────────────────────┘
+┌─────────────────────┐
+│ β ε ε μ μ μ ζ δ δ δ │
+│ β κ ε ε μ μ ζ δ θ δ │
+│ β κ κ ε α ζ ζ ζ θ θ │
+│ β κ γ α α α λ η η θ │
+│ β κ γ ι α λ λ λ η θ │
+│ γ γ γ ι ι ι ι λ η η │
+└─────────────────────┘
+\end{verbatim}
 }
 \end{margintable}
 
@@ -323,81 +300,57 @@ $\quad$\\
 
 \begin{margintable}%[-5cm]
 \inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
-{
-\setlength{\tabcolsep}{4pt}
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-  & γ & γ & γ & δ & δ & δ & ζ & ζ & ζ \\
-  & ι & ι & γ & δ &   & δ & λ & ζ & \\
-  & ι & μ & γ &   &   & λ & λ & ζ & \\
-  & ι & μ & μ &   &   & η & λ & λ & \\
-  & ι & μ & μ & θ & θ & η & η & η & \\
-β & β & β & β & β & θ & θ & θ & η & \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-  & γ & γ & γ & ι & ι & ι & ι & λ & λ \\
-  & μ & μ & γ & ι &   & ε & λ & λ & \\
-  & μ & μ & γ &   &   & ε & ε & λ & \\
-  & δ & μ & δ &   &   & η & ε & ε & \\
-  & δ & δ & δ & θ & θ & η & η & η & \\
-β & β & β & β & β & θ & θ & θ & η & \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-  & γ & γ & γ & ι & ι & ι & ι & λ & λ \\
-  & γ & μ & μ & ι &   & ε & λ & λ & \\
-  & γ & μ & μ &   &   & ε & ε & λ & \\
-  & δ & μ & δ &   &   & η & ε & ε & \\
-  & δ & δ & δ & θ & θ & η & η & η & \\
-β & β & β & β & β & θ & θ & θ & η & \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-  & γ & γ & γ & θ & θ & δ & δ & λ & λ \\
-  & γ & θ & θ & θ &   & δ & λ & λ & \\
-  & γ & ε & ε &   &   & δ & δ & λ & \\
-  & ε & ε & κ &   &   & ζ & μ & μ & \\
-  & ε & κ & κ & κ & κ & ζ & μ & μ & \\
-β & β & β & β & β & ζ & ζ & ζ & μ & \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-  & γ & γ & γ & θ & θ & δ & δ & λ & λ \\
-  & γ & θ & θ & θ &   & δ & λ & λ & \\
-  & γ & ε & ε &   &   & δ & δ & λ & \\
-  & ε & ε & κ &   &   & η & η & μ & \\
-  & ε & κ & κ & κ & κ & η & μ & μ & \\
-β & β & β & β & β & η & η & μ & μ & \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-  & γ & γ & γ & θ & θ & δ & δ & λ & λ \\
-  & γ & θ & θ & θ &   & δ & λ & λ & \\
-  & γ & ε & ε &   &   & δ & δ & λ & \\
-  & ε & ε & κ &   &   & μ & μ & μ & \\
-  & ε & κ & κ & κ & κ & μ & μ & ι & \\
-β & β & β & β & β & ι & ι & ι & ι & \\
-\hline
-\end{tabular}
-$\quad$\\
-$\quad$\\
+{\footnotesize
+\begin{verbatim}
+┌─────────────────────┐
+│   γ γ γ δ δ δ ζ ζ ζ │
+│   ι ι γ δ   δ λ ζ   │
+│   ι μ γ     λ λ ζ   │
+│   ι μ μ     η λ λ   │
+│   ι μ μ θ θ η η η   │
+│ β β β β β θ θ θ η   │
+└─────────────────────┘
+┌─────────────────────┐
+│   γ γ γ ι ι ι ι λ λ │
+│   μ μ γ ι   ε λ λ   │
+│   μ μ γ     ε ε λ   │
+│   δ μ δ     η ε ε   │
+│   δ δ δ θ θ η η η   │
+│ β β β β β θ θ θ η   │
+└─────────────────────┘
+┌─────────────────────┐
+│   γ γ γ ι ι ι ι λ λ │
+│   γ μ μ ι   ε λ λ   │
+│   γ μ μ     ε ε λ   │
+│   δ μ δ     η ε ε   │
+│   δ δ δ θ θ η η η   │
+│ β β β β β θ θ θ η   │
+└─────────────────────┘
+┌─────────────────────┐
+│   γ γ γ θ θ δ δ λ λ │
+│   γ θ θ θ   δ λ λ   │
+│   γ ε ε     δ δ λ   │
+│   ε ε κ     ζ μ μ   │
+│   ε κ κ κ κ ζ μ μ   │
+│ β β β β β ζ ζ ζ μ   │
+└─────────────────────┘
+┌─────────────────────┐
+│   γ γ γ θ θ δ δ λ λ │
+│   γ θ θ θ   δ λ λ   │
+│   γ ε ε     δ δ λ   │
+│   ε ε κ     η η μ   │
+│   ε κ κ κ κ η μ μ   │
+│ β β β β β η η μ μ   │
+└─────────────────────┘
+┌─────────────────────┐
+│   γ γ γ θ θ δ δ λ λ │
+│   γ θ θ θ   δ λ λ   │
+│   γ ε ε     δ δ λ   │
+│   ε ε κ     μ μ μ   │
+│   ε κ κ κ κ μ μ ι   │
+│ β β β β β ι ι ι ι   │
+└─────────────────────┘
+\end{verbatim}
 }
 \end{margintable}
 
@@ -417,7 +370,7 @@ actually 10; in order to show this fact we give 10 copies of the \verb|Y_shape| 
 each one with one piece available, respectively:
 \begin{minted}[fontsize=\small]{python}
 >>> Y_shapes = [
-...     shape_spec(name="{}_{}".format(Y_shape.name, i), 
+...     shape_spec(name="{}_{}".format(Y_shape.name, i),
 ...                isomorphisms=Y_shape.isomorphisms)
 ...     for i in range(10)
 ... ]
@@ -427,107 +380,134 @@ each one with one piece available, respectively:
 
 \begin{margintable}
 \mintinline[fontsize=\footnotesize]{python}{>>> print(pretty(next(Y_tilings)))}
-
-{
-\setlength{\tabcolsep}{4pt}
-$\quad$\\
-\begin{tabular}{|cccccccccc|}
-\hline
-α & γ & γ & γ & γ & ζ & ι & ι & ι & ι \\
-α & α & δ & γ & ζ & ζ & ζ & ζ & ι & κ \\
-α & δ & δ & δ & δ & η & η & η & η & κ \\
-α & β & ε & ε & ε & ε & θ & η & κ & κ \\
-β & β & β & β & ε & θ & θ & θ & θ & κ \\
-\hline
-\end{tabular}
+{\footnotesize
+\begin{verbatim}
+┌─────────────────────┐
+│ α γ γ γ γ ζ ι ι ι ι │
+│ α α δ γ ζ ζ ζ ζ ι κ │
+│ α δ δ δ δ η η η η κ │
+│ α β ε ε ε ε θ η κ κ │
+│ β β β β ε θ θ θ θ κ │
+└─────────────────────┘
+\end{verbatim}
 }
 \end{margintable}
 
 \subsection{Fibonacci's tilings}
 
-\inputminted[fontsize=\small,stripnl=false, firstline=511,lastline=525]{python}{backtracking/polyominoes.py}
+\inputminted[fontsize=\small,stripnl=false, firstline=514,lastline=530]{python}{backtracking/polyominoes.py}
 
-The classic sequence of Fibonacci's numbers, \marginnote{\url{https://oeis.org/A000045}}
+We can use tilings against different boards, increasing ordered according to the
+number of rows, to enumerate the following sequences
 \begin{minted}[fontsize=\small]{python}
->>> [len(list(polyominoes(dim=(1,i), 
-...                       shapes=fibonacci_shapes, 
-...                       availables='inf')))
-...  for i in range(13)]
-[0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233]
+>>> [ [len(list(polyominoes(dim=(j,i),
+...                         shapes=fibonacci_shapes,
+...                         availables='inf')))
+...    for i in range(n)]
+...  for j, n in [(1, 13),  # https://oeis.org/A000045
+...               (2, 13),  # https://oeis.org/A030186
+...               (3, 7),   # https://oeis.org/A033506
+...               (4, 7),   # https://oeis.org/A033507
+...               (5, 6)]]  # https://oeis.org/A033508
+[[0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233],
+ [0, 2, 7, 22, 71, 228, 733, 2356, 7573, 24342, 78243, 251498, 808395],
+ [0, 3, 22, 131, 823, 5096, 31687],
+ [0, 5, 71, 823, 10012, 120465, 1453535],
+ [0, 8, 228, 5096, 120465, 2810694]]
 \end{minted}
-Number of matchings in ladder graph $L_n = P_2 \times P_n$, \marginnote{\url{https://oeis.org/A030186}}
-\begin{minted}[fontsize=\small]{python}
->>> [len(list(polyominoes(dim=(2,i), 
-...                       shapes=fibonacci_shapes, 
-...                       availables='inf')))
-...  for i in range(13)]
-[0, 2, 7, 22, 71, 228, 733, 2356, 7573, 24342, 78243, 251498, 808395]
-\end{minted}
-Number of matchings in graph $P_{3} \times P_{n}$, \marginnote{\url{https://oeis.org/A033506}}
-\begin{minted}[fontsize=\small]{python}
->>> [len(list(polyominoes(dim=(3,i), 
-...                       shapes=fibonacci_shapes, 
-...                       availables='inf')))
-...  for i in range(7)]
-[0, 3, 22, 131, 823, 5096, 31687]
-\end{minted}
-Number of matchings in graph $P_{4} \times P_{n}$, \marginnote{\url{https://oeis.org/A033507}}
-\begin{minted}[fontsize=\small]{python}
->>> [len(list(polyominoes(dim=(4,i), 
-...                       shapes=fibonacci_shapes, 
-...                       availables='inf')))
-...  for i in range(7)]
-[0, 5, 71, 823, 10012, 120465, 1453535]
-\end{minted}
-Number of matchings in graph $P_{5} \times P_{n}$, \marginnote{\url{https://oeis.org/A033508}}
-\begin{minted}[fontsize=\small]{python}
->>> [len(list(polyominoes(dim=(5,i), 
-...                       shapes=fibonacci_shapes, 
-...                       availables='inf')))
-...  for i in range(6)]
-[0, 8, 228, 5096, 120465, 2810694]
-\end{minted}
+which counts Fibonacci's numbers, the number of matchings in graphs $P_2 \times
+P_n$, $P_{3} \times P_{n}$, $P_{4} \times P_{n}$ and $P_{5} \times P_{n}$,
+respectively. For the sake of clarity, the $f_{6} = 13$ ways to tile a board $1\times 6$ are
+{
+\small
+\begin{verbatim}
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│ α α α α α α │  │ α α α α β β │  │ α α α β β α │  │ α α β β α α │
+└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│ α α β β β β │  │ α β β α α α │  │ α β β α β β │  │ α β β β β α │
+└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│ β β α α α α │  │ β β α α β β │  │ β β α β β α │  │ β β β β α α │
+└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
+┌─────────────┐
+│ β β β β β β │
+└─────────────┘
+\end{verbatim}
+}
 
-\newpage
+\section{Parallelogram Polyominoes}
 
 {
-\footnotesize
+\small
 \begin{Verbatim}
- ▢ ▢ ▢          ▢ ▢ ▢          ▢ ▢            ▢ ▢            ▢ ▢ ▢ ▢        ▢ ▢ ▢
- ▢ ▢ ▢          ▢ ▢ ▢          ▢ ▢ ▢          ▢ ▢            ▢ ▢ ▢ ▢        ▢ ▢ ▢
- ▢ ▢ ▢            ▢ ▢          ▢ ▢ ▢          ▢ ▢                               ▢
-                                              ▢ ▢                          
-                                                                           
- ▢ ▢ ▢          ▢ ▢            ▢ ▢            ▢              ▢              ▢ ▢
-   ▢ ▢          ▢ ▢            ▢ ▢ ▢          ▢ ▢ ▢          ▢ ▢            ▢ ▢
-   ▢ ▢          ▢ ▢ ▢            ▢ ▢          ▢ ▢ ▢          ▢ ▢            ▢ ▢
-                                                             ▢ ▢              ▢
-                                                                           
- ▢ ▢ ▢ ▢        ▢ ▢ ▢          ▢ ▢            ▢ ▢ ▢          ▢ ▢            ▢
-   ▢ ▢ ▢        ▢ ▢ ▢ ▢        ▢ ▢              ▢ ▢          ▢ ▢ ▢          ▢ ▢
-                                 ▢ ▢              ▢              ▢          ▢ ▢ ▢
-                                                                           
-                                                                           
- ▢              ▢ ▢            ▢              ▢ ▢ ▢          ▢ ▢            ▢ ▢ ▢ ▢
- ▢ ▢ ▢            ▢ ▢          ▢ ▢              ▢ ▢ ▢        ▢ ▢ ▢ ▢            ▢ ▢
-   ▢ ▢            ▢ ▢          ▢ ▢                                         
-                                 ▢                                         
-                                                                           
- ▢ ▢            ▢              ▢ ▢ ▢          ▢              ▢              ▢ ▢
- ▢ ▢            ▢                  ▢          ▢ ▢            ▢ ▢ ▢            ▢
-   ▢            ▢ ▢                ▢            ▢ ▢              ▢            ▢ ▢
-   ▢            ▢ ▢                                                        
-                                                                           
- ▢ ▢            ▢              ▢              ▢ ▢            ▢              ▢ ▢ ▢
-   ▢ ▢          ▢              ▢ ▢ ▢ ▢          ▢            ▢                  ▢ ▢
-     ▢          ▢ ▢ ▢                           ▢            ▢             
-                                                ▢            ▢ ▢           
-                                                                           
- ▢              ▢ ▢ ▢ ▢        ▢              ▢ ▢            ▢              ▢ ▢ ▢ ▢ ▢
- ▢                    ▢        ▢ ▢              ▢ ▢ ▢        ▢             
- ▢ ▢                             ▢                           ▢             
-   ▢                             ▢                           ▢             
-                                                             ▢             
+ ▢ ▢ ▢    ▢ ▢ ▢      ▢ ▢        ▢ ▢        ▢ ▢ ▢ ▢    ▢ ▢ ▢
+ ▢ ▢ ▢    ▢ ▢ ▢      ▢ ▢ ▢      ▢ ▢        ▢ ▢ ▢ ▢    ▢ ▢ ▢
+ ▢ ▢ ▢      ▢ ▢      ▢ ▢ ▢      ▢ ▢                       ▢
+                                ▢ ▢
+
+ ▢ ▢ ▢    ▢ ▢        ▢ ▢        ▢          ▢          ▢ ▢
+   ▢ ▢    ▢ ▢        ▢ ▢ ▢      ▢ ▢ ▢      ▢ ▢        ▢ ▢
+   ▢ ▢    ▢ ▢ ▢        ▢ ▢      ▢ ▢ ▢      ▢ ▢        ▢ ▢
+                                           ▢ ▢          ▢
+
+ ▢ ▢ ▢    ▢ ▢ ▢      ▢ ▢        ▢ ▢ ▢      ▢ ▢        ▢
+   ▢ ▢    ▢ ▢ ▢ ▢    ▢ ▢          ▢ ▢      ▢ ▢ ▢      ▢ ▢
+                       ▢ ▢          ▢          ▢      ▢ ▢ ▢
+
+
+ ▢        ▢ ▢        ▢          ▢ ▢ ▢      ▢ ▢        ▢ ▢ ▢ ▢
+ ▢ ▢ ▢      ▢ ▢      ▢ ▢          ▢ ▢ ▢    ▢ ▢ ▢ ▢        ▢ ▢
+   ▢ ▢      ▢ ▢      ▢ ▢
+                       ▢
+
+ ▢ ▢      ▢          ▢ ▢ ▢      ▢          ▢          ▢ ▢
+ ▢ ▢      ▢              ▢      ▢ ▢        ▢ ▢ ▢        ▢
+   ▢      ▢ ▢            ▢        ▢ ▢          ▢        ▢ ▢
+   ▢      ▢ ▢
+
+ ▢ ▢      ▢          ▢          ▢ ▢        ▢          ▢ ▢ ▢
+   ▢ ▢    ▢          ▢ ▢ ▢ ▢      ▢        ▢              ▢ ▢
+     ▢    ▢ ▢ ▢                   ▢        ▢
+                                  ▢        ▢ ▢
+
+ ▢        ▢ ▢ ▢ ▢    ▢          ▢ ▢        ▢          ▢ ▢ ▢ ▢ ▢
+ ▢              ▢    ▢ ▢          ▢ ▢ ▢    ▢
+ ▢ ▢                   ▢                   ▢
+   ▢                   ▢                   ▢
+                                           ▢
 
 \end{Verbatim}
 }
+
+
+\begin{minted}[fontsize=\small]{python}
+>>> dim = (size, size)
+>>> polys_sols = polyominoes(dim, parallelogram_polyominoes, availables="ones",
+...                          max_depth_reached=40,
+...                          pruning=functools.partial(not_insertion_on_edges,
+...                                                    size=size))
+>>> pretty_tilings = markdown_pretty(polys_sols, dim, parallelogram_polyominoes, raw_text=True)
+>>> print(next(pretty_tilings)) # doctest: +NORMALIZE_WHITESPACE
+\end{minted}
+The first incomplete and complete tilings are
+\begin{Verbatim}
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+|     |   | |_    |_ _ _ _ _| |●    |     |   | |_    | |_  |_ _    |
+|     |   |   |_  |   |   | |   |   |     |   |   |_  |   |_ _ _|_ _|
+|_ _ _|   |   | |_|_  |   | |_  |   |_ _ _|   |   | |_|_ _ _|_ _ _  |
+|     |_ _|_ _|_    | |_  | | |_|   |     |_ _|_ _|_    |   | |_  |_|
+|_    |     |   |_ _|_| |_| | |●    |_    |     |   |_ _|   | | |   |
+| |_ _|_ _  |_  |_    |_  |_|   |   | |_ _|_ _  |_  | | |_  | | |_ _|
+|     |   |_| |_ _|_ _ _|_ _|_ _|   |     |   |_| | | |_  |_| | |_  |
+|_ _ _|_ _  |   |_  |_  |_  | |●    |_ _ _|_ _  | |_|_  |_ _|_|_ _| |
+|   |_    |_|_ _ _|_  |   | |_  |   |   |_    |_|_ _ _|_| |_  |   | |
+|     |   |     |_  |_|_ _|_ _| |   |     |   |     |_  |_  | |_  |_|
+|_ _ _|_ _|_ _ _ _|_ _ _|_  | |_|   |_ _ _|_ _|_ _ _ _|_  | |_ _|_ _|
+|       |_      |   |_ _  | | |●    |       |_      |   |_|_| |_ _  |
+|_ _ _ _| |_ _ _|_ _ _ _| | | |●    |_ _ _ _| |_ _ _|_ _ _ _|   | | |
+|   |   |_ _  |_ _ _  | |_|_|_ _|   |   |   |_ _  |_ _ _ _ _|_  | |_|
+|   |_    | |_|_ _  |_| |_ _    |   |   |_    | |_|_ _  |_    |_|   |
+|_ _ _|_ _|_ _ _ _|_ _|_ _ _|_ _|   |_ _ _|_ _|_ _ _ _|_ _|_ _ _|_ _|
+\end{Verbatim}
+

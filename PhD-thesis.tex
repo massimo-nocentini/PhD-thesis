@@ -32,8 +32,8 @@
 % Useful in tabular environments.
 %\newcommand{\hangstar}{\makebox[0pt][l]{*}}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+\usepackage{inputenc}
+\usepackage{fontenc}
 \usepackage{euler}
 \usepackage{textcomp}
 %\usepackage{unicode-math}
@@ -60,7 +60,11 @@
 \usepackage{mathdots}
 \usepackage{minted}
 
+\setmonofont[Scale=0.8]{Menlo}
 
+% solved in https://github.com/Tufte-LaTeX/tufte-latex/issues/64
+\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+\renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
 
 
 %%
@@ -252,6 +256,9 @@
             {\small Coordinatore: \indent prof. \textbf{Graziano Gentili}}\\
 }
 
+
+
+\iffalse
 \DeclareUnicodeCharacter{221E}{$\infty$}
 \DeclareUnicodeCharacter{250C}{ }
 \DeclareUnicodeCharacter{2500}{ }
@@ -272,6 +279,7 @@
 \DeclareUnicodeCharacter{03B6}{$\zeta$}
 \DeclareUnicodeCharacter{03BA}{$\kappa$}
 \DeclareUnicodeCharacter{25A2}{$\square$}
+\fi
 
 \makeindex
 
@@ -311,7 +319,7 @@ why they were important.
 
 % r.3 full title page
 
-%\maketitle
+\maketitle
 
 \iffalse
 \begin{center}
@@ -404,15 +412,10 @@ Anni 2014/2017
 \iffalse % commented out because included in the LICENSE file
 Copyright \copyright\ \the\year\ Massimo Nocentini
 \fi
-
 %\par\smallcaps{Published by \thanklesspublisher}
-
-\par{\url{https://github.com/massimo-nocentini/}}
-
-\par\include{LICENSE}\index{license}
-
+\par{\url{https://github.com/massimo-nocentini/}\VerbatimInput{LICENSE.tex}}
+%\par\include{LICENSE}\index{license}
 %\par\textit{First printing, \monthyear}
-
 \end{fullwidth}
 
 % r.5 contents
@@ -462,6 +465,17 @@ simple introduction.
 \label{ch:queens-tilings-polyominoes}
 
 \input{backtracking/backtracking.tex}
+
+\chapter{Semi-Certified Interactive\newline Logic Programming} 
+\label{ch:scilp}
+
+\input{SCILP/body}
+
+\chapter{More $\mu$Kanrens languages}
+\label{ch:more-kanrens}
+
+Hello.
+
 
 %%
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.

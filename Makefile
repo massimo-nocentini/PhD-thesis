@@ -1,12 +1,12 @@
 
 do: #unittests
-	pdflatex -shell-escape PhD-thesis.tex
+	lualatex -shell-escape PhD-thesis.tex
 
 dependencies:
 	cd backtracking && wget https://raw.githubusercontent.com/massimo-nocentini/competitive-programming/master/python-libs/bits.py
 
 unittests:
-	cd backtracking && python3 -m doctest queens.py polyominoes.py
+	cd backtracking && PYTHONPATH=../deps/competitive-programming/python-libs/ python3 -m doctest queens.py polyominoes.py
 
 clean:
 	rm -f *.aux *.idx *.lof *.log *.lot *.out *.pdf *.toc

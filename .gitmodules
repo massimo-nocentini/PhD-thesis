@@ -1,0 +1,6 @@
+[submodule "deps/SCILP"]
+	path = deps/SCILP
+	url = git@github.com:maggesi/SCILP.git
+[submodule "deps/competitive-programming"]
+	path = deps/competitive-programming
+	url = git@github.com:massimo-nocentini/competitive-programming.git

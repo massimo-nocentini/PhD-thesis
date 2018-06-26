@@ -15,8 +15,6 @@ def polyominoes(dim, shapes, availables='ones',
     if not availables or availables == 'ones':
         availables = {s.name:1 for s in shapes}
     elif availables == 'inf':
-        # trick: represent ∞ piece availability
-        # by decreasing negative numbers
         availables = {s.name:-1 for s in shapes}
 
     def place(S, positions):
@@ -24,15 +22,15 @@ def polyominoes(dim, shapes, availables='ones',
             S = clear_bit(S, r + rows*c)
         return S
 
+    def shapes_available():
+        return {s for s in shapes if availables[s.name]}
+
     def gen(positions, attempts):
 
         p = low_bit(positions)
-
         c, r = divmod(p, rows)
 
-        if pruning((r,c), positions,
-                   #set(filter(lambda s: availables[s.name], shapes)))
-                   {s for s in shapes if availables[s.name]}):
+        if pruning((r,c), positions, shapes_available()):
             raise StopIteration()
 
         for i, s in enumerate(shapes):
@@ -47,7 +45,6 @@ def polyominoes(dim, shapes, availables='ones',
                        for rr, cc in iso):
 
                     fewer_positions = place(positions, iso)
-
                     availables[s.name] -= 1
                     sol.append((s, positions, (r,c), iso),)
 
@@ -194,9 +191,9 @@ I_shape = shape_spec(name='I',
                                                 ((r, c), (r,c+1), (r,c+2), (r,c+3), (r,c+4))])
 
 """
-*      * * *      *  * * *
-*          *      *  *
-* * *      *  * * *  *
+*      * * *       *   * * *
+*          *       *   *
+* * *      *   * * *   *
 """
 V_shape = shape_spec(
             name='V',
@@ -743,16 +740,6 @@ def doctests():
     '''
     Doctests, simply.
 
-
-
-
-
-
-
-
-
-
-
     >>> dim = (6,10)
     >>> polys_sols = polyominoes(dim, pentominoes, availables="ones", forbidden=[])
     >>> tilings = markdown_pretty(polys_sols, dim, pentominoes, pretty_printer=symbols_pretty, raw_text=True)
@@ -903,49 +890,65 @@ def doctests():
     │ β β β β ε ι ι ι ι θ │
     └─────────────────────┘
 
-    >>> [len(list(polyominoes(dim=(1,i), shapes=fibonacci_shapes, availables='inf')))
-    ...  for i in range(13)]
-    [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233]
 
-    >>> [len(list(polyominoes(dim=(2,i), shapes=fibonacci_shapes, availables='inf')))
-    ...  for i in range(13)]
-    [0, 2, 7, 22, 71, 228, 733, 2356, 7573, 24342, 78243, 251498, 808395]
+    >>> [ [len(list(polyominoes(dim=(j,i), shapes=fibonacci_shapes, availables='inf'))) # doctest: +NORMALIZE_WHITESPACE
+    ...    for i in range(n)]
+    ...  for j, n in [(1, 13),  # https://oeis.org/A000045
+    ...               (2, 13),  # https://oeis.org/A030186
+    ...               (3, 7),   # https://oeis.org/A033506
+    ...               (4, 7),   # https://oeis.org/A033507
+    ...               (5, 6)]]  # https://oeis.org/A033508
+    [[0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233],
+     [0, 2, 7, 22, 71, 228, 733, 2356, 7573, 24342, 78243, 251498, 808395],
+     [0, 3, 22, 131, 823, 5096, 31687],
+     [0, 5, 71, 823, 10012, 120465, 1453535],
+     [0, 8, 228, 5096, 120465, 2810694]]
 
-    >>> [len(list(polyominoes(dim=(3,i), shapes=fibonacci_shapes, availables='inf')))
-    ...  for i in range(7)]
-    [0, 3, 22, 131, 823, 5096, 31687]
 
-    >>> [len(list(polyominoes(dim=(4,i), shapes=fibonacci_shapes, availables='inf')))
-    ...  for i in range(7)]
-    [0, 5, 71, 823, 10012, 120465, 1453535]
-
-    >>> [len(list(polyominoes(dim=(5,i), shapes=fibonacci_shapes, availables='inf')))
-    ...  for i in range(6)]
-    [0, 8, 228, 5096, 120465, 2810694]
-
-    >>> dim = (1,12)
+    >>> dim = (1,6)
     >>> fibs_sols = polyominoes(dim, fibonacci_shapes, availables='inf')
     >>> fibs_tilings = list(markdown_pretty(fibs_sols, dim, fibonacci_shapes, pretty_printer=symbols_pretty, raw_text=True))
-    >>> for i in range(6): # doctest: +NORMALIZE_WHITESPACE
-    ...     print(fibs_tilings[i])
-    ┌─────────────────────────┐
-    │ α α α α α α α α α α α α │
-    └─────────────────────────┘
-    ┌─────────────────────────┐
-    │ α α α α α α α α α α β β │
-    └─────────────────────────┘
-    ┌─────────────────────────┐
-    │ α α α α α α α α α β β α │
-    └─────────────────────────┘
-    ┌─────────────────────────┐
-    │ α α α α α α α α β β α α │
-    └─────────────────────────┘
-    ┌─────────────────────────┐
-    │ α α α α α α α α β β β β │
-    └─────────────────────────┘
-    ┌─────────────────────────┐
-    │ α α α α α α α β β α α α │
-    └─────────────────────────┘
+    >>> for t in fibs_tilings: # doctest: +NORMALIZE_WHITESPACE
+    ...     print(t)
+    ┌─────────────┐
+    │ α α α α α α │
+    └─────────────┘
+    ┌─────────────┐
+    │ α α α α β β │
+    └─────────────┘
+    ┌─────────────┐
+    │ α α α β β α │
+    └─────────────┘
+    ┌─────────────┐
+    │ α α β β α α │
+    └─────────────┘
+    ┌─────────────┐
+    │ α α β β β β │
+    └─────────────┘
+    ┌─────────────┐
+    │ α β β α α α │
+    └─────────────┘
+    ┌─────────────┐
+    │ α β β α β β │
+    └─────────────┘
+    ┌─────────────┐
+    │ α β β β β α │
+    └─────────────┘
+    ┌─────────────┐
+    │ β β α α α α │
+    └─────────────┘
+    ┌─────────────┐
+    │ β β α α β β │
+    └─────────────┘
+    ┌─────────────┐
+    │ β β α β β α │
+    └─────────────┘
+    ┌─────────────┐
+    │ β β β β α α │
+    └─────────────┘
+    ┌─────────────┐
+    │ β β β β β β │
+    └─────────────┘
 
 
     >>> semiperimeter = 6
@@ -1048,7 +1051,7 @@ def doctests():
     ...                                                    size=size))
     >>> pretty_tilings = markdown_pretty(polys_sols, dim, parallelogram_polyominoes, raw_text=True)
     >>> print(next(pretty_tilings)) # doctest: +NORMALIZE_WHITESPACE
-    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+     _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     |     |   | |_    |_ _ _ _ _| |●
     |     |   |   |_  |   |   | |   |
     |_ _ _|   |   | |_|_  |   | |_  |
