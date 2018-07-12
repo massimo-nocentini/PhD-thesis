@@ -60,6 +60,8 @@
 \usepackage{mathdots}
 \usepackage{minted}
 
+
+
 \setmonofont[Scale=0.8]{Menlo}
 
 % solved in https://github.com/Tufte-LaTeX/tufte-latex/issues/64
@@ -220,7 +222,7 @@
 % Generates the index
 \usepackage{makeidx}
 
-\setcitestyle{square, comma, numbers}
+%\setcitestyle{square, comma, numbers}
 
 
 
@@ -423,7 +425,7 @@ Copyright \copyright\ \the\year\ Massimo Nocentini
 % r.5 contents
 \tableofcontents
 
-\listoffigures
+%\listoffigures
 
 \listoftables
 
@@ -473,10 +475,6 @@ simple introduction.
 
 \input{SCILP/scilp}
 
-\chapter{More $\mu$Kanrens languages}
-\label{ch:more-kanrens}
-
-Hello.
 
 
 %%
@@ -484,8 +482,10 @@ Hello.
 
 \backmatter
 
-\bibliography*{SCILP/scilp}
-\bibliographystyle{plainurl}
+\bibliographystyle{plainnat}
+%\bibliography{SCILP/scilp}
+\bibliography{SCILP/scilp,algebraic-gf-for-languages-avoiding-Riordan-patterns/avoiding-RA-patterns}
+
 
 %\newpage
 %\input{bibliography.tex}

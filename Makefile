@@ -10,7 +10,7 @@ unittests:
 	cd backtracking && PYTHONPATH=../deps/competitive-programming/python-libs/ python3 -m doctest ECO.py #queens.py polyominoes.py
 
 clean:
-	rm -f *.aux *.idx *.lof *.log *.lot *.out *.pdf *.toc
+	rm -f *.aux *.idx *.lof *.log *.lot *.out *.pdf *.toc *.bbl *.blg
 
 world: clean
 	lualatex -shell-escape PhD-thesis.tex
