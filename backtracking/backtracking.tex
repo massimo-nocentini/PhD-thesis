@@ -417,24 +417,38 @@ number of rows, to enumerate the following sequences
 \end{minted}
 which counts Fibonacci's numbers, the number of matchings in graphs $P_2 \times
 P_n$, $P_{3} \times P_{n}$, $P_{4} \times P_{n}$ and $P_{5} \times P_{n}$,
-respectively. For the sake of clarity, the $f_{6} = 13$ ways to tile a board $1\times 6$ are
+respectively.
+
+\begin{margintable}%[-5cm]
 {
-\small
+\footnotesize
 \begin{verbatim}
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│ α α α α α α │  │ α α α α β β │  │ α α α β β α │  │ α α β β α α │
-└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│ α α β β β β │  │ α β β α α α │  │ α β β α β β │  │ α β β β β α │
-└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│ β β α α α α │  │ β β α α β β │  │ β β α β β α │  │ β β β β α α │
-└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
+┌─────────────┐  ┌─────────────┐  
+│ α α α α α α │  │ α α α α β β │  
+└─────────────┘  └─────────────┘  
+┌─────────────┐  ┌─────────────┐
+│ α α α β β α │  │ α α β β α α │
+└─────────────┘  └─────────────┘
+┌─────────────┐  ┌─────────────┐  
+│ α α β β β β │  │ α β β α α α │  
+└─────────────┘  └─────────────┘  
+┌─────────────┐  ┌─────────────┐  
+│ β β α α α α │  │ β β α α β β │  
+└─────────────┘  └─────────────┘  
+┌─────────────┐  ┌─────────────┐
+│ α β β α β β │  │ α β β β β α │
+└─────────────┘  └─────────────┘
+┌─────────────┐  ┌─────────────┐
+│ β β α β β α │  │ β β β β α α │
+└─────────────┘  └─────────────┘
 ┌─────────────┐
 │ β β β β β β │
 └─────────────┘
 \end{verbatim}
 }
+\caption{ The $f_{6} = 13$ ways to tile a board $1\times 6$.}
+\end{margintable}
+
 
 \section{Parallelogram Polyominoes}
 
@@ -515,10 +529,121 @@ The first incomplete and complete tilings are
 
 \subsection{Binary trees}
 
-\inputminted[fontsize=\small,stripnl=false,firstline=163,lastline=172]{python}{backtracking/ECO.py}
+\notbreakable{
+    \inputminted[fontsize=\small,
+                 stripnl=false,
+                 firstline=163,
+                 lastline=172]
+                {python}{backtracking/ECO.py}
+}
 
-\begin{margintable}%[-5cm]
+\begin{margintable}
 \VerbatimInput[fontsize=\footnotesize]{backtracking/binary_trees_eco.py}
 where the symbol \verb|☆| means the sovrapposition of symbols \verb|●| and
-\verb|★| in back and fore ground, respectively.  
+\verb|★| in back and fore ground, respectively.
+\caption{Enumerations up to the $5$th generation of binary trees.}
 \end{margintable}
+
+\newpage
+\subsection{Dyck paths}
+
+Dyck paths recursive structures are encoded by
+
+\notbreakable{
+    \inputminted[fontsize=\small,
+                 stripnl=false,
+                 firstline=187,
+                 lastline=196]
+                {python}{backtracking/ECO.py}
+}
+
+\begin{margintable}
+\VerbatimInput[fontsize=\footnotesize]{backtracking/dyck_paths_eco.py}
+\caption{Enumerations up to the $5$th generation of Dyck paths.}
+\end{margintable}
+
+\newpage
+\subsection{Parens and ballots}
+
+\textit{Ballots} recursive structures are encoded by
+
+\notbreakable{
+    \inputminted[fontsize=\small,
+                 stripnl=false,
+                 firstline=198,
+                 lastline=206]
+                {python}{backtracking/ECO.py}
+}
+
+\begin{margintable}
+\VerbatimInput[fontsize=\footnotesize]{backtracking/parens_ballots_eco.py}
+\caption{Enumerations up to the $5$th generation of parens and ballots structures.}
+\end{margintable}
+
+In parallel, \textit{balanced parens} recursive structures are encoded by
+
+\notbreakable{
+    \inputminted[fontsize=\small,
+                 stripnl=false,
+                 firstline=208,
+                 lastline=216]
+                {python}{backtracking/ECO.py}
+}
+
+
+\newpage
+\subsection{Triangulated polygons}
+
+\textit{Triangulated polygons} recursive structures are encoded by
+
+\begin{margintable}
+\VerbatimInput[fontsize=\footnotesize]{backtracking/triangulated_polygons_eco.py}
+\caption{Enumerations up to the $5$th generation of triangulated polygons.}
+\end{margintable}
+
+\notbreakable{
+    \inputminted[fontsize=\small,
+                 stripnl=false,
+                 firstline=231,
+                 lastline=273]
+                {python}{backtracking/ECO.py}
+}
+
+\newpage
+\subsection{Steep parallelograms}
+
+\textit{Steep parallelograms} recursive structures are encoded by
+
+\begin{margintable}
+\VerbatimInput[fontsize=\footnotesize]{backtracking/steep_parallelograms_eco.py}
+where the symbol \verb|◐| means the sovrapposition of symbols \verb|▢| and
+\verb|☆| in back and fore ground, respectively.
+\caption{Enumerations up to the $5$th generation of steep parallelograms.}
+\end{margintable}
+
+\notbreakable{
+    \inputminted[fontsize=\small,
+                 stripnl=false,
+                 firstline=305,
+                 lastline=320]
+                {python}{backtracking/ECO.py}
+}
+
+\newpage
+\subsection{Rabbits}
+
+\textit{Rabbits} recursive structures are encoded by
+
+\begin{margintable}
+\VerbatimInput[fontsize=\footnotesize]{backtracking/rabbits_eco.py}
+\caption{Enumerations up to the $6$th generation of rabbits.}
+\end{margintable}
+
+\notbreakable{
+    \inputminted[fontsize=\small,
+                 stripnl=false,
+                 firstline=287,
+                 lastline=302]
+                {python}{backtracking/ECO.py}
+}
+

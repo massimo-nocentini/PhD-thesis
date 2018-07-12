@@ -186,12 +186,12 @@ ternary_tree_shapes = {
 
 "       \
   ★     \
-(   ★   \
+/   ★   \
 "
 dyck_path_shapes = {
-    'dick': lambda r, c: Anchor(symbol='(', stars=[
+    'dick': lambda r, c: Anchor(symbol='/', stars=[
         Star(row=r-1, col=c+1, offsets=(0, 2), link='dick', symbol='★'),
-        Star(row=r, col=c+2, offsets=None, link='dick', symbol='★'),
+        Star(row=r,   col=c+2, offsets=None,   link='dick', symbol='★'),
     ]),
 }
 
@@ -201,7 +201,7 @@ dyck_path_shapes = {
 ballot_shapes = {
     'linear': lambda r, c: Anchor(symbol='●', stars=[
         Star(row=r, col=c+1, offsets=(0,2), link='linear', symbol='★'),
-        Star(row=r, col=c+2, offsets=None, link='linear', symbol='★'),
+        Star(row=r, col=c+2, offsets=None,  link='linear', symbol='★'),
     ]),
 }
 
@@ -211,7 +211,7 @@ ballot_shapes = {
 balanced_parens_shapes = {
     'parens': lambda r, c: Anchor(symbol='(', stars=[
         Star(row=r, col=c+1, offsets=(0,3), link='parens', symbol='★'),
-        Star(row=r, col=c+3, offsets=None, link='parens', symbol='★'),
+        Star(row=r, col=c+3, offsets=None,  link='parens', symbol='★'),
     ]),
 }
 
@@ -251,20 +251,20 @@ triangulated_shapes = {
         Star(row=r, col=c+1, offsets=None, link='ne', symbol='★'),
     ]),
     'sw':   lambda r, c: Anchor(symbol='▲', stars=[
-        Star(row=r, col=c-1, offsets=None, link='nw', symbol='★'),
-        Star(row=r+1, col=c, offsets=None, link='south', symbol='★'),
+        Star(row=r,   col=c-1, offsets=None, link='nw',    symbol='★'),
+        Star(row=r+1, col=c,   offsets=None, link='south', symbol='★'),
     ]),
     'se':   lambda r, c: Anchor(symbol='▲', stars=[
-        Star(row=r+1, col=c, offsets=None, link='south', symbol='★'),
-        Star(row=r, col=c+1, offsets=None, link='ne', symbol='★'),
+        Star(row=r+1, col=c,   offsets=None, link='south', symbol='★'),
+        Star(row=r,   col=c+1, offsets=None, link='ne',    symbol='★'),
     ]),
     'nw':   lambda r, c: Anchor(symbol='▼', stars=[
-        Star(row=r, col=c-1, offsets=None, link='sw', symbol='★'),
-        Star(row=r-1, col=c, offsets=None, link='north', symbol='★'),
+        Star(row=r,   col=c-1, offsets=None, link='sw',    symbol='★'),
+        Star(row=r-1, col=c,   offsets=None, link='north', symbol='★'),
     ]),
     'ne':   lambda r, c: Anchor(symbol='▼', stars=[
-        Star(row=r-1, col=c, offsets=None, link='north', symbol='★'),
-        Star(row=r, col=c+1, offsets=None, link='se', symbol='★'),
+        Star(row=r-1, col=c,   offsets=None, link='north', symbol='★'),
+        Star(row=r,   col=c+1, offsets=None, link='se',    symbol='★'),
     ]),
     'south': lambda r, c: Anchor(symbol='▼', stars=[
         Star(row=r, col=c-1, offsets=None, link='sw', symbol='★'),
@@ -296,7 +296,7 @@ rabbits_shapes = {
         Star(row=r-1, col=c+1, offsets=None, link='senior', symbol='★'),
     ]),
     'senior': lambda r, c: Anchor(symbol='●', stars=[
-        Star(row=r, col=c+1, offsets=None, link='young', symbol='▲'),
+        Star(row=r,   col=c+1, offsets=None, link='young',  symbol='▲'),
         Star(row=r+1, col=c+1, offsets=None, link='senior', symbol='★'),
     ]),
 }
@@ -314,8 +314,8 @@ steep_shapes = {
         Star(row=r-1, col=c, offsets=None, link='two_stars', symbol='☆'),
     ]),
     'two_stars': lambda r, c: Anchor(symbol='▢', stars=[
-        Star(row=r-1, col=c, offsets=None, link='two_stars', symbol='☆'),
-        Star(row=r, col=c+1, offsets=None, link='one_star', symbol='★'),
+        Star(row=r-1, col=c,   offsets=None, link='two_stars', symbol='☆'),
+        Star(row=r,   col=c+1, offsets=None, link='one_star',  symbol='★'),
     ]),
 }
 
@@ -577,90 +577,90 @@ def doctests():
     ★                        
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
      ★                       
-    ( ★                      
+    / ★                      
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
       ★                      
-     ( ★                     
-    (   ★                    
+     / ★                     
+    /   ★                    
     <BLANKLINE>
        ★                     
-    ( ( ★                    
+    / / ★                    
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
        ★                     
-      ( ★                    
-     (   ★                   
-    (     ★                  
+      / ★                    
+     /   ★                   
+    /     ★                  
     <BLANKLINE>
         ★                    
-     ( ( ★                   
-    (     ★                  
+     / / ★                   
+    /     ★                  
     <BLANKLINE>
-     (   ★                   
-    (   ( ★                  
+     /   ★                   
+    /   / ★                  
     <BLANKLINE>
         ★                    
-       ( ★                   
-    ( (   ★                  
+       / ★                   
+    / /   ★                  
     <BLANKLINE>
          ★                   
-    ( ( ( ★                  
+    / / / ★                  
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
         ★                    
-       ( ★                   
-      (   ★                  
-     (     ★                 
-    (       ★                
+       / ★                   
+      /   ★                  
+     /     ★                 
+    /       ★                
     <BLANKLINE>
          ★                   
-      ( ( ★                  
-     (     ★                 
-    (       ★                
+      / / ★                  
+     /     ★                 
+    /       ★                
     <BLANKLINE>
-      (   ★                  
-     (   ( ★                 
-    (       ★                
+      /   ★                  
+     /   / ★                 
+    /       ★                
     <BLANKLINE>
-      (                      
-     (     ★                 
-    (     ( ★                
-    <BLANKLINE>
-         ★                   
-        ( ★                  
-     ( (   ★                 
-    (       ★                
-    <BLANKLINE>
-          ★                  
-     ( ( ( ★                 
-    (       ★                
-    <BLANKLINE>
-     ( (   ★                 
-    (     ( ★                
-    <BLANKLINE>
-          ★                  
-     (   ( ★                 
-    (   (   ★                
-    <BLANKLINE>
-     (     ★                 
-    (   ( ( ★                
+      /                      
+     /     ★                 
+    /     / ★                
     <BLANKLINE>
          ★                   
-        ( ★                  
-       (   ★                 
-    ( (     ★                
+        / ★                  
+     / /   ★                 
+    /       ★                
     <BLANKLINE>
           ★                  
-       ( ( ★                 
-    ( (     ★                
+     / / / ★                 
+    /       ★                
     <BLANKLINE>
-       (   ★                 
-    ( (   ( ★                
+     / /   ★                 
+    /     / ★                
     <BLANKLINE>
           ★                  
-         ( ★                 
-    ( ( (   ★                
+     /   / ★                 
+    /   /   ★                
+    <BLANKLINE>
+     /     ★                 
+    /   / / ★                
+    <BLANKLINE>
+         ★                   
+        / ★                  
+       /   ★                 
+    / /     ★                
+    <BLANKLINE>
+          ★                  
+       / / ★                 
+    / /     ★                
+    <BLANKLINE>
+       /   ★                 
+    / /   / ★                
+    <BLANKLINE>
+          ★                  
+         / ★                 
+    / / /   ★                
     <BLANKLINE>
            ★                 
-    ( ( ( ( ★                
+    / / / / ★                
 
     Ballots
     =======

@@ -9,7 +9,7 @@ logic programming paradigm.
 
 Our setup, is based on the HOL Light theorem prover, in which we
 extend the currently available tactic mechanism with three basic
-features: (i)~the explicit use of meta variables, (ii)~the ability to
+features: (i)~the explicit use of meta-variables, (ii)~the ability to
 backtrack during the proof search, (iii)~a layer of tools and
 facilities to interface with the underlying proof mechanism.
 
@@ -18,15 +18,19 @@ call \emph{solvers}, which are a generalization of HOL tactics and
 are~--as well as tactics-- meant to be used compositionally to define
 arbitrarily complex proof search strategies.
 
-We say that our approach is \emph{semi-certified} because the produced
-solutions are formally proved theorems, hence their validity is
-guaranteed by construction; however, the completeness of the search
-procedure has to be ensured by a meta reasoning.
+We say that our approach is \emph{semi-certified} because
+\begin{itemize}
+\item on one hand, the produced solutions are formally proved
+  theorems, hence their validity is guaranteed by construction;
+\item on the other hand, the completeness of the search procedure
+  cannot be enforced in our framework and consequently has to be
+  ensured by a meta-reasoning.
+\end{itemize}
 
 At the present stage, our implementation is intended to be a test bed
 for experiments and further investigation on this reasoning paradigm.
 
-Our code is available from in a shared
+Our code is freely available from a shared
 repository\footnote{\url{https://github.com/massimo-nocentini/kanren-light}}.
 
 \section{An simple example}
@@ -37,12 +41,22 @@ computations on lists.
 
 Consider first the problem of computing the concatenation of two lists
 \verb|[1; 2]| and \verb|[3]|.  One natural way to approach this
-problem is by using rewriting.  In HOL Light, this can be done using
+problem is by using rewriting.  In HOL Light, this can be done by using
 \emph{conversions} with the command
 \begin{verbatim}
-# REWRITE_CONV [APPEND_NIL; APPEND_CONS] `APPEND [1;2] [3]`;;
+# REWRITE_CONV [APPEND] `APPEND [1;2] [3]`;;
 \end{verbatim}
-where the two theorems
+where the theorem
+\begin{verbatim}
+# APPEND;;
+val it : thm =
+  |- (!l. APPEND [] l = l) /\
+     (!h t l. APPEND (h :: t) l = h :: APPEND t l)
+\end{verbatim}
+gives the recursive equations for the operator \verb|APPEND|.
+
+Our implementation allows us to address the same problem from a
+logical point of view.  We start by proving two theorems
 \begin{verbatim}
 # APPEND_NIL;;
 val it : thm = |- !l. APPEND [] l = l
@@ -52,11 +66,8 @@ val it : thm =
   |- !x xs ys zs. APPEND xs ys = zs
                   ==> APPEND (x :: xs) ys = x :: zs
 \end{verbatim}
-characterize the concatenation operator \verb|APPEND|.
-
-Our implementation allows us to address the same problem from a
-logical point of view.  We start by defining the following
-\emph{solver}
+that gives the logical rules that characterize the \verb|APPEND|
+operator.  Then we define a \emph{solver}
 \begin{verbatim}
 let APPEND_SLV : solver =
   REPEAT_SLV (CONCAT_SLV (ACCEPT_SLV APPEND_NIL)
@@ -78,8 +89,8 @@ term
 `??x. APPEND [1;2] [3] = x`
 \end{verbatim}
 where the binder \verb|`(??)`| is a syntactic variant of the usual
-existential quantifier \verb|`(?)`|, which introduces the meta
-variables of the \emph{query}.
+existential quantifier \verb|`(?)`|, which introduces the
+\emph{meta-variables} of the \emph{query}.
 
 The following command
 \begin{verbatim}
@@ -94,7 +105,7 @@ stream into a list.
 
 The output of the previous command is a single solution which is
 represented by a pair where the first element is the instantiation for
-the meta variable \verb|`x`|and the second element is a HOL theorem
+the meta-variable \verb|`x`|and the second element is a HOL theorem
 \begin{verbatim}
 val it : (term list * thm) list =
   [([`x = [1; 2; 3]`], |- APPEND [1; 2] [3] = [1; 2; 3])]
@@ -128,47 +139,55 @@ val it : (term list * thm) list =
 
 Our framework is based on ML procedures called \emph{solvers}.
 Solvers generalizes classical HOL tactics in two ways: (i) they
-facilitate the manipulation of meta variables in the goal\footnote{The
+facilitate the manipulation of meta-variables in the goal\footnote{The
   tactic mechanism currently implemented in HOL Light already provides
-  basic support for meta variables in goals.  However, it seems to be
+  basic support for meta-variables in goals.  However, it seems to be
   used only internally in the implementation of the intuitionistic
   tautology prover \texttt{ITAUT\_TAC}.}; (ii) they allows to backtrack
 during the proof search.
 
 We provide a library of basic solvers.  They usually have a name that
-ends in \verb|_SLV| as, for instance, \verb|CONJ_SLV|.
+ends in \verb|_SLV| as, for instance, \verb|REFL_SLV|.
 
 Every HOL tactic can be `promoted' into a solver using the ML function
 \begin{verbatim}
 TACTIC_SLV : tactic -> solver
 \end{verbatim}
-A partial list of solvers corresponding to classical HOL tactics is
-\verb|ACCEPT_SLV|, \verb|ALL_SLV|, \verb|ASSUME_SLV|, \verb|CONJ_SLV|,
-\verb|CONTR_SLV|, \verb|CONV_SLV|, \verb|DISCH_SLV|, \verb|DISJ1_SLV|,
-\verb|DISJ2_SLV|, \verb|EQ_SLV|, \verb|GEN_SLV|, \verb|LABEL_SLV|,
-\verb|NO_SLV|, \verb|REFL_SLV|, \verb|RULE_SLV| (corresponding to
-\verb|MATCH_MP_TAC|).
+A partial list of solvers approximately corresponding to classical HOL
+tactics are \verb|ACCEPT_SLV|, \verb|NO_SLV|, \verb|REFL_SLV|,
+\verb|RULE_SLV| (corresponding to \verb|MATCH_MP_TAC|).
 
-However, whenever it make sense, solvers use term unification instead
-of term matching.  For instance, the \verb|REFL_SLV| solver, applied
+Notice that these solvers are different from their corresponding
+tactics because either
+\begin{enumerate}
+\item use the stream mechanism instead of OCaml exceptions to
+  handle the control flow; or
+\item perform some kind of unification.
+\end{enumerate}
+
+For (1), a very basic example is the solver \verb|NO_SLV| which,
+instead of raising an exception, it returns the empty stream of
+solutions.
+
+One example of (2) is the \verb|REFL_SLV| solver: when it is applied
 to the goal
 \begin{verbatim}
 ?- x + 1 = 1 + x
 \end{verbatim}
-where \verb|x| is a metavariable, closes the goal by augmenting the
+where \verb|x| is a meta-variable, closes the goal by augmenting the
 instantiation with the substitution $\mathtt{1}/\mathtt{x}$ and
-producing the theorem \verb!|- 1 + 1 = 1 + 1!.
+producing the theorem \verb!|- 1 + 1 = 1 + 1!.  Observe that the
+corresponding \verb|REFL_TAC| fails in this case.
 
 As for tactics, we have a collection of higher-order solvers.  Some of
 them, are the analogous of the corresponding tacticals:
 \verb|ASSUM_LIST_SLV|,
-\verb|CHANGE_SLV|,
+\verb|CHANGED_SLV|,
 \verb|EVERY_SLV|,
 \verb|MAP_EVERY_SLV|,
 \verb|POP_ASSUM_LIST_SLV|,
 \verb|POP_ASSUM_SLV|,
 \verb|REPEAT_SLV|,
-\verb|RULE_ASSUM_SLV|,
 \verb|THENL_SLV|,
 \verb|THEN_SLV|,
 \verb|TRY_SLV|,
@@ -182,14 +201,16 @@ most basic construction for introducing backtracking into the proof
 strategy.
 
 From \verb|CONCAT_SLV|, a number of derived combinators are defined to
-capture the most common enumerating pattern.  In this synthetic note,
-we give here a brief list of those combinators without an explicit
-description.  However, we hope that the reader can guess the actual
-behaviour from both their name and their ML type:\\
-\verb|COLLECT_SLV : solver list -> solver|\\
-\verb|MAP_COLLECT_SLV : ('a->solver) -> 'a list -> solver|\\
-\verb|COLLECT_ASSUM_SLV : thm_solver -> solver|\\
-\verb|COLLECT_X_ASSUM_SLV : thm_solver -> solver|.
+capture the most common enumeration patterns.  In this synthetic note,
+we give a brief list of those combinators without an explicit
+description. However, we hope that the reader can guess the actual
+behaviour from both their name and their ML type:
+\begin{verbatim}
+COLLECT_SLV : solver list -> solver
+MAP_COLLECT_SLV : ('a->solver) -> 'a list -> solver
+COLLECT_ASSUM_SLV : thm_solver -> solver
+COLLECT_X_ASSUM_SLV : thm_solver -> solver
+\end{verbatim}
 
 %% Solver 'bilanciati'?
 %% % let MPLUS_SLV (slv1:solver) (slv2:solver) : solver =
@@ -214,7 +235,7 @@ prints the current goal state.  The stream of results is produced by
 a call to \verb|top_thms()|.
 
 Here is an example of interaction.  We first introduce the goal,
-notice the use of the binder \verb|(??)| for the metavariable \verb|x|:
+notice the use of the binder \verb|(??)| for the meta-variable \verb|x|:
 \begin{verbatim}
 # gg `??x. 2 + 2 = x`;;
 val it : mgoalstack = 
@@ -279,8 +300,8 @@ val it : (term list * thm) list =
    ([`x = 4`], |- 2 + 2 = 4)]
 \end{verbatim}
 
-\section{Advanced solvers}
-\label{sec:advanced-solvers}
+%\section{Advanced solvers}
+%\label{sec:advanced-solvers}
 
 % - PROLOG_SLV (come chiamarla pero'?)
 % - ITAUT_SLV (bug di ITAUT_TAC)
@@ -293,7 +314,7 @@ work of Byrd, Holk and Friedman about the miniKanren system
 \cite{Byrd:2012:MLU:2661103.2661105}, where the authors work with the
 semantics of the scheme language.  Here we target a lisp-like
 language, implemented as an object language inside the HOL prover.
-Our language is substantially simpler than the scheme language.  In
+Our language is substantially simpler than the scheme language; in
 particular, it uses dynamic (instead of lexical) scope for variables.
 Nonetheless, we believe that this example can suffice to illustrate
 the general methodology.
@@ -314,7 +335,7 @@ term with
              Symbol "b"]]`
 \end{verbatim}
 This syntactic representation can be hard to read and gets quickly
-cumbersome as the size of the terms grow.  Hence, we also introduce a
+cumbersome as the size of the terms grows.  Hence, we also introduce a
 notation for concrete sexp terms, which is activated by the syntactic
 pattern \verb|'(|\ldots\verb|)|.  For instance, the above example
 is written in the HOL concrete syntax for terms as
@@ -386,10 +407,10 @@ val it : term list * thm =
 \end{verbatim}
 
 Again, we can use the declarative nature of logic programs to run the
-computation backwards.  For instance, one interesting exercise is the
+computation backwards.  For instance, one intriguing exercise is the
 generation of quine programs, that is, programs that evaluates to
 themselves.  In our formalization, they are those terms $q$ satisfying
-the relation \verb|`EVAL| $q\ q$\verb|`|.  The following command
+the relation \verb|`EVAL|~\verb|[]|~$q$~$q$\verb|`|.  The following command
 computes the first two quines found by our solver.
 \begin{verbatim}
 # let sols = solve EVAL_SLV `??q. EVAL [] q q`);;
@@ -460,10 +481,24 @@ val it : term =
 \section{Conclusions and future work}
 \label{sec:conclusions}
 
-% Citare altri esperimenti
-% - quick sort
-% - cassaforte
+We presented a rudimentary framework implemented on top of the HOL
+Light theorem prover that enable a logic programming paradigm for
+proof searching.  More specifically, it facilitates the use of
+meta-variables in HOL goals and permits backtracking during the proof
+construction.
 
-% Sviluppi futuri:
-% - constraints
-% - higher-order unification (\lambda Prolog)
+It would be interesting to enhance our framework with more features:
+\begin{itemize}
+\item Implement higher-order unification as Miller's higher-order
+  patterns, so that our system can enable higher-order logic
+  programming in the style of $\lambda$Prolog.
+\item Support constraint logic programming, e.g., by adapting the data
+  structure that represent goals.
+\end{itemize}
+
+Despite the simplicity of present implementation, we have already
+shown the implementation of some paradigmatic examples of
+logic-oriented proof strategies.  In the code base, some further
+examples are included concerning a quicksort implementation and a
+simple example of logical puzzle.
+

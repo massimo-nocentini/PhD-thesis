@@ -1,4 +1,4 @@
-\documentclass{tufte-book}
+\documentclass[nopart]{tufte-book}
 
 \hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
 
@@ -214,6 +214,8 @@
 
 %  ______________________________________________________________________________
 
+\newcommand{\notbreakable}[1]{\noindent\parbox{\textwidth}{#1}}
+    
 
 % Generates the index
 \usepackage{makeidx}
@@ -469,7 +471,7 @@ simple introduction.
 \chapter{Semi-Certified Interactive\newline Logic Programming} 
 \label{ch:scilp}
 
-\input{SCILP/body}
+\input{SCILP/scilp}
 
 \chapter{More $\mu$Kanrens languages}
 \label{ch:more-kanrens}
@@ -482,8 +484,8 @@ Hello.
 
 \backmatter
 
-%\bibliography{sample}
-%\bibliographystyle{plainnat}
+\bibliography*{SCILP/scilp}
+\bibliographystyle{plainurl}
 
 %\newpage
 %\input{bibliography.tex}
