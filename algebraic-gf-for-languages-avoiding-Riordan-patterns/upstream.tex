@@ -31,7 +31,7 @@ is true and $0$ otherwise) as follows:
 $$c_i=[\![p_0p_1\cdots p_{h-1-i}=p_{i}p_{i+1}\cdots p_{h-1}]\!];$$
 in words, the bit $c_i$ is determined by shifting $\mathfrak{p}$ to the right by
 $i$ positions, setting $c_i=1$ if and only if the remaining letters match the
-original. 
+original.
 \begin{table}
     \begin{center}
         \begin{tabular}{ccccc|cccccc}
@@ -57,7 +57,7 @@ $C^{[\mathfrak{p}]}(x,y)=C^{[\mathfrak{\bar{p}}]}(y,x)$.
 
 Addition of constraints to the nature of a pattern $\mathfrak{p}$ yields
 the following definition:
-\begin{defi}[Riordan pattern]
+\begin{definition}[Riordan pattern]
 \label{defrp}
 We say that $\mathfrak{p}=p_0\cdots p_{h-1}$ is a Riordan pattern if and only
 if
@@ -68,7 +68,7 @@ C^{[\mathfrak{p}]}(x,y)=C^{[\mathfrak{\bar{p}}]}(y,x)=\sum_{i=0}^{\lfloor(h-1)/2
 \end{displaymath}
 where $n_1^{[\mathfrak{p}]}$ and  $n_0^{[\mathfrak{p}]}$ correspond to the
 number of $1$-bits  and $0$-bits  in the pattern, respectively.
-\end{defi}
+\end{definition}
 
 For example, Table \ref{auto} corresponds to a Riordan pattern and
 $\mathfrak{p}= 1100110110011000$ is another Riordan pattern having
@@ -142,11 +142,11 @@ having $n$ $1$-bits  and $n-k$  $0$-bits; additionally, let
 $\mathcal{R}^{[\mathfrak{p}]}=\left(R_{n,k}^{[\mathfrak{p}]}\right)_{n,k\in\mathbb{N}}$
 the enclosing matrix. The following theorem, which is proved in \citep{MERLINI20112988},
 shows the importance of Riordan patterns:
-\begin{teo}
+\begin{theorem}
 \label{main}
 Matrices ${\cal{R}^{[\mathfrak{p}]}}$ and ${\cal{R}^{[\bar{\mathfrak{p}]}}}$
 are Riordan arrays if and only if  $\mathfrak{p}$ is a Riordan pattern.
-\end{teo}
+\end{theorem}
 
 By previous theorem, matrices ${\cal{R}^{[\mathfrak{p}]}}$ and
 ${\cal{R}^{[\bar{\mathfrak{p}]}}}$ can be defined as
@@ -157,14 +157,14 @@ $h^{[\bar{\mathfrak{p}}]},$ given a Riordan pattern $\mathfrak{p}$; moreover, th
 upper part of the array
 ${\cal{F}^{[\mathfrak{p}]}}=(F_{n,k}^{[\mathfrak{p}]})_{n,k \in \mathbb{N}}$,
 where $F_{n,k}^{[\mathfrak{p}]}$ denotes the number of words avoiding pattern
-$\mathfrak{p}$ and having $n$ $1$-bits  and $k$ $0$-bits . 
+$\mathfrak{p}$ and having $n$ $1$-bits  and $k$ $0$-bits .
 
 \begin{example}
 Tables \ref{Fprimo}, \ref{Rprimoa} and \ref{Rprimob}
 illustrate some rows for the matrices ${\cal{F}^{[\mathfrak{p}]}},$
 ${\cal{R}^{[\mathfrak{p}]}}$ and ${\cal{R}^{[\bar{\mathfrak{p}]}}}$, where
 $\mathfrak{p}=10101$.
-\begin{table}[htb]
+\begin{table}
 $$
 \begin{array}{c|cccccccc}
 n/k  & 0 & 1 & 2 & 3 & 4 &5 &6 &7  \\ \cline{1-9}
@@ -180,7 +180,7 @@ n/k  & 0 & 1 & 2 & 3 & 4 &5 &6 &7  \\ \cline{1-9}
 $$
 \caption{\label{Fprimo} ${\cal{F}^{[\mathfrak{p}]}}$ for $\mathfrak{p}=10101$}
 \end{table}
-\begin{table}[htb]
+\begin{table}
 $$
 \begin{array}{c|cccccccc}
 n/k  & 0 & 1 & 2 & 3 & 4 &5 &6 &7  \\ \cline{1-9}
@@ -196,7 +196,7 @@ n/k  & 0 & 1 & 2 & 3 & 4 &5 &6 &7  \\ \cline{1-9}
 $$
 \caption{\label{Rprimoa} ${\cal{R}^{[\mathfrak{p}]}}$ for $\mathfrak{p}=10101$}
 \end{table}
-\begin{table}[htb]
+\begin{table}
 $$
 \begin{array}{c|cccccccc}
 n/k  & 0 & 1 & 2 & 3 & 4 &5 &6 &7  \\ \cline{1-9}
@@ -214,7 +214,7 @@ $$
 \end{table}
 \end{example}
 
-\begin{rem}
+\begin{remark}
  Riordan patterns are not the only patterns related to Riordan arrays; for
  example, given the pattern $\mathfrak{p}=0100100$ corresponding to
  $C^{[\mathfrak{p}]}(x,y)=1+xy^2+x^2y^4$, matrix ${\cal{R}^{[\mathfrak{p}]}}$
@@ -225,7 +225,7 @@ is not, as illustrated in Example 5.4 of \citep{Baccherini2007BinaryWE}. However
 situations it is not easy to find functions $d^{[\mathfrak{p}]}(t)$ and
 $h^{[\mathfrak{p}]}(t)$ while for Riordan patterns it is always possible, as
 shown in Theorems \ref{main} and \ref{teo1}.
-\end{rem}
+\end{remark}
 
 
 As already observed, the enumeration of the set of binary words avoiding a
@@ -268,7 +268,7 @@ In particular, $d^{[\mathfrak{p}]}(t)$ is the generating function of paths which
 
 We start with a result which is a direct consequence of  Theorems 2.3 and 3.3
 in \citep{MERLINI20112988}:
-\begin{teo}
+\begin{theorem}
 \label{teo1}
 Let  $R_{n,k}^{[\mathfrak{p}]}$ be the number of binary words with $n$ $1$-bits
 and $n-k$  $0$-bits, avoiding a Riordan pattern $\mathfrak{p}.$  Then the
@@ -301,7 +301,7 @@ $$h^{[\mathfrak{p}]}(t)={C^{[\mathfrak{p}]}(t) -\sqrt{C^{[\mathfrak{p}]}(t)^2-4t
 \over 2 (C^{[\mathfrak{p}]}(t)- t^{n_1^{[\mathfrak{p}]}})}.$$
 
 \end{itemize}
-\end{teo}
+\end{theorem}
 
 If $R^{[\mathfrak{p}]}(t,w)$ denotes the bivariate generating function of the
 Riordan array ${\cal{R}^{[\mathfrak{p}]}},$ as already mentioned in the
@@ -310,7 +310,7 @@ $$R^{[\mathfrak{p}]}(t,w)=\sum_{n,k\in\mathbb{N}} R_{n, k}^{[\mathfrak{p}]}t^n
 w^k={d^{[\mathfrak{p}]}(t) \over 1-wh^{[\mathfrak{p}]}(t)}$$ and Theorem
 \ref{teo1} allow us to state the following results.
 
-\begin{teo}
+\begin{theorem}
 \label{teo2}
 Let $\mathfrak{p}$ be  a Riordan pattern and $S^{[\mathfrak{p}]}(t)=\sum_{n\geq
 0}S_n^{[\mathfrak{p}]}t^n$ the generating function enumerating the set of binary words $\left\lbrace w\in
@@ -334,7 +334,7 @@ $$S^{[\mathfrak{p}]}(t)={2C^{[\mathfrak{p}]}(t)^2 \over \sqrt{Q(t)}
 where $Q(t)=(1-4t)C^{[\mathfrak{p}]}(t)^2+2t^{n_0^{[\mathfrak{p}]}}C^{[\mathfrak{p}]}(t)+t^{2n_0^{[\mathfrak{p}]}}.$
 
 \end{itemize}
-\end{teo}
+\end{theorem}
 \begin{proof}
 For the proof we can observe that $S^{[\mathfrak{p}]}(t)=\sum_{n\geq
 0}S_n^{[\mathfrak{p}]}t^n=R^{[\mathfrak{p}]}(t,1),$ or, equivalently, that
@@ -343,7 +343,7 @@ fundamental rule (\ref{somme}) with $f_k=1.$ The statement of the theorem can
 be found after some algebraic simplification.
 \end{proof}
 
-\begin{teo}
+\begin{theorem}
 \label{teo3}
 Let $\mathfrak{p}$ be  a Riordan pattern and $L^{[\mathfrak{p}]}(t)=\sum_{n\geq
 0}L_n^{[\mathfrak{p}]}t^n$ the generating function enumerating the set of binary words $\left\lbrace w\in
@@ -369,7 +369,7 @@ where
 $Q(t)=(1-4t^2)C^{[\mathfrak{p}]}(t^2)^2+2t^{2n_0^{[\mathfrak{p}]}}C^{[\mathfrak{p}]}(t^2)+t^{4n_0^{[\mathfrak{p}]}}.$
 
 \end{itemize}
-\end{teo}
+\end{theorem}
 \begin{proof}
 For the proof we can observe that the application of generating function $R^{[\mathfrak{p}]}(t, w)$ as
 \begin{displaymath}
@@ -389,7 +389,7 @@ Theorems \ref{teo2} and \ref{teo3} allows us to find the generating functions $S
  in the case $C^{[\mathfrak{p}]}(x,y)=1.$
 For such particular patterns, Theorem \ref{teo1} simplifies as follows.
 
-\begin{coro}
+\begin{corollary}
 \label{corodh}
 Let  ${\cal{R}^{[\mathfrak{p}]}}=(R_{n, k}^{[\mathfrak{p}]})_{n,k\in\mathbb{N}}=(d^{[\mathfrak{p}]}(t),h^{[\mathfrak{p}]}(t))$  be the
 Riordan array corresponding to the number of binary words with $n$ $1$-bits  and
@@ -423,7 +423,7 @@ h^{[\mathfrak{p}]}(t) &= {\sum_{i=0}^jt^i -\sqrt{1-2\sum_{i=1}^jt^i-3\left( \sum
 \end{displaymath}
 
 \end{itemize}
-\end{coro}
+\end{corollary}
 
 As a peculiar instance, observe that when we instantiate a pattern from family
 $\mathfrak{p}=1^{j}0^{j}$ with $j=1$ we get a Riordan array
@@ -441,7 +441,7 @@ coordinate $(2n, 0)$ for each $n\in\mathbb{N}$, formally the path $0^{n}1^{n}$.
 
 By applying Theorem \ref{teo2} to the same patterns as before, we get the following corollary.
 
-\begin{coro}
+\begin{corollary}
 \label{coroS}
 Let  $S^{[\mathfrak{p}]}(t)=\sum_{n\geq 0}S_n^{[\mathfrak{p}]}t^n$ the
 generating function enumerating the set of binary words $\left\lbrace w\in
@@ -474,7 +474,7 @@ where $Q(t)={1-4t+2t^{j+1}+4t^{j+2}-3t^{2j+2}}$.
 %\sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2} \left(\sum_{i=0}^{j-1}t^i-t^j+\sqrt{1-2\sum_{i=1}^jt^i-3 \left( \sum_{i=1}^j t^i \right)^2}\right) }$$
 
 \end{itemize}
-\end{coro}
+\end{corollary}
 We observe that the case $\mathfrak{p}=(10)^j1$ in Corollary \ref{coroS}
 corresponds to the sequence studied in \citep{Bilotta2013CountingBW}; moreover, in
 \autoref{tbl:S1_j1:0_j}, \autoref{tbl:S0_j1:1_j}, \autoref{tbl:S0_j:1_j},
@@ -484,6 +484,7 @@ functions just defined, respectively.
 
 % S tables {{{
 
+
 % p = 1^{j+1}0^{j}
 \begin{table}
 \begin{equation*}
@@ -491,19 +492,14 @@ functions just defined, respectively.
         j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\\hline0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 3 & 7 & 15 & 31 & 63 & 127 & 255 & 511 & 1023 & 2047 & 4095\\2 & 1 & 3 & 10 & 32 & 106 & 357 & 1222 & 4230 & 14770 & 51918 & 183472 & 651191\\3 & 1 & 3 & 10 & 35 & 123 & 442 & 1611 & 5931 & 22010 & 82187 & 308427 & 1162218\\4 & 1 & 3 & 10 & 35 & 126 & 459 & 1696 & 6330 & 23806 & 90068 & 342430 & 1307138\\5 & 1 & 3 & 10 & 35 & 126 & 462 & 1713 & 6415 & 24205 & 91874 & 350406 & 1341782\\6 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6432 & 24290 & 92273 & 352212 & 1349768\\7 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24307 & 92358 & 352611 & 1351574\\8 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24310 & 92375 & 352696 & 1351973
     \end{array}
 \end{equation*}
-\begin{displaymath}
-\begin{split}
-[t^{3}]S^{[110]}(t) &= \big|\lbrace 111, 0111, 1011, 00111, 01011, 10011, 10101, 000111, \\
-& 001011, 010011, 010101, 100011, 100101, 101001, 101010\rbrace\big| = 15
-\end{split}
-\end{displaymath}
-Series developments for $S^{[1^{j+1}0^j]}(t)$
-and the set of words with $n=3$ $1$-bits, avoiding pattern $\mathfrak{p}=110$,
-so $j=1$ in the family; moreover, for $j=1$ the sequence corresponds to
-$A000225$, for $j=2$ the sequence corresponds to $A261058$.
-\caption[][-0.5cm]{Series developments for $S^{[1^{j+1}0^j]}(t)$ where $j\in
-\lbrace 0,\ldots,8 \rbrace$.}
-
+\caption[Series developments for $S^{[1^{j+1}0^j]}(t)$ where $j\in \lbrace 0,\ldots,8 \rbrace$.]
+        [6cm]{
+    Series developments for $S^{[1^{j+1}0^j]}(t)$ where $j\in \lbrace
+    0,\ldots,8 \rbrace$, avoiding
+    pattern $\mathfrak{p}=110$; moreover,
+    when $j=1$ the sequence corresponds to $A000225$ and
+    when $j=2$ the sequence corresponds to $A261058$.
+}
 \label{tbl:S1_j1:0_j}
 \end{table}
 
@@ -514,18 +510,12 @@ $A000225$, for $j=2$ the sequence corresponds to $A261058$.
     j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\\hline0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 3 & 8 & 20 & 48 & 112 & 256 & 576 & 1280 & 2816 & 6144 & 13312\\2 & 1 & 3 & 10 & 33 & 111 & 378 & 1302 & 4525 & 15841 & 55783 & 197389 & 701286\\3 & 1 & 3 & 10 & 35 & 124 & 447 & 1632 & 6015 & 22336 & 83439 & 313216 & 1180511\\4 & 1 & 3 & 10 & 35 & 126 & 460 & 1701 & 6351 & 23890 & 90398 & 343713 & 1312108\\5 & 1 & 3 & 10 & 35 & 126 & 462 & 1714 & 6420 & 24226 & 91958 & 350736 & 1343069\\6 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6433 & 24295 & 92294 & 352296 & 1350098\\7 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24308 & 92363 & 352632 & 1351658\\8 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24310 & 92376 & 352701 & 1351994
 \end{array}
 \end{equation*}
-
-\begin{displaymath}
-    \begin{split}
-    [t^{3}]S^{[001]}(t) &= \big|\lbrace 111, 0111, 1011, 1101, 1110, 01011, 01101, 01110, 10101, 10110, 11010, 11100,\\
-    & 010101, 010110, 011010, 011100, 101010, 101100, 110100, 111000\rbrace\big| = 20
-    \end{split}
-\end{displaymath}
-{Some series developments for $S^{[0^{j+1}1^j]}(t)$ and the set of
-words with $n=3$ $1$-bits, avoiding pattern $\mathfrak{p}=001$, so $j=1$ in the
-family; moreover, for $j=1$ the sequence corresponds to $A001792$.}
-\caption[][-0.5cm]{Some series developments for $S^{[0^{j+1}1^j]}(t)$ where $j\in \lbrace
-0,\ldots,8 \rbrace$.}
+\caption[Series developments for $S^{[0^{j+1}1^j]}(t)$ where $j\in \lbrace 0,\ldots,8 \rbrace$.]
+        [6cm]{
+            Series developments for $S^{[0^{j+1}1^j]}(t)$ where $j\in \lbrace 0,\ldots,8 \rbrace$,
+            avoiding pattern $\mathfrak{p}=001$; moreover,
+            when $j=1$ the sequence corresponds to $A001792$.
+        }
 \label{tbl:S0_j1:1_j}
 \end{table}
 
@@ -536,20 +526,14 @@ family; moreover, for $j=1$ the sequence corresponds to $A001792$.}
     j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\\hline0 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24310 & 92378 & 352716 & 1352078\\1 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12\\2 & 1 & 3 & 9 & 27 & 82 & 253 & 791 & 2499 & 7960 & 25520 & 82248 & 266221\\3 & 1 & 3 & 10 & 34 & 118 & 417 & 1493 & 5400 & 19684 & 72196 & 266122 & 985003\\4 & 1 & 3 & 10 & 35 & 125 & 454 & 1671 & 6211 & 23261 & 87641 & 331821 & 1261398\\5 & 1 & 3 & 10 & 35 & 126 & 461 & 1708 & 6390 & 24086 & 91328 & 347965 & 1331072\\6 & 1 & 3 & 10 & 35 & 126 & 462 & 1715 & 6427 & 24265 & 92154 & 351666 & 1347326\\7 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6434 & 24302 & 92333 & 352492 & 1351028\\8 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24309 & 92370 & 352671 & 1351854
 \end{array}
 \end{equation*}
-
-\begin{displaymath}
-    \begin{split}
-    [t^{8}]S^{[01]}(t) &= \big|\lbrace 11111111, 111111110, 1111111100, 11111111000, 111111110000,\\
-    & 1111111100000, 11111111000000, 111111110000000, 1111111100000000\rbrace\big| = 9
-    \end{split}
-\end{displaymath}
-{Some series developments for $S^{[0^{j}1^j]}(t)$ (or, equivalently,
-$S^{[1^{j}0^{j}]}(t)$) and the set of words with $n=8$ $1$-bits, avoiding
-pattern $\mathfrak{p}=01$ (or, equivalently, $\mathfrak{p}=10$), so $j=1$ in
-the family; moreover, for $j=0$ the sequence corresponds to $A001700$, for
-$j=1$ the sequence corresponds to  $A001477$.}
-\caption[][-0.5cm]{Some series developments for $S^{[0^{j}1^j]}(t)$ (or,
-equivalently, $S^{[1^{j}0^{j}]}(t)$) where $j\in \lbrace 0,\ldots,8 \rbrace$.}
+\caption[Series developments for $S^{[0^{j}1^j]}(t)$ where $j\in \lbrace 0,\ldots,8 \rbrace$.]
+        [6cm]{
+            Series developments for $S^{[0^{j}1^j]}(t)$ (or, equivalently,
+            $S^{[1^{j}0^{j}]}(t)$) where $j\in \lbrace 0,\ldots,8 \rbrace$,
+            avoiding pattern $\mathfrak{p}=01$ (or, equivalently,
+            $\mathfrak{p}=10$); moreover,
+            when $j=0$ the sequence corresponds to $A001700$.
+        }
 \label{tbl:S0_j:1_j}
 \end{table}
 
@@ -560,18 +544,12 @@ equivalently, $S^{[1^{j}0^{j}]}(t)$) where $j\in \lbrace 0,\ldots,8 \rbrace$.}
     j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\\hline0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 3 & 7 & 18 & 48 & 131 & 363 & 1017 & 2873 & 8169 & 23349 & 67024\\2 & 1 & 3 & 10 & 32 & 109 & 377 & 1324 & 4697 & 16795 & 60425 & 218485 & 793259\\3 & 1 & 3 & 10 & 35 & 123 & 445 & 1631 & 6036 & 22511 & 84460 & 318438 & 1205457\\4 & 1 & 3 & 10 & 35 & 126 & 459 & 1699 & 6350 & 23911 & 90572 & 344737 & 1317397\\5 & 1 & 3 & 10 & 35 & 126 & 462 & 1713 & 6418 & 24225 & 91979 & 350910 & 1344092\\6 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6432 & 24293 & 92293 & 352317 & 1350272\\7 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24307 & 92361 & 352631 & 1351679\\8 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24310 & 92375 & 352699 & 1351993
 \end{array}
 \end{equation*}
-
-\begin{displaymath}
-    \begin{split}
-    [t^{3}]S^{[101]}(t) &= \big|\lbrace 111, 0111, 1110, 00111, 01110, 10011, 11001, 11100, 000111, 001110,\\
-    & 010011, 011001, 011100, 100011, 100110, 110001, 110010, 111000 \rbrace\big| = 18
-    \end{split}
-\end{displaymath}
-{Some series developments for $S^{[(10)^{j}1]}(t)$ and the set of words with
-$n=3$ $1$-bits, avoiding pattern $\mathfrak{p}=101$, so $j=1$ in the family;
-moreover, for $j=1$ the sequence corresponds to $A225034$.}
-\caption[][-0.5cm]{Some series developments for $S^{[(10)^{j}1]}(t)$ where
-$j\in \lbrace 0,\ldots,8 \rbrace$.}
+\caption[Series developments for $S^{[(10)^{j}1]}(t)$ where $j\in \lbrace 0,\ldots,8 \rbrace$.]
+        [6cm]{
+            Series developments for $S^{[(10)^{j}1]}(t)$ where $j\in \lbrace 0,\ldots,8 \rbrace$,
+            avoiding pattern $\mathfrak{p}=101$; moreover,
+            when $j=1$ the sequence corresponds to $A225034$.
+        }
 \label{tbl:S10_j:1}
 \end{table}
 
@@ -582,26 +560,59 @@ $j\in \lbrace 0,\ldots,8 \rbrace$.}
     j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\\hline0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 3 & 8 & 22 & 61 & 171 & 483 & 1373 & 3923 & 11257 & 32418 & 93644\\2 & 1 & 3 & 10 & 33 & 113 & 393 & 1384 & 4920 & 17618 & 63456 & 229642 & 834342\\3 & 1 & 3 & 10 & 35 & 124 & 449 & 1647 & 6099 & 22754 & 85394 & 322022 & 1219205\\4 & 1 & 3 & 10 & 35 & 126 & 460 & 1703 & 6366 & 23974 & 90818 & 345691 & 1321092\\5 & 1 & 3 & 10 & 35 & 126 & 462 & 1714 & 6422 & 24241 & 92042 & 351156 & 1345049\\6 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6433 & 24297 & 92309 & 352380 & 1350518\\7 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24308 & 92365 & 352647 & 1351742\\8 & 1 & 3 & 10 & 35 & 126 & 462 & 1716 & 6435 & 24310 & 92376 & 352703 & 1352009
 \end{array}
 \end{equation*}
-
-\begin{displaymath}
-    \begin{split}
-    [t^{3}]S^{[010]}(t) &= \big|\lbrace 111, 0111, 1011, 1101, 1110, 00111, 01101, 01110, \\
-            & 10011, 10110, 11001, 11100, 000111, 001101, 001110, 011001, \\
-            & 011100, 100011, 100110, 101100, 110001, 111000 \rbrace\big| = 22
-    \end{split}
-\end{displaymath}
-{Some series developments for $S^{[(01)^{j}0]}(t)$ and the set of words with
-$n=3$ $1$-bits, avoiding pattern $\mathfrak{p}=010$, so $j=1$ in the family;
-moreover, for $j=1$ the sequence corresponds to $A025566$.}
-\caption[][-0.5cm]{Some series developments for $S^{[(01)^{j}0]}(t)$ where $j\in
-\lbrace 0,\ldots,8 \rbrace$.}
+\caption[Series developments for $S^{[(01)^{j}0]}(t)$ where $j\in \lbrace 0,\ldots,8 \rbrace$.]
+        [6cm]{
+            Series developments for $S^{[(01)^{j}0]}(t)$  where $j\in \lbrace 0,\ldots,8 \rbrace$,
+            avoiding pattern $\mathfrak{p}=010$; moreover,
+            when $j=1$ the sequence corresponds to $A025566$.
+        }
 \label{tbl:S01_j:0}
 \end{table}
 
+\begin{table}
+$$
+\begin{array}{c|c}
+[t^{3}]S^{[110]}(t) &
+\begin{split}
+    & 111, 0111, 1011, 00111, 01011, 10011, \\
+    & 10101, 000111, 001011, 010011, 010101, \\
+    & 100011, 100101, 101001, 101010 \\
+\end{split} \\\hline
+[t^{3}]S^{[001]}(t) &
+\begin{split}
+& 111, 0111, 1011, 1101, 1110, 01011, \\
+& 01101, 01110, 10101, 10110, 11010, \\
+& 11100, 010101, 010110, 011010,\\
+& 011100, 101010, 101100, 110100, 111000 \\
+\end{split} \\\hline
+[t^{8}]S^{[01]}(t) &
+\begin{split}
+& 11111111, 111111110, 1111111100, 11111111000, \\
+& 111111110000, 1111111100000, 11111111000000, \\
+& 111111110000000, 1111111100000000 \\
+\end{split} \\\hline
+[t^{3}]S^{[101]}(t) &
+\begin{split}
+& 111, 0111, 1110, 00111, 01110, 10011, 11001, \\
+& 11100, 000111, 001110, 010011, 011001, 011100,\\
+& 100011, 100110, 110001, 110010, 111000 \\
+\end{split} \\\hline
+[t^{3}]S^{[010]}(t) &
+\begin{split}
+& 111, 0111, 1011, 1101, 1110, 00111, 01101, \\
+& 01110, 10011, 10110, 11001, 11100, 000111, \\
+& 001101, 001110, 011001, 011100, 100011, \\
+& 100110, 101100, 110001, 111000 \\
+\end{split}
+\end{array}
+$$
+\caption{Set of words with $3, 3, 8, 3$ and $3$ occurrences of $1$-bits
+avoiding patterns $110, 001, 01, 101$ and $010$, respectively.}
+\end{table}
 % }}}
 
 Finally, by applying Theorem \ref{teo3} to the pattern families already examined, we find the following result.
-\begin{coro}
+\begin{corollary}
 \label{coroL}
 Let  $L^{[\mathfrak{p}]}(t)=\sum_{n\geq 0}L_n^{[\mathfrak{p}]}t^n$ the
 generating function enumerating the set of binary words $\left\lbrace w\in
@@ -633,7 +644,7 @@ $$ L^{[\mathfrak{p}]}(t)={2 t (t^{2j+2}-1)(t^{2j}-1)\over  \sqrt{Q(t)} (t^{2j+2}
 
 \end{itemize}
 where $Q(t)={1-4t^2+2t^{2j+2}+4t^{2j+4}-3t^{4j+4}}$.
-\end{coro}
+\end{corollary}
 
 In \autoref{tbl:L1_j1:0_j}, \autoref{tbl:L0_j1:1_j}, \autoref{tbl:L0_j:1_j},
 \autoref{tbl:L10_j:1} and \autoref{tbl:L01_j:0} we report some series
@@ -645,21 +656,21 @@ respectively.
 % p = 1^{j+1}0^{j}
 \begin{table}
 \begin{equation*}\begin{array}{c|ccccccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\\hline0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 3 & 3 & 7 & 7 & 15 & 15 & 31 & 31 & 63 & 63 & 127 & 127 & 255\\2 & 1 & 1 & 3 & 4 & 11 & 15 & 38 & 55 & 135 & 201 & 483 & 736 & 1742 & 2699 & 6313\\3 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 63 & 159 & 247 & 610 & 969 & 2354 & 3802 & 9117\\4 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 255 & 634 & 1015 & 2482 & 4041 & 9752\\5 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1023 & 2506 & 4087 & 9880\\6 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4095 & 9904\\7 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9908\end{array}\end{equation*}
-\caption[][-0.5cm]{Some series developments for $L^{[1^{j+1}0^j]}(t)$ where $j\in \lbrace 0,\ldots,7 \rbrace$.}
+\caption[][-0.5cm]{Series developments for $L^{[1^{j+1}0^j]}(t)$ where $j\in \lbrace 0,\ldots,7 \rbrace$.}
 \label{tbl:L1_j1:0_j}
 \end{table}
 
 % p = 0^{j+1}1^{j}
 \begin{table}
 \begin{equation*}\begin{array}{c|ccccccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\\hline0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 1 & 3 & 4 & 9 & 13 & 26 & 39 & 73 & 112 & 201 & 313 & 546 & 859 & 1469\\2 & 1 & 1 & 3 & 4 & 11 & 16 & 40 & 61 & 147 & 231 & 542 & 870 & 2004 & 3269 & 7423\\3 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 161 & 253 & 622 & 999 & 2414 & 3942 & 9396\\4 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 636 & 1021 & 2494 & 4071 & 9812\\5 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2508 & 4093 & 9892\\6 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9906\\7 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9908\end{array}\end{equation*}
-\caption[][-0.5cm]{Some series developments for $L^{[0^{j+1}1^j]}(t)$ where $j\in \lbrace 0,\ldots,7 \rbrace$.}
+\caption[][-0.5cm]{Series developments for $L^{[0^{j+1}1^j]}(t)$ where $j\in \lbrace 0,\ldots,7 \rbrace$.}
 \label{tbl:L0_j1:1_j}
 \end{table}
 
 % p = 0^{j}1^{j}
 \begin{table}
 \begin{equation*}\begin{array}{c|ccccccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\\hline0 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9908\\1 & 1 & 1 & 2 & 2 & 3 & 3 & 4 & 4 & 5 & 5 & 6 & 6 & 7 & 7 & 8\\2 & 1 & 1 & 3 & 4 & 10 & 14 & 33 & 48 & 109 & 163 & 362 & 552 & 1207 & 1868 & 4036\\3 & 1 & 1 & 3 & 4 & 11 & 16 & 41 & 62 & 154 & 240 & 583 & 928 & 2217 & 3587 & 8459\\4 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 162 & 254 & 629 & 1008 & 2455 & 4000 & 9614\\5 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 637 & 1022 & 2501 & 4080 & 9853\\6 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2509 & 4094 & 9899\\7 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9907\end{array}\end{equation*}
-\caption[][-0.5cm]{Some series developments for $L^{[0^{j}1^j]}(t)$ (or, equivalently,
+\caption[][-0.5cm]{Series developments for $L^{[0^{j}1^j]}(t)$ (or, equivalently,
 $L^{[1^{j}0^j]}(t)$) where $j\in \lbrace 0,\ldots,7 \rbrace$.}
 \label{tbl:L0_j:1_j}
 \end{table}
@@ -667,14 +678,14 @@ $L^{[1^{j}0^j]}(t)$) where $j\in \lbrace 0,\ldots,7 \rbrace$.}
 % p = (10)^{j}1
 \begin{table}
 \begin{equation*}\begin{array}{c|ccccccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\\hline0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 3 & 3 & 7 & 8 & 19 & 23 & 53 & 66 & 150 & 191 & 429 & 555 & 1235\\2 & 1 & 1 & 3 & 4 & 11 & 15 & 38 & 56 & 139 & 210 & 511 & 790 & 1892 & 2973 & 7034\\3 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 63 & 159 & 248 & 614 & 978 & 2382 & 3857 & 9273\\4 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 255 & 634 & 1016 & 2486 & 4050 & 9780\\5 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1023 & 2506 & 4088 & 9884\\6 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4095 & 9904\\7 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9908\end{array}\end{equation*}
-\caption[][-0.5cm]{Some series developments for $L^{[(10)^{j}1]}(t)$ where $j\in \lbrace 0,\ldots,7 \rbrace$.}
+\caption[][-0.5cm]{Series developments for $L^{[(10)^{j}1]}(t)$ where $j\in \lbrace 0,\ldots,7 \rbrace$.}
 \label{tbl:L10_j:1}
 \end{table}
 
 % p = (01)^{j}0
 \begin{table}
 \begin{equation*}\begin{array}{c|ccccccccccccccc}j/n & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14\\\hline0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 1 & 3 & 4 & 9 & 13 & 28 & 42 & 87 & 134 & 271 & 425 & 844 & 1342 & 2628\\2 & 1 & 1 & 3 & 4 & 11 & 16 & 40 & 61 & 149 & 234 & 558 & 895 & 2098 & 3420 & 7909\\3 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 161 & 253 & 624 & 1002 & 2430 & 3967 & 9492\\4 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 636 & 1021 & 2496 & 4074 & 9828\\5 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2508 & 4093 & 9894\\6 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9906\\7 & 1 & 1 & 3 & 4 & 11 & 16 & 42 & 64 & 163 & 256 & 638 & 1024 & 2510 & 4096 & 9908\end{array}\end{equation*}
-\caption[][-0.5cm]{Some series developments for $L^{[(01)^{j}0]}(t)$ where $j\in \lbrace 0,\ldots,7 \rbrace$.}
+\caption[][-0.5cm]{Series developments for $L^{[(01)^{j}0]}(t)$ where $j\in \lbrace 0,\ldots,7 \rbrace$.}
 \label{tbl:L01_j:0}
 \end{table}
 
@@ -692,12 +703,12 @@ computing the coefficients of the involved generating functions explicitly.
 
 \subsection{Enumeration with respect to the number of $1$-bits}
 
-\begin{coro}
+\begin{corollary}
 \label{coro:1_j1_0_j}
 Consider pattern $\mathfrak{p}=1^{j+1}0^{j}$, there is only one word in
 $\mathfrak{L}^{[\mathfrak{p}]}$ for $j=0$; on the other hand, there are
 $S_{n}^{[\mathfrak{p}]} = 2^{n+1}-1$ words for $j=1$.
-\end{coro}
+\end{corollary}
 
 \begin{proof}
 When $j=0$ the pattern to avoid is $\mathfrak{p}=1$, therefore only words
@@ -759,13 +770,13 @@ where
 \end{displaymath}
 the same set of words shown in \autoref{tbl:S1_j1:0_j}.
 
-\begin{coro}
+\begin{corollary}
 \label{coro:0_j1_1_j}
 Consider pattern $\mathfrak{p}=0^{j+1}1^{j}$, there is one word
 $S_{n}^{[\mathfrak{p}]} = 1$ for each $n\in\mathbb{N}$ in
 $\mathfrak{L}^{[\mathfrak{p}]}$ when $j=0$; on the other hand, there are
 $(n+2)2^{n-1}$ words for $j=1$.
-\end{coro}
+\end{corollary}
 
 \begin{proof}
 When $j=0$ the pattern to avoid is $\mathfrak{p}=0$, therefore only words
@@ -805,7 +816,7 @@ hence there are $k+1$ paddings for each set of inversions. Therefore, since ther
 concludes the proof by symmetry of binomial coefficients.
 \end{proof}
 
-\begin{coro}
+\begin{corollary}
 Consider pattern $\mathfrak{p}=0^{j}1^{j}$ (or, equivalently,
 $\mathfrak{p}=1^{j}0^{j}$), there are
 \begin{displaymath}
@@ -813,7 +824,7 @@ S_{n}^{[\mathfrak{p}]}=\sum_{k=0}^{n}{{{n+k}\choose{k}}}={{2n+1}\choose{n}}
 \end{displaymath}
 words in $\mathfrak{L}^{[\mathfrak{p}]}$ for $j=0$; on the other hand, there
 are $S_{n}^{[\mathfrak{p}]} = n+1$ words for $j=1$.
-\end{coro}
+\end{corollary}
 
 \begin{proof}
 When $j=0$ there is no pattern to avoid and this situation corresponds to the
@@ -866,11 +877,11 @@ the best of our knowledge.
 
 \subsection{Enumeration with respect to the length}
 
-\begin{coro}
+\begin{corollary}
 Consider pattern $\mathfrak{p}=1^{j+1}0^{j}$, there is one word in
 $\mathfrak{L}^{[\mathfrak{p}]}$ for $j=0$; on the other hand, there are
 $2^{m+1}-1$ words, where $n=2m +  [\![\text{n is odd}]\!]$,  for $j=1$.
-\end{coro}
+\end{corollary}
 
 \begin{proof}
 When $j=0$ the pattern to avoid is $\mathfrak{p}=1$, therefore
@@ -920,14 +931,14 @@ equals the one given for the even case, completing the case for $n$ odd.
 \end{proof}
 
 
-\begin{coro}
+\begin{corollary}
 Consider pattern $\mathfrak{p}=0^{j+1}1^{j}$, there is one word
 $L_{n}^{[\mathfrak{p}]} = 1$ for each $n\in\mathbb{N}$ in
 $\mathfrak{L}^{[\mathfrak{p}]}$ when $j=0$; on the other hand, there are
 $L_{n}^{[\mathfrak{p}]} = F_{n+3}-2^{m}$ words if $n=2m$ else
 $L_{n}^{[\mathfrak{p}]} = F_{n+3}-2^{m+1}$ words if $n=2m+1$, for $j=1$, where
 $F_{n}$ is the $n$-th Fibonacci number.
-\end{coro}
+\end{corollary}
 
 \begin{proof}
 When $j=0$ the pattern to avoid is $\mathfrak{p}=0$, therefore suitable
@@ -999,14 +1010,14 @@ which equals $F_{2m+4}-2^{m+1} = L_{2m+1}^{[\mathfrak{p}]}$,
 completing the case for $n$ odd.
 \end{proof}
 
-\begin{coro}
+\begin{corollary}
 Consider pattern $\mathfrak{p}=0^{j}1^{j}$ (or, equivalently,
 $\mathfrak{p}=1^{j}0^{j}$), there are $2^{n-1}$ words in
 $\mathfrak{L}^{[\mathfrak{p}]}$ if $n$ is odd else $2^{n-1}
 +\frac{1}{2}{{2m}\choose{m}}$ where $n=2m$, for $j=0$; on the other hand, there
 are $L_{n}^{[\mathfrak{p}]} = m+1$ words, where $n=2m +  [\![\text{n is
 odd}]\!]$, for $j=1$.
-\end{coro}
+\end{corollary}
 
 \begin{proof}
 When $j=0$ the pattern to avoid is $\mathfrak{p}=\varepsilon $, namely the
@@ -1088,7 +1099,7 @@ B^{[110]} = \left[\begin{array}{ccccccccccc}
 1 & 1 & -4 & 16 & -34 & 46 & -40 & 22 & -7 & 1 & \\
 1 & 0 & 5 & -20 & 50 & -80 & 86 & -62 & 29 & -8 & 1\end{array}\right]
 \end{displaymath}
-defined by functions 
+defined by functions
 $ d^{[110]}(t)=\frac{1}{1-t}$ and
 $h^{[110]}(t)=\frac{t}{1+t}$.
 
@@ -1097,14 +1108,14 @@ the family, is the binomial transform of
 \begin{displaymath}
 B^{[11100]} =\left[\begin{array}{ccccccccccc}1 &  &  &  &  &  &  &  &  &  & \\1 & 1 &  &  &  &  &  &  &  &  & \\3 & 1 & 1 &  &  &  &  &  &  &  & \\5 & 3 & 1 & 1 &  &  &  &  &  &  & \\15 & 7 & 3 & 1 & 1 &  &  &  &  &  & \\31 & 16 & 9 & 3 & 1 & 1 &  &  &  &  & \\87 & 43 & 17 & 11 & 3 & 1 & 1 &  &  &  & \\201 & 101 & 55 & 18 & 13 & 3 & 1 & 1 &  &  & \\543 & 271 & 119 & 67 & 19 & 15 & 3 & 1 & 1 &  & \\1331 & 666 & 341 & 141 & 79 & 20 & 17 & 3 & 1 & 1 & \\3533 & 1766 & 826 & 411 & 167 & 91 & 21 & 19 & 3 & 1 & 1\end{array}\right]
 \end{displaymath}
-defined by functions 
+defined by functions
 \begin{displaymath}
 d^{[11100]}(t)=\sqrt\frac{1+t}{1-t-5t^{2}+t^{3}} \quad \text{and}
 \end{displaymath}
 \begin{displaymath}
 h^{[11100]}(t)=\frac{1+2t+t^{2}-\sqrt{(1-t-5t^{2}+t^{3})(1+t)}}{2(1+t)^{2}};
 \end{displaymath}
-in particular, the latter expands to 
+in particular, the latter expands to
 \begin{displaymath}
 h^{[11100]}(t)=t + 2 t^{4} - t^{5} + 7 t^{6} + 24 t^{8} + 17 t^{9} + 98 t^{10} +
 \mathcal{O}\left(t^{11}\right).

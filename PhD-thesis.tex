@@ -1,4 +1,4 @@
-\documentclass[nopart]{tufte-book}
+\documentclass[a4paper,twoside,symmetric]{tufte-book}
 
 \hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
 
@@ -36,7 +36,8 @@
 \usepackage{fontenc}
 \usepackage{euler}
 \usepackage{textcomp}
-%\usepackage{unicode-math}
+%\usepackage{newtxtext}
+%\usepackage{concrete}
 
 %%
 % Prints a trailing space in a smart way.
@@ -44,23 +45,18 @@
 
 %%
 \usepackage{url}
-%\usepackage{newtxtext}
 \usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
-%\usepackage{concrete}
-%\usepackage{caption}
 \usepackage{acronym}
-%\usepackage{bm}
-%\usepackage{bbold}
 \usepackage{hyperref}
 \usepackage{tabu}
 \usepackage{rotating}
 \usepackage{mathdots}
 \usepackage{minted}
-
-
+\usepackage{units}
+\usepackage{makeidx}
 
 \setmonofont[Scale=0.8]{Menlo}
 
@@ -68,21 +64,6 @@
 \renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
 \renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
 
-
-%%
-% Some shortcuts for Tufte's book titles.  The lowercase commands will
-% produce the initials of the book title in italics.  The all-caps commands
-% will print out the full title of the book in italics.
-%\newcommand{\vdqi}{\textit{VDQI}\xspace}
-%\newcommand{\ei}{\textit{EI}\xspace}
-%\newcommand{\ve}{\textit{VE}\xspace}
-%\newcommand{\be}{\textit{BE}\xspace}
-%\newcommand{\VDQI}{\textit{The Visual Display of Quantitative Information}\xspace}
-%\newcommand{\EI}{\textit{Envisioning Information}\xspace}
-%\newcommand{\VE}{\textit{Visual Explanations}\xspace}
-%\newcommand{\BE}{\textit{Beautiful Evidence}\xspace}
-
-%\newcommand{\TL}{Tufte-\LaTeX\xspace}
 
 % Prints the month name (e.g., January) and the year (e.g., 2008)
 \newcommand{\monthyear}{%
@@ -107,24 +88,22 @@
 % Inserts a blank page
 \newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
 
-\usepackage{units}
-
 % Typesets the font size, leading, and measure in the form of 10/12x26 pc.
 \newcommand{\measure}[3]{#1/#2$\times$\unit[#3]{pc}}
 
 % Macros for typesetting the documentation
-%\newcommand{\hlred}[1]{\textcolor{Maroon}{#1}}% prints in red
-%\newcommand{\hangleft}[1]{\makebox[0pt][r]{#1}}
-%\newcommand{\hairsp}{\hspace{1pt}}% hair space
-%\newcommand{\hquad}{\hskip0.5em\relax}% half quad space
-%\newcommand{\TODO}{\textcolor{red}{\bf TODO!}\xspace}
-%\newcommand{\na}{\quad--}% used in tables for N/A cells
-%\providecommand{\XeLaTeX}{X\lower.5ex\hbox{\kern-0.15em\reflectbox{E}}\kern-0.1em\LaTeX}
-%\newcommand{\tXeLaTeX}{\XeLaTeX\index{XeLaTeX@\protect\XeLaTeX}}
-% \index{\texttt{\textbackslash xyz}@\hangleft{\texttt{\textbackslash}}\texttt{xyz}}
-%\newcommand{\tuftebs}{\symbol{'134}}% a backslash in tt type in OT1/T1
-%\newcommand{\doccmdnoindex}[2][]{\texttt{\tuftebs#2}}% command name -- adds backslash automatically (and doesn't add cmd to the index)
-\iffalse
+\newcommand{\hlred}[1]{\textcolor{Maroon}{#1}}% prints in red
+\newcommand{\hangleft}[1]{\makebox[0pt][r]{#1}}
+\newcommand{\hairsp}{\hspace{1pt}}% hair space
+\newcommand{\hquad}{\hskip0.5em\relax}% half quad space
+\newcommand{\TODO}{\textcolor{red}{\bf TODO!}\xspace}
+\newcommand{\na}{\quad--}% used in tables for N/A cells
+\providecommand{\XeLaTeX}{X\lower.5ex\hbox{\kern-0.15em\reflectbox{E}}\kern-0.1em\LaTeX}
+\newcommand{\tXeLaTeX}{\XeLaTeX\index{XeLaTeX@\protect\XeLaTeX}}
+ \index{\texttt{\textbackslash xyz}@\hangleft{\texttt{\textbackslash}}\texttt{xyz}}
+\newcommand{\tuftebs}{\symbol{'134}}% a backslash in tt type in OT1/T1
+\newcommand{\doccmdnoindex}[2][]{\texttt{\tuftebs#2}}% command name -- adds backslash automatically (and doesn't add cmd to the index)
+
 \newcommand{\doccmddef}[2][]{%
   \hlred{\texttt{\tuftebs#2}}\label{cmd:#2}%
   \ifthenelse{\isempty{#1}}%
@@ -159,7 +138,7 @@
 \newcommand{\docmsg}[2]{\bigskip\begin{fullwidth}\noindent\ttfamily#1\end{fullwidth}\medskip\par\noindent#2}
 \newcommand{\docfilehook}[2]{\texttt{#1}\index{file hooks!#2}\index{#1@\texttt{#1}}}
 \newcommand{\doccounter}[1]{\texttt{#1}\index{#1 counter@\texttt{#1} counter}}
-\fi
+
 
 
 \newtheorem{theorem}{Theorem}[section]
@@ -170,60 +149,9 @@
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{example}[theorem]{Example}
 
-% from Donatella's stuff
-
 \newcommand{\Ra}{\mbox{$\mathcal{R}$}}
 
-\def \theequation{\thesection.\arabic{equation}}
-\def \thefigure{\thesection.\arabic{figure}}
-\def \thetable{\thesection.\arabic{table}}
-%\newenvironment{proof}{{\bf Proof}:\ }{\hfill\vrule height7pt width5pt\par\vspace{0.2cm}}
-\newtheorem{teo}{Theorem}[section]
-\newtheorem{prop}[teo]{Proposition}
-\newtheorem{coro}[teo]{Corollary}
-\newtheorem{defi}[teo]{Definition}
-\newtheorem{rem}[teo]{Remark}
-
-%\newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=0pt}
-
-\newcommand{\NS}{\mbox{\scriptsize${\mathbb{N}}$}}
-\newcommand{\Q}{\mbox{$\mathbb{Q}$}}
-%\newcommand{\C}{\mbox{${\tiny \mathbb{C}}$}}
-\newcommand{\FF}{\mbox{$\mathbb{F}$}}
-\newcommand{\R}{\mbox{$\mathbb{R}$}}
-\newcommand{\Z}{\mbox{$\mathbb{Z}$}}
-\newcommand{\ZS}{\mbox{\scriptsize${\mathbb{Z}}$}}
-\newcommand{\F}{\mbox{$\mathcal{F}$}}
-%\newcommand{\G}{\mbox{$\mathcal{G}$}}
-\newcommand{\K}{{\Bbb K}} %% adding by Ana
-\renewcommand{\L}{\mbox{$\mathcal{L}$}}
-\renewcommand{\H}{\mbox{$\mathcal{H}$}}
-\newcommand{\h}{\mbox{$\overline{h}$}}
-\newcommand{\Xa}{\mbox{$\mathcal{X}$}}
-\newcommand{\ord}{\mbox{{\rm ord}}}
-%\newcommand{\mod}{\mbox{{\rm \ mod\ }}}
-\newcommand{\SEP}{\ \Bigm|\ }
-\newcommand{\MID}{\ \Bigm|\ }
-\newcommand{\de}{\mbox{\rm d}}
-\newcommand{\EQ}[1]{\mbox{$\stackrel{\ \small #1}{=}\ $}}
-%\newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=0pt}
-\def\Gf#1{\G\left( #1\right)}
-\def\matrice#1{\left(#1_{n,k}\right)_{n,k\in \NS}}
-\def\insieme#1{\left\{#1\right\}}
-\def\sequ#1{\left(#1_k\right)_{k\in \NS}}
-\def\stdue#1#2{\left\{{#1\atop#2}\right\}}
-\def\stuno#1#2{\left[{#1\atop#2}\right]}
-
-%  ______________________________________________________________________________
-
 \newcommand{\notbreakable}[1]{\noindent\parbox{\textwidth}{#1}}
-    
-
-% Generates the index
-\usepackage{makeidx}
-
-%\setcitestyle{square, comma, numbers}
-
 
 
 \newsavebox{\logounifi}
@@ -255,42 +183,17 @@
 \date{Accademic years from $2015$ to $2018$}
 
 \publisher{ %\par
-            {\small Candidato: \indent\indent\indent dott. \textbf{Massimo Nocentini}}\\
-            {\small Tutor: \indent\indent\indent\indent\indent prof. \textbf{Donatella Merlini}}\\
-            {\small Coordinatore: \indent prof. \textbf{Graziano Gentili}}\\
+    {\small\noindent Candidato: \indent\indent\indent dott. \textbf{Massimo Nocentini}}\\
+    {\small Tutor: \indent\indent\indent\indent\indent prof. \textbf{Donatella Merlini}}\\
+    {\small Coordinatore: \indent prof. \textbf{Graziano Gentili}}\\
 }
-
-
-
-\iffalse
-\DeclareUnicodeCharacter{221E}{$\infty$}
-\DeclareUnicodeCharacter{250C}{ }
-\DeclareUnicodeCharacter{2500}{ }
-\DeclareUnicodeCharacter{2510}{ }
-\DeclareUnicodeCharacter{2502}{ }
-\DeclareUnicodeCharacter{2514}{ }
-\DeclareUnicodeCharacter{2518}{ }
-\DeclareUnicodeCharacter{03B2}{$\beta$}
-\DeclareUnicodeCharacter{03B4}{$\delta$}
-\DeclareUnicodeCharacter{03B5}{$\epsilon$}
-\DeclareUnicodeCharacter{03B9}{$\iota$}
-\DeclareUnicodeCharacter{03B8}{$\theta$}
-\DeclareUnicodeCharacter{03B1}{$\alpha$}
-\DeclareUnicodeCharacter{03BB}{$\lambda$}
-\DeclareUnicodeCharacter{03B7}{$\eta$}
-\DeclareUnicodeCharacter{03B3}{$\gamma$}
-\DeclareUnicodeCharacter{03BC}{$\mu$}
-\DeclareUnicodeCharacter{03B6}{$\zeta$}
-\DeclareUnicodeCharacter{03BA}{$\kappa$}
-\DeclareUnicodeCharacter{25A2}{$\square$}
-\fi
 
 \makeindex
 
 \begin{document}
 
 % Front matter
-\frontmatter
+%\frontmatter
 
 % r.1 blank page
 \blankpage
@@ -407,7 +310,7 @@ Anni 2014/2017
 \fi
 
 % v.4 copyright page
-\newpage
+\cleardoublepage
 \begin{fullwidth}
 ~\vfill
 \thispagestyle{empty}
@@ -435,9 +338,7 @@ Copyright \copyright\ \the\year\ Massimo Nocentini
 \begin{doublespace}
 \noindent\fontsize{18}{22}\selectfont\itshape
 \nohyphenation
-Dedicated to those who appreciate \LaTeX{}
-and the work of \mbox{Edward R.~Tufte}
-and \mbox{Donald E.~Knuth}.
+to \mbox{Angela}
 \end{doublespace}
 \vfill
 \vfill
@@ -452,7 +353,7 @@ simple introduction.
 
 %%
 % Start the main matter (normal chapters)
-\mainmatter
+%\mainmatter
 
 
 \chapter{Functions and Jordan canonical\newline forms of Riordan matrices}
@@ -480,15 +381,10 @@ simple introduction.
 %%
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.
 
-\backmatter
+%\backmatter
 
 \bibliographystyle{plainnat}
-%\bibliography{SCILP/scilp}
 \bibliography{SCILP/scilp,algebraic-gf-for-languages-avoiding-Riordan-patterns/avoiding-RA-patterns}
-
-
-%\newpage
-%\input{bibliography.tex}
 
 \printindex
 
