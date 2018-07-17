@@ -1,4 +1,4 @@
-\documentclass[a4paper,symmetric]{tufte-book}
+\documentclass[a4paper]{tufte-book}
 
 \hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
 
@@ -140,9 +140,7 @@
 \newcommand{\docfilehook}[2]{\texttt{#1}\index{file hooks!#2}\index{#1@\texttt{#1}}}
 \newcommand{\doccounter}[1]{\texttt{#1}\index{#1 counter@\texttt{#1} counter}}
 
-
-
-\newtheorem{theorem}{Theorem}[section]
+\newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -365,7 +363,7 @@ simple introduction.
 \chapter{Algebraic generating functions for\newline languages avoiding Riordan patterns}
 \label{ch:algebraic-gfs-languages-avoiding-Riordan-patterns}
 
-\input{algebraic-gf-for-languages-avoiding-Riordan-patterns/upstream.tex}
+\input{deps/algebraic-gf-for-languages-avoiding-Riordan-patterns/tex/body.tex}
 
 \chapter{Queens, tilings and polyominoes}
 \label{ch:queens-tilings-polyominoes}
@@ -385,7 +383,7 @@ simple introduction.
 %\backmatter
 
 \bibliographystyle{plainnat}
-\bibliography{SCILP/scilp,algebraic-gf-for-languages-avoiding-Riordan-patterns/avoiding-RA-patterns}
+\bibliography{SCILP/scilp,deps/algebraic-gf-for-languages-avoiding-Riordan-patterns/tex/avoiding-RA-patterns}
 
 \printindex
 
