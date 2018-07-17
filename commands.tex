@@ -1,0 +1,29 @@
+
+% solved in https://github.com/Tufte-LaTeX/tufte-latex/issues/64
+\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+\renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+
+% Prints the month name (e.g., January) and the year (e.g., 2008)
+\newcommand{\monthyear}{%
+  \ifcase\month\or January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or
+  December\fi\space\number\year
+}
+
+% Inserts a blank page
+\newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
+
+% Typesets the font size, leading, and measure in the form of 10/12x26 pc.
+\newcommand{\measure}[3]{#1/#2$\times$\unit[#3]{pc}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Ra}{\mbox{$\mathcal{R}$}}
+
+\newcommand{\notbreakable}[1]{\noindent\parbox{\textwidth}{#1}}
