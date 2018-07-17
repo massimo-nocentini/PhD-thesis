@@ -4,3 +4,6 @@
 [submodule "deps/competitive-programming"]
 	path = deps/competitive-programming
 	url = git@github.com:massimo-nocentini/competitive-programming.git
+[submodule "deps/algebraic-gf-for-languages-avoiding-Riordan-patterns"]
+	path = deps/algebraic-gf-for-languages-avoiding-Riordan-patterns
+	url = git@github.com:massimo-nocentini/algebraic-gf-for-languages-avoiding-Riordan-patterns.git

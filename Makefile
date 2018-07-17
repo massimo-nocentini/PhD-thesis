@@ -17,3 +17,4 @@ world: clean
 	bibtex PhD-thesis
 	lualatex -shell-escape PhD-thesis.tex
 	lualatex -shell-escape PhD-thesis.tex
+	lualatex -shell-escape PhD-thesis.tex
