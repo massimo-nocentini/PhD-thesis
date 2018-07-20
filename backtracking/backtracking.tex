@@ -1,21 +1,20 @@
 
 
 First of all, we introduce basic bitwise tricks and programming idioms that
-will be useful for the understanding of the upcoming content, which lies heavy
-on those techniques for the sake of efficency.
-\begin{margintable}[2cm]
-\inputminted[fontsize=\footnotesize]{python}{backtracking/bits_clean.py}
-\caption{Basic bitwise operators.}
-\end{margintable}
+will be useful for the understanding of the upcoming content, which heavily lies
+on those techniques for the sake of efficency:
+\inputminted[fontsize=\small,stripnl=false,firstline=193, lastline=206]{python}{deps/competitive-programming/python-libs/bits.py}
+\inputminted[fontsize=\small,stripnl=false,firstline=279, lastline=291]{python}{deps/competitive-programming/python-libs/bits.py}
+\inputminted[fontsize=\small,stripnl=false,firstline=265, lastline=277]{python}{deps/competitive-programming/python-libs/bits.py}
+\inputminted[fontsize=\small,stripnl=false,firstline=208, lastline=221]{python}{deps/competitive-programming/python-libs/bits.py}
+many other techniques can be found in the reference work
+\citep{Warren:2012:HD:2462741}.
 
 
 \section{The $n$-Queens problem}
 
 In this section we provide a pythonic implementation of the $n$-Queens problem,
-using the approach described by Ruskey \sidenote{\url{http://webhome.cs.uvic.ca/~ruskey/}}
-in Chapter 3 of his unpublished book
-\textit{Combinatorial Generation}
-\sidenote{\url{http://www.1stworks.com/ref/RuskeyCombGen.pdf}}.
+using the approach described in Chapter $3$ of \citep{RuskeyCombGen}.
 
 We use three \textit{bit masks}, namely integers, to
 represent whether a row, a raising $\nearrow$ and a falling $\searrow$ diagonal
@@ -45,8 +44,10 @@ is under attack, namely to each diagonal is associated one bit according to:
 \end{itemize}
 where rows and cols indexes range in $\lbrace 0,\ldots,n-1 \rbrace$; in both
 cases, it is necessary a bitmask $2n-1$ bits long. Here's the code:
-\newpage
-\inputminted[fontsize=\small,firstline=3,lastline=33]{python}{backtracking/queens.py}
+
+\notbreakable{
+    \inputminted[fontsize=\small,firstline=3,lastline=33]{python}{backtracking/queens.py}
+}
 
 \begin{margintable}
 Using the following pretty printer
@@ -98,7 +99,7 @@ Enumerating all solutions for different integers $n$ we get the known sequence
 
 Moreover, we can tackle the more complex $24$-Queens problem, providing a
 solution as follows
-\newpage
+
 \begin{minted}[fontsize=\small]{python}
 >>> more_queens = queens(24)
 >>> print(pretty(next(more_queens)))
@@ -131,13 +132,12 @@ solution as follows
 \section{Polyominoes}
 
 
-In this section we play with some problems concerning
-\textit{polyominoes}\sidenote{\url{https://en.wikipedia.org/wiki/Polyomino}},
+In this section we play with some problems concerning \textit{polyominoes},
 formalized and introduced by prof. Solomon Golomb and extended in various
 directions; we got interest in this topic after reading the chapter about
 backtracking in the volume of Ruskey, cited in the previous section.
 
-\subsection{Backtracking machanism}
+\subsection{Backtracking mechanism}
 
 Maybe the hardest part in understanding concerns how to represent the board and
 the state (free/occupied) of each cell; moreover, the question about how a
@@ -150,19 +150,17 @@ turns:
     the utility function \verb|low_bit|), which correspond to the position of
     the first bit $1$ from the right, namely the right-most $1$ in the least
     significant part.
-    \begin{margintable}[-2cm]
-        \begin{displaymath}
-        \begin{array}{c|c|c|c|c}
-        0 & r & 2r & \ldots & (c-1)r \\
-        \hline
-        1 & r+1 & 2r+1 & \ldots & (c-1)r+1 \\
-        \hline
-        \vdots & \vdots & \vdots & \ddots & \vdots \\
-        \hline
-        r-1 & 2r-1 & 3r-1 & \ldots & rc-1\\
-        \end{array}
-        \end{displaymath}
-    \end{margintable}
+    \begin{displaymath}
+    \begin{array}{c|c|c|c|c}
+    0 & r & 2r & \ldots & (c-1)r \\
+    \hline
+    1 & r+1 & 2r+1 & \ldots & (c-1)r+1 \\
+    \hline
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    \hline
+    r-1 & 2r-1 & 3r-1 & \ldots & rc-1\\
+    \end{array}
+    \end{displaymath}
 
     \item a \textit{shape} is a collection of cells, usually sharing an edge
     pairwise. We choose to represent a shape as a \verb|namedtuple| object: it
@@ -184,22 +182,20 @@ The anchor is \textit{always} given with respect to position \verb|(r,c)|:
 * * *       (r,c) (r,c+1) (r, c+2)
 \end{verbatim}
 so the orientation is coded as the \textit{tuple}
-\begin{verbatim}
-((r,c), (r,c+1), (r-2,c+2),
- (r-1,c+2), (r, c+2))
-\end{verbatim}
-\end{margintable}
-Observe how pairs are listed according to the order \textit{top to bottom} and,
+\verb|((r,c), (r,c+1), (r-2,c+2), (r-1,c+2), (r, c+2))|,
+where pairs are listed according to the order \textit{top to bottom} and,
 when rows are exausted go up to the top of the next column and repeat, so then
-\textit{left to right}.  The following section contains many examples of
-manually-coded shapes.
-
+\textit{left to right}.
+\end{margintable}
 
 In order to structure our thoughts, we start with the definition of the shape
 concept as a \verb|namedtuple| object:
 \inputminted[fontsize=\small,stripnl=false,firstline=4, lastline=6]{python}{backtracking/polyominoes.py}
-we define the backtracking algorithm: \newpage
-\inputminted[fontsize=\small,stripnl=false,firstline=8, lastline=60]{python}{backtracking/polyominoes.py}
+that allows us to define the backtracking algorithm:
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=8, lastline=60]{python}{backtracking/polyominoes.py}
+}
 
 \subsection{Pentominoes}
 
@@ -423,18 +419,18 @@ respectively.
 {
 \footnotesize
 \begin{verbatim}
-┌─────────────┐  ┌─────────────┐  
-│ α α α α α α │  │ α α α α β β │  
-└─────────────┘  └─────────────┘  
+┌─────────────┐  ┌─────────────┐
+│ α α α α α α │  │ α α α α β β │
+└─────────────┘  └─────────────┘
 ┌─────────────┐  ┌─────────────┐
 │ α α α β β α │  │ α α β β α α │
 └─────────────┘  └─────────────┘
-┌─────────────┐  ┌─────────────┐  
-│ α α β β β β │  │ α β β α α α │  
-└─────────────┘  └─────────────┘  
-┌─────────────┐  ┌─────────────┐  
-│ β β α α α α │  │ β β α α β β │  
-└─────────────┘  └─────────────┘  
+┌─────────────┐  ┌─────────────┐
+│ α α β β β β │  │ α β β α α α │
+└─────────────┘  └─────────────┘
+┌─────────────┐  ┌─────────────┐
+│ β β α α α α │  │ β β α α β β │
+└─────────────┘  └─────────────┘
 ┌─────────────┐  ┌─────────────┐
 │ α β β α β β │  │ α β β β β α │
 └─────────────┘  └─────────────┘
