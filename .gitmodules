@@ -10,3 +10,6 @@
 [submodule "deps/oeis-tools"]
 	path = deps/oeis-tools
 	url = git@github.com:massimo-nocentini/oeis-tools.git
+[submodule "deps/simulation-methods"]
+	path = deps/simulation-methods
+	url = git@github.com:massimo-nocentini/simulation-methods.git

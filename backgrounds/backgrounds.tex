@@ -1,0 +1,235 @@
+
+\section{Riordan Arrays, formally}
+
+A \textit{Riordan array} is an infinite lower triangular array
+$(d_{n,k} )_{n,k \in \mathbb{N}},$ defined by a pair of formal power series
+$(d(t),h(t)),$ such that $d(0)\neq 0, h(0)=0, h^\prime(0)\neq0$ and the generic
+element $d_{n,k}$ is the coefficient of monomial $t^{n}$ in the series
+expansion of $d(t)h(t)^{k}$, formally
+\begin{displaymath}
+    d_{n,k}=[t^n]d(t)h(t)^k, \qquad n,k \geq 0
+\end{displaymath}
+where $d_{n,k}=0$ for $k>n.$ These arrays were introduced in
+\citep{SHAPIRO1991229}, with the aim of defining a class of infinite lower
+triangular arrays with properties analogous to those of the Pascal triangle and
+since then they have attracted, and continue to attract, a lot of attention in
+the literature. Some of their properties  and recent applications can be found
+in \citep{LUZON201475,MRSV97}. In particular, we recall that the bivariate generating
+function enumerating the sequence $(d_{n,k} )_{n,k \in\mathbb{N}}$ is
+\begin{equation}
+    \label{bgf}
+    R(t,w) = \sum_{n,k \in\mathbb{N}}{d_{n,k} t^n w^k} = {d(t) \over 1-wh(t)}
+\end{equation}
+
+An important property of Riordan array concerns the computation of
+combinatorial sums.  In particular we have the following result (see, e.g.,
+\citep{LUZON2012631,Merlini:2009:CSI:2653507.2654195,SPRUGNOLI1994267}):
+\begin{equation}
+    \label{somme}
+    \sum_{k=0}^n d_{n,k}f_k=[t^n]d(t)f(h(t))
+\end{equation}
+that is, every combinatorial sum involving a Riordan array can be computed by
+extracting the coefficient of $t^n$ from the series expansion of $d(t)f(h(t))$,
+where $f(t)=\mathcal{G}(f_k)=\sum_{k\geq 0}f_kt^k$ is the generating function of the
+sequence $(f_k)_{k \in\mathbb{N}}$ and the symbol $\mathcal{G}$ denotes the generating function
+operator. Due to its importance, relation (\ref{somme}) is often called the
+\textit{fundamental rule} of Riordan arrays.  Along the paper, the notation
+$(f_k)_{k}$ will be used as an abbreviation of $(f_k)_{k\in\mathbb{N}}.$
+
+\section{Riordan Arrays, computationally}
+
+\begin{minted}[fontsize=\small]{python}
+>>> m = 5
+>>> d_fn, h_fn = Function('d'), Function('h')
+>>> d, h = IndexedBase('d'), IndexedBase('h')
+\end{minted}
+
+\begin{example}
+Symbolic Riordan array built by two polynomials with symbolic coefficients:
+\begin{minted}[fontsize=\small]{python}
+>>> d_series = Eq(d_fn(t), 1+sum(d[i]*t**i for i in range(1,m)))
+>>> h_series = Eq(h_fn(t), t*(1+sum(h[i]*t**i for i in range(1,m-1)))).expand()
+>>> d_series, h_series
+\end{minted}
+\begin{displaymath}
+\left ( d{\left (t \right )} = t^{4} d_{4} + t^{3} d_{3} + t^{2} d_{2} + t d_{1} + 1, \quad h{\left (t \right )} = t^{4} h_{3} + t^{3} h_{2} + t^{2} h_{1} + t\right )
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> R = Matrix(m, m, riordan_matrix_by_convolution(m, d_series, h_series))
+>>> R
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}1 &   &   &   &  \\d_{1} & 1 &   &   &  \\d_{2} & d_{1} + h_{1} & 1 &   &  \\d_{3} & d_{1} h_{1} + d_{2} + h_{2} & d_{1} + 2 h_{1} & 1 &  \\d_{4} & d_{1} h_{2} + d_{2} h_{1} + d_{3} + h_{3} & 2 d_{1} h_{1} + d_{2} + h_{1}^{2} + 2 h_{2} & d_{1} + 3 h_{1} & 1\end{matrix}\right]
+\end{displaymath}
+\end{example}
+
+\begin{example}
+The Pascal triangle built using closed generating functions:
+\begin{minted}[fontsize=\small]{python}
+>>> d_series = Eq(d_fn(t), 1/(1-t))
+>>> h_series = Eq(h_fn(t), t*d_series.rhs)
+>>> d_series, h_series
+\end{minted}
+\begin{displaymath}
+\left ( d{\left (t \right )} = \frac{1}{1-t}, \quad h{\left (t \right )} = \frac{t}{1-t}\right )
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> R = Matrix(10, 10, riordan_matrix_by_convolution(m, d_series, h_series))
+>>> R
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\1 & 2 & 1 &   &   &   &   &   &   &  \\1 & 3 & 3 & 1 &   &   &   &   &   &  \\1 & 4 & 6 & 4 & 1 &   &   &   &   &  \\1 & 5 & 10 & 10 & 5 & 1 &   &   &   &  \\1 & 6 & 15 & 20 & 15 & 6 & 1 &   &   &  \\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1 &   &  \\1 & 8 & 28 & 56 & 70 & 56 & 28 & 8 & 1 &  \\1 & 9 & 36 & 84 & 126 & 126 & 84 & 36 & 9 & 1\end{matrix}\right]
+\end{displaymath}
+\end{example}
+
+\begin{example}
+Symbolic Riordan Array built according to the recurrence:
+\begin{displaymath}
+\begin{split}
+d_{n+1, 0} &= \bar{b}\,d_{n, 0} + c\,d_{n,1} \\
+d_{n+1, k+1} &= a\,d_{n, k} + b\,d_{n, k} + c\,d_{n,k+1}, \quad k \in\mathbb{N}
+\end{split}
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> dim = 5
+>>> a, b, b_bar, c = symbols(r'a b \bar{b} c')
+>>> M = Matrix(dim, dim,
+...            riordan_matrix_by_recurrence(
+...               dim, lambda n, k: {(n-1, k-1):a,
+...                                  (n-1, k): b if k else b_bar,
+...                                  (n-1, k+1):c}))
+>>> M
+\end{minted}
+\begin{displaymath}
+\footnotesize
+\left[\begin{matrix}1 &   &   &   &  \\\bar{b} & a &   &   &  \\\bar{b}^{2} + a c & \bar{b} a + a b & a^{2} &   &  \\\bar{b}^{3} + 2 \bar{b} a c + a b c & \bar{b}^{2} a + \bar{b} a b + 2 a^{2} c + a b^{2} & \bar{b} a^{2} + 2 a^{2} b & a^{3} &  \\\bar{b}^{4} + 3 \bar{b}^{2} a c + 2 \bar{b} a b c + 2 a^{2} c^{2} + a b^{2} c & \bar{b}^{3} a + \bar{b}^{2} a b + 3 \bar{b} a^{2} c + \bar{b} a b^{2} + 5 a^{2} b c + a b^{3} & \bar{b}^{2} a^{2} + 2 \bar{b} a^{2} b + 3 a^{3} c + 3 a^{2} b^{2} & \bar{b} a^{3} + 3 a^{3} b & a^{4}\end{matrix}\right]
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> production_matrix(M)
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}\bar{b} & a &   &  \\c & b & a &  \\  & c & b & a\\  &   & c & b\end{matrix}\right]
+\end{displaymath}
+\end{example}
+
+
+\begin{example}
+Again the Pascal triangle built using $A$ and $Z$ sequences
+\begin{minted}[fontsize=\small]{python}
+>>> A, Z = Function('A'), Function('Z')
+>>> A_eq = Eq(A(t), 1 + t)
+>>> Z_eq = Eq(Z(t),1)
+>>> A_eq, Z_eq
+\end{minted}
+\begin{displaymath}
+\left ( A{\left (t \right )} = t + 1, \quad Z{\left (t \right )} = 1\right )
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> R = Matrix(10, 10, riordan_matrix_by_AZ_sequences(10, (Z_eq, A_eq)))
+>>> R
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\1 & 2 & 1 &   &   &   &   &   &   &  \\1 & 3 & 3 & 1 &   &   &   &   &   &  \\1 & 4 & 6 & 4 & 1 &   &   &   &   &  \\1 & 5 & 10 & 10 & 5 & 1 &   &   &   &  \\1 & 6 & 15 & 20 & 15 & 6 & 1 &   &   &  \\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1 &   &  \\1 & 8 & 28 & 56 & 70 & 56 & 28 & 8 & 1 &  \\1 & 9 & 36 & 84 & 126 & 126 & 84 & 36 & 9 & 1\end{matrix}\right]
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> production_matrix(R)
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}1 & 1 &   &   &   &   &   &   &  \\  & 1 & 1 &   &   &   &   &   &  \\  &   & 1 & 1 &   &   &   &   &  \\  &   &   & 1 & 1 &   &   &   &  \\  &   &   &   & 1 & 1 &   &   &  \\  &   &   &   &   & 1 & 1 &   &  \\  &   &   &   &   &   & 1 & 1 &  \\  &   &   &   &   &   &   & 1 & 1\\  &   &   &   &   &   &   &   & 1\end{matrix}\right]
+\end{displaymath}
+\end{example}
+
+
+\begin{example}
+Catalan triangle built using $A$ and $Z$ sequences, which are equal for this array:
+\begin{minted}[fontsize=\small]{python}
+>>> A_ones = Eq(A(t), 1/(1-t)) # A is defined as in the previous example
+>>> R = Matrix(10, 10, riordan_matrix_by_AZ_sequences(10, (A_ones, A_ones)))
+>>> R
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\2 & 2 & 1 &   &   &   &   &   &   &  \\5 & 5 & 3 & 1 &   &   &   &   &   &  \\14 & 14 & 9 & 4 & 1 &   &   &   &   &  \\42 & 42 & 28 & 14 & 5 & 1 &   &   &   &  \\132 & 132 & 90 & 48 & 20 & 6 & 1 &   &   &  \\429 & 429 & 297 & 165 & 75 & 27 & 7 & 1 &   &  \\1430 & 1430 & 1001 & 572 & 275 & 110 & 35 & 8 & 1 &  \\4862 & 4862 & 3432 & 2002 & 1001 & 429 & 154 & 44 & 9 & 1\end{matrix}\right]
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> production_matrix(R)
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}1 & 1 &   &   &   &   &   &   &  \\1 & 1 & 1 &   &   &   &   &   &  \\1 & 1 & 1 & 1 &   &   &   &   &  \\1 & 1 & 1 & 1 & 1 &   &   &   &  \\1 & 1 & 1 & 1 & 1 & 1 &   &   &  \\1 & 1 & 1 & 1 & 1 & 1 & 1 &   &  \\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 &  \\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\end{matrix}\right]
+\end{displaymath}
+\end{example}
+
+
+\begin{example}
+Symbolic Riordan arrays built using $A$ and $Z$ sequences, which are equal in this case:
+\begin{minted}[fontsize=\small]{python}
+>>> dim = 5
+>>> a = IndexedBase('a')
+>>> A_gen = Eq(A(t), sum((a[j] if j else 1)*t**j for j in range(dim)))
+>>> R = Matrix(dim, dim, riordan_matrix_by_AZ_sequences(dim, (A_gen, A_gen)))
+>>> R
+\end{minted}
+\begin{displaymath}
+\footnotesize
+\left[\begin{matrix}1 &   &   &   &  \\1 & 1 &   &   &  \\a_{1} + 1 & a_{1} + 1 & 1 &   &  \\a_{1}^{2} + 2 a_{1} + a_{2} + 1 & a_{1}^{2} + 2 a_{1} + a_{2} + 1 & 2 a_{1} + 1 & 1 &  \\a_{1}^{3} + 3 a_{1}^{2} + 3 a_{1} a_{2} + 3 a_{1} + 2 a_{2} + a_{3} + 1 & a_{1}^{3} + 3 a_{1}^{2} + 3 a_{1} a_{2} + 3 a_{1} + 2 a_{2} + a_{3} + 1 & 3 a_{1}^{2} + 3 a_{1} + 2 a_{2} + 1 & 3 a_{1} + 1 & 1\end{matrix}\right]
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> z = IndexedBase('z')
+>>> A_gen = Eq(A(t), sum((a[j] if j else 1)*t**j for j in range(dim)))
+>>> Z_gen = Eq(Z(t), sum((z[j] if j else 1)*t**j for j in range(dim)))
+>>> Raz = Matrix(dim, dim, riordan_matrix_by_AZ_sequences(dim, (Z_gen, A_gen)))
+>>> Raz
+\end{minted}
+\begin{displaymath}
+\footnotesize
+\left[\begin{matrix}1 &   &   &   &  \\1 & 1 &   &   &  \\z_{1} + 1 & a_{1} + 1 & 1 &   &  \\a_{1} z_{1} + 2 z_{1} + z_{2} + 1 & a_{1}^{2} + a_{1} + a_{2} + z_{1} + 1 & 2 a_{1} + 1 & 1 &  \\ \left(\begin{split} a_{1}^{2} z_{1} &+ 2 a_{1} z_{1} + 2 a_{1} z_{2} + a_{2} z_{1} +\\ z_{1}^{2} &+ 3 z_{1} + 2 z_{2} + z_{3} + 1\end{split}\right) & a_{1}^{3} + a_{1}^{2} + 3 a_{1} a_{2} + 2 a_{1} z_{1} + a_{1} + a_{2} + a_{3} + 2 z_{1} + z_{2} + 1 & 3 a_{1}^{2} + 2 a_{1} + 2 a_{2} + z_{1} + 1 & 3 a_{1} + 1 & 1\end{matrix}\right]
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> production_matrix(R), production_matrix(Raz)
+\end{minted}
+\begin{displaymath}
+\left ( \left[\begin{matrix}1 & 1 &   &  \\a_{1} & a_{1} & 1 &  \\a_{2} & a_{2} & a_{1} & 1\\a_{3} & a_{3} & a_{2} & a_{1}\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 &   &  \\z_{1} & a_{1} & 1 &  \\z_{2} & a_{2} & a_{1} & 1\\z_{3} & a_{3} & a_{2} & a_{1}\end{matrix}\right]\right )
+\end{displaymath}
+\end{example}
+
+
+\begin{example}
+Compositional inverse of Catalan tringle's $h$ generating function:
+\begin{minted}[fontsize=\small]{python}
+>>> H = Function('h')
+>>> C_eq = Eq(H(t), (1-sqrt(1-4*t))/2)
+>>> C_eq, compositional_inverse(C_eq)
+\end{minted}
+\begin{displaymath}
+\left ( h{\left (t \right )} = - \frac{1}{2} \sqrt{- 4 t + 1} + \frac{1}{2}, \quad \bar{ h }{\left (y \right )} = - y \left(y - 1\right)\right )
+\end{displaymath}
+Compositional inverse of Pascal tringle's $h$ generating function:
+\begin{minted}[fontsize=\small]{python}
+>>> P_eq = Eq(H(t), t/(1-t))
+>>> (P_eq, 
+...  compositional_inverse(P_eq), 
+...  compositional_inverse(compositional_inverse(P_eq), y=t))
+\end{minted}
+\begin{displaymath}
+\left ( h{\left (t \right )} = \frac{t}{1-t}, \quad \bar{ h }{\left (y \right )} = \frac{y}{y + 1}, \quad \bar{ \bar{ h } }{\left (t \right )} = \frac{t}{1-t}\right )
+\end{displaymath}
+\end{example}
+
+\begin{example}
+Build the triangle of Stirling numbers of the II kind:
+\begin{minted}[fontsize=\small]{python}
+>>> d_series = Eq(d_fn(t), 1)
+>>> h_series = Eq(h_fn(t), exp(t)-1)
+>>> d_series, h_series 
+\end{minted}
+\begin{displaymath}
+\left ( d{\left (t \right )} = 1, \quad h{\left (t \right )} = e^{t} - 1\right )
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> R = matrix(10, 10, riordan_matrix_exponential(
+...                     riordan_matrix_by_convolution(10, d_series, h_series)))
+>>> R
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\  & 1 &   &   &   &   &   &   &   &  \\  & 1 & 1 &   &   &   &   &   &   &  \\  & 1 & 3 & 1 &   &   &   &   &   &  \\  & 1 & 7 & 6 & 1 &   &   &   &   &  \\  & 1 & 15 & 25 & 10 & 1 &   &   &   &  \\  & 1 & 31 & 90 & 65 & 15 & 1 &   &   &  \\  & 1 & 63 & 301 & 350 & 140 & 21 & 1 &   &  \\  & 1 & 127 & 966 & 1701 & 1050 & 266 & 28 & 1 &  \\  & 1 & 255 & 3025 & 7770 & 6951 & 2646 & 462 & 36 & 1\end{matrix}\right]
+\end{displaymath}
+\end{example}
