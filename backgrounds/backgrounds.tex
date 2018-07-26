@@ -1,4 +1,14 @@
 
+\section{Symbolic computation}
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,lastline=35]{python}{deps/simulation-methods/src/commons.py}
+}
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=48]{python}{deps/simulation-methods/src/commons.py}
+}
+
 \section{Riordan Arrays, formally}
 
 A \textit{Riordan array} is an infinite lower triangular array
@@ -36,13 +46,68 @@ operator. Due to its importance, relation (\ref{somme}) is often called the
 \textit{fundamental rule} of Riordan arrays.  Along the paper, the notation
 $(f_k)_{k}$ will be used as an abbreviation of $(f_k)_{k\in\mathbb{N}}.$
 
+As it is well-known (see, e.g., \citep{LUZON201475,MRSV97,SHAPIRO1991229}),
+Riordan arrays constitute an \textit{algebraic group} with respect to the usual
+row-by-column product between matrices; formally, the product of two Riordan
+arrays $D_1$ and $D_2$ is defined as
+\begin{displaymath}
+\begin{split}
+  D_1 \cdot D_2 &= (d_1(t),\ h_1(t)) \cdot (d_2(t),\ h_2(t)) \\
+                &=(d_1(t)d_2(h_1(t)),\ h_2(h_1(t))).
+\end{split}
+\end{displaymath}
+Moreover, the Riordan array $I = (1,\ t)$ acts as the identity element and the
+inverse of $D =(d(t), h(t))$ is the Riordan array:
+$$
+D^{-1} = \left( \frac{1}{d(\overline{h}(t))},
+  \overline{h}(t) \right)
+$$
+where $\overline{h}(t)$ is the compositional inverse of $h(t)$.
+
 \section{Riordan Arrays, computationally}
 
+In this section we describe a little framework that implements parts
+of the concepts seen in the previous section; in particular, we provide
+some strategies to build Riordan arrays, to find corresponding production
+matrices and group inverse elements, respectively.
+
+First of all we introduce function symbols \verb|d_fn| and \verb|h_fn|
+to denote arbitrary symbolic functions $d$ and $h$, respectively:
 \begin{minted}[fontsize=\small]{python}
->>> m = 5
 >>> d_fn, h_fn = Function('d'), Function('h')
 >>> d, h = IndexedBase('d'), IndexedBase('h')
 \end{minted}
+
+To build Riordan matrices we use \verb|Matrix| objects; in particular, the
+expression \verb|Matrix(r, c, ctor)| denotes a matrix with \verb|r| rows and
+\verb|c| columns; finally, \verb|ctor| is a \textit{callable} object consuming
+two arguments $n$ and $k$, the row and column coordinates of each coefficient
+$d_{n,k}$ in the matrix, respectively. We call it \verb|ctor|, abbreviation of
+\textit{constructor}, because it allows us to code the definition of each
+coefficient with a Python callable object.
+
+Here we show how to build a pure symbolic matrix:
+\begin{minted}[fontsize=\small]{python}
+>>> rows, cols = 5, 5
+>>> ctor = lambda i,j: d[i,j]
+>>> Matrix(rows, cols, ctor)
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}d_{0,0} & d_{0,1} & d_{0,2} & d_{0,3} & d_{0,4}\\d_{1,0} & d_{1,1} & d_{1,2} & d_{1,3} & d_{1,4}\\d_{2,0} & d_{2,1} & d_{2,2} & d_{2,3} & d_{2,4}\\d_{3,0} & d_{3,1} & d_{3,2} & d_{3,3} & d_{3,4}\\d_{4,0} & d_{4,1} & d_{4,2} & d_{4,3} & d_{4,4}\end{matrix}\right]
+\end{displaymath}
+
+In the following sections we show a collection of such \verb|ctor|s, each one
+of them implements one theoretical characterization used to denote Riordan
+arrays and corresponding examples are given.
+
+\subsection{Convolution ctor}
+
+The following definition implements a ctor that allows us to build Riordan
+arrays by convolution of their $d$ and $h$ functions; here it is,
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=26, lastline=45]{python}{deps/simulation-methods/src/sequences.py}
+}
 
 \begin{example}
 Symbolic Riordan array built by two polynomials with symbolic coefficients:
@@ -74,13 +139,19 @@ The Pascal triangle built using closed generating functions:
 \left ( d{\left (t \right )} = \frac{1}{1-t}, \quad h{\left (t \right )} = \frac{t}{1-t}\right )
 \end{displaymath}
 \begin{minted}[fontsize=\small]{python}
->>> R = Matrix(10, 10, riordan_matrix_by_convolution(m, d_series, h_series))
+>>> R = Matrix(10, 10, riordan_matrix_by_convolution(10, d_series, h_series))
 >>> R
 \end{minted}
 \begin{displaymath}
 \left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\1 & 2 & 1 &   &   &   &   &   &   &  \\1 & 3 & 3 & 1 &   &   &   &   &   &  \\1 & 4 & 6 & 4 & 1 &   &   &   &   &  \\1 & 5 & 10 & 10 & 5 & 1 &   &   &   &  \\1 & 6 & 15 & 20 & 15 & 6 & 1 &   &   &  \\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1 &   &  \\1 & 8 & 28 & 56 & 70 & 56 & 28 & 8 & 1 &  \\1 & 9 & 36 & 84 & 126 & 126 & 84 & 36 & 9 & 1\end{matrix}\right]
 \end{displaymath}
 \end{example}
+
+\subsection{Recurrence ctor}
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=81, lastline=105, mathescape=true]{python}{deps/simulation-methods/src/sequences.py}
+}
 
 \begin{example}
 Symbolic Riordan Array built according to the recurrence:
@@ -110,8 +181,32 @@ d_{n+1, k+1} &= a\,d_{n, k} + b\,d_{n, k} + c\,d_{n,k+1}, \quad k \in\mathbb{N}
 \begin{displaymath}
 \left[\begin{matrix}\bar{b} & a &   &  \\c & b & a &  \\  & c & b & a\\  &   & c & b\end{matrix}\right]
 \end{displaymath}
+Forcing $a=1$ and $\bar{b} = b$ yield the easier matrix \verb|Msubs|
+\begin{minted}[fontsize=\small]{python}
+>>> Msubs = M.subs({a:1, b_bar:b})
+>>> Msubs, production_matrix(Msubs)
+\end{minted}
+\begin{displaymath}
+\left ( \left[\begin{matrix}1 & 0 & 0 & 0 & 0\\b & 1 & 0 & 0 & 0\\b^{2} + c & 2 b & 1 & 0 & 0\\b^{3} + 3 b c & 3 b^{2} + 2 c & 3 b & 1 & 0\\b^{4} + 6 b^{2} c + 2 c^{2} & 4 b^{3} + 8 b c & 6 b^{2} + 3 c & 4 b & 1\end{matrix}\right], \quad \left[\begin{matrix}b & 1 & 0 & 0\\c & b & 1 & 0\\0 & c & b & 1\\0 & 0 & c & b\end{matrix}\right]\right )
+\end{displaymath}
+and the correspoding production matrix checks the substitution.
 \end{example}
 
+Previous examples uses the function \verb|production_matrix| to compute the
+\textit{production matrix} \citep{DEUTSCH2005101,Deutsch2009} of a Riordan
+array, here is its definition with two helpers \verb|ctor|s:
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=160, lastline=178]{python}{deps/simulation-methods/src/sequences.py}
+}
+
+implemented according to \citep{barry2017riordan}, page $215$.
+
+\subsection{$A$ and $Z$ sequences ctor}
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=47, lastline=78]{python}{deps/simulation-methods/src/sequences.py}
+}
 
 \begin{example}
 Again the Pascal triangle built using $A$ and $Z$ sequences
@@ -126,16 +221,10 @@ Again the Pascal triangle built using $A$ and $Z$ sequences
 \end{displaymath}
 \begin{minted}[fontsize=\small]{python}
 >>> R = Matrix(10, 10, riordan_matrix_by_AZ_sequences(10, (Z_eq, A_eq)))
->>> R
+>>> R, production_matrix(R)
 \end{minted}
 \begin{displaymath}
-\left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\1 & 2 & 1 &   &   &   &   &   &   &  \\1 & 3 & 3 & 1 &   &   &   &   &   &  \\1 & 4 & 6 & 4 & 1 &   &   &   &   &  \\1 & 5 & 10 & 10 & 5 & 1 &   &   &   &  \\1 & 6 & 15 & 20 & 15 & 6 & 1 &   &   &  \\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1 &   &  \\1 & 8 & 28 & 56 & 70 & 56 & 28 & 8 & 1 &  \\1 & 9 & 36 & 84 & 126 & 126 & 84 & 36 & 9 & 1\end{matrix}\right]
-\end{displaymath}
-\begin{minted}[fontsize=\small]{python}
->>> production_matrix(R)
-\end{minted}
-\begin{displaymath}
-\left[\begin{matrix}1 & 1 &   &   &   &   &   &   &  \\  & 1 & 1 &   &   &   &   &   &  \\  &   & 1 & 1 &   &   &   &   &  \\  &   &   & 1 & 1 &   &   &   &  \\  &   &   &   & 1 & 1 &   &   &  \\  &   &   &   &   & 1 & 1 &   &  \\  &   &   &   &   &   & 1 & 1 &  \\  &   &   &   &   &   &   & 1 & 1\\  &   &   &   &   &   &   &   & 1\end{matrix}\right]
+\left ( \left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 2 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 3 & 3 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 4 & 6 & 4 & 1 & 0 & 0 & 0 & 0 & 0\\1 & 5 & 10 & 10 & 5 & 1 & 0 & 0 & 0 & 0\\1 & 6 & 15 & 20 & 15 & 6 & 1 & 0 & 0 & 0\\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1 & 0 & 0\\1 & 8 & 28 & 56 & 70 & 56 & 28 & 8 & 1 & 0\\1 & 9 & 36 & 84 & 126 & 126 & 84 & 36 & 9 & 1\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\end{matrix}\right]\right )
 \end{displaymath}
 \end{example}
 
@@ -145,16 +234,10 @@ Catalan triangle built using $A$ and $Z$ sequences, which are equal for this arr
 \begin{minted}[fontsize=\small]{python}
 >>> A_ones = Eq(A(t), 1/(1-t)) # A is defined as in the previous example
 >>> R = Matrix(10, 10, riordan_matrix_by_AZ_sequences(10, (A_ones, A_ones)))
->>> R
+>>> R, production_matrix(R)
 \end{minted}
 \begin{displaymath}
-\left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\2 & 2 & 1 &   &   &   &   &   &   &  \\5 & 5 & 3 & 1 &   &   &   &   &   &  \\14 & 14 & 9 & 4 & 1 &   &   &   &   &  \\42 & 42 & 28 & 14 & 5 & 1 &   &   &   &  \\132 & 132 & 90 & 48 & 20 & 6 & 1 &   &   &  \\429 & 429 & 297 & 165 & 75 & 27 & 7 & 1 &   &  \\1430 & 1430 & 1001 & 572 & 275 & 110 & 35 & 8 & 1 &  \\4862 & 4862 & 3432 & 2002 & 1001 & 429 & 154 & 44 & 9 & 1\end{matrix}\right]
-\end{displaymath}
-\begin{minted}[fontsize=\small]{python}
->>> production_matrix(R)
-\end{minted}
-\begin{displaymath}
-\left[\begin{matrix}1 & 1 &   &   &   &   &   &   &  \\1 & 1 & 1 &   &   &   &   &   &  \\1 & 1 & 1 & 1 &   &   &   &   &  \\1 & 1 & 1 & 1 & 1 &   &   &   &  \\1 & 1 & 1 & 1 & 1 & 1 &   &   &  \\1 & 1 & 1 & 1 & 1 & 1 & 1 &   &  \\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 &  \\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\end{matrix}\right]
+\left ( \left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\2 & 2 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\5 & 5 & 3 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\14 & 14 & 9 & 4 & 1 & 0 & 0 & 0 & 0 & 0\\42 & 42 & 28 & 14 & 5 & 1 & 0 & 0 & 0 & 0\\132 & 132 & 90 & 48 & 20 & 6 & 1 & 0 & 0 & 0\\429 & 429 & 297 & 165 & 75 & 27 & 7 & 1 & 0 & 0\\1430 & 1430 & 1001 & 572 & 275 & 110 & 35 & 8 & 1 & 0\\4862 & 4862 & 3432 & 2002 & 1001 & 429 & 154 & 44 & 9 & 1\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 & 0\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\end{matrix}\right]\right )
 \end{displaymath}
 \end{example}
 
@@ -191,35 +274,18 @@ Symbolic Riordan arrays built using $A$ and $Z$ sequences, which are equal in th
 \end{displaymath}
 \end{example}
 
+\subsection{Exponential ctor}
 
-\begin{example}
-Compositional inverse of Catalan tringle's $h$ generating function:
-\begin{minted}[fontsize=\small]{python}
->>> H = Function('h')
->>> C_eq = Eq(H(t), (1-sqrt(1-4*t))/2)
->>> C_eq, compositional_inverse(C_eq)
-\end{minted}
-\begin{displaymath}
-\left ( h{\left (t \right )} = - \frac{1}{2} \sqrt{- 4 t + 1} + \frac{1}{2}, \quad \bar{ h }{\left (y \right )} = - y \left(y - 1\right)\right )
-\end{displaymath}
-Compositional inverse of Pascal tringle's $h$ generating function:
-\begin{minted}[fontsize=\small]{python}
->>> P_eq = Eq(H(t), t/(1-t))
->>> (P_eq, 
-...  compositional_inverse(P_eq), 
-...  compositional_inverse(compositional_inverse(P_eq), y=t))
-\end{minted}
-\begin{displaymath}
-\left ( h{\left (t \right )} = \frac{t}{1-t}, \quad \bar{ h }{\left (y \right )} = \frac{y}{y + 1}, \quad \bar{ \bar{ h } }{\left (t \right )} = \frac{t}{1-t}\right )
-\end{displaymath}
-\end{example}
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=23, lastline=24]{python}{deps/simulation-methods/src/sequences.py}
+}
 
 \begin{example}
 Build the triangle of Stirling numbers of the II kind:
 \begin{minted}[fontsize=\small]{python}
 >>> d_series = Eq(d_fn(t), 1)
 >>> h_series = Eq(h_fn(t), exp(t)-1)
->>> d_series, h_series 
+>>> d_series, h_series
 \end{minted}
 \begin{displaymath}
 \left ( d{\left (t \right )} = 1, \quad h{\left (t \right )} = e^{t} - 1\right )
@@ -231,5 +297,79 @@ Build the triangle of Stirling numbers of the II kind:
 \end{minted}
 \begin{displaymath}
 \left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\  & 1 &   &   &   &   &   &   &   &  \\  & 1 & 1 &   &   &   &   &   &   &  \\  & 1 & 3 & 1 &   &   &   &   &   &  \\  & 1 & 7 & 6 & 1 &   &   &   &   &  \\  & 1 & 15 & 25 & 10 & 1 &   &   &   &  \\  & 1 & 31 & 90 & 65 & 15 & 1 &   &   &  \\  & 1 & 63 & 301 & 350 & 140 & 21 & 1 &   &  \\  & 1 & 127 & 966 & 1701 & 1050 & 266 & 28 & 1 &  \\  & 1 & 255 & 3025 & 7770 & 6951 & 2646 & 462 & 36 & 1\end{matrix}\right]
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> production_matrix(R), production_matrix(R, exp=True)
+\end{minted}
+\begin{displaymath}
+\left ( \left[\begin{matrix}0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 3 & 1 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 4 & 1 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 5 & 1 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 6 & 1 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 7 & 1\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 8\end{matrix}\right], \quad \left[\begin{matrix}0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 1 & 2 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 2 & 3 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 4 & 5 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 5 & 6 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 6 & 7 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 7 & 8\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 8\end{matrix}\right]\right )
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> inspect(R)
+nature(is_ordinary=False, is_exponential=True)
+\end{minted}
+\end{example}
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=181, lastline=204]{python}{deps/simulation-methods/src/sequences.py}
+}
+
+\begin{example}
+\url{https://oeis.org/A021009}
+\begin{minted}[fontsize=\small]{python}
+>>> d_series, h_series = Eq(d_fn(t), 1/(1-t)), Eq(h_fn(t), t/(1-t))
+>>> R = matrix(10, 10, riordan_matrix_exponential(
+...                     riordan_matrix_by_convolution(10, d_series, h_series)))
+>>> R
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\2 & 4 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\6 & 18 & 9 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\24 & 96 & 72 & 16 & 1 & 0 & 0 & 0 & 0 & 0\\120 & 600 & 600 & 200 & 25 & 1 & 0 & 0 & 0 & 0\\720 & 4320 & 5400 & 2400 & 450 & 36 & 1 & 0 & 0 & 0\\5040 & 35280 & 52920 & 29400 & 7350 & 882 & 49 & 1 & 0 & 0\\40320 & 322560 & 564480 & 376320 & 117600 & 18816 & 1568 & 64 & 1 & 0\\362880 & 3265920 & 6531840 & 5080320 & 1905120 & 381024 & 42336 & 2592 & 81 & 1\end{matrix}\right]
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> production_matrix(R), production_matrix(R, exp=True)
+\end{minted}
+\begin{displaymath}
+\left ( \left[\begin{matrix}1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 3 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 4 & 5 & 1 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 9 & 7 & 1 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 16 & 9 & 1 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 25 & 11 & 1 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 36 & 13 & 1 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 49 & 15 & 1\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 64 & 17\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 3 & 2 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 2 & 5 & 3 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 3 & 7 & 4 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 4 & 9 & 5 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 5 & 11 & 6 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 6 & 13 & 7 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 7 & 15 & 8\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 8 & 17\end{matrix}\right]\right )
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> inspect(R)
+nature(is_ordinary=False, is_exponential=True)
+\end{minted}
+\end{example}
+
+\subsection{Group inverse elements}
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=207, lastline=223]{python}{deps/simulation-methods/src/sequences.py}
+}
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=225, lastline=247]{python}{deps/simulation-methods/src/sequences.py}
+}
+
+\begin{example}
+Compositional inverse of Catalan tringle's $h$ generating function:
+\begin{minted}[fontsize=\small]{python}
+>>> catalan_term = (1-sqrt(1-4*t))/(2*t)
+>>> d_series = Eq(d_fn(t), catalan_term)
+>>> h_series = Eq(h_fn(t), t*catalan_term)
+>>> h_series, compositional_inverse(h_series)
+\end{minted}
+\begin{displaymath}
+\left ( h{\left (t \right )} = - \frac{1}{2} \sqrt{- 4 t + 1} + \frac{1}{2}, \quad \bar{ h }{\left (y \right )} = - y \left(y - 1\right)\right )
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> C_inverse = group_inverse(d_series, h_series, post=radsimp)
+>>> C_inverse
+\end{minted}
+\begin{displaymath}
+\left ( g{\left (t \right )} = \frac{1}{2} \sqrt{4 t^{2} - 4 t + 1} + \frac{1}{2}, \quad f{\left (t \right )} = t \left(- t + 1\right)\right )
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> R = Matrix(10, 10, riordan_matrix_by_convolution(10, C_inverse[0], C_inverse[1]))
+>>> R
+\end{minted}
+\begin{displaymath}
+\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\-1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & -2 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 1 & -3 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 3 & -4 & 1 & 0 & 0 & 0 & 0 & 0\\0 & 0 & -1 & 6 & -5 & 1 & 0 & 0 & 0 & 0\\0 & 0 & 0 & -4 & 10 & -6 & 1 & 0 & 0 & 0\\0 & 0 & 0 & 1 & -10 & 15 & -7 & 1 & 0 & 0\\0 & 0 & 0 & 0 & 5 & -20 & 21 & -8 & 1 & 0\\0 & 0 & 0 & 0 & -1 & 15 & -35 & 28 & -9 & 1\end{matrix}\right]
 \end{displaymath}
 \end{example}
