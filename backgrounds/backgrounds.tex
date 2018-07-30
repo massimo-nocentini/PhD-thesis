@@ -1,13 +1,10 @@
 
-\section{Symbolic computation}
+In this introductory section we review theoretical concepts about the
+\textit{Riordan group} that will be useful in subsequent chapters;
+additionally, we provide a very short introduction to symbolic computation
+using the \verb|sympy| module implemented using the Python programming
+language, giving a taste of our programming style.
 
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,lastline=35]{python}{deps/simulation-methods/src/commons.py}
-}
-
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=48]{python}{deps/simulation-methods/src/commons.py}
-}
 
 \section{Riordan Arrays, formally}
 
@@ -49,12 +46,9 @@ $(f_k)_{k}$ will be used as an abbreviation of $(f_k)_{k\in\mathbb{N}}.$
 As it is well-known (see, e.g., \citep{LUZON201475,MRSV97,SHAPIRO1991229}),
 Riordan arrays constitute an \textit{algebraic group} with respect to the usual
 row-by-column product between matrices; formally, the product of two Riordan
-arrays $D_1$ and $D_2$ is defined as
+arrays $D_1(d_1(t),\ h_1(t))$ and $D_2(d_2(t),\ h_2(t))$ is defined as
 \begin{displaymath}
-\begin{split}
-  D_1 \cdot D_2 &= (d_1(t),\ h_1(t)) \cdot (d_2(t),\ h_2(t)) \\
-                &=(d_1(t)d_2(h_1(t)),\ h_2(h_1(t))).
-\end{split}
+  D_1 \cdot D_2 =(d_1(t)d_2(h_1(t)),\ h_2(h_1(t))).
 \end{displaymath}
 Moreover, the Riordan array $I = (1,\ t)$ acts as the identity element and the
 inverse of $D =(d(t), h(t))$ is the Riordan array:
@@ -64,12 +58,136 @@ D^{-1} = \left( \frac{1}{d(\overline{h}(t))},
 $$
 where $\overline{h}(t)$ is the compositional inverse of $h(t)$.
 
+\section{Symbolic computation}
+
+The main part of symbolic computation supporting the topics discussed in this
+dissertation has been coded using the Python language, relying on the module
+\verb|sympy| for what concerns mathematical stuff. Quoting from \url{http://www.sympy.org/}:
+\begin{center}
+\textit{ ``SymPy is a Python library for symbolic mathematics. It aims to
+become a full-featured computer algebra system (CAS) while keeping the code as
+simple as possible in order to be comprehensible and easily extensible.''}
+\end{center}
+The paper \citep{10.7717/peerj-cs.103} explains it and many other resources can
+be found online; for example, a comprehensive documentation is
+\citep{sympy:doc} and a well written, understandable tutorial
+\citep{sympy:tutorial} is provided by the development team.
+
+Here we avoid to duplicate the tutorial with similar examples, instead we state
+the methodology used while coding our definitions. Python is a very expressive
+language allowing programmers to use both the object-oriented and functional
+paradigms. It is easily extendible by means of \textit{modules} and
+\verb|sympy| is an example that targets manipulation of symbolic terms.
+Contrary to other software like Maple and Mathematica which ship with their own
+languages, \verb|sympy| is implemented entirely in Python, allowing a
+transparent and easy integration in other Python programs, as we will see in
+later chapters.
+
+The main point to grasp in our opinion is the difference between the
+\textit{meta language}, which is Python, and the \textit{object language},
+which is the mathematical expressions denoted by \verb|sympy| objects.
+
+\begin{example}
+\verb|Symbol| is a fundamental class of objects that introduces arbitrary
+mathematical symbols.
+\begin{minted}[fontsize=\small]{python}
+>>> from sympy import Symbol
+>>> a_sym = Symbol('a')
+>>> a_sym
+a
+\end{minted}
+The previous snippet allows us to clarify the duality among meta and object
+languages; precisely, the mathematical expression $a$ is denoted by the Python
+object \verb|a_sym|.
+\end{example}
+
+The above example is the first one found by the reader and it shows a common
+pattern used through this document to illustrate \textit{computations}; in
+particular, when a line starts with (i)~\verb|>>>| then it is an \textit{input}
+line holding code to be executed, (ii)~\verb|...| then it is a
+\textit{continuation} line holding an unfinished code expression, otherwise
+(iii) it is an \textit{output} line reporting the result of the evaluation.
+
+A second fundamental methodology that we embrace in our symbolic manipulations is
+\textit{equational reasoning}, namely we use equations denoted by \verb|Eq| objects
+to express identity to reason about, used both to define things and
+to solve with respect to a symbol.
+\begin{example}
+Introduction of \verb|Eq|, \verb|solve| and \verb|symbols| functions:
+\begin{minted}[fontsize=\small]{python}
+>>> from sympy import Eq, solve, symbols
+>>> a, t = symbols('a t')
+>>> a_def = Eq(a, 3)
+>>> at_eq = Eq(a+5*t, 1/(1-t))
+>>> sols = [Eq(t, s) for s in solve(at_eq, t)]
+>>> a_def, at_eq, sols
+\end{minted}
+\begin{displaymath}
+\left(
+a=3,\quad a + 5 t = \frac{1}{- t + 1}, \quad \left [ t = - \frac{a}{10} - \frac{1}{10} \sqrt{a^{2} + 10 a + 5} + \frac{1}{2}, \quad t = - \frac{a}{10} + \frac{1}{10} \sqrt{a^{2} + 10 a + 5} + \frac{1}{2}\right ]
+\right)
+\end{displaymath}
+\end{example}
+
+Due to the importance of equations in our code, we introduce two
+helper functions. First, \verb|define| builds a definition:
+
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,lastline=9]{python}{deps/simulation-methods/src/commons.py}
+}
+
+\begin{example}
+Introduction of \verb|Function| objects:
+\begin{minted}[fontsize=\small]{python}
+>>> from sympy import Function, sqrt
+>>> f = Function('f')
+>>> f(3)
+f(3)
+>>> t = symbols('t')
+>>> define(let=f(t), be=(1-sqrt(1-4*t))/(2*t))
+\end{minted}
+\begin{displaymath}
+f{\left (t \right )} = \frac{1}{2 t} \left(- \sqrt{- 4 t + 1} + 1\right)
+\end{displaymath}
+\end{example}
+
+Second, \verb|lift_to_Lambda| promotes an equation as a \verb|callable| object
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false,firstline=11, lastline=18]{python}{deps/simulation-methods/src/commons.py}
+}
+
+\begin{example}
+Introduction of \verb|IndexedBase| objects:
+\begin{minted}[fontsize=\small]{python}
+>>> from commons import lift_to_Lambda
+>>> from sympy import IndexedBase
+>>> a = IndexedBase('a')
+>>> aeq = Eq(a[n], n+a[n-1])
+>>> with lift_to_Lambda(aeq, return_eq=True) as aEQ:
+...     arec = aEQ(n+1)
+>>> arec
+\end{minted}
+\begin{displaymath}
+    a_{n + 1} = n + a_{n} + 1
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> b = Function('b')
+>>> beq = Eq(b(n), n+b(n-1))
+>>> with lift_to_Lambda(beq, return_eq=True) as bEQ:
+...     brec = bEQ(n+1)
+>>> brec
+\end{minted}
+\begin{displaymath}
+    b{\left (n + 1 \right )} = n + b{\left (n \right )} + 1
+\end{displaymath}
+\end{example}
+
 \section{Riordan Arrays, computationally}
 
 In this section we describe a little framework that implements parts
 of the concepts seen in the previous section; in particular, we provide
 some strategies to build Riordan arrays, to find corresponding production
-matrices and group inverse elements, respectively.
+matrices and their group inverse elements, respectively.
 
 First of all we introduce function symbols \verb|d_fn| and \verb|h_fn|
 to denote arbitrary symbolic functions $d$ and $h$, respectively:
@@ -88,6 +206,7 @@ coefficient with a Python callable object.
 
 Here we show how to build a pure symbolic matrix:
 \begin{minted}[fontsize=\small]{python}
+>>> from sympy import Matrix
 >>> rows, cols = 5, 5
 >>> ctor = lambda i,j: d[i,j]
 >>> Matrix(rows, cols, ctor)
@@ -149,6 +268,9 @@ The Pascal triangle built using closed generating functions:
 
 \subsection{Recurrence ctor}
 
+The following definition implements a ctor that allows us to build Riordan
+arrays by a recurrence relation over coefficients $d_{n+1, k+1}$; here it is,
+
 \notbreakable{
     \inputminted[fontsize=\small,stripnl=false,firstline=81, lastline=105, mathescape=true]{python}{deps/simulation-methods/src/sequences.py}
 }
@@ -157,8 +279,8 @@ The Pascal triangle built using closed generating functions:
 Symbolic Riordan Array built according to the recurrence:
 \begin{displaymath}
 \begin{split}
-d_{n+1, 0} &= \bar{b}\,d_{n, 0} + c\,d_{n,1} \\
-d_{n+1, k+1} &= a\,d_{n, k} + b\,d_{n, k} + c\,d_{n,k+1}, \quad k \in\mathbb{N}
+d_{n+1, 0} &= \bar{b}\,d_{n, 0} + c\,d_{n,1}, \quad n \in\mathbb{N} \\
+d_{n+1, k+1} &= a\,d_{n, k} + b\,d_{n, k} + c\,d_{n,k+1}, \quad n,k \in\mathbb{N}
 \end{split}
 \end{displaymath}
 \begin{minted}[fontsize=\small]{python}
@@ -187,14 +309,14 @@ Forcing $a=1$ and $\bar{b} = b$ yield the easier matrix \verb|Msubs|
 >>> Msubs, production_matrix(Msubs)
 \end{minted}
 \begin{displaymath}
-\left ( \left[\begin{matrix}1 & 0 & 0 & 0 & 0\\b & 1 & 0 & 0 & 0\\b^{2} + c & 2 b & 1 & 0 & 0\\b^{3} + 3 b c & 3 b^{2} + 2 c & 3 b & 1 & 0\\b^{4} + 6 b^{2} c + 2 c^{2} & 4 b^{3} + 8 b c & 6 b^{2} + 3 c & 4 b & 1\end{matrix}\right], \quad \left[\begin{matrix}b & 1 & 0 & 0\\c & b & 1 & 0\\0 & c & b & 1\\0 & 0 & c & b\end{matrix}\right]\right )
+\left ( \left[\begin{matrix}1 &   &   &   &  \\b & 1 &   &   &  \\b^{2} + c & 2 b & 1 &   &  \\b^{3} + 3 b c & 3 b^{2} + 2 c & 3 b & 1 &  \\b^{4} + 6 b^{2} c + 2 c^{2} & 4 b^{3} + 8 b c & 6 b^{2} + 3 c & 4 b & 1\end{matrix}\right], \quad \left[\begin{matrix}b & 1 &   &  \\c & b & 1 &  \\  & c & b & 1\\  &   & c & b\end{matrix}\right]\right )
 \end{displaymath}
 and the correspoding production matrix checks the substitution.
 \end{example}
 
 Previous examples uses the function \verb|production_matrix| to compute the
 \textit{production matrix} \citep{DEUTSCH2005101,Deutsch2009} of a Riordan
-array, here is its definition with two helpers \verb|ctor|s:
+array, here is its definition with two helper \verb|ctor|s:
 
 \notbreakable{
     \inputminted[fontsize=\small,stripnl=false,firstline=160, lastline=178]{python}{deps/simulation-methods/src/sequences.py}
@@ -203,6 +325,9 @@ array, here is its definition with two helpers \verb|ctor|s:
 implemented according to \citep{barry2017riordan}, page $215$.
 
 \subsection{$A$ and $Z$ sequences ctor}
+
+The following definition implements a ctor that allows us to build Riordan
+arrays by their $Z$ and $A$ sequences; here it is,
 
 \notbreakable{
     \inputminted[fontsize=\small,stripnl=false,firstline=47, lastline=78]{python}{deps/simulation-methods/src/sequences.py}
@@ -224,7 +349,7 @@ Again the Pascal triangle built using $A$ and $Z$ sequences
 >>> R, production_matrix(R)
 \end{minted}
 \begin{displaymath}
-\left ( \left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 2 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 3 & 3 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 4 & 6 & 4 & 1 & 0 & 0 & 0 & 0 & 0\\1 & 5 & 10 & 10 & 5 & 1 & 0 & 0 & 0 & 0\\1 & 6 & 15 & 20 & 15 & 6 & 1 & 0 & 0 & 0\\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1 & 0 & 0\\1 & 8 & 28 & 56 & 70 & 56 & 28 & 8 & 1 & 0\\1 & 9 & 36 & 84 & 126 & 126 & 84 & 36 & 9 & 1\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\end{matrix}\right]\right )
+\left ( \left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\1 & 2 & 1 &   &   &   &   &   &   &  \\1 & 3 & 3 & 1 &   &   &   &   &   &  \\1 & 4 & 6 & 4 & 1 &   &   &   &   &  \\1 & 5 & 10 & 10 & 5 & 1 &   &   &   &  \\1 & 6 & 15 & 20 & 15 & 6 & 1 &   &   &  \\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1 &   &  \\1 & 8 & 28 & 56 & 70 & 56 & 28 & 8 & 1 &  \\1 & 9 & 36 & 84 & 126 & 126 & 84 & 36 & 9 & 1\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 &   &   &   &   &   &   &  \\  & 1 & 1 &   &   &   &   &   &  \\  &   & 1 & 1 &   &   &   &   &  \\  &   &   & 1 & 1 &   &   &   &  \\  &   &   &   & 1 & 1 &   &   &  \\  &   &   &   &   & 1 & 1 &   &  \\  &   &   &   &   &   & 1 & 1 &  \\  &   &   &   &   &   &   & 1 & 1\\  &   &   &   &   &   &   &   & 1\end{matrix}\right]\right )
 \end{displaymath}
 \end{example}
 
@@ -237,7 +362,7 @@ Catalan triangle built using $A$ and $Z$ sequences, which are equal for this arr
 >>> R, production_matrix(R)
 \end{minted}
 \begin{displaymath}
-\left ( \left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\2 & 2 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\5 & 5 & 3 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\14 & 14 & 9 & 4 & 1 & 0 & 0 & 0 & 0 & 0\\42 & 42 & 28 & 14 & 5 & 1 & 0 & 0 & 0 & 0\\132 & 132 & 90 & 48 & 20 & 6 & 1 & 0 & 0 & 0\\429 & 429 & 297 & 165 & 75 & 27 & 7 & 1 & 0 & 0\\1430 & 1430 & 1001 & 572 & 275 & 110 & 35 & 8 & 1 & 0\\4862 & 4862 & 3432 & 2002 & 1001 & 429 & 154 & 44 & 9 & 1\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0\\1 & 1 & 1 & 1 & 1 & 1 & 0 & 0 & 0\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\end{matrix}\right]\right )
+\left ( \left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\2 & 2 & 1 &   &   &   &   &   &   &  \\5 & 5 & 3 & 1 &   &   &   &   &   &  \\14 & 14 & 9 & 4 & 1 &   &   &   &   &  \\42 & 42 & 28 & 14 & 5 & 1 &   &   &   &  \\132 & 132 & 90 & 48 & 20 & 6 & 1 &   &   &  \\429 & 429 & 297 & 165 & 75 & 27 & 7 & 1 &   &  \\1430 & 1430 & 1001 & 572 & 275 & 110 & 35 & 8 & 1 &  \\4862 & 4862 & 3432 & 2002 & 1001 & 429 & 154 & 44 & 9 & 1\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 &   &   &   &   &   &   &  \\1 & 1 & 1 &   &   &   &   &   &  \\1 & 1 & 1 & 1 &   &   &   &   &  \\1 & 1 & 1 & 1 & 1 &   &   &   &  \\1 & 1 & 1 & 1 & 1 & 1 &   &   &  \\1 & 1 & 1 & 1 & 1 & 1 & 1 &   &  \\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 &  \\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\end{matrix}\right]\right )
 \end{displaymath}
 \end{example}
 
@@ -276,6 +401,9 @@ Symbolic Riordan arrays built using $A$ and $Z$ sequences, which are equal in th
 
 \subsection{Exponential ctor}
 
+The following definition implements a ctor that allows us to build an
+exponential Riordan array; here it is,
+
 \notbreakable{
     \inputminted[fontsize=\small,stripnl=false,firstline=23, lastline=24]{python}{deps/simulation-methods/src/sequences.py}
 }
@@ -302,34 +430,48 @@ Build the triangle of Stirling numbers of the II kind:
 >>> production_matrix(R), production_matrix(R, exp=True)
 \end{minted}
 \begin{displaymath}
-\left ( \left[\begin{matrix}0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 3 & 1 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 4 & 1 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 5 & 1 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 6 & 1 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 7 & 1\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 8\end{matrix}\right], \quad \left[\begin{matrix}0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 1 & 2 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 2 & 3 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 3 & 4 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 4 & 5 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 5 & 6 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 6 & 7 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 7 & 8\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 8\end{matrix}\right]\right )
+\left ( \left[\begin{matrix}0 & 1 &   &   &   &   &   &   &  \\  & 1 & 1 &   &   &   &   &   &  \\  &   & 2 & 1 &   &   &   &   &  \\  &   &   & 3 & 1 &   &   &   &  \\  &   &   &   & 4 & 1 &   &   &  \\  &   &   &   &   & 5 & 1 &   &  \\  &   &   &   &   &   & 6 & 1 &  \\  &   &   &   &   &   &   & 7 & 1\\  &   &   &   &   &   &   &   & 8\end{matrix}\right], \quad \left[\begin{matrix}0 & 1 &   &   &   &   &   &   &  \\  & 1 & 2 &   &   &   &   &   &  \\  &   & 2 & 3 &   &   &   &   &  \\  &   &   & 3 & 4 &   &   &   &  \\  &   &   &   & 4 & 5 &   &   &  \\  &   &   &   &   & 5 & 6 &   &  \\  &   &   &   &   &   & 6 & 7 &  \\  &   &   &   &   &   &   & 7 & 8\\  &   &   &   &   &   &   &   & 8\end{matrix}\right]\right )
 \end{displaymath}
 \begin{minted}[fontsize=\small]{python}
 >>> inspect(R)
 nature(is_ordinary=False, is_exponential=True)
 \end{minted}
 \end{example}
+In the above example we introduced another function \verb|inspect| that studies
+the type of array it consumes. Before reporting its definition, together with
+the helper \verb|is_arithmetic_progression|, we remark that the matrix on the
+left is an usual production matrix (which tells us that $d_{6,4} = d_{5,3} +
+4d_{5,4} = 25 + 4\cdot 10 = 65$, for example); on the other hand, the matrix on
+right helps to decide if the array is an exponential one by proving that each
+diagonal is an \textit{arithmetic progression}, for more on this see
+\citep{barry2017riordan}.
 
 \notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=181, lastline=204]{python}{deps/simulation-methods/src/sequences.py}
+    \inputminted[fontsize=\small,stripnl=false,firstline=181, lastline=206]{python}{deps/simulation-methods/src/sequences.py}
 }
 
 \begin{example}
 \url{https://oeis.org/A021009}
 \begin{minted}[fontsize=\small]{python}
 >>> d_series, h_series = Eq(d_fn(t), 1/(1-t)), Eq(h_fn(t), t/(1-t))
+>>> d_series, h_series
+\end{minted}
+\begin{displaymath}
+\left ( d{\left (t \right )} = \frac{1}{1-t}, \quad h{\left (t \right )} = \frac{t}{1-t}\right )
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
 >>> R = matrix(10, 10, riordan_matrix_exponential(
 ...                     riordan_matrix_by_convolution(10, d_series, h_series)))
 >>> R
 \end{minted}
 \begin{displaymath}
-\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\2 & 4 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\6 & 18 & 9 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\24 & 96 & 72 & 16 & 1 & 0 & 0 & 0 & 0 & 0\\120 & 600 & 600 & 200 & 25 & 1 & 0 & 0 & 0 & 0\\720 & 4320 & 5400 & 2400 & 450 & 36 & 1 & 0 & 0 & 0\\5040 & 35280 & 52920 & 29400 & 7350 & 882 & 49 & 1 & 0 & 0\\40320 & 322560 & 564480 & 376320 & 117600 & 18816 & 1568 & 64 & 1 & 0\\362880 & 3265920 & 6531840 & 5080320 & 1905120 & 381024 & 42336 & 2592 & 81 & 1\end{matrix}\right]
+\left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\2 & 4 & 1 &   &   &   &   &   &   &  \\6 & 18 & 9 & 1 &   &   &   &   &   &  \\24 & 96 & 72 & 16 & 1 &   &   &   &   &  \\120 & 600 & 600 & 200 & 25 & 1 &   &   &   &  \\720 & 4320 & 5400 & 2400 & 450 & 36 & 1 &   &   &  \\5040 & 35280 & 52920 & 29400 & 7350 & 882 & 49 & 1 &   &  \\40320 & 322560 & 564480 & 376320 & 117600 & 18816 & 1568 & 64 & 1 &  \\362880 & 3265920 & 6531840 & 5080320 & 1905120 & 381024 & 42336 & 2592 & 81 & 1\end{matrix}\right]
 \end{displaymath}
 \begin{minted}[fontsize=\small]{python}
 >>> production_matrix(R), production_matrix(R, exp=True)
 \end{minted}
 \begin{displaymath}
-\left ( \left[\begin{matrix}1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 3 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 4 & 5 & 1 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 9 & 7 & 1 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 16 & 9 & 1 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 25 & 11 & 1 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 36 & 13 & 1 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 49 & 15 & 1\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 64 & 17\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 3 & 2 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 2 & 5 & 3 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 3 & 7 & 4 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 4 & 9 & 5 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 5 & 11 & 6 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 6 & 13 & 7 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 7 & 15 & 8\\0 & 0 & 0 & 0 & 0 & 0 & 0 & 8 & 17\end{matrix}\right]\right )
+\left ( \left[\begin{matrix}1 & 1 &   &   &   &   &   &   &  \\1 & 3 & 1 &   &   &   &   &   &  \\  & 4 & 5 & 1 &   &   &   &   &  \\  &   & 9 & 7 & 1 &   &   &   &  \\  &   &   & 16 & 9 & 1 &   &   &  \\  &   &   &   & 25 & 11 & 1 &   &  \\  &   &   &   &   & 36 & 13 & 1 &  \\  &   &   &   &   &   & 49 & 15 & 1\\  &   &   &   &   &   &   & 64 & 17\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 &   &   &   &   &   &   &  \\1 & 3 & 2 &   &   &   &   &   &  \\  & 2 & 5 & 3 &   &   &   &   &  \\  &   & 3 & 7 & 4 &   &   &   &  \\  &   &   & 4 & 9 & 5 &   &   &  \\  &   &   &   & 5 & 11 & 6 &   &  \\  &   &   &   &   & 6 & 13 & 7 &  \\  &   &   &   &   &   & 7 & 15 & 8\\  &   &   &   &   &   &   & 8 & 17\end{matrix}\right]\right )
 \end{displaymath}
 \begin{minted}[fontsize=\small]{python}
 >>> inspect(R)
@@ -339,12 +481,36 @@ nature(is_ordinary=False, is_exponential=True)
 
 \subsection{Group inverse elements}
 
+In this final section we show how to compute the compositional inverse of 
+a function and then apply this procedure to find the inverse of a given
+Riordan array.
+
+Your task is to find the compositional inverse of Pascal array's $h$ function
+\begin{displaymath}
+h(t)= \frac{t}{1-t}
+\end{displaymath}
+namely, you want to find a function $\bar{h}$ such that $\bar{h}(h(t))=t$.
+Starting from this very last identity we use the substitution notation
+\begin{displaymath}
+\bar{h}(h(t)) = t \leftrightarrow \left[ \bar{h}(y) = t\, | \, y = h(t) \right]
+\end{displaymath}
+reducing the original problem to solve $y = h(t)$ with respect to $t$;
+formally, using the definition of $h$ we rewrite
+\begin{displaymath}
+y = \frac{t}{1-t} \quad\text{that implies}\quad t = \frac{y}{1+y}
+\end{displaymath}
+which can be put back in $\bar{h}(y) = t$ yielding 
+\begin{displaymath}
+\bar{h}(y)= \frac{y}{1+y}.
+\end{displaymath}
+The following code implements this procedure:
+
 \notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=207, lastline=223]{python}{deps/simulation-methods/src/sequences.py}
+    \inputminted[fontsize=\small,stripnl=false,firstline=209, lastline=225, mathescape=true]{python}{deps/simulation-methods/src/sequences.py}
 }
 
 \notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=225, lastline=247]{python}{deps/simulation-methods/src/sequences.py}
+    \inputminted[fontsize=\small,stripnl=false,firstline=227, lastline=249, mathescape=true]{python}{deps/simulation-methods/src/sequences.py}
 }
 
 \begin{example}
@@ -370,6 +536,6 @@ Compositional inverse of Catalan tringle's $h$ generating function:
 >>> R
 \end{minted}
 \begin{displaymath}
-\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\-1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & -2 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 1 & -3 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 3 & -4 & 1 & 0 & 0 & 0 & 0 & 0\\0 & 0 & -1 & 6 & -5 & 1 & 0 & 0 & 0 & 0\\0 & 0 & 0 & -4 & 10 & -6 & 1 & 0 & 0 & 0\\0 & 0 & 0 & 1 & -10 & 15 & -7 & 1 & 0 & 0\\0 & 0 & 0 & 0 & 5 & -20 & 21 & -8 & 1 & 0\\0 & 0 & 0 & 0 & -1 & 15 & -35 & 28 & -9 & 1\end{matrix}\right]
+\left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\-1 & 1 &   &   &   &   &   &   &   &  \\  & -2 & 1 &   &   &   &   &   &   &  \\  & 1 & -3 & 1 &   &   &   &   &   &  \\  &   & 3 & -4 & 1 &   &   &   &   &  \\  &   & -1 & 6 & -5 & 1 &   &   &   &  \\  &   &   & -4 & 10 & -6 & 1 &   &   &  \\  &   &   & 1 & -10 & 15 & -7 & 1 &   &  \\  &   &   &   & 5 & -20 & 21 & -8 & 1 &  \\  &   &   &   & -1 & 15 & -35 & 28 & -9 & 1\end{matrix}\right]
 \end{displaymath}
 \end{example}

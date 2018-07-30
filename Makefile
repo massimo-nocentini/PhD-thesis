@@ -7,6 +7,7 @@ dependencies:
 	cp deps/SCILP/scilp.tex deps/SCILP/scilp.bib SCILP/
 
 unittests:
+	cd backgrounds && PYTHONPATH=../deps/simulation-methods/src/ python3 -m doctest backgrounds.py
 	cd backtracking && PYTHONPATH=../deps/competitive-programming/python-libs/ python3 -m doctest ECO.py #queens.py polyominoes.py
 
 clean:
