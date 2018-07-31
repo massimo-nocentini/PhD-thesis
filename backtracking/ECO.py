@@ -228,22 +228,11 @@ plane_trees_shapes = {
 }
 
 
-"               \
-★▲★  :nord      \
-                \
-★▲   :sw        \
- ★              \
-                \
-▲★   :se        \
-★               \
-                \
- ★              \
-★▼   :nw        \
-                \
-★               \
-▼★   :ne        \
-                \
-★▼★  :south     \
+"                                       \
+n:    sw:    se:    nw:    ne:   s:     \
+                     ★     ★            \
+★▲★   ★▲     ▲★     ★▼     ▼★    ★▼★    \
+       ★     ★                          \
 "
 triangulated_shapes = {
     'north': lambda r, c: Anchor(symbol='▲', stars=[
@@ -574,93 +563,93 @@ def doctests():
     >>> dick_paths = recursive_structures((dyck_path_shapes, 'dick'), rows-1, (coor, number))
     >>> representations = map(make_pretty((rows, cols),), dick_paths)
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                        
+    ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-     ★                       
-    / ★                      
+     ★
+    / ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-      ★                      
-     / ★                     
-    /   ★                    
+      ★
+     / ★
+    /   ★
     <BLANKLINE>
-       ★                     
-    / / ★                    
+       ★
+    / / ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-       ★                     
-      / ★                    
-     /   ★                   
-    /     ★                  
+       ★
+      / ★
+     /   ★
+    /     ★
     <BLANKLINE>
-        ★                    
-     / / ★                   
-    /     ★                  
+        ★
+     / / ★
+    /     ★
     <BLANKLINE>
-     /   ★                   
-    /   / ★                  
+     /   ★
+    /   / ★
     <BLANKLINE>
-        ★                    
-       / ★                   
-    / /   ★                  
+        ★
+       / ★
+    / /   ★
     <BLANKLINE>
-         ★                   
-    / / / ★                  
+         ★
+    / / / ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-        ★                    
-       / ★                   
-      /   ★                  
-     /     ★                 
-    /       ★                
+        ★
+       / ★
+      /   ★
+     /     ★
+    /       ★
     <BLANKLINE>
-         ★                   
-      / / ★                  
-     /     ★                 
-    /       ★                
+         ★
+      / / ★
+     /     ★
+    /       ★
     <BLANKLINE>
-      /   ★                  
-     /   / ★                 
-    /       ★                
+      /   ★
+     /   / ★
+    /       ★
     <BLANKLINE>
-      /                      
-     /     ★                 
-    /     / ★                
+      /
+     /     ★
+    /     / ★
     <BLANKLINE>
-         ★                   
-        / ★                  
-     / /   ★                 
-    /       ★                
+         ★
+        / ★
+     / /   ★
+    /       ★
     <BLANKLINE>
-          ★                  
-     / / / ★                 
-    /       ★                
+          ★
+     / / / ★
+    /       ★
     <BLANKLINE>
-     / /   ★                 
-    /     / ★                
+     / /   ★
+    /     / ★
     <BLANKLINE>
-          ★                  
-     /   / ★                 
-    /   /   ★                
+          ★
+     /   / ★
+    /   /   ★
     <BLANKLINE>
-     /     ★                 
-    /   / / ★                
+     /     ★
+    /   / / ★
     <BLANKLINE>
-         ★                   
-        / ★                  
-       /   ★                 
-    / /     ★                
+         ★
+        / ★
+       /   ★
+    / /     ★
     <BLANKLINE>
-          ★                  
-       / / ★                 
-    / /     ★                
+          ★
+       / / ★
+    / /     ★
     <BLANKLINE>
-       /   ★                 
-    / /   / ★                
+       /   ★
+    / /   / ★
     <BLANKLINE>
-          ★                  
-         / ★                 
-    / / /   ★                
+          ★
+         / ★
+    / / /   ★
     <BLANKLINE>
-           ★                 
-    / / / / ★                
+           ★
+    / / / / ★
 
     Ballots
     =======
@@ -671,51 +660,51 @@ def doctests():
     >>> linears = recursive_structures((ballot_shapes, 'linear'), 1, (coor, number))
     >>> representations = map(make_pretty((rows, cols),), linears)
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                        
+    ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ●★★                      
+    ●★★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ●●★★★                    
+    ●●★★★
     <BLANKLINE>
-    ● ●★★                    
+    ● ●★★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ●●●★★★★                  
+    ●●●★★★★
     <BLANKLINE>
-    ●● ●★★★                  
+    ●● ●★★★
     <BLANKLINE>
-    ●●  ●★★                  
+    ●●  ●★★
     <BLANKLINE>
-    ● ●●★★★                  
+    ● ●●★★★
     <BLANKLINE>
-    ● ● ●★★                  
+    ● ● ●★★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ●●●●★★★★★                
+    ●●●●★★★★★
     <BLANKLINE>
-    ●●● ●★★★★                
+    ●●● ●★★★★
     <BLANKLINE>
-    ●●●  ●★★★                
+    ●●●  ●★★★
     <BLANKLINE>
-    ●●●   ●★★                
+    ●●●   ●★★
     <BLANKLINE>
-    ●● ●●★★★★                
+    ●● ●●★★★★
     <BLANKLINE>
-    ●● ● ●★★★                
+    ●● ● ●★★★
     <BLANKLINE>
-    ●● ●  ●★★                
+    ●● ●  ●★★
     <BLANKLINE>
-    ●●  ●●★★★                
+    ●●  ●●★★★
     <BLANKLINE>
-    ●●  ● ●★★                
+    ●●  ● ●★★
     <BLANKLINE>
-    ● ●●●★★★★                
+    ● ●●●★★★★
     <BLANKLINE>
-    ● ●● ●★★★                
+    ● ●● ●★★★
     <BLANKLINE>
-    ● ●●  ●★★                
+    ● ●●  ●★★
     <BLANKLINE>
-    ● ● ●●★★★                
+    ● ● ●●★★★
     <BLANKLINE>
-    ● ● ● ●★★                
+    ● ● ● ●★★
 
     Balanced parens
     ===============
@@ -726,51 +715,51 @@ def doctests():
     >>> parens = recursive_structures((balanced_parens_shapes, 'parens'), 1, (coor, number))
     >>> representations = map(make_pretty((rows, cols),), parens)
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                               
+    ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    (★ ★                            
+    (★ ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ((★ ★ ★                         
+    ((★ ★ ★
     <BLANKLINE>
-    (  (★ ★                         
+    (  (★ ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    (((★ ★ ★ ★                      
+    (((★ ★ ★ ★
     <BLANKLINE>
-    ((  (★ ★ ★                      
+    ((  (★ ★ ★
     <BLANKLINE>
-    ((    (★ ★                      
+    ((    (★ ★
     <BLANKLINE>
-    (  ((★ ★ ★                      
+    (  ((★ ★ ★
     <BLANKLINE>
-    (  (  (★ ★                      
+    (  (  (★ ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ((((★ ★ ★ ★ ★                   
+    ((((★ ★ ★ ★ ★
     <BLANKLINE>
-    (((  (★ ★ ★ ★                   
+    (((  (★ ★ ★ ★
     <BLANKLINE>
-    (((    (★ ★ ★                   
+    (((    (★ ★ ★
     <BLANKLINE>
-    (((      (★ ★                   
+    (((      (★ ★
     <BLANKLINE>
-    ((  ((★ ★ ★ ★                   
+    ((  ((★ ★ ★ ★
     <BLANKLINE>
-    ((  (  (★ ★ ★                   
+    ((  (  (★ ★ ★
     <BLANKLINE>
-    ((  (    (★ ★                   
+    ((  (    (★ ★
     <BLANKLINE>
-    ((    ((★ ★ ★                   
+    ((    ((★ ★ ★
     <BLANKLINE>
-    ((    (  (★ ★                   
+    ((    (  (★ ★
     <BLANKLINE>
-    (  (((★ ★ ★ ★                   
+    (  (((★ ★ ★ ★
     <BLANKLINE>
-    (  ((  (★ ★ ★                   
+    (  ((  (★ ★ ★
     <BLANKLINE>
-    (  ((    (★ ★                   
+    (  ((    (★ ★
     <BLANKLINE>
-    (  (  ((★ ★ ★                   
+    (  (  ((★ ★ ★
     <BLANKLINE>
-    (  (  (  (★ ★                   
+    (  (  (  (★ ★
 
     Plane trees
     ===========
@@ -781,120 +770,120 @@ def doctests():
     >>> plane_trees = recursive_structures((plane_trees_shapes, 'plane'), 4, (coor, number))
     >>> representations = map(make_pretty((rows, cols),), plane_trees)
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                        
+    ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                        
-    Λ                        
-     ★                       
+    ★
+    Λ
+     ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                        
-    Λ                        
-    Λ★                       
-     ★                       
+    ★
+    Λ
+    Λ★
+     ★
     <BLANKLINE>
-    Λ★                       
-     Λ                       
-      ★                      
+    Λ★
+     Λ
+      ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                        
-    Λ                        
-    Λ★                       
-    Λ★                       
-     ★                       
+    ★
+    Λ
+    Λ★
+    Λ★
+     ★
     <BLANKLINE>
-    Λ★                       
-    ΛΛ                       
-     ★★                      
+    Λ★
+    ΛΛ
+     ★★
     <BLANKLINE>
-    Λ                        
-    Λ★                       
-     Λ                       
-      ★                      
+    Λ
+    Λ★
+     Λ
+      ★
     <BLANKLINE>
-     ★                       
-    ΛΛ                       
-     Λ★                      
-      ★                      
+     ★
+    ΛΛ
+     Λ★
+      ★
     <BLANKLINE>
-    Λ                        
-     Λ★                      
-      Λ                      
-       ★                     
+    Λ
+     Λ★
+      Λ
+       ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                        
-    Λ                        
-    Λ★                       
-    Λ★                       
-    Λ★                       
-     ★                       
+    ★
+    Λ
+    Λ★
+    Λ★
+    Λ★
+     ★
     <BLANKLINE>
-    Λ★                       
-    ΛΛ                       
-    Λ★★                      
-     ★                       
+    Λ★
+    ΛΛ
+    Λ★★
+     ★
     <BLANKLINE>
-    Λ                        
-    Λ★                       
-    ΛΛ                       
-     ★★                      
+    Λ
+    Λ★
+    ΛΛ
+     ★★
     <BLANKLINE>
-    Λ                        
-    Λ                        
-    Λ★                       
-     Λ                       
-      ★                      
+    Λ
+    Λ
+    Λ★
+     Λ
+      ★
     <BLANKLINE>
-     ★                       
-    ΛΛ                       
-    ΛΛ★                      
-     ★★                      
+     ★
+    ΛΛ
+    ΛΛ★
+     ★★
     <BLANKLINE>
-    Λ                        
-    ΛΛ,★                       
-     Λ★                      
-      ★                      
+    Λ
+    ΛΛ,★
+     Λ★
+      ★
     <BLANKLINE>
-    Λ                        
-    ΛΛ★                      
-      Λ                      
-       ★                     
+    Λ
+    ΛΛ★
+      Λ
+       ★
     <BLANKLINE>
-    Λ★                       
-    ΛΛ                       
-     Λ★                      
-      ★                      
+    Λ★
+    ΛΛ
+     Λ★
+      ★
     <BLANKLINE>
-    Λ                        
-    Λ                        
-     Λ★                      
-      Λ                      
-       ★                     
+    Λ
+    Λ
+     Λ★
+      Λ
+       ★
     <BLANKLINE>
-     ★                       
-     Λ                       
-    ΛΛ★                      
-     Λ★                      
-      ★                      
+     ★
+     Λ
+    ΛΛ★
+     Λ★
+      ★
     <BLANKLINE>
-    ΛΛ★                      
-     ΛΛ                      
-      ★★                     
+    ΛΛ★
+     ΛΛ
+      ★★
     <BLANKLINE>
-    ΛΛ                       
-     Λ★                      
-      Λ                      
-       ★                     
+    ΛΛ
+     Λ★
+      Λ
+       ★
     <BLANKLINE>
-    Λ ★                      
-     ΛΛ                      
-      Λ★                     
-       ★                     
+    Λ ★
+     ΛΛ
+      Λ★
+       ★
     <BLANKLINE>
-    Λ                        
-     Λ                       
-      Λ★                     
-       Λ                     
-        ★                    
+    Λ
+     Λ
+      Λ★
+       Λ
+        ★
 
     Triangulated polygons
     =====================
@@ -905,80 +894,80 @@ def doctests():
     >>> triangulated = recursive_structures((triangulated_shapes, 'north'), rows*12+4, (coor, number))
     >>> representations = map(make_pretty((rows, cols),), triangulated)
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-                ★            
+                ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-               ★▲★           
+               ★▲★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-               ★             
-              ★▼▲★           
+               ★
+              ★▼▲★
     <BLANKLINE>
-                 ★           
-                ▲▼★          
+                 ★
+                ▲▼★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-               ★             
-             ★▲▼▲★           
-              ★              
+               ★
+             ★▲▼▲★
+              ★
     <BLANKLINE>
-              ★▲★            
-               ▼▲★           
+              ★▲★
+               ▼▲★
     <BLANKLINE>
-                 ★           
-               ▼▲▼★          
+                 ★
+               ▼▲▼★
     <BLANKLINE>
-                ★▲★          
-                ▲▼★          
+                ★▲★
+                ▲▼★
     <BLANKLINE>
-                ▲▼▲★         
-                  ★          
+                ▲▼▲★
+                  ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-             ★ ★             
-            ★▼▲▼▲★           
-              ★              
+             ★ ★
+            ★▼▲▼▲★
+              ★
     <BLANKLINE>
-               ★             
-              ▲▼▲★           
-             ★▼★             
+               ★
+              ▲▼▲★
+             ★▼★
     <BLANKLINE>
-              ★▲★            
-              ▲▼▲★           
+              ★▲★
+              ▲▼▲★
     <BLANKLINE>
-                 ★           
-              ▲▼▲▼★          
+                 ★
+              ▲▼▲▼★
     <BLANKLINE>
-              ★              
-             ★▼▲★            
-               ▼▲★           
+              ★
+             ★▼▲★
+               ▼▲★
     <BLANKLINE>
-                ★            
-               ▲▼★           
-               ▼▲★           
+                ★
+               ▲▼★
+               ▼▲★
     <BLANKLINE>
-               ▲ ★           
-               ▼▲▼★          
+               ▲ ★
+               ▼▲▼★
     <BLANKLINE>
-                ★▲★          
-               ▼▲▼★          
+                ★▲★
+               ▼▲▼★
     <BLANKLINE>
-               ▼▲▼▲★         
-                  ★          
+               ▼▲▼▲★
+                  ★
     <BLANKLINE>
-                ★            
-               ★▼▲★          
-                ▲▼★          
+                ★
+               ★▼▲★
+                ▲▼★
     <BLANKLINE>
-                  ★          
-                 ▲▼★         
-                ▲▼★          
+                  ★
+                 ▲▼★
+                ▲▼★
     <BLANKLINE>
-                 ▲           
-                ▲▼▲★         
-                  ★          
+                 ▲
+                ▲▼▲★
+                  ★
     <BLANKLINE>
-                ▲▼▲★         
-                 ★▼★         
+                ▲▼▲★
+                 ★▼★
     <BLANKLINE>
-                   ★         
-                ▲▼▲▼★        
+                   ★
+                ▲▼▲▼★
 
 
     Blocks
@@ -990,93 +979,93 @@ def doctests():
     >>> blocks = recursive_structures((blocks_shapes, 'block'), 4, (coor, number))
     >>> representations = map(make_pretty((rows, cols), joiner=' '), blocks)
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                                                
+    ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                                                
-    ▢ ★                                              
+    ★
+    ▢ ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                                                
-    ▢ ★                                              
-    ▢ ★                                              
+    ★
+    ▢ ★
+    ▢ ★
     <BLANKLINE>
-      ★                                              
-    ▢ ▢ ★                                            
+      ★
+    ▢ ▢ ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                                                
-    ▢ ★                                              
-    ▢ ★                                              
-    ▢ ★                                              
+    ★
+    ▢ ★
+    ▢ ★
+    ▢ ★
     <BLANKLINE>
-      ★                                              
-    ▢ ▢ ★                                            
-    ▢ ★                                              
+      ★
+    ▢ ▢ ★
+    ▢ ★
     <BLANKLINE>
-    ▢ ★                                              
-    ▢ ▢ ★                                            
+    ▢ ★
+    ▢ ▢ ★
     <BLANKLINE>
-      ★                                              
-      ▢ ★                                            
-    ▢ ▢ ★                                            
+      ★
+      ▢ ★
+    ▢ ▢ ★
     <BLANKLINE>
-        ★                                            
-    ▢ ▢ ▢ ★                                          
+        ★
+    ▢ ▢ ▢ ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                                                
-    ▢ ★                                              
-    ▢ ★                                              
-    ▢ ★                                              
-    ▢ ★                                              
+    ★
+    ▢ ★
+    ▢ ★
+    ▢ ★
+    ▢ ★
     <BLANKLINE>
-      ★                                              
-    ▢ ▢ ★                                            
-    ▢ ★                                              
-    ▢ ★                                              
+      ★
+    ▢ ▢ ★
+    ▢ ★
+    ▢ ★
     <BLANKLINE>
-    ▢ ★                                              
-    ▢ ▢ ★                                            
-    ▢ ★                                              
+    ▢ ★
+    ▢ ▢ ★
+    ▢ ★
     <BLANKLINE>
-    ▢                                                
-    ▢ ★                                              
-    ▢ ▢ ★                                            
+    ▢
+    ▢ ★
+    ▢ ▢ ★
     <BLANKLINE>
-      ★                                              
-      ▢ ★                                            
-    ▢ ▢ ★                                            
-    ▢ ★                                              
+      ★
+      ▢ ★
+    ▢ ▢ ★
+    ▢ ★
     <BLANKLINE>
-    ▢ ▢,★ ★                                            
-    ▢ ▢ ★                                            
+    ▢ ▢,★ ★
+    ▢ ▢ ★
     <BLANKLINE>
-        ★                                            
-    ▢ ▢ ▢ ★                                          
-    ▢                                                
+        ★
+    ▢ ▢ ▢ ★
+    ▢
     <BLANKLINE>
-      ★                                              
-    ▢ ▢ ★                                            
-    ▢ ▢ ★                                            
+      ★
+    ▢ ▢ ★
+    ▢ ▢ ★
     <BLANKLINE>
-    ▢   ★                                            
-    ▢ ▢ ▢ ★                                          
+    ▢   ★
+    ▢ ▢ ▢ ★
     <BLANKLINE>
-      ★                                              
-      ▢ ★                                            
-      ▢ ★                                            
-    ▢ ▢ ★                                            
+      ★
+      ▢ ★
+      ▢ ★
+    ▢ ▢ ★
     <BLANKLINE>
-        ★                                            
-      ▢ ▢ ★                                          
-    ▢ ▢ ★                                            
+        ★
+      ▢ ▢ ★
+    ▢ ▢ ★
     <BLANKLINE>
-      ▢ ★                                            
-    ▢ ▢ ▢ ★                                          
+      ▢ ★
+    ▢ ▢ ▢ ★
     <BLANKLINE>
-        ★                                            
-        ▢ ★                                          
-    ▢ ▢ ▢ ★                                          
+        ★
+        ▢ ★
+    ▢ ▢ ▢ ★
     <BLANKLINE>
-          ★                                          
-    ▢ ▢ ▢ ▢ ★                                        
+          ★
+    ▢ ▢ ▢ ▢ ★
 
 
     Rabbits
@@ -1089,81 +1078,81 @@ def doctests():
     >>> representations = map(make_pretty((rows, cols), joiner=''), rabbits)
 
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                        
+    ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-     ★                       
-    ○                        
+     ★
+    ○
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-     ●▲                      
-    ○ ★                      
+     ●▲
+    ○ ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-       ★                     
-     ●○                      
-    ○ ★                      
+       ★
+     ●○
+    ○ ★
     <BLANKLINE>
-     ●                       
-    ○ ●▲                     
-       ★                     
+     ●
+    ○ ●▲
+       ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-       ★                     
-     ●○                      
-    ○ ●▲                     
-       ★                     
+       ★
+     ●○
+    ○ ●▲
+       ★
     <BLANKLINE>
-       ●▲                    
-     ●○ ★                    
-    ○                        
+       ●▲
+     ●○ ★
+    ○
     <BLANKLINE>
-     ●  ★                    
-    ○ ●○                     
-       ★                     
+     ●  ★
+    ○ ●○
+       ★
     <BLANKLINE>
-     ●                       
-    ○ ●                      
-       ●▲                    
-        ★                    
+     ●
+    ○ ●
+       ●▲
+        ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-       ●▲                    
-     ●○ ★                    
-    ○ ●▲                     
-       ★                     
+       ●▲
+     ●○ ★
+    ○ ●▲
+       ★
     <BLANKLINE>
-     ●○ ★                    
-    ○ ●○                     
-       ★                     
+     ●○ ★
+    ○ ●○
+       ★
     <BLANKLINE>
-     ●○                      
-    ○ ●                      
-       ●▲                    
-        ★                    
+     ●○
+    ○ ●
+       ●▲
+        ★
     <BLANKLINE>
-         ★                   
-       ●○                    
-     ●○ ★                    
-    ○                        
+         ★
+       ●○
+     ●○ ★
+    ○
     <BLANKLINE>
-       ●                     
-     ●○ ●▲                   
-    ○    ★                   
+       ●
+     ●○ ●▲
+    ○    ★
     <BLANKLINE>
-     ●  ★                    
-    ○ ●○                     
-       ●▲                    
-        ★                    
+     ●  ★
+    ○ ●○
+       ●▲
+        ★
     <BLANKLINE>
-     ●  ●▲                   
-    ○ ●○ ★                   
+     ●  ●▲
+    ○ ●○ ★
     <BLANKLINE>
-     ●                       
-    ○ ●  ★                   
-       ●○                    
-        ★                    
+     ●
+    ○ ●  ★
+       ●○
+        ★
     <BLANKLINE>
-     ●                       
-    ○ ●                      
-       ●                     
-        ●▲                   
-         ★                   
+     ●
+    ○ ●
+       ●
+        ●▲
+         ★
 
     Steep parallelograms
     ====================
@@ -1174,92 +1163,92 @@ def doctests():
     >>> steep_parallelograms = recursive_structures((steep_shapes, 'one_star'), 7, (coor, number))
     >>> representations = map(make_pretty((rows, cols), joiner=' '), steep_parallelograms)
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                                                
+    ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ☆                                                
-    ▢                                                
+    ☆
+    ▢
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ☆                                                
-    ▢ ★                                              
-    ▢                                                
+    ☆
+    ▢ ★
+    ▢
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ☆                                                
-    ▢ ★                                              
-    ▢ ★                                              
-    ▢                                                
+    ☆
+    ▢ ★
+    ▢ ★
+    ▢
     <BLANKLINE>
-      ☆                                              
-    ▢ ▢                                              
-    ▢                                                
+      ☆
+    ▢ ▢
+    ▢
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ☆                                                
-    ▢ ★                                              
-    ▢ ★                                              
-    ▢ ★                                              
-    ▢                                                
+    ☆
+    ▢ ★
+    ▢ ★
+    ▢ ★
+    ▢
     <BLANKLINE>
-      ☆                                              
-    ▢ ▢                                              
-    ▢ ★                                              
-    ▢                                                
+      ☆
+    ▢ ▢
+    ▢ ★
+    ▢
     <BLANKLINE>
-    ▢ ☆                                              
-    ▢ ▢                                              
-    ▢                                                
+    ▢ ☆
+    ▢ ▢
+    ▢
     <BLANKLINE>
-      ☆                                              
-      ▢ ★                                            
-    ▢ ▢                                              
-    ▢                                                
+      ☆
+      ▢ ★
+    ▢ ▢
+    ▢
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ☆                                                
-    ▢ ★                                              
-    ▢ ★                                              
-    ▢ ★                                              
-    ▢ ★                                              
-    ▢                                                
+    ☆
+    ▢ ★
+    ▢ ★
+    ▢ ★
+    ▢ ★
+    ▢
     <BLANKLINE>
-      ☆                                              
-    ▢ ▢                                              
-    ▢ ★                                              
-    ▢ ★                                              
-    ▢                                                
+      ☆
+    ▢ ▢
+    ▢ ★
+    ▢ ★
+    ▢
     <BLANKLINE>
-    ▢ ☆                                              
-    ▢ ▢                                              
-    ▢ ★                                              
-    ▢                                                
+    ▢ ☆
+    ▢ ▢
+    ▢ ★
+    ▢
     <BLANKLINE>
-    ▢                                                
-    ▢ ☆                                              
-    ▢ ▢                                              
-    ▢                                                
+    ▢
+    ▢ ☆
+    ▢ ▢
+    ▢
     <BLANKLINE>
-      ☆                                              
-      ▢ ★                                            
-    ▢ ▢                                              
-    ▢ ★                                              
-    ▢                                                
+      ☆
+      ▢ ★
+    ▢ ▢
+    ▢ ★
+    ▢
     <BLANKLINE>
-    ▢ ▢,☆                                              
-    ▢ ▢                                              
-    ▢                                                
+    ▢ ▢,☆
+    ▢ ▢
+    ▢
     <BLANKLINE>
-      ☆                                              
-    ▢ ▢ ★                                            
-    ▢ ▢                                              
-    ▢                                                
+      ☆
+    ▢ ▢ ★
+    ▢ ▢
+    ▢
     <BLANKLINE>
-      ☆                                              
-      ▢ ★                                            
-      ▢ ★                                            
-    ▢ ▢                                              
-    ▢                                                
+      ☆
+      ▢ ★
+      ▢ ★
+    ▢ ▢
+    ▢
     <BLANKLINE>
-        ☆                                            
-      ▢ ▢                                            
-    ▢ ▢                                              
-    ▢                                                
+        ☆
+      ▢ ▢
+    ▢ ▢
+    ▢
 
     Sigmoids
     ========
@@ -1270,114 +1259,114 @@ def doctests():
     >>> sigmoids = recursive_structures((sigmoid_shapes, 'sigmoid'), 4, (coor, number))
     >>> representations = map(make_pretty((rows, cols),), sigmoids)
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-    ★                        
+    ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-     ★                       
-    ―                        
-      ★                      
+     ★
+    ―
+      ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-      ★                      
-     ―                       
-    ―  ★                     
-      ★                      
+      ★
+     ―
+    ―  ★
+      ★
     <BLANKLINE>
-    ―  ★                     
-      ―                      
-        ★                    
+    ―  ★
+      ―
+        ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-       ★                     
-      ―                      
-     ―  ★                    
-    ―  ★                     
-      ★                      
+       ★
+      ―
+     ―  ★
+    ―  ★
+      ★
     <BLANKLINE>
-     ―                       
-    ―  ★                     
-      ―                      
-        ★                    
+     ―
+    ―  ★
+      ―
+        ★
     <BLANKLINE>
-     ―  ★                    
-    ―  ―                     
-         ★                   
+     ―  ★
+    ―  ―
+         ★
     <BLANKLINE>
-        ★                    
-    ―  ―                     
-      ―  ★                   
-        ★                    
+        ★
+    ―  ―
+      ―  ★
+        ★
     <BLANKLINE>
-    ―                        
-      ―  ★                   
-        ―                    
-          ★                  
+    ―
+      ―  ★
+        ―
+          ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-       ★                     
-      ―                      
-     ―  ★                    
-    ―  ★                     
-      ―                      
-        ★                    
+       ★
+      ―
+     ―  ★
+    ―  ★
+      ―
+        ★
     <BLANKLINE>
-        ★                    
-       ―                     
-      ―  ★                   
-     ―  ★                    
-    ―  ★                     
+        ★
+       ―
+      ―  ★
+     ―  ★
+    ―  ★
     <BLANKLINE>
-      ―                      
-     ―  ★                    
-    ―  ―                     
-         ★                   
+      ―
+     ―  ★
+    ―  ―
+         ★
     <BLANKLINE>
-      ―  ★                   
-     ―  ―                    
-    ―     ★                  
+      ―  ★
+     ―  ―
+    ―     ★
     <BLANKLINE>
-     ―  ★                    
-    ―  ―                     
-      ―  ★                   
-        ★                    
+     ―  ★
+    ―  ―
+      ―  ★
+        ★
     <BLANKLINE>
-     ―                       
-    ―                        
-      ―  ★                   
-        ―                    
-          ★                  
+     ―
+    ―
+      ―  ★
+        ―
+          ★
     <BLANKLINE>
-         ★                   
-     ―  ―                    
-    ―  ―  ★                  
-         ★                   
+         ★
+     ―  ―
+    ―  ―  ★
+         ★
     <BLANKLINE>
-     ―                       
-    ―  ―  ★                  
-         ―                   
-           ★                 
+     ―
+    ―  ―  ★
+         ―
+           ★
     <BLANKLINE>
-         ★                   
-        ―                    
-    ―  ―  ★                  
-      ―  ★                   
-        ★                    
+         ★
+        ―
+    ―  ―  ★
+      ―  ★
+        ★
     <BLANKLINE>
-    ―  ―                     
-      ―  ★                   
-        ―                    
-          ★                  
+    ―  ―
+      ―  ★
+        ―
+          ★
     <BLANKLINE>
-    ―  ―  ★                  
-      ―  ―                   
-           ★                 
+    ―  ―  ★
+      ―  ―
+           ★
     <BLANKLINE>
-    ―     ★                  
-      ―  ―                   
-        ―  ★                 
-          ★                  
+    ―     ★
+      ―  ―
+        ―  ★
+          ★
     <BLANKLINE>
-    ―                        
-      ―                      
-        ―  ★                 
-          ―                  
-            ★                
+    ―
+      ―
+        ―  ★
+          ―
+            ★
 
     Splitters
     =========
@@ -1388,92 +1377,92 @@ def doctests():
     >>> splitters = recursive_structures((splitters_shapes, 'vertical'), rows*12+4, (coor, number))
     >>> representations = map(make_pretty((rows, cols),), splitters)
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-                ★            
+                ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-               ★│★           
+               ★│★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-               ★             
-               ─│★           
-               ★             
+               ★
+               ─│★
+               ★
     <BLANKLINE>
-                 ★           
-                │─           
-                 ★           
+                 ★
+                │─
+                 ★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-              ★│★            
-               ─│★           
-               ★             
+              ★│★
+               ─│★
+               ★
     <BLANKLINE>
-               ─│★           
-              ★│★            
+               ─│★
+              ★│★
     <BLANKLINE>
-                 ★           
-               ─│─           
-                 ★           
+                 ★
+               ─│─
+                 ★
     <BLANKLINE>
-                ★│★          
-                │─           
-                 ★           
+                ★│★
+                │─
+                 ★
     <BLANKLINE>
-                │─           
-                ★│★          
+                │─
+                ★│★
     >>> print(next(representations)) # doctest: +NORMALIZE_WHITESPACE
-              ★              
-              ─│★            
-              ★─│★           
-               ★             
+              ★
+              ─│★
+              ★─│★
+               ★
     <BLANKLINE>
-               │★            
-               ─│★           
-              ★│★            
+               │★
+               ─│★
+              ★│★
     <BLANKLINE>
-                ★            
-               │─            
-               ─│,★★           
+                ★
+               │─
+               ─│,★★
     <BLANKLINE>
-               │ ★           
-               ─│─           
-                 ★           
+               │ ★
+               ─│─
+                 ★
     <BLANKLINE>
-              ★─│★           
-              ─│★            
-              ★              
+              ★─│★
+              ─│★
+              ★
     <BLANKLINE>
-               ─│,★★           
-               │─            
-                ★            
+               ─│,★★
+               │─
+                ★
     <BLANKLINE>
-                 ★           
-               ─│─           
-               │ ★           
+                 ★
+               ─│─
+               │ ★
     <BLANKLINE>
-                ★│★          
-               ─│─           
-                 ★           
+                ★│★
+               ─│─
+                 ★
     <BLANKLINE>
-               ─│─           
-                ★│★          
+               ─│─
+                ★│★
     <BLANKLINE>
-                ★            
-                ─│★          
-                │,★─           
-                 ★           
+                ★
+                ─│★
+                │,★─
+                 ★
     <BLANKLINE>
-                 │★          
-                │─           
-                ★│★          
+                 │★
+                │─
+                ★│★
     <BLANKLINE>
-                  ★          
-                 │─          
-                │─★          
+                  ★
+                 │─
+                │─★
     <BLANKLINE>
-                │,★─           
-                ─│★          
-                ★            
+                │,★─
+                ─│★
+                ★
     <BLANKLINE>
-                │─★          
-                 │─          
-                  ★          
+                │─★
+                 │─
+                  ★
 
     """
     pass

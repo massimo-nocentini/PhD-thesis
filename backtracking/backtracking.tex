@@ -3,18 +3,19 @@
 First of all, we introduce basic bitwise tricks and programming idioms that
 will be useful for the understanding of the upcoming content, which heavily lies
 on those techniques for the sake of efficency:
-\inputminted[fontsize=\small,stripnl=false,firstline=193, lastline=206]{python}{deps/competitive-programming/python-libs/bits.py}
-\inputminted[fontsize=\small,stripnl=false,firstline=279, lastline=291]{python}{deps/competitive-programming/python-libs/bits.py}
-\inputminted[fontsize=\small,stripnl=false,firstline=265, lastline=277]{python}{deps/competitive-programming/python-libs/bits.py}
-\inputminted[fontsize=\small,stripnl=false,firstline=208, lastline=221]{python}{deps/competitive-programming/python-libs/bits.py}
-many other techniques can be found in the reference work
-\citep{Warren:2012:HD:2462741}.
+\inputminted[fontsize=\small,stripnl=false]{python}{backtracking/bits_clean.py}
+\begin{margintable}[-3cm]
+\inputminted[fontsize=\footnotesize,stripnl=false]{python}{backtracking/bits_clean_test.py}
+\caption{Uses of bitmasking functions.}
+\end{margintable}
+Many other techniques can be found in \citep{Warren:2012:HD:2462741}.
 
 
 \section{The $n$-Queens problem}
 
 In this section we provide a pythonic implementation of the $n$-Queens problem,
-using the approach described in Chapter $3$ of \citep{RuskeyCombGen}.
+using the approach described in Chapter $3$ of \citep{RuskeyCombGen}; additionally,
+many resources talks about this problem, see the survey \citep{BELL20091}.
 
 We use three \textit{bit masks}, namely integers, to
 represent whether a row, a raising $\nearrow$ and a falling $\searrow$ diagonal
@@ -33,13 +34,15 @@ is under attack, namely to each diagonal is associated one bit according to:
   indices is constant along falling diagonals; therefore, diagonal $d_\searrow$
   is associated to the bit in position  $c_{1}-r_{1}$, of a suitable bitmask $p$.
   In order to be consistent, if $c_{1}-r_{1} < 0$ then take the difference modulo
-  $2n-1$, where $n$ is the number of rows (and columns), namely:
+  $2n-1$, where $n$ is the number of rows (and columns), formally:
   \begin{displaymath}
-  \begin{split}
-  &p_{n-1}\,p_{n-2}\,\ldots\,p_{0}p_{-1}\,p_{-2}\,\ldots\,p_{-(n-1)} \rightarrow \\
-  &p_{-1 mod(2n-1)}\,p_{-2 mod(2n-1)}\,\ldots\,p_{-(n-1) mod(2n-1)}p_{n-1}\,p_{n-2}\,\ldots\,p_{0} \rightarrow \\
-  &p_{2n-2}\,p_{2n-3}\,\ldots\,p_{n}p_{n-1}\,p_{n-2}\,\ldots\,p_{0}\\
-  \end{split}
+  p_{-1}\,p_{-2}\,\ldots\,p_{-(n-1)} \rightarrow_{\equiv_{2n-1}}
+  p_{2n-2}\,p_{2n-3}\,\ldots\,p_{n}
+  \end{displaymath}
+  entails
+  \begin{displaymath}
+  p_{n-1}\,p_{n-2}\,\ldots\,p_{0}p_{-1}\,p_{-2}\,\ldots\,p_{-(n-1)} \rightarrow
+  p_{2n-2}\,p_{2n-3}\,\ldots\,p_{n}p_{n-1}\,p_{n-2}\,\ldots\,p_{0}
   \end{displaymath}
 \end{itemize}
 where rows and cols indexes range in $\lbrace 0,\ldots,n-1 \rbrace$; in both
@@ -49,45 +52,29 @@ cases, it is necessary a bitmask $2n-1$ bits long. Here's the code:
     \inputminted[fontsize=\small,firstline=3,lastline=33]{python}{backtracking/queens.py}
 }
 
-\begin{margintable}
-Using the following pretty printer
-\inputminted[fontsize=\footnotesize,firstline=35, lastline=44]{python}{backtracking/queens.py}
-\noindent we show solutions for $5$-Queens with
-%\inputminted[fontsize=\footnotesize,stripnl=false,firstline=49, lastline=50]{python}{backtracking/queens.py}
-\inputminted[fontsize=\footnotesize,]{python}{backtracking/5queens-enumeration-snippet.py}
-\begin{verbatim}
-|Q| | | | |  |Q| | | | |
-| | | |Q| |  | | |Q| | |
-| |Q| | | |  | | | | |Q|
-| | | | |Q|  | |Q| | | |
-| | |Q| | |  | | | |Q| |
+\begin{example}
+We show solutions for the $5$-Queens problem with
+\inputminted[fontsize=\small,]{python}{backtracking/5queens-enumeration-snippet.py}
+\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
+|Q| | | | |  |Q| | | | |  | | |Q| | |  | | | |Q| |  | | | |Q| |
+| | | |Q| |  | | |Q| | |  |Q| | | | |  |Q| | | | |  | |Q| | | |
+| |Q| | | |  | | | | |Q|  | | | |Q| |  | | |Q| | |  | | | | |Q|
+| | | | |Q|  | |Q| | | |  | |Q| | | |  | | | | |Q|  | | |Q| | |
+| | |Q| | |  | | | |Q| |  | | | | |Q|  | |Q| | | |  |Q| | | | |
 
-| | |Q| | |  | | | |Q| |
-|Q| | | | |  |Q| | | | |
-| | | |Q| |  | | |Q| | |
-| |Q| | | |  | | | | |Q|
-| | | | |Q|  | |Q| | | |
 
-| |Q| | | |  | | | | |Q|
-| | | |Q| |  | | |Q| | |
-|Q| | | | |  |Q| | | | |
-| | |Q| | |  | | | |Q| |
-| | | | |Q|  | |Q| | | |
 
-| |Q| | | |  | | | | |Q|
-| | | | |Q|  | |Q| | | |
-| | |Q| | |  | | | |Q| |
-|Q| | | | |  |Q| | | | |
-| | | |Q| |  | | |Q| | |
+| |Q| | | |  | | | | |Q|  | |Q| | | |  | | | | |Q|  | | |Q| | |
+| | | |Q| |  | | |Q| | |  | | | | |Q|  | |Q| | | |  | | | | |Q|
+|Q| | | | |  |Q| | | | |  | | |Q| | |  | | | |Q| |  | |Q| | | |
+| | |Q| | |  | | | |Q| |  |Q| | | | |  |Q| | | | |  | | | |Q| |
+| | | | |Q|  | |Q| | | |  | | | |Q| |  | | |Q| | |  |Q| | | | |
+\end{Verbatim}
+\end{example}
 
-| | | |Q| |  | | |Q| | |
-| |Q| | | |  | | | | |Q|
-| | | | |Q|  | |Q| | | |
-| | |Q| | |  | | | |Q| |
-|Q| | | | |  |Q| | | | |
-\end{verbatim}
-\caption{Enumeration of $5$-Queens problem's solutions.}
-\end{margintable}
+In these examples the following pretty printer is used to print solutions
+\inputminted[fontsize=\small,firstline=35, lastline=44]{python}{backtracking/queens.py}
+drawing them in pure ASCII notation, bare minimal.
 
 Enumerating all solutions for different integers $n$ we get the known sequence
 \url{http://oeis.org/A000170}, which starts with
@@ -97,12 +84,14 @@ Enumerating all solutions for different integers $n$ we get the known sequence
 \end{minted}
 %\inputminted[fontsize=\footnotesize,firstline=117, lastline=119]{python}{backtracking/queens.py}
 
-Moreover, we can tackle the more complex $24$-Queens problem, providing a
-solution as follows
-
+\begin{example}
+We tackle the more complex $24$-Queens problem providing a
+solution as follows:
 \begin{minted}[fontsize=\small]{python}
 >>> more_queens = queens(24)
 >>> print(pretty(next(more_queens)))
+\end{minted}
+\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
 |Q| | | | | | | | | | | | | | | | | | | | | | | |
 | | | |Q| | | | | | | | | | | | | | | | | | | | |
 | |Q| | | | | | | | | | | | | | | | | | | | | | |
@@ -127,7 +116,8 @@ solution as follows
 | | | | | | | | | |Q| | | | | | | | | | | | | | |
 | | | | | | | | | | | |Q| | | | | | | | | | | | |
 | | | | | | | | | | | | | |Q| | | | | | | | | | |
-\end{minted}
+\end{Verbatim}
+\end{example}
 
 \section{Polyominoes}
 
@@ -174,19 +164,19 @@ turns:
 By \textit{anchor} we mean the position in which the top-left cell of a shape
 orientation will be placed in the next \textit{free} cell in the board; every
 orientation should be relative to the anchor provided.
-\begin{margintable}
+
 The anchor is \textit{always} given with respect to position \verb|(r,c)|:
-\begin{verbatim}
+\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
     *                     (r-2,c+2)
     *   ->                (r-1,c+2)
 * * *       (r,c) (r,c+1) (r, c+2)
-\end{verbatim}
+\end{Verbatim}
 so the orientation is coded as the \textit{tuple}
 \verb|((r,c), (r,c+1), (r-2,c+2), (r-1,c+2), (r, c+2))|,
 where pairs are listed according to the order \textit{top to bottom} and,
 when rows are exausted go up to the top of the next column and repeat, so then
 \textit{left to right}.
-\end{margintable}
+
 
 In order to structure our thoughts, we start with the definition of the shape
 concept as a \verb|namedtuple| object:
@@ -227,8 +217,7 @@ generator over the solution space with
 \end{minted}
 \begin{margintable}[-5cm]
 \inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
-{\footnotesize
-\begin{verbatim}
+\begin{Verbatim}[baselinestretch=0.1, fontsize=\footnotesize]
 ┌─────────────────────┐
 │ β δ δ δ ε ε ι ι ι ι │
 │ β δ θ δ α ε ε λ λ ι │
@@ -277,8 +266,7 @@ generator over the solution space with
 │ β κ γ ι α λ λ λ η θ │
 │ γ γ γ ι ι ι ι λ η η │
 └─────────────────────┘
-\end{verbatim}
-}
+\end{Verbatim}
 \end{margintable}
 
 \newpage
@@ -296,8 +284,7 @@ generator over the solution space with
 
 \begin{margintable}%[-5cm]
 \inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
-{\footnotesize
-\begin{verbatim}
+\begin{Verbatim}[baselinestretch=0.1, fontsize=\footnotesize]
 ┌─────────────────────┐
 │   γ γ γ δ δ δ ζ ζ ζ │
 │   ι ι γ δ   δ λ ζ   │
@@ -346,8 +333,7 @@ generator over the solution space with
 │   ε κ κ κ κ μ μ ι   │
 │ β β β β β ι ι ι ι   │
 └─────────────────────┘
-\end{verbatim}
-}
+\end{Verbatim}
 \end{margintable}
 
 \subsection{Polyomino's order}
@@ -372,12 +358,9 @@ each one with one piece available, respectively:
 ... ]
 >>> dim = (5,10)
 >>> Y_tilings = polyominoes(dim, Y_shapes, availables='ones')
+>>> print(pretty(next(Y_tilings)))
 \end{minted}
-
-\begin{margintable}
-\mintinline[fontsize=\footnotesize]{python}{>>> print(pretty(next(Y_tilings)))}
-{\footnotesize
-\begin{verbatim}
+\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
 ┌─────────────────────┐
 │ α γ γ γ γ ζ ι ι ι ι │
 │ α α δ γ ζ ζ ζ ζ ι κ │
@@ -385,9 +368,7 @@ each one with one piece available, respectively:
 │ α β ε ε ε ε θ η κ κ │
 │ β β β β ε θ θ θ θ κ │
 └─────────────────────┘
-\end{verbatim}
-}
-\end{margintable}
+\end{Verbatim}
 
 \subsection{Fibonacci's tilings}
 
@@ -413,53 +394,38 @@ number of rows, to enumerate the following sequences
 \end{minted}
 which counts Fibonacci's numbers, the number of matchings in graphs $P_2 \times
 P_n$, $P_{3} \times P_{n}$, $P_{4} \times P_{n}$ and $P_{5} \times P_{n}$,
-respectively.
-
-\begin{margintable}%[-5cm]
-{
-\footnotesize
-\begin{verbatim}
-┌─────────────┐  ┌─────────────┐
-│ α α α α α α │  │ α α α α β β │
-└─────────────┘  └─────────────┘
-┌─────────────┐  ┌─────────────┐
-│ α α α β β α │  │ α α β β α α │
-└─────────────┘  └─────────────┘
-┌─────────────┐  ┌─────────────┐
-│ α α β β β β │  │ α β β α α α │
-└─────────────┘  └─────────────┘
-┌─────────────┐  ┌─────────────┐
-│ β β α α α α │  │ β β α α β β │
-└─────────────┘  └─────────────┘
-┌─────────────┐  ┌─────────────┐
-│ α β β α β β │  │ α β β β β α │
-└─────────────┘  └─────────────┘
-┌─────────────┐  ┌─────────────┐
-│ β β α β β α │  │ β β β β α α │
-└─────────────┘  └─────────────┘
+respectively. For the sake of clarity, the $f_{6} = 13$ ways to tile a 
+simple board $1\times 6$ are:
+\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│ α α α α α α │  │ α α α α β β │  │ α α α β β α │  │ α α β β α α │
+└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│ α α β β β β │  │ α β β α α α │  │ β β α α α α │  │ β β α α β β │
+└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│ α β β α β β │  │ α β β β β α │  │ β β α β β α │  │ β β β β α α │
+└─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
 ┌─────────────┐
 │ β β β β β β │
 └─────────────┘
-\end{verbatim}
-}
-\caption{ The $f_{6} = 13$ ways to tile a board $1\times 6$.}
-\end{margintable}
+\end{Verbatim}
 
 
 \section{Parallelogram Polyominoes}
 
-{
-\small
-\begin{Verbatim}
+\begin{Verbatim}[baselinestretch=0.5, fontsize=\small]
  ▢ ▢ ▢    ▢ ▢ ▢      ▢ ▢        ▢ ▢        ▢ ▢ ▢ ▢    ▢ ▢ ▢
  ▢ ▢ ▢    ▢ ▢ ▢      ▢ ▢ ▢      ▢ ▢        ▢ ▢ ▢ ▢    ▢ ▢ ▢
  ▢ ▢ ▢      ▢ ▢      ▢ ▢ ▢      ▢ ▢                       ▢
                                 ▢ ▢
 
+
  ▢ ▢ ▢    ▢ ▢        ▢ ▢        ▢          ▢          ▢ ▢
    ▢ ▢    ▢ ▢        ▢ ▢ ▢      ▢ ▢ ▢      ▢ ▢        ▢ ▢
    ▢ ▢    ▢ ▢ ▢        ▢ ▢      ▢ ▢ ▢      ▢ ▢        ▢ ▢
                                            ▢ ▢          ▢
+
 
  ▢ ▢ ▢    ▢ ▢ ▢      ▢ ▢        ▢ ▢ ▢      ▢ ▢        ▢
    ▢ ▢    ▢ ▢ ▢ ▢    ▢ ▢          ▢ ▢      ▢ ▢ ▢      ▢ ▢
@@ -471,24 +437,25 @@ respectively.
    ▢ ▢      ▢ ▢      ▢ ▢
                        ▢
 
+
  ▢ ▢      ▢          ▢ ▢ ▢      ▢          ▢          ▢ ▢
  ▢ ▢      ▢              ▢      ▢ ▢        ▢ ▢ ▢        ▢
    ▢      ▢ ▢            ▢        ▢ ▢          ▢        ▢ ▢
    ▢      ▢ ▢
+
 
  ▢ ▢      ▢          ▢          ▢ ▢        ▢          ▢ ▢ ▢
    ▢ ▢    ▢          ▢ ▢ ▢ ▢      ▢        ▢              ▢ ▢
      ▢    ▢ ▢ ▢                   ▢        ▢
                                   ▢        ▢ ▢
 
+
  ▢        ▢ ▢ ▢ ▢    ▢          ▢ ▢        ▢          ▢ ▢ ▢ ▢ ▢
  ▢              ▢    ▢ ▢          ▢ ▢ ▢    ▢
  ▢ ▢                   ▢                   ▢
    ▢                   ▢                   ▢
                                            ▢
-
 \end{Verbatim}
-}
 
 
 \begin{minted}[fontsize=\small]{python}
@@ -501,7 +468,7 @@ respectively.
 >>> print(next(pretty_tilings)) # doctest: +NORMALIZE_WHITESPACE
 \end{minted}
 The first incomplete and complete tilings are
-\begin{Verbatim}
+\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 |     |   | |_    |_ _ _ _ _| |●    |     |   | |_    | |_  |_ _    |
 |     |   |   |_  |   |   | |   |   |     |   |   |_  |   |_ _ _|_ _|
@@ -536,13 +503,12 @@ The first incomplete and complete tilings are
 }
 
 \begin{margintable}
-\VerbatimInput[fontsize=\footnotesize]{backtracking/binary_trees_eco.py}
+\VerbatimInput[baselinestretch=0.5, fontsize=\footnotesize]{backtracking/binary_trees_eco.py}
 where the symbol \verb|☆| means the sovrapposition of symbols \verb|●| and
 \verb|★| in back and fore ground, respectively.
 \caption{Enumerations up to the $5$th generation of binary trees.}
 \end{margintable}
 
-\newpage
 \subsection{Dyck paths}
 
 Dyck paths recursive structures are encoded by
@@ -556,11 +522,10 @@ Dyck paths recursive structures are encoded by
 }
 
 \begin{margintable}
-\VerbatimInput[fontsize=\footnotesize]{backtracking/dyck_paths_eco.py}
+\VerbatimInput[baselinestretch=0.5, fontsize=\footnotesize]{backtracking/dyck_paths_eco.py}
 \caption{Enumerations up to the $5$th generation of Dyck paths.}
 \end{margintable}
 
-\newpage
 \subsection{Parens and ballots}
 
 \textit{Ballots} recursive structures are encoded by
@@ -573,10 +538,6 @@ Dyck paths recursive structures are encoded by
                 {python}{backtracking/ECO.py}
 }
 
-\begin{margintable}
-\VerbatimInput[fontsize=\footnotesize]{backtracking/parens_ballots_eco.py}
-\caption{Enumerations up to the $5$th generation of parens and ballots.}
-\end{margintable}
 
 In parallel, \textit{balanced parens} recursive structures are encoded by
 
@@ -588,14 +549,18 @@ In parallel, \textit{balanced parens} recursive structures are encoded by
                 {python}{backtracking/ECO.py}
 }
 
-
 \newpage
 \subsection{Triangulated polygons}
 
 \textit{Triangulated polygons} recursive structures are encoded by
 
 \begin{margintable}
-\VerbatimInput[fontsize=\footnotesize]{backtracking/triangulated_polygons_eco.py}
+\VerbatimInput[baselinestretch=0.5,fontsize=\footnotesize]{backtracking/parens_ballots_eco.py}
+\caption{Enumerations up to the $5$th generation of parens and ballots.}
+\end{margintable}
+
+\begin{margintable}
+\VerbatimInput[baselinestretch=0.5,fontsize=\footnotesize]{backtracking/triangulated_polygons_eco.py}
 \caption{Enumerations up to the $5$th generation of triangulated polygons.}
 \end{margintable}
 
@@ -603,7 +568,7 @@ In parallel, \textit{balanced parens} recursive structures are encoded by
     \inputminted[fontsize=\small,
                  stripnl=false,
                  firstline=231,
-                 lastline=273]
+                 lastline=262]
                 {python}{backtracking/ECO.py}
 }
 
@@ -613,7 +578,7 @@ In parallel, \textit{balanced parens} recursive structures are encoded by
 \textit{Steep parallelograms} recursive structures are encoded by
 
 \begin{margintable}
-\VerbatimInput[fontsize=\footnotesize]{backtracking/steep_parallelograms_eco.py}
+\VerbatimInput[baselinestretch=0.5,fontsize=\footnotesize]{backtracking/steep_parallelograms_eco.py}
 where the symbol \verb|◐| means the sovrapposition of symbols \verb|▢| and
 \verb|☆| in back and fore ground, respectively.
 \caption{Enumerations up to the $5$th generation of steep parallelograms.}
@@ -622,26 +587,25 @@ where the symbol \verb|◐| means the sovrapposition of symbols \verb|▢| and
 \notbreakable{
     \inputminted[fontsize=\small,
                  stripnl=false,
-                 firstline=305,
-                 lastline=320]
+                 firstline=294,
+                 lastline=309]
                 {python}{backtracking/ECO.py}
 }
 
-\newpage
 \subsection{Rabbits}
 
 \textit{Rabbits} recursive structures are encoded by
 
 \begin{margintable}
-\VerbatimInput[fontsize=\footnotesize]{backtracking/rabbits_eco.py}
+\VerbatimInput[baselinestretch=0.5,fontsize=\footnotesize]{backtracking/rabbits_eco.py}
 \caption{Enumerations up to the $6$th generation of rabbits.}
 \end{margintable}
 
 \notbreakable{
     \inputminted[fontsize=\small,
                  stripnl=false,
-                 firstline=287,
-                 lastline=302]
+                 firstline=276,
+                 lastline=291]
                 {python}{backtracking/ECO.py}
 }
 
