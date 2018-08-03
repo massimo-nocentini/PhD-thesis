@@ -198,10 +198,10 @@ I_shape = shape_spec(name='I',
 V_shape = shape_spec(
             name='V',
             isomorphisms=lambda r, c: [
-                ((r,c), (r+1,c), (r+2,c), (r+2, c+1), (r+2, c+2)),
-                ((r,c), (r, c+1), (r,c+2), (r+1, c+2), (r+2, c+2)),
-                ((r,c), (r,c+1), (r-2,c+2), (r-1,c+2), (r, c+2)),
-                ((r,c), (r+1,c), (r+2,c), (r,c+1), (r, c+2))
+                ((r,c), (r+1,c),  (r+2,c),   (r+2, c+1), (r+2, c+2)),
+                ((r,c), (r, c+1), (r,c+2),   (r+1, c+2), (r+2, c+2)),
+                ((r,c), (r,c+1),  (r-2,c+2), (r-1,c+2),  (r, c+2)),
+                ((r,c), (r+1,c),  (r+2,c),   (r,c+1),    (r, c+2))
             ])
 
 """
@@ -519,8 +519,8 @@ square_shape = shape_spec(
     isomorphisms=lambda r, c: [((r, c),)])
 
 """
-* *  *
-     *
+* *    *
+       *
 """
 domino_shape = shape_spec(
     name='domino',

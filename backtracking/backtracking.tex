@@ -17,39 +17,48 @@ In this section we provide a pythonic implementation of the $n$-Queens problem,
 using the approach described in Chapter $3$ of \citep{RuskeyCombGen}; additionally,
 many resources talks about this problem, see the survey \citep{BELL20091}.
 
-We use three \textit{bit masks}, namely integers, to
-represent whether a row, a raising $\nearrow$ and a falling $\searrow$ diagonal
-are "under attack" by an already placed queen, instead of three boolean arrays.
-It is sufficient to use \textit{one} bit only to represent that a cell on a diagonal
-is under attack, namely to each diagonal is associated one bit according to:
+We use three \textit{bit masks}, namely integers, to represent whether a row, a
+raising $\nearrow$ and a falling $\searrow$ diagonals are \textit{under attack}
+by an already placed queen, instead of three boolean arrays.  It is sufficient
+to use \textit{one} bit only to represent that a cell on a diagonal is under
+attack, namely to each diagonal is associated one bit according to:
 \begin{itemize}
-\item if such diagonal is raising, call it $d_\nearrow$, then $a_{r_{1}, c_{1}}\in
-  d_\nearrow \wedge a_{r_{2}, c_{2}} \in d_\nearrow$ if and only if
-  $r_{1}+c_{1}=r_{2}+c_{2}$; in words, the sum of the row and column indices is
-  constant along raising diagonals; therefore, diagonal $d_\nearrow$ is
-  associated to the bit in position $r_{1}+c_{1}$ of a suitable bitmask.
-\item if such diagonal is falling, call it $d_\searrow$, then $a_{r_{1},
-  c_{1}}\in d_\searrow \wedge a_{r_{2}, c_{2}} \in d_\searrow$ if and only if
-  $c_{1}-r_{1}=c_{2}-r_{2}$; in words, the difference of the column and row
-  indices is constant along falling diagonals; therefore, diagonal $d_\searrow$
+\item if such diagonal is \textit{raising}, call it $d_\nearrow$, then
+  \begin{displaymath}
+    a_{r_{1}, c_{1}}\in d_\nearrow \wedge a_{r_{2}, c_{2}} \in d_\nearrow
+    \quad\text{if and only if}\quad r_{1}+c_{1}=r_{2}+c_{2};
+  \end{displaymath}
+  in words, the sum of the row and column indices is
+  constant along raising diagonals. Therefore diagonal $d_\nearrow$ is
+  associated to the bit in position $r_{1}+c_{1}$ of a suitable bitmask $p$;
+\item otherwise, if such diagonal is \textit{falling}, call it $d_\searrow$, then
+  \begin{displaymath}
+    a_{r_{1}, c_{1}}\in d_\searrow \wedge a_{r_{2}, c_{2}} \in d_\searrow
+    \quad\text{if and only if}\quad c_{1}-r_{1}=c_{2}-r_{2};
+  \end{displaymath}
+  in words, the difference of the column and row
+  indices is constant along falling diagonals. Therefore diagonal $d_\searrow$
   is associated to the bit in position  $c_{1}-r_{1}$, of a suitable bitmask $p$.
   In order to be consistent, if $c_{1}-r_{1} < 0$ then take the difference modulo
-  $2n-1$, where $n$ is the number of rows (and columns), formally:
+  $2n-1$, where $n$ is the number of rows (and columns), formally
   \begin{displaymath}
   p_{-1}\,p_{-2}\,\ldots\,p_{-(n-1)} \rightarrow_{\equiv_{2n-1}}
   p_{2n-2}\,p_{2n-3}\,\ldots\,p_{n}
   \end{displaymath}
-  entails
+  entails that
   \begin{displaymath}
-  p_{n-1}\,p_{n-2}\,\ldots\,p_{0}p_{-1}\,p_{-2}\,\ldots\,p_{-(n-1)} \rightarrow
-  p_{2n-2}\,p_{2n-3}\,\ldots\,p_{n}p_{n-1}\,p_{n-2}\,\ldots\,p_{0}
+  \left(p_{n-1}\,p_{n-2}\,\ldots\,p_{0}p_{-1}\,p_{-2}\,\ldots\,p_{-(n-1)}\right)_{2}
+  \end{displaymath}
+  equals
+  \begin{displaymath}
+  \left(p_{2n-2}\,p_{2n-3}\,\ldots\,p_{n}p_{n-1}\,p_{n-2}\,\ldots\,p_{0}\right)_{2},
   \end{displaymath}
 \end{itemize}
 where rows and cols indexes range in $\lbrace 0,\ldots,n-1 \rbrace$; in both
 cases, it is necessary a bitmask $2n-1$ bits long. Here's the code:
 
 \notbreakable{
-    \inputminted[fontsize=\small,firstline=3,lastline=33]{python}{backtracking/queens.py}
+    \inputminted[fontsize=\small,firstline=3,lastline=28]{python}{backtracking/queens.py}
 }
 
 \begin{example}
@@ -73,8 +82,8 @@ We show solutions for the $5$-Queens problem with
 \end{example}
 
 In these examples the following pretty printer is used to print solutions
-\inputminted[fontsize=\small,firstline=35, lastline=44]{python}{backtracking/queens.py}
-drawing them in pure ASCII notation, bare minimal.
+\inputminted[fontsize=\small,firstline=30, lastline=39]{python}{backtracking/queens.py}
+\noindent drawing them in pure ASCII notation, bare minimal.
 
 Enumerating all solutions for different integers $n$ we get the known sequence
 \url{http://oeis.org/A000170}, which starts with
@@ -121,20 +130,26 @@ solution as follows:
 
 \section{Polyominoes}
 
-
 In this section we play with some problems concerning \textit{polyominoes},
-formalized and introduced by prof. Solomon Golomb and extended in various
-directions; we got interest in this topic after reading the chapter about
-backtracking in the volume of Ruskey, cited in the previous section.
+formalized and introduced by prof. Solomon Golomb in \citep{Golomb:1996}.  Our
+aim is to provide an \textit{generic} algorithm that consumes a board where it
+is possible to place some pieces and produces a collection of (possibly
+complete) tiling of the board. Therefore we (i)~describe how boards are
+encoded, (ii)~how shapes can be defined and (iii) the fundamental concept of
+\textit{anchor} that allows us to bookkeep the next \text{free} cell in the
+board. Our implementation is coded in Python and has an educational flavor;
+additionally, for more puzzles and problems solved using the same language see
+\citep{Goodger:polyominoes}, while \citep{knuth:dancing:links} popularize the
+idea of \citep{HITOTUMATU1979174} about a clever use of doubly linked lists to
+tackle combinatorial enumeration via depth-first search and backtracking.
 
-\subsection{Backtracking mechanism}
+\subsection{Boards, shapes, anchors for backtracking}
 
-Maybe the hardest part in understanding concerns how to represent the board and
-the state (free/occupied) of each cell; moreover, the question about how a
-shape, and its orientation, is interesting too. We answer to each question in
-turns:
+Maybe the hardest part in understanding concerns the representation of the board and
+the state (free or occupied) of each cell; moreover, the same question applies
+to shapes and their orientations as well. We answer to each one in turn:
 \begin{itemize}
-    \item a board with $r$ rows and $c$ columns is represented by an
+    \item a \textit{board} with $r$ rows and $c$ columns is represented by an
     \textit{integer} with $rc$ bits; this is because we want to use bit masking
     techniques and it is efficient to find the \textit{next free} cell (using
     the utility function \verb|low_bit|), which correspond to the position of
@@ -160,23 +175,23 @@ turns:
     and column indices, and returns a list of isomorphic shapes, namely
     positions coding symmetry, reflection or rotation of the shape; therefore,
     \textit{each isomorphism is a sequence of positions too}.
+
+    \item an \textit{anchor} is the position in which the top-left cell of
+    a shape orientation will be placed in the next \textit{free} cell in the
+    board, every orientation should be relative to the anchor provided.
+    The anchor is \textit{always} given with respect to position \verb|(r,c)|:
+    \begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
+        *                     (r-2,c+2)
+        *   ->                (r-1,c+2)
+    * * *       (r,c) (r,c+1) (r, c+2)
+    \end{Verbatim}
+    so the orientation is coded as the \textit{tuple}
+    \verb|((r,c), (r,c+1), (r-2,c+2), (r-1,c+2), (r, c+2))|, in the given order,
+    where pairs are listed according to the order \textit{top to bottom} and,
+    when rows are exausted go up to the top of the next column and repeat, so then
+    \textit{left to right}.
+
 \end{itemize}
-By \textit{anchor} we mean the position in which the top-left cell of a shape
-orientation will be placed in the next \textit{free} cell in the board; every
-orientation should be relative to the anchor provided.
-
-The anchor is \textit{always} given with respect to position \verb|(r,c)|:
-\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
-    *                     (r-2,c+2)
-    *   ->                (r-1,c+2)
-* * *       (r,c) (r,c+1) (r, c+2)
-\end{Verbatim}
-so the orientation is coded as the \textit{tuple}
-\verb|((r,c), (r,c+1), (r-2,c+2), (r-1,c+2), (r, c+2))|,
-where pairs are listed according to the order \textit{top to bottom} and,
-when rows are exausted go up to the top of the next column and repeat, so then
-\textit{left to right}.
-
 
 In order to structure our thoughts, we start with the definition of the shape
 concept as a \verb|namedtuple| object:
@@ -189,33 +204,13 @@ that allows us to define the backtracking algorithm:
 
 \subsection{Pentominoes}
 
-Now, we introduce shapes with their orientations according to the given rules;
-for example, here is the definition of \verb|V_shape|:
+We start with a relatively simple set of shapes, those composed of $5$ unit cells
+and commonly known as \textit{pentominoes}.
+According to our encoding, we introduce shapes with their orientations;
+for example, here is the definition of the \verb|V_shape|:
 \inputminted[fontsize=\small,stripnl=false,firstline=193, lastline=205]{python}{backtracking/polyominoes.py}
 
-With the current setup we can define the set of shapes and, consequently, the
-generator over the solution space with
-\begin{minted}[fontsize=\small]{python}
->>> '''
-... X:      I:  V:      U:    W:      T:
-...   *     *   *       * *   *       * * *
-... * * *   *   *       *     * *       *
-...   *     *   * * *   * *     * *     *
-...         *
-...         *
-...
-... Z:      N:    L:    Y:    F:      P:
-... *       *     *     *     *       *
-... * * *   * *   *     * *   * * *   * *
-...     *     *   *     *       *     * *
-...           *   * *   *
-... '''
->>> shapes = [X_shape, I_shape, V_shape, U_shape, W_shape, T_shape,
-...           Z_shape, N_shape, L_shape, Y_shape, F_shape, P_shape]
->>> dim = (6,10)
->>> tilings = polyominoes(dim, shapes, availables="ones")
-\end{minted}
-\begin{margintable}[-5cm]
+\begin{margintable}
 \inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
 \begin{Verbatim}[baselinestretch=0.1, fontsize=\footnotesize]
 ┌─────────────────────┐
@@ -267,20 +262,57 @@ generator over the solution space with
 │ γ γ γ ι ι ι ι λ η η │
 └─────────────────────┘
 \end{Verbatim}
+\caption{The first $6$ tilings enumerated by generator \texttt{polyominoes}
+using the \texttt{shapes} collection of pieces.}
+\label{tbl:pentominoes}
 \end{margintable}
+With the current setup we can define the complete set of shapes and,
+consequently, the generator over the solution space for the tiling of a board
+$6\times 10$ having $1$ piece of each shape, respectively.
+\begin{minted}[fontsize=\small]{python}
+>>> '''
+... X:      I:  V:      U:    W:      T:
+...   *     *   *       * *   *       * * *
+... * * *   *   *       *     * *       *
+...   *     *   * * *   * *     * *     *
+...         *
+...         *
+...
+... Z:      N:    L:    Y:    F:      P:
+... *       *     *     *     *       *
+... * * *   * *   *     * *   * * *   * *
+...     *     *   *     *       *     * *
+...           *   * *   *
+... '''
+>>> shapes = [X_shape, I_shape, V_shape, U_shape, W_shape, T_shape,
+...           Z_shape, N_shape, L_shape, Y_shape, F_shape, P_shape]
+>>> dim = (6,10)
+>>> tilings = polyominoes(dim, shapes, availables="ones")
+\end{minted}
+In Table \ref{tbl:pentominoes} we report an application of our implementation;
+in particular, it shows our choice to represent tilings, drawing shapes as
+collections of multiple occurrences of the same greek letters.
 
-\newpage
-\subsection{With forbidden cells and limited shapes availability}
+\subsection*{With forbidden cells and limited shapes availability}
 
+It is possible to taylor the enumeration with respect to (i)~the number of
+available pieces for each shape and to (ii)~forbidden placements on the board.
+Both of them can easy achieved by tuning the application of \verb|polyominoes|
+providing the \textit{keyword} arguments \verb|availables| and
+\verb|forbidden|, respectively. For the former, provide a dictionary of
+\verb|(k, v)| objects, where \verb|k| denotes the shape's name and \verb|v|
+denotes its pieces availability; for the latter, provide a list of
+positions that should be avoided in the placement process. An example follows,
 \begin{minted}[fontsize=\small]{python}
 >>> dim = (6,10)
 >>> tilings = polyominoes(
 ...     dim, shapes,
 ...     availables={s.name:3 for s in shapes},
 ...     forbidden=[(0,0), (1,0), (2,0), (3,0), (4,0),
-...                (1,9),(2,9),(3,9),(4,9), (5,9),
-...                (1,5), (2, 4), (2, 5), (3, 4), (3,5)])
+...                (1,9), (2,9), (3,9), (4,9), (5,9),
+...                (1,5), (2,4), (2,5), (3,4), (3,5)])
 \end{minted}
+and some tilings are shown in Table \ref{tbl:pentominoes:with:restrictions}.
 
 \begin{margintable}%[-5cm]
 \inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
@@ -334,6 +366,10 @@ generator over the solution space with
 │ β β β β β ι ι ι ι   │
 └─────────────────────┘
 \end{Verbatim}
+\caption{The first $6$ tilings enumerated by generator \texttt{polyominoes}
+using the \texttt{shapes} collection of pieces under the restriction to
+have $3$ pieces for each shape and forbidden cells should be left blank.}
+\label{tbl:pentominoes:with:restrictions}
 \end{margintable}
 
 \subsection{Polyomino's order}
@@ -347,9 +383,10 @@ perfectly fit into a rectangle board, where rotations and reflections of $P$
 are allowed.
 \end{definition}
 
-We reproduce the tiling using the \verb|Y| polyomino and we check that its order is
-actually 10; in order to show this fact we give 10 copies of the \verb|Y_shape| object,
-each one with one piece available, respectively:
+We reproduce the tiling using the \verb|Y| polyomino and we check that its
+order is actually 10 in tailing a board $5\times 10$; in order to show this
+fact we give 10 copies of the \verb|Y_shape| object, each one with one piece
+available, respectively; although there are many other solution,
 \begin{minted}[fontsize=\small]{python}
 >>> Y_shapes = [
 ...     shape_spec(name="{}_{}".format(Y_shape.name, i),
@@ -369,13 +406,22 @@ each one with one piece available, respectively:
 │ β β β β ε θ θ θ θ κ │
 └─────────────────────┘
 \end{Verbatim}
+the one shown above closes the request.
+\vfill
 
 \subsection{Fibonacci's tilings}
 
-\inputminted[fontsize=\small,stripnl=false, firstline=514,lastline=530]{python}{backtracking/polyominoes.py}
+In this section we take into account a smaller set of shapes, composed of
+\textit{squares} and \textit{dominos} pieces, in order to tile boards with an
+increasing number of rows; eventually, enumerations of tilings for greater
+boards are counted by known sequences in the OEIS.
 
-We can use tilings against different boards, increasing ordered according to the
-number of rows, to enumerate the following sequences
+\notbreakable{
+    \inputminted[fontsize=\small,stripnl=false, firstline=514,lastline=530]{python}{backtracking/polyominoes.py}
+}
+
+Tiling greater boards, ascending ordered according to the
+number of rows, we enumerate the sequences
 \begin{minted}[fontsize=\small]{python}
 >>> [ [len(list(polyominoes(dim=(j,i),
 ...                         shapes=fibonacci_shapes,
@@ -394,7 +440,7 @@ number of rows, to enumerate the following sequences
 \end{minted}
 which counts Fibonacci's numbers, the number of matchings in graphs $P_2 \times
 P_n$, $P_{3} \times P_{n}$, $P_{4} \times P_{n}$ and $P_{5} \times P_{n}$,
-respectively. For the sake of clarity, the $f_{6} = 13$ ways to tile a 
+respectively. For the sake of clarity, the $f_{6} = 13$ ways to tile a
 simple board $1\times 6$ are:
 \begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
 ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
@@ -411,9 +457,21 @@ simple board $1\times 6$ are:
 └─────────────┘
 \end{Verbatim}
 
-
 \section{Parallelogram Polyominoes}
 
+In this section we study a collection of polyominoes where their shapes are
+subject to a constraint; precisely, a \textit{parallelogram polyomino} is
+defined by two paths that only intersect at their origin and extremity,
+composed of East and South steps only. They are counted by Catalan numbers
+according to their \textit{semiperimeter}, which equals the sum of their
+heights and widths; for the sake of clarity, both
+\citep{delest1993enumeration,delest:enumeration:pp} are extensive studies.
+
+We report in Table \ref{tbl:parallelogram:polyominoes}
+a collection of parallelogram polyominoes generated by function
+implemented by us and available in the appendix \footnote{really? Remember to
+put it there or at least add a reference}.
+\begin{table}
 \begin{Verbatim}[baselinestretch=0.5, fontsize=\small]
  ▢ ▢ ▢    ▢ ▢ ▢      ▢ ▢        ▢ ▢        ▢ ▢ ▢ ▢    ▢ ▢ ▢
  ▢ ▢ ▢    ▢ ▢ ▢      ▢ ▢ ▢      ▢ ▢        ▢ ▢ ▢ ▢    ▢ ▢ ▢
@@ -456,17 +514,25 @@ simple board $1\times 6$ are:
    ▢                   ▢                   ▢
                                            ▢
 \end{Verbatim}
+\caption{Parallelogram Polyominoes with semiperimeter $6$,
+which are $42$ in total, the $6$th Catalan number.}
+\label{tbl:parallelogram:polyominoes}
+\end{table}
 
-
+\begin{example}
+The introduced set of $42$ parallelogram polyominoes can be used to tile a
+board $16\times 16$; here the running code,
 \begin{minted}[fontsize=\small]{python}
+>>> size = 16
 >>> dim = (size, size)
->>> polys_sols = polyominoes(dim, parallelogram_polyominoes, availables="ones",
+>>> polys_sols = polyominoes(dim, parallelogram_polyominoes,
+...                          availables="ones",
 ...                          max_depth_reached=40,
-...                          pruning=functools.partial(not_insertion_on_edges,
-...                                                    size=size))
->>> pretty_tilings = markdown_pretty(polys_sols, dim, parallelogram_polyominoes, raw_text=True)
->>> print(next(pretty_tilings)) # doctest: +NORMALIZE_WHITESPACE
+...                          pruning=functools.partial(not_insertion_on_edges, size=size))
+>>> pretty_tilings = pretty(polys_sols, dim, parallelogram_polyominoes, raw_text=True)
+>>> print(next(pretty_tilings))
 \end{minted}
+\newpage
 The first incomplete and complete tilings are
 \begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -487,7 +553,7 @@ The first incomplete and complete tilings are
 |   |_    | |_|_ _  |_| |_ _    |   |   |_    | |_|_ _  |_    |_|   |
 |_ _ _|_ _|_ _ _ _|_ _|_ _ _|_ _|   |_ _ _|_ _|_ _ _ _|_ _|_ _ _|_ _|
 \end{Verbatim}
-
+\end{example}
 
 \section{ECO methodology, illustrated}
 
@@ -526,20 +592,9 @@ Dyck paths recursive structures are encoded by
 \caption{Enumerations up to the $5$th generation of Dyck paths.}
 \end{margintable}
 
-\subsection{Parens and ballots}
+\subsection{Balanced Parens}
 
-\textit{Ballots} recursive structures are encoded by
-
-\notbreakable{
-    \inputminted[fontsize=\small,
-                 stripnl=false,
-                 firstline=198,
-                 lastline=206]
-                {python}{backtracking/ECO.py}
-}
-
-
-In parallel, \textit{balanced parens} recursive structures are encoded by
+\textit{Balanced parens} recursive structures are encoded by
 
 \notbreakable{
     \inputminted[fontsize=\small,
@@ -556,7 +611,7 @@ In parallel, \textit{balanced parens} recursive structures are encoded by
 
 \begin{margintable}
 \VerbatimInput[baselinestretch=0.5,fontsize=\footnotesize]{backtracking/parens_ballots_eco.py}
-\caption{Enumerations up to the $5$th generation of parens and ballots.}
+\caption{Enumerations up to the $5$th generation of balanced parens.}
 \end{margintable}
 
 \begin{margintable}
