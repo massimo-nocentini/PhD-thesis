@@ -521,7 +521,9 @@ which are $42$ in total, the $6$th Catalan number.}
 
 \begin{example}
 The introduced set of $42$ parallelogram polyominoes can be used to tile a
-board $16\times 16$; here the running code,
+board $16\times 16$; precisely, using the enumerator \verb|polyominoes| again,
+we show the first incomplete and the first complete tilings,
+\iffalse
 \begin{minted}[fontsize=\small]{python}
 >>> size = 16
 >>> dim = (size, size)
@@ -532,8 +534,7 @@ board $16\times 16$; here the running code,
 >>> pretty_tilings = pretty(polys_sols, dim, parallelogram_polyominoes, raw_text=True)
 >>> print(next(pretty_tilings))
 \end{minted}
-\newpage
-The first incomplete and complete tilings are
+\fi
 \begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 |     |   | |_    |_ _ _ _ _| |●    |     |   | |_    | |_  |_ _    |
@@ -553,114 +554,432 @@ The first incomplete and complete tilings are
 |   |_    | |_|_ _  |_| |_ _    |   |   |_    | |_|_ _  |_    |_|   |
 |_ _ _|_ _|_ _ _ _|_ _|_ _ _|_ _|   |_ _ _|_ _|_ _ _ _|_ _|_ _ _|_ _|
 \end{Verbatim}
+respectively. The solution space of this problem is very sparse and the
+enumeration is pretty hard; despite the vanilla approach used, our
+implementation allows us to provide an heuristic function (to prune any attempt
+to insert a polyomino on last row or last column, for example) but we get no
+gain in efficiency. On the contrary, we note that the order in which
+polyominoes are choosen for placement leverage the execution time, even for
+smaller boards; however, for greater boards the problem remains open.
 \end{example}
 
-\section{ECO methodology, illustrated}
+\section{An implementation of the ECO method}
+
+The \textit{ECO methodology} is introduced in \citep{BARCUCCI199845} and
+refined in \citep{doi:10.1080/10236199908808200} in order to enumerate classes
+of combinatorial objects; relying on the idea to perform \textit{local
+expansion} on objects' \textit{active sites} by means of an \textit{operator},
+the ECO method gives a recursive construction of the class that objects belong
+to.
+\iffalse
+and it yields functional equations about the classes that, once
+solved, enumerate objects with respect to various parameters; nonetheless
+powerful, the latter feature outperforms the goal of this section.
+\fi
+
+In the spirit of \citep{Bernini2007AnEG,Bacchelli2004}, we provide a
+implementation of the ECO method which allows us to \textit{build} classes of
+combinatorial objects; consequently, enumeration comes for free.  Moreover,
+defining a \textit{recursive shape} as the combination of symbols denoting the
+objects' structure with symbols denoting the objects'\textit{active sites},
+namely positions where it is possible to perform a local expansion, we have a
+data structure to be manipulated by a Python function, which reifies the
+\textit{operator} concept.
+
+For the sake of clarity, let \verb|★| be an \textit{active site} that accepts
+to be replaced by
+\begin{Verbatim}[baselinestretch=0.5]
+ ●
+★ ★
+\end{Verbatim}
+hence, operator \verb|→| performs replacements for each site; for example,
+\begin{Verbatim}[baselinestretch=0.5]
+  ●             ●      ●      ●
+ ● ★    →      ● ★    ● ★    ● ●
+★ ★           ● ★      ●      ★ ★
+             ★ ★      ★ ★
+\end{Verbatim}
+In order to understand how \verb|→| works, we label each \verb|★| with
+a integer subscript that denotes the discrete time in which it will be
+replaced,
+\begin{Verbatim}[baselinestretch=0.5]
+  ●             ●      ●      ●
+ ● ★₃   →      ● ★₃   ● ★₃   ● ●
+★₁★₂          ● ★₂     ●      ★₄★₅
+             ★₄★₅     ★₄★₅
+\end{Verbatim}
+and we normalize discrete times of produced objects in order to restart the
+application of operator \verb|→| to each one of them,
+\begin{Verbatim}[baselinestretch=0.5]
+   ●      ●      ●
+  ● ★₂   ● ★₁   ● ●
+ ● ★₁     ●      ★₁★₂
+★₃★₄     ★₂★₃
+\end{Verbatim}
+From this characterization it is possible to recover the correlated concepts of
+\textit{generating tree} and \textit{succession rule} \citep{CHUNG1978382}.
+The former is straightforward encoded within the application of the operator
+\verb|→|, the latter is $(3) \hookrightarrow (4)(3)(2)$ because (i)~on the left
+hand side of \verb|→| there are $1$ object with $3$ active sites and (ii)~on
+the right hand side of \verb|→| there are $3$ objects with $4, 3$ and $2$
+active sites, respectively.
+
+In the following examples we apply this methodology to build and enumerate
+known classes of combinatorial objects.
 
 \newpage
-\subsection{Binary trees}
+
+\begin{example}[Binary trees]
+Their class is encoded by
 
 \notbreakable{
     \inputminted[fontsize=\small,
                  stripnl=false,
-                 firstline=163,
+                 firstline=167,
                  lastline=172]
                 {python}{backtracking/ECO.py}
 }
+and enumerated in Table \ref{tbl:eco:binary:trees}.
 
 \begin{margintable}
-\VerbatimInput[baselinestretch=0.5, fontsize=\footnotesize]{backtracking/binary_trees_eco.py}
+According to the symbolic equation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+★  =   ●
+      ★ ★
+\end{Verbatim}
+the enumeration process starts with
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+            ★
+\end{Verbatim}
+and enumerates the (i) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+            ●
+           ★ ★
+\end{Verbatim}
+the (ii) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+         ●     ●
+        ● ★     ●
+       ★ ★     ★ ★
+\end{Verbatim}
+the (iii) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+   ●      ●      ●      ●     ●
+  ● ★    ● ★    ● ●      ●     ●
+ ● ★      ●      ★ ★    ● ★     ●
+★ ★      ★ ★           ★ ★     ★ ★
+\end{Verbatim}
+the (iv) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+    ●       ●        ●        ●
+   ● ★     ● ★      ● ★      ● ●
+  ● ★     ● ★      ● ●      ● ★ ★
+ ● ★       ●        ★ ★
+★ ★       ★ ★
+
+  ●       ●         ●          ●
+ ● ★     ● ●       ●          ● ●
+  ●       ☆ ★       ●          ● ★
+ ● ★       ★         ●        ★ ★
+★ ★                 ★ ★
+
+ ●          ●        ●         ●
+● ●          ●        ●         ●
+   ●        ● ★      ● ★       ● ●
+  ★ ★      ● ★        ●         ★ ★
+          ★ ★        ★ ★
+
+ ●        ●
+  ●        ●
+   ●        ●
+  ● ★        ●
+ ★ ★        ★ ★
+\end{Verbatim}
 where the symbol \verb|☆| means the sovrapposition of symbols \verb|●| and
 \verb|★| in back and fore ground, respectively.
 \caption{Enumerations up to the $5$th generation of binary trees.}
+\label{tbl:eco:binary:trees}
 \end{margintable}
+\end{example}
 
-\subsection{Dyck paths}
+The previous example shows our way to encode the recursive shape of binary
+trees; in particular, shapes are vanilla Python dictionaries, where each one of
+them contains key-value pairs \verb|(k, v)| where \verb|k| denotes the shape
+label and \verb|v| denotes a function that consumes a coordinate \verb|(r,c)|
+and produces an \verb|Anchor| object that carries information about the
+structure symbol and the collection of shape's \textit{active sites}.
 
-Dyck paths recursive structures are encoded by
+
+\begin{example}[Dyck paths]
+Their class is encoded by
 
 \notbreakable{
     \inputminted[fontsize=\small,
                  stripnl=false,
-                 firstline=187,
+                 firstline=191,
                  lastline=196]
                 {python}{backtracking/ECO.py}
 }
+and enumerated in Table \ref{tbl:eco:dyck:paths}.
 
 \begin{margintable}
-\VerbatimInput[baselinestretch=0.5, fontsize=\footnotesize]{backtracking/dyck_paths_eco.py}
+\noindent According to the symbolic equation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+     ★
+★ = / ★
+\end{Verbatim}
+the enumeration process starts with
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+★
+\end{Verbatim}
+and enumerates the (i) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+ ★
+/ ★
+\end{Verbatim}
+the (ii) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+  ★
+ / ★          ★
+/   ★      / / ★
+\end{Verbatim}
+the (iii) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+   ★
+  / ★          ★
+ /   ★      / / ★      /   ★
+/     ★    /     ★    /   / ★
+
+    ★
+   / ★          ★
+/ /   ★    / / / ★
+\end{Verbatim}
+the (iv) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+    ★
+   / ★            ★
+  /   ★        / / ★        /   ★
+ /     ★      /     ★      /   / ★
+/       ★    /       ★    /       ★
+
+                  ★
+  /              / ★            ★
+ /     ★      / /   ★      / / / ★
+/     / ★    /       ★    /       ★
+
+
+                   ★
+ / /   ★      /   / ★       /     ★
+/     / ★    /   /   ★     /   / / ★
+
+     ★
+    / ★            ★
+   /   ★        / / ★        /   ★
+/ /     ★    / /     ★    / /   / ★
+
+      ★
+     / ★            ★
+/ / /   ★    / / / / ★
+\end{Verbatim}
 \caption{Enumerations up to the $5$th generation of Dyck paths.}
+\label{tbl:eco:dyck:paths}
 \end{margintable}
+\end{example}
 
-\subsection{Balanced Parens}
+Previous example spots a feature provided by \verb|Star| objects,
+namely the capability to shift part of the structure in order to make
+room for local expansion; this is achieved by the keyword argument
+\verb|offset|, which has to be a pair \verb|(or, oc)| where components
+are integers that denote row and column offsets, respectively.
+For the Dyck paths shape, we provide \verb|offset=(0,2)| for the topmost
+active site because when the structure is expanded there, the rightmost
+path already generated should be shifted by $2$ columns while remaining
+at the same distance from the $x$ axis.
 
-\textit{Balanced parens} recursive structures are encoded by
+
+\begin{example}[Balanced Parens] Their class is encoded by
 
 \notbreakable{
     \inputminted[fontsize=\small,
                  stripnl=false,
-                 firstline=208,
+                 firstline=211,
                  lastline=216]
                 {python}{backtracking/ECO.py}
 }
+and enumerated in Table \ref{tbl:eco:balanced:parens}.
+\end{example}
+
+Both the previous examples and the next one enumerate classes of objects
+counted by \textit{Catalan numbers} and each class obeys to the succession rule
+$(1) \hookrightarrow (2)$ and $(k) \hookrightarrow (2)\cdots(k+1)$, where
+$k>1$.
 
 \newpage
-\subsection{Triangulated polygons}
-
-\textit{Triangulated polygons} recursive structures are encoded by
+\begin{example}[Steep parallelograms polyominoes] They are a refinement of
+parallelogram polyominoes because the lower border of those polyominoes has no
+pair of consecutive horizontal steps. Their class is encoded by
 
 \begin{margintable}
-\VerbatimInput[baselinestretch=0.5,fontsize=\footnotesize]{backtracking/parens_ballots_eco.py}
+\noindent According to the symbolic equation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+★ = (★)★
+\end{Verbatim}
+the enumeration process starts with
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+★
+\end{Verbatim}
+and enumerates the (i) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+(★ ★
+\end{Verbatim}
+the (ii) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+((★ ★ ★
+(  (★ ★
+\end{Verbatim}
+the (iii) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+(((★ ★ ★ ★
+((  (★ ★ ★
+((    (★ ★
+(  ((★ ★ ★
+(  (  (★ ★
+\end{Verbatim}
+the (iv) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+((((★ ★ ★ ★ ★
+(((  (★ ★ ★ ★
+(((    (★ ★ ★
+(((      (★ ★
+((  ((★ ★ ★ ★
+((  (  (★ ★ ★
+((  (    (★ ★
+((    ((★ ★ ★
+((    (  (★ ★
+(  (((★ ★ ★ ★
+(  ((  (★ ★ ★
+(  ((    (★ ★
+(  (  ((★ ★ ★
+(  (  (  (★ ★
+\end{Verbatim}
 \caption{Enumerations up to the $5$th generation of balanced parens.}
+\label{tbl:eco:balanced:parens}
 \end{margintable}
 
 \begin{margintable}
-\VerbatimInput[baselinestretch=0.5,fontsize=\footnotesize]{backtracking/triangulated_polygons_eco.py}
-\caption{Enumerations up to the $5$th generation of triangulated polygons.}
-\end{margintable}
+\noindent According to the mutually symbolic equations
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+    ☆           ☆
+★ = ▢       ☆ = ▢ ★
+\end{Verbatim}
+the enumeration process starts with
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+★
+\end{Verbatim}
+and enumerates the (i) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+☆
+▢
+\end{Verbatim}
+the (ii) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+☆
+▢ ★
+▢
+\end{Verbatim}
+the (iii) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+☆
+▢ ★      ☆
+▢ ★    ▢ ▢
+▢      ▢
+\end{Verbatim}
+the (iv) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+☆
+▢ ★      ☆             ☆
+▢ ★    ▢ ▢    ▢ ☆      ▢ ★
+▢ ★    ▢ ★    ▢ ▢    ▢ ▢
+▢      ▢      ▢      ▢
 
-\notbreakable{
-    \inputminted[fontsize=\small,
-                 stripnl=false,
-                 firstline=231,
-                 lastline=262]
-                {python}{backtracking/ECO.py}
-}
+☆
+▢ ★      ☆
+▢ ★    ▢ ▢    ▢ ☆    ▢
+▢ ★    ▢ ★    ▢ ▢    ▢ ☆
+▢ ★    ▢ ★    ▢ ★    ▢ ▢
+▢      ▢      ▢      ▢
 
-\newpage
-\subsection{Steep parallelograms}
+  ☆                      ☆
+  ▢ ★            ☆       ▢ ★
+▢ ▢     ▢ ◐    ▢ ▢ ★     ▢ ★
+▢ ★     ▢ ▢    ▢ ▢     ▢ ▢
+▢       ▢      ▢       ▢
 
-\textit{Steep parallelograms} recursive structures are encoded by
-
-\begin{margintable}
-\VerbatimInput[baselinestretch=0.5,fontsize=\footnotesize]{backtracking/steep_parallelograms_eco.py}
+    ☆
+  ▢ ▢
+▢ ▢
+▢
+\end{Verbatim}
 where the symbol \verb|◐| means the sovrapposition of symbols \verb|▢| and
 \verb|☆| in back and fore ground, respectively.
 \caption{Enumerations up to the $5$th generation of steep parallelograms.}
+\label{tbl:eco:steep:parallelograms}
 \end{margintable}
 
 \notbreakable{
     \inputminted[fontsize=\small,
                  stripnl=false,
-                 firstline=294,
+                 firstline=301,
                  lastline=309]
                 {python}{backtracking/ECO.py}
 }
+and enumerated in Table \ref{tbl:eco:steep:parallelograms}.
+\end{example}
 
-\subsection{Rabbits}
+In \citep{BARCUCCI199821} it is proved that steep parallelogram polyominoes are
+counted by the \textit{Motzkin numbers}, in particular the set of those
+polyominoes having semiperimeter $n+1$ has $\mathcal{M}_{n}$ objects -- the
+$n$-th Motzkin number. Moreover, the enumeration verifies that steep
+parallelogram polyominoes obey the succession rule $(1) \hookrightarrow (2)$
+and $(k) \hookrightarrow (1)\cdots(k-1)(k+1)$, where $k>1$.
 
-\textit{Rabbits} recursive structures are encoded by
-
-\begin{margintable}
-\VerbatimInput[baselinestretch=0.5,fontsize=\footnotesize]{backtracking/rabbits_eco.py}
-\caption{Enumerations up to the $6$th generation of rabbits.}
-\end{margintable}
+\begin{example}[Rabbits] These shapes encode that (i) a couple of young rabbits
+\verb|○| gets old and becomes \verb|●| which, in turn, (ii) gives birth to a
+couple of young rabbits and gets older. 
 
 \notbreakable{
     \inputminted[fontsize=\small,
                  stripnl=false,
-                 firstline=276,
+                 firstline=283,
                  lastline=291]
                 {python}{backtracking/ECO.py}
 }
-
+\end{example}
+The complete enumeration contains doubles, so we report the set of those
+structures that is actually counted by the \textit{Fibonacci numbers};
+according to the mutually symbolic equations,
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+     ★
+☆ = ○       ★ = ●☆
+                 ★
+\end{Verbatim}
+the enumeration process starts with \verb|☆| and enumerates the (i), (ii),
+(iii) and (iv) generations
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+    |       |     ★         |     ●☆          
+ ★  |   ●☆  |   ●○     ●    |   ●○ ★     ●  ★     ● 
+○   |  ○ ★  |  ○ ★    ○ ●☆  |  ○        ○ ●○     ○ ●
+    |       |            ★  |              ★        ●☆
+    |       |               |                       ★
+\end{Verbatim}
+and, finally, the (v) generation
+\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+     ★
+   ●○       ●              
+ ●○ ★     ●○ ●☆     ●  ●☆      ●         ●
+○        ○    ★    ○ ●○ ★     ○ ●  ★    ○ ●
+                                 ●○        ●
+                                  ★         ●☆
+                                             ★
+\end{Verbatim}
+as required.

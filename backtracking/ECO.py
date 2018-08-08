@@ -160,10 +160,10 @@ def make_pretty(dim, joiner='', separator=',', empty=' '):
 # In the following, the symbol ★ has a generation power,
 # namely produces a new structure with the basic shape replacing ★ recursively.
 
-"       \
-  ●     \
-★   ★   \
-"
+"""
+  ●
+★   ★
+"""
 binary_tree_shapes = {
     'bintree': lambda r, c: Anchor(symbol='●', stars=[
         Star(row=r+1, col=c-1, offsets=None, link='bintree', symbol='★'),
@@ -171,10 +171,10 @@ binary_tree_shapes = {
     ]),
 }
 
-"       \
-  ●     \
-★ ★ ★   \
-"
+"""
+  ●
+★ ★ ★
+"""
 ternary_tree_shapes = {
     'threetree': lambda r, c: Anchor(symbol='●', stars=[
         Star(row=r+1, col=c-1, offsets=None, link='threetree', symbol='★'),
@@ -184,10 +184,10 @@ ternary_tree_shapes = {
 }
 
 
-"       \
-  ★     \
-/   ★   \
-"
+"""
+  ★
+/   ★
+"""
 dyck_path_shapes = {
     'dick': lambda r, c: Anchor(symbol='/', stars=[
         Star(row=r-1, col=c+1, offsets=(0, 2), link='dick', symbol='★'),
@@ -195,9 +195,9 @@ dyck_path_shapes = {
     ]),
 }
 
-"       \
-● ★ ★   \
-"
+"""
+● ★ ★
+"""
 ballot_shapes = {
     'linear': lambda r, c: Anchor(symbol='●', stars=[
         Star(row=r, col=c+1, offsets=(0,2), link='linear', symbol='★'),
@@ -205,21 +205,21 @@ ballot_shapes = {
     ]),
 }
 
-"           \
-( ★ ) ★     \
-"
+"""
+( ★ ) ★
+"""
 balanced_parens_shapes = {
     'parens': lambda r, c: Anchor(symbol='(', stars=[
-        Star(row=r, col=c+1, offsets=(0,3), link='parens', symbol='★'),
-        Star(row=r, col=c+3, offsets=None,  link='parens', symbol='★'),
+        Star(row=r, col=c+1, offsets=(0, 3), link='parens', symbol='★'),
+        Star(row=r, col=c+3, offsets=None,   link='parens', symbol='★'),
     ]),
 }
 
-"       \
-★       \
-Λ       \
- ★      \
-"
+"""
+★
+Λ
+ ★
+"""
 plane_trees_shapes = {
     'plane': lambda r, c: Anchor(symbol='Λ', stars=[
         Star(row=r-1, col=c, offsets=None, link='plane', symbol='★'),
@@ -228,12 +228,12 @@ plane_trees_shapes = {
 }
 
 
-"                                       \
-n:    sw:    se:    nw:    ne:   s:     \
-                     ★     ★            \
-★▲★   ★▲     ▲★     ★▼     ▼★    ★▼★    \
-       ★     ★                          \
-"
+"""
+n:    sw:    se:    nw:    ne:   s:
+                     ★     ★
+★▲★   ★▲     ▲★     ★▼     ▼★    ★▼★
+       ★     ★
+"""
 triangulated_shapes = {
     'north': lambda r, c: Anchor(symbol='▲', stars=[
         Star(row=r, col=c-1, offsets=None, link='nw', symbol='★'),
@@ -261,10 +261,10 @@ triangulated_shapes = {
     ]),
 }
 
-"       \
-★       \
-▢ ★     \
-"
+"""
+★
+▢ ★
+"""
 blocks_shapes = {
     'block': lambda r, c: Anchor(symbol='▢', stars=[
         Star(row=r-1, col=c, offsets=None, link='block', symbol='★'),
@@ -273,13 +273,13 @@ blocks_shapes = {
 }
 
 
-"       \
-  ★     \
-○       \
-        \
-● ▲     \
-  ★     \
-"
+"""
+  ★
+○
+
+● ▲
+  ★
+"""
 rabbits_shapes = {
     'young': lambda r, c: Anchor(symbol='○', stars=[
         Star(row=r-1, col=c+1, offsets=None, link='senior', symbol='★'),
@@ -291,13 +291,13 @@ rabbits_shapes = {
 }
 
 
-"       \
-☆       \
-▢       \
-        \
-☆       \
-▢ ★     \
-"
+"""
+☆
+▢
+
+☆
+▢ ★
+"""
 steep_shapes = {
     'one_star': lambda r, c: Anchor(symbol='▢', stars=[
         Star(row=r-1, col=c, offsets=None, link='two_stars', symbol='☆'),
@@ -308,11 +308,11 @@ steep_shapes = {
     ]),
 }
 
-"       \
-  ★     \
-― o o   \
-    ★   \
-"
+"""
+  ★
+― o o
+    ★
+"""
 sigmoid_shapes = {
     'sigmoid': lambda r, c: Anchor(symbol='―', stars=[
         Star(row=r-1, col=c+1, offsets=None, link='sigmoid', symbol='★'),
@@ -321,13 +321,13 @@ sigmoid_shapes = {
 }
 
 
-"                   \
-★                   \
-─  :horizontal      \
-★                   \
-                    \
-★ │ ★   :vertical   \
-"
+"""
+★
+─  :horizontal
+★
+
+★ │ ★   :vertical
+"""
 splitters_shapes = {
     'horizontal': lambda r, c: Anchor(symbol='─', stars=[
         Star(row=r-1, col=c, offsets=None, link='vertical', symbol='★'),
