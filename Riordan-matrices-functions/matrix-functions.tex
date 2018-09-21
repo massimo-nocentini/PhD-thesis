@@ -7,23 +7,21 @@ A\boldsymbol{v}_{i}=\lambda_{i}\boldsymbol{v}_{i},
 with corresponding multiplicities $m_{i}$ such that $ \sum_{i=1}^{\nu}{m_{i}}=m$.
 
 Let $\nu=\left|\sigma(A)\right|$ to define the \textit{characteristic
-polynomial} $p(\lambda)=\det{\left(A-\lambda
+polynomial} $p(\lambda)=det{\left(A-\lambda
 I\right)}=\prod_{i=1}^{\nu}{(\lambda - \lambda_{i})^{m_{i}}}$ of matrix $A$.
 The degree of $p$ is $m$ and any polynomial $h$ of degree greater than $m$ can
 be divided as $h(\lambda) = q(\lambda)p(\lambda)+r(\lambda)$ where
-$\deg{r(\lambda) < m}$; by the Cayley-Hamilton theorem $p(A)=O$, therefore
+$deg{r(\lambda) < m}$; by the Cayley-Hamilton theorem $p(A)=O$, therefore
 $h(A) = r(A)$ holds, namely polynomials $h$ and $r$ (possibly of
 \textit{different degrees}) yield the same matrix when applied to $A$.
-Moreover,
+Moreover, $\displaystyle \left. \frac{\partial^{(j)}{p}}{\partial{\lambda}^{j}}
+\right|_{\lambda=\lambda_{i}}=0 $ implies
 \begin{displaymath}
-\left. \frac{\partial^{(j)}{p}}{\partial{\lambda}^{j}} \right|_{\lambda=\lambda_{i}}=0
-\quad\text{implies}\quad
 \left.\frac{\partial^{(j)}\left(h(\lambda) - r(\lambda)\right)}{\partial\lambda^{j}}\right|_{\lambda=\lambda_{i}} =
-\left.\frac{\partial^{(j)}\left(q(\lambda)p(\lambda)\right)}{\partial\lambda^{j}}\right|_{\lambda=\lambda_{i}} = 0
+\left.\frac{\partial^{(j)}\left(q(\lambda)p(\lambda)\right)}{\partial\lambda^{j}}\right|_{\lambda=\lambda_{i}} = 0,
 \end{displaymath}
-so polynomials $h$ and $r$ satisfy 
+so polynomials $h$ and $r$ satisfy $h(A)=r(A)$ if and only if
 \begin{displaymath}
-h(A)=r(A) \quad\text{if and only if}\quad
 \left.\frac{\partial^{(j)}h}{\partial\lambda^{j}}=\frac{\partial^{(j)}r}{\partial\lambda^{j}}\right|_{\lambda=\lambda_{i}},
 \quad 
 \begin{array}{l} 
@@ -47,7 +45,7 @@ $z$; we say that $f$ \textit{is defined on $\sigma(A)$} if exists
 Given a function $f$ defined on $\sigma(A)$, a polynomial $g$ can be defined
 such that $f$ and $g$ take the same values on $\sigma(A)$; in particular, $g$
 can be written using the base of \textit{generalized Lagrange polynomials}
-$\Phi_{i,j}\in\prod_{m-1}$, where $\prod_{r}$ denotes the set of polynomials of
+$\Phi_{i,j}\in~\prod_{m-1}$, where $\prod_{r}$ denotes the set of polynomials of
 degree $r\in\mathbb{N}$. Coefficients of each polynomial $\Phi_{i,j}$ are implicitly
 defined to be the solutions of the system with $m$ constraints
 \begin{equation}
@@ -78,16 +76,16 @@ $\Phi_{i,1},\Phi_{i,2},\Phi_{i,3},\Phi_{i,4} \in\prod_{3}$ defined as
 \Phi_{ 1, 1 }{\left (z \right )} &= \frac{\left(z - \lambda_{2}\right)
 \left(z - \lambda_{3}\right) \left(z - \lambda_{4}\right)}{\left(\lambda_{1} -
 \lambda_{2}\right) \left(\lambda_{1} - \lambda_{3}\right) \left(\lambda_{1} -
-\lambda_{4}\right)}, \quad 
-\Phi_{ 2, 1 }{\left (z \right )} = - \frac{\left(z -
+\lambda_{4}\right)}, \\
+\Phi_{ 2, 1 }{\left (z \right )} &= - \frac{\left(z -
 \lambda_{1}\right) \left(z - \lambda_{3}\right) \left(z -
 \lambda_{4}\right)}{\left(\lambda_{1} - \lambda_{2}\right) \left(\lambda_{2} -
 \lambda_{3}\right) \left(\lambda_{2} - \lambda_{4}\right)}, \\
 \Phi_{ 3, 1 }{\left (z \right )} &= \frac{\left(z - \lambda_{1}\right) \left(z -
 \lambda_{2}\right) \left(z - \lambda_{4}\right)}{\left(\lambda_{1} -
 \lambda_{3}\right) \left(\lambda_{2} - \lambda_{3}\right) \left(\lambda_{3} -
-\lambda_{4}\right)}, \quad
-\Phi_{ 4, 1 }{\left (z \right )} = - \frac{\left(z -
+\lambda_{4}\right)}\quad\text{and} \\
+\Phi_{ 4, 1 }{\left (z \right )} &= - \frac{\left(z -
 \lambda_{1}\right) \left(z - \lambda_{2}\right) \left(z -
 \lambda_{3}\right)}{\left(\lambda_{1} - \lambda_{4}\right) \left(\lambda_{2} -
 \lambda_{4}\right) \left(\lambda_{3} - \lambda_{4}\right)}\\

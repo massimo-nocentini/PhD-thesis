@@ -64,8 +64,8 @@ First of all, we list Hermite interpolating polynomials for the following functi
                                 &+ \frac{\alpha^{3} z^{3}}{144} \left(\alpha^{4} - 4 \alpha^{3} + 12 \alpha^{2} - 24 \alpha + 24\right) \\
                                 &+ \frac{\alpha^{2} z^{2}}{240} \left(- \alpha^{5} + 5 \alpha^{4} - 20 \alpha^{3} + 60 \alpha^{2} - 120 \alpha + 120\right) \\
                                 &+ \frac{\alpha z}{720} \left(\alpha^{6} - 6 \alpha^{5} + 30 \alpha^{4} - 120 \alpha^{3} + 360 \alpha^{2} - 720 \alpha + 720\right) \\
-                                &- \left.\frac{\alpha^{7}}{5040} + \frac{\alpha^{6}}{720} - \frac{\alpha^{5}}{120} + \frac{\alpha^{4}}{24} - \frac{\alpha^{3}}{6} + \frac{\alpha^{2}}{2} -\alpha + 1\right) \\
-        \left.E_{8}{\left (z \right )}\right|_{\alpha=1} &= e \left(\frac{z^{7}}{5040} + \frac{z^{5}}{240} + \frac{z^{4}}{72} + \frac{z^{3}}{16} + \frac{11 z^{2}}{60} + \frac{53 z}{144} + \frac{103}{280}\right)\\
+                                &- \left.\frac{\alpha^{7}}{5040} + \frac{\alpha^{6}}{720} - \frac{\alpha^{5}}{120} + \frac{\alpha^{4}}{24} - \frac{\alpha^{3}}{6} + \frac{\alpha^{2}}{2} -\alpha + 1\right), \\
+        \left.E_{8}{\left (z \right )}\right|_{\alpha=1} &= e \left(\frac{z^{7}}{5040} + \frac{z^{5}}{240} + \frac{z^{4}}{72} + \frac{z^{3}}{16} + \frac{11 z^{2}}{60} + \frac{53 z}{144} + \frac{103}{280}\right)\quad\text{and}\\
         \left.E_{8}{\left (z \right )}\right|_{\alpha=-1} &=\frac{1}{e} \left( - \frac{z^{7}}{5040} + \frac{z^{6}}{360} - \frac{z^{5}}{48} + \frac{z^{4}}{9}\right. - \left.\frac{65 z^{3}}{144} + \frac{163 z^{2}}{120} - \frac{1957 z}{720} + \frac{685}{252}\right);
     \end{split}
 \end{displaymath}
@@ -81,25 +81,25 @@ First of all, we list Hermite interpolating polynomials for the following functi
 \begin{displaymath}
     \footnotesize
     \begin{split}
-        S_{8}{\left (z \right )} &= - \frac{1}{5040} \left(z - 1\right)^{7} \cos{\left (1 \right )} - \frac{1}{720} \left(z - 1\right)^{6} \sin{\left (1 \right )} + \frac{1}{120} \left(z - 1\right)^{5} \cos{\left (1 \right )} + \frac{1}{24} \left(z - 1\right)^{4} \sin{\left (1 \right )} \\
-                             &- \frac{1}{6} \left(z - 1\right)^{3} \cos{\left (1 \right )} - \frac{1}{2} \left(z - 1\right)^{2} \sin{\left (1 \right )} + \left(z - 1\right) \cos{\left (1 \right )} + \sin{\left (1 \right )}\\
-                             &= \frac{1}{720} \left(- z^{6} + 6 z^{5} + 15 z^{4} - 100 z^{3} - 195 z^{2} + 606 z + 389\right) \sin{\left (1 \right )} \\
-                             &+ \frac{1}{5040} \left(- z^{7} + 7 z^{6} + 21 z^{5} - 175 z^{4} - 455 z^{3} + 2121 z^{2} + 2723 z - 4241\right) \cos{\left (1 \right )} \\
-                             &= - \frac{z^{7}}{5040} \cos{\left (1 \right )} + z^{6} \left(- \frac{1}{720} \sin{\left (1 \right )} + \frac{1}{720} \cos{\left (1 \right )}\right) + z^{5} \left(\frac{1}{120} \sin{\left (1 \right )} + \frac{1}{240} \cos{\left (1 \right )}\right) \\
-                             &+ z^{4} \left(\frac{1}{48} \sin{\left (1 \right )} - \frac{5}{144} \cos{\left (1 \right )}\right) + z^{3} \left(- \frac{5}{36} \sin{\left (1 \right )} - \frac{13}{144} \cos{\left (1 \right )}\right) + z^{2} \left(- \frac{13}{48} \sin{\left (1 \right )} + \frac{101}{240} \cos{\left (1 \right )}\right) \\
-                             &+ z \left(\frac{101}{120} \sin{\left (1 \right )} + \frac{389}{720} \cos{\left (1 \right )}\right) + \frac{389}{720} \sin{\left (1 \right )} - \frac{4241}{5040} \cos{\left (1 \right )};
+        S_{8}{\left (z \right )} &= - \frac{1}{5040} \left(z - 1\right)^{7} cos\,{\left (1 \right )} - \frac{1}{720} \left(z - 1\right)^{6} sin\,{\left (1 \right )} + \frac{1}{120} \left(z - 1\right)^{5} cos\,{\left (1 \right )} + \frac{1}{24} \left(z - 1\right)^{4} sin\,{\left (1 \right )} \\
+                             &- \frac{1}{6} \left(z - 1\right)^{3} cos\,{\left (1 \right )} - \frac{1}{2} \left(z - 1\right)^{2} sin\,{\left (1 \right )} + \left(z - 1\right) cos\,{\left (1 \right )} + sin\,{\left (1 \right )}\\
+                             &= \frac{1}{720} \left(- z^{6} + 6 z^{5} + 15 z^{4} - 100 z^{3} - 195 z^{2} + 606 z + 389\right) sin\,{\left (1 \right )} \\
+                             &+ \frac{1}{5040} \left(- z^{7} + 7 z^{6} + 21 z^{5} - 175 z^{4} - 455 z^{3} + 2121 z^{2} + 2723 z - 4241\right) cos\,{\left (1 \right )} \\
+                             &= - \frac{z^{7}}{5040} cos\,{\left (1 \right )} + z^{6} \left(- \frac{1}{720} sin\,{\left (1 \right )} + \frac{1}{720} cos\,{\left (1 \right )}\right) + z^{5} \left(\frac{1}{120} sin\,{\left (1 \right )} + \frac{1}{240} cos\,{\left (1 \right )}\right) \\
+                             &+ z^{4} \left(\frac{1}{48} sin\,{\left (1 \right )} - \frac{5}{144} cos\,{\left (1 \right )}\right) + z^{3} \left(- \frac{5}{36} sin\,{\left (1 \right )} - \frac{13}{144} cos\,{\left (1 \right )}\right) + z^{2} \left(- \frac{13}{48} sin\,{\left (1 \right )} + \frac{101}{240} cos\,{\left (1 \right )}\right) \\
+                             &+ z \left(\frac{101}{120} sin\,{\left (1 \right )} + \frac{389}{720} cos\,{\left (1 \right )}\right) + \frac{389}{720} sin\,{\left (1 \right )} - \frac{4241}{5040} cos\,{\left (1 \right )};
     \end{split}
 \end{displaymath}
 \item[cosine function]
 \begin{displaymath}
     \footnotesize
     \begin{split}
-        C_{8}{\left (z \right )} &= \frac{1}{5040} \left(z - 1\right)^{7} \sin{\left (1 \right )} - \frac{1}{720} \left(z - 1\right)^{6} \cos{\left (1 \right )} - \frac{1}{120} \left(z - 1\right)^{5} \sin{\left (1 \right )} + \frac{1}{24} \left(z - 1\right)^{4} \cos{\left (1 \right )} \\ &+ \frac{1}{6} \left(z - 1\right)^{3} \sin{\left (1 \right )} - \frac{1}{2} \left(z - 1\right)^{2} \cos{\left (1 \right )} - \left(z - 1\right) \sin{\left (1 \right )} + \cos{\left (1 \right )} \\
-                             &= \frac{1}{720} \left(- z^{6} + 6 z^{5} + 15 z^{4} - 100 z^{3} - 195 z^{2} + 606 z + 389\right) \cos{\left (1 \right )} \\
-                             &+ \frac{1}{5040} \left(z^{7} - 7 z^{6} - 21 z^{5} + 175 z^{4} + 455 z^{3} - 2121 z^{2} - 2723 z + 4241\right) \sin{\left (1 \right )}\\
-                             &= \frac{z^{7}}{5040} \sin{\left (1 \right )} + z^{6} \left(- \frac{1}{720} \sin{\left (1 \right )} - \frac{1}{720} \cos{\left (1 \right )}\right) + z^{5} \left(- \frac{1}{240} \sin{\left (1 \right )} + \frac{1}{120} \cos{\left (1 \right )}\right) \\
-                             &+ z^{4} \left(\frac{5}{144} \sin{\left (1 \right )} + \frac{1}{48} \cos{\left (1 \right )}\right) + z^{3} \left(\frac{13}{144} \sin{\left (1 \right )} - \frac{5}{36} \cos{\left (1 \right )}\right) + z^{2} \left(- \frac{101}{240} \sin{\left (1 \right )} - \frac{13}{48} \cos{\left (1 \right )}\right) \\
-                             &+ z \left(- \frac{389}{720} \sin{\left (1 \right )} + \frac{101}{120} \cos{\left (1 \right )}\right) + \frac{4241}{5040} \sin{\left (1 \right )} + \frac{389}{720} \cos{\left (1 \right )}.
+        C_{8}{\left (z \right )} &= \frac{1}{5040} \left(z - 1\right)^{7} sin\,{\left (1 \right )} - \frac{1}{720} \left(z - 1\right)^{6} cos\,{\left (1 \right )} - \frac{1}{120} \left(z - 1\right)^{5} sin\,{\left (1 \right )} + \frac{1}{24} \left(z - 1\right)^{4} cos\,{\left (1 \right )} \\ &+ \frac{1}{6} \left(z - 1\right)^{3} sin\,{\left (1 \right )} - \frac{1}{2} \left(z - 1\right)^{2} cos\,{\left (1 \right )} - \left(z - 1\right) sin\,{\left (1 \right )} + cos\,{\left (1 \right )} \\
+                             &= \frac{1}{720} \left(- z^{6} + 6 z^{5} + 15 z^{4} - 100 z^{3} - 195 z^{2} + 606 z + 389\right) cos\,{\left (1 \right )} \\
+                             &+ \frac{1}{5040} \left(z^{7} - 7 z^{6} - 21 z^{5} + 175 z^{4} + 455 z^{3} - 2121 z^{2} - 2723 z + 4241\right) sin\,{\left (1 \right )}\\
+                             &= \frac{z^{7}}{5040} sin\,{\left (1 \right )} + z^{6} \left(- \frac{1}{720} sin\,{\left (1 \right )} - \frac{1}{720} cos\,{\left (1 \right )}\right) + z^{5} \left(- \frac{1}{240} sin\,{\left (1 \right )} + \frac{1}{120} cos\,{\left (1 \right )}\right) \\
+                             &+ z^{4} \left(\frac{5}{144} sin\,{\left (1 \right )} + \frac{1}{48} cos\,{\left (1 \right )}\right) + z^{3} \left(\frac{13}{144} sin\,{\left (1 \right )} - \frac{5}{36} cos\,{\left (1 \right )}\right) + z^{2} \left(- \frac{101}{240} sin\,{\left (1 \right )} - \frac{13}{48} cos\,{\left (1 \right )}\right) \\
+                             &+ z \left(- \frac{389}{720} sin\,{\left (1 \right )} + \frac{101}{120} cos\,{\left (1 \right )}\right) + \frac{4241}{5040} sin\,{\left (1 \right )} + \frac{389}{720} cos\,{\left (1 \right )}.
     \end{split}
 \end{displaymath}
 \end{description}

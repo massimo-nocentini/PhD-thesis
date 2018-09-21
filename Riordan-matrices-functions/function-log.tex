@@ -5,9 +5,11 @@ Let $f(z)=\log{z}$ and $\mathcal{R}$ be a Riordan array; let $H_{n}$ be the
 $n$-th harmonic number, then 
 \begin{equation}
   \label{eq:log-Hermite-interpolating-poly}
-  L_{m}(z) = \sum_{j=1}^{m-1}{\frac{(-1)^{j-1}}{j}{\left(z-1\right)^{j} }}
-  \quad\text{and, explicitly,}\quad
-  L_{m}(z) = - \sum_{k=1}^{m-1}\frac{1}{k}{{m-1}\choose{k}}{(-z)^{k}}- H_{m-1} 
+  \begin{split}
+  L_{m}(z) &= \sum_{j=1}^{m-1}{\frac{(-1)^{j-1}}{j}{\left(z-1\right)^{j} }}
+  \quad\text{and, explicitly,}\\
+  L_{m}(z) &= - \sum_{k=1}^{m-1}\frac{1}{k}{{m-1}\choose{k}}{(-z)^{k}}- H_{m-1} 
+  \end{split}
 \end{equation}
 are both Hermite interpolating polynomials of the logarithm function for the minor
 $\mathcal{R}_{m}, m\in\mathbb{N}$.
@@ -18,15 +20,19 @@ The closed form of the $j$-th derivative of function $f$ is
 $$\frac{\partial^{(j)}{f}(z)}{\partial{z}^{j}} =\frac{(-1)^{j-1}(j-1)!}{z^{j}}, \quad 0<j\in\mathbb{N};$$ 
 therefore, observing that $f(1)\Phi_{1,1}(z)=0$ entails
 \begin{displaymath}
-  L_{m}(z) = \sum_{j=0}^{m-1}{ \left. \frac{\partial^{(j)}{f}}{\partial{z}^{j}} \right|_{z=1}\Phi_{1,j+1}(z)}
-       = \sum_{j=1}^{m-1}{ \left. \frac{(-1)^{j-1}(j-1)!}{z^{j}} \right|_{z=1}\Phi_{1,j+1}(z)}
-       = \sum_{j=1}^{m-1}{ \frac{(-1)^{j-1}}{j} (z-1)^{j}},
+\begin{split}
+  L_{m}(z)  &= \sum_{j=0}^{m-1}{ \left. \frac{\partial^{(j)}{f}}{\partial{z}^{j}} \right|_{z=1}\Phi_{1,j+1}(z)}\\
+            &= \sum_{j=1}^{m-1}{ \left. \frac{(-1)^{j-1}(j-1)!}{z^{j}} \right|_{z=1}\Phi_{1,j+1}(z)}\\
+            &= \sum_{j=1}^{m-1}{ \frac{(-1)^{j-1}}{j} (z-1)^{j}},
+\end{split}
 \end{displaymath}
 proving the first identity. On the other hand,
 \begin{displaymath}
-  L_{m}(z) = - \sum_{j=1}^{m-1}{\sum_{k=0}^{j}{\frac{1}{j}{{j}\choose{k}}(-z)^{k}}}
-       = - \sum_{k=1}^{m-1}{\left(\sum_{j=k}^{m-1}{\frac{1}{j}{{j}\choose{k}}}\right)}(-z)^{k} - \sum_{j=1}^{m-1}{\frac{1}{j}}
-       = - \sum_{k=1}^{m-1}\frac{1}{k}{{m-1}\choose{k}}{(-z)^{k}}- H_{m-1} 
+\begin{split}
+  L_{m}(z)  &= - \sum_{j=1}^{m-1}{\sum_{k=0}^{j}{\frac{1}{j}{{j}\choose{k}}(-z)^{k}}}\\
+            &= - \sum_{k=1}^{m-1}{\left(\sum_{j=k}^{m-1}{\frac{1}{j}{{j}\choose{k}}}\right)}(-z)^{k} - \sum_{j=1}^{m-1}{\frac{1}{j}}\\
+            &= - \sum_{k=1}^{m-1}\frac{1}{k}{{m-1}\choose{k}}{(-z)^{k}}- H_{m-1} \\
+\end{split}
 \end{displaymath}
 proves the explicit one.
 \end{proof}

@@ -18,9 +18,18 @@ expansion of $d(t)h(t)^{k}$, formally
 \end{displaymath}
 where $d_{n,k}=0$ for $k>n.$ These arrays were introduced in
 \citep{SHAPIRO1991229}, with the aim of defining a class of infinite lower
-triangular arrays with properties analogous to those of the Pascal triangle and
-since then they have attracted, and continue to attract, a lot of attention in
-the literature. Some of their properties  and recent applications can be found
+triangular arrays and since then they have attracted, and continue to attract,
+a lot of attention in the literature.
+
+The most simple example of Riordan matrix is the \textit{Pascal triangle}
+$$\mathcal{R}\left(\frac{1}{1-t}, \frac{t}{1-t}\right)\quad\text{where}\quad
+d_{n,k}={n\choose k};$$ moreover, another remarkable matrix is the
+\textit{Catalan triangle}
+$$\mathcal{R}\left(\frac{1-\sqrt{1-4\,t}}{2\,t}, \frac{1-\sqrt{1-4\,t}}{2\,t}\right)
+\quad\text{where}$$
+$$d_{n,k}={{2n-k}\choose{n-k}} - {{2n-k}\choose{n-k-1}}.$$
+
+Some of their properties  and recent applications can be found
 in \citep{LUZON201475,MRSV97}. In particular, we recall that the bivariate generating
 function enumerating the sequence $(d_{n,k} )_{n,k \in\mathbb{N}}$ is
 \begin{equation}
@@ -481,7 +490,7 @@ nature(is_ordinary=False, is_exponential=True)
 
 \subsection{Group inverse elements}
 
-In this final section we show how to compute the compositional inverse of 
+In this final section we show how to compute the compositional inverse of
 a function and then apply this procedure to find the inverse of a given
 Riordan array.
 
@@ -499,7 +508,7 @@ formally, using the definition of $h$ we rewrite
 \begin{displaymath}
 y = \frac{t}{1-t} \quad\text{that implies}\quad t = \frac{y}{1+y}
 \end{displaymath}
-which can be put back in $\bar{h}(y) = t$ yielding 
+which can be put back in $\bar{h}(y) = t$ yielding
 \begin{displaymath}
 \bar{h}(y)= \frac{y}{1+y}.
 \end{displaymath}

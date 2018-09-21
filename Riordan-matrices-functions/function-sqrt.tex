@@ -1,14 +1,16 @@
 
 \begin{theorem}
 \label{thm:sqrt-Hermite-interpolating-poly-implicit}
-Let $f(z)=\sqrt{z}$ and $\mathcal{R}$ be a Riordan array and
-${\frac{1}{2}\choose {j}} = \frac{(-1)^{j-1}}{4^{j}(2j-1)}{ {2j}\choose{j} }$.
-Then,
+Let $f(z)=\sqrt{z}$ and $\mathcal{R}$ be a Riordan array and\\
+$ {\frac{1}{2}\choose {j}} = \frac{(-1)^{j-1}}{4^{j}(2j-1)}{ {2j}\choose{j} }$;
+then,
 \begin{equation}
   \label{eq:sqrt-Hermite-interpolating-poly}
-  R_{m}(z) = \sum_{j=0}^{m-1}{{\frac{1}{2} \choose j}\left(z-1\right)^{j}}
-  \quad\text{and, explicitly,}\quad
-  R_{m}(z) = \sum_{k=0}^{m-1}{\left(\sum_{j=k}^{m-1}{(-1)^{j}{{\frac{1}{2}}\choose{j}}{{j}\choose{k}}}\right)(-z)^{k}}
+  \begin{split}
+  R_{m}(z) &= \sum_{j=0}^{m-1}{{\frac{1}{2} \choose j}\left(z-1\right)^{j}}
+  \quad\text{and, explicitly,}\\
+  R_{m}(z) &= \sum_{k=0}^{m-1}{\left(\sum_{j=k}^{m-1}{(-1)^{j}{{\frac{1}{2}}\choose{j}}{{j}\choose{k}}}\right)(-z)^{k}}
+  \end{split}
 \end{equation}
 are both Hermite interpolating polynomials of the square root function for the minor
 $\mathcal{R}_{m}, m\in\mathbb{N}$.
@@ -21,24 +23,30 @@ The closed form of the $j$-th derivative of function $f$ is
 \end{displaymath}
 therefore, first observing that $f(1)\Phi_{1,1}(z)=1$ entails
 \begin{displaymath}
-  R_{m}(z) = \sum_{j=0}^{m-1}{ \left. \frac{\partial^{(j)}{f}}{\partial{z}^{j}} \right|_{z=1}\Phi_{1,j+1}(z)}
-       = 1 + \sum_{j=1}^{m-1}{ \left. \frac{(-1)^{j-1}}{2}\frac{(j-1)!}{4^{j-1}}{{2(j-1)}\choose{j-1}}\frac{1}{z^{\frac{2(j-1)+1}{2}}} \right|_{z=1}\Phi_{1,j+1}(z)};
+\begin{split}
+  R_{m}(z)  &= \sum_{j=0}^{m-1}{ \left. \frac{\partial^{(j)}{f}}{\partial{z}^{j}} \right|_{z=1}\Phi_{1,j+1}(z)}\\
+            &= 1 + \sum_{j=1}^{m-1}{ \left. \frac{(-1)^{j-1}}{2}\frac{(j-1)!}{4^{j-1}}{{2(j-1)}\choose{j-1}}\frac{1}{z^{\frac{2(j-1)+1}{2}}} \right|_{z=1}\Phi_{1,j+1}(z)};
+\end{split}
 \end{displaymath}
 second, identities ${ {v}\choose{w}} = \frac{v}{w} { {v-1}\choose{w-1} }$ and 
 ${ {-\frac{1}{2}}\choose{j} } = \frac{(-1)^{j}}{4^{j}}{ {2j}\choose{j} }$ allow us
 to rewrite
 \begin{displaymath}
-  R_{m}(z) = 1 + \frac{1}{2}\sum_{j=1}^{m-1}{ \frac{(-1)^{j-1}}{j\,4^{j-1}}{{2(j-1)}\choose{j-1}} \left(z-1\right)^{j}}
-       = 1 + \frac{1}{2}\sum_{j=1}^{m-1}{ \frac{1}{j}{-\frac{1}{2}\choose{j-1}} \left(z-1\right)^{j}}
-       = 1 + \sum_{j=1}^{m-1}{ {\frac{1}{2}\choose{j}} \left(z-1\right)^{j}};
+\begin{split}
+  R_{m}(z)  &= 1 + \frac{1}{2}\sum_{j=1}^{m-1}{ \frac{(-1)^{j-1}}{j\,4^{j-1}}{{2(j-1)}\choose{j-1}} \left(z-1\right)^{j}}\\
+            &= 1 + \frac{1}{2}\sum_{j=1}^{m-1}{ \frac{1}{j}{-\frac{1}{2}\choose{j-1}} \left(z-1\right)^{j}}
+             = 1 + \sum_{j=1}^{m-1}{ {\frac{1}{2}\choose{j}} \left(z-1\right)^{j}};
+\end{split}
 \end{displaymath}
 finally, sum's coefficient equals $1$ for $j=0$, hence summation can be
 extended to start from index $0$ incorporating the outer value $1$, proving the
 first identity.  On the other hand,
 \begin{displaymath}
-  R_{m}(z) = \sum_{j=0}^{m-1}{ {\frac{1}{2}\choose{j}} \left(z-1\right)^{j}}
-       = \sum_{j=0}^{m-1}{\sum_{k=0}^{j}{(-1)^{j}{\frac{1}{2}\choose{j}}{ {j}\choose{k} } \left(-z\right)^{k}}}
-       = \sum_{k=0}^{m-1}{\left(\sum_{j=k}^{m-1}{(-1)^{j}{\frac{1}{2}\choose{j}}{ {j}\choose{k} } }\right)\left(-z\right)^{k}}
+\begin{split}
+  R_{m}(z)  &= \sum_{j=0}^{m-1}{ {\frac{1}{2}\choose{j}} \left(z-1\right)^{j}}\\
+            &= \sum_{j=0}^{m-1}{\sum_{k=0}^{j}{(-1)^{j}{\frac{1}{2}\choose{j}}{ {j}\choose{k} } \left(-z\right)^{k}}}\\
+            &= \sum_{k=0}^{m-1}{\left(\sum_{j=k}^{m-1}{(-1)^{j}{\frac{1}{2}\choose{j}}{ {j}\choose{k} } }\right)\left(-z\right)^{k}}\\
+\end{split}
 \end{displaymath}
 proves the explicit one.
 \end{proof}

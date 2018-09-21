@@ -1,47 +1,17 @@
 
-A Riordan matrix $(d_{n,k})_{n,k\in\mathbb{N}}$ is an infinite lower triangular
-matrix defined by two generating functions $d(t)$ and $h(t)$, with $h(0)=0$ and
-$h^{\prime}(0)\neq 0$,  %and $\mathcal{R}$ is called \textit{proper} and it is
-denoted as $\mathcal{R}(d(t), h(t))$; formally, each matrix coefficient
-$d_{n,k}\in\mathbb{R}$ satisfies $d_{n, k}=[t^{n}]d(t)h(t)^{k}$, where
-$[t^{n}]$ is the \textit{coefficient of} operator defined in \cite{MSV07}.
-\iffalse % Let $R_{k}(t) = d(t)h(t)^{k} = \sum_{n\in\mathbb{N}}{d_{n,k}t^{n}}$ be the {{{
-formal power series enumerating coefficients that lie on column $k$; to
-summarize, 
-\fi
-% }}}
-
-The most simple example of Riordan matrix is the \textit{Pascal triangle}
-$\mathcal{R}\left(\frac{1}{1-t}, \frac{t}{1-t}\right)$ where
-$d_{n,k}={n\choose k}$; another remarkable matrix is the \textit{Catalan
-triangle} $\mathcal{R}\left(\frac{1-\sqrt{1-4\,t}}{2\,t},
-\frac{1-\sqrt{1-4\,t}}{2\,t}\right)$ where $d_{n,k}={{2n-k}\choose{n-k}} -
-{{2n-k}\choose{n-k-1}}$. 
-
-We recall shortly that Riordan arrays form a \textit{group} with respect to the
-usual row by column product between matrices, where the identity element is $I
-= \Ra(1,\ t)$; moreover, the group operation and inverse element are
-\begin{equation}
-\label{eq:Riordan-group-ops}
-\Ra(d(t),\ h(t)) \cdot \Ra(a(t),\ b(t)) = \Ra(d(t) a(h(t)),\
-b(h(t)))\quad\text{and}\quad\Ra(d(t),\ h(t))^{-1} = \Ra\left( \frac{1}
-{d(\overline{h}(t))},\ \overline{h}(t) \right)
-\end{equation}
-respectively, denoting with $\overline{h}$ the \textit{compositional
-inverse} of function $h$, namely $h(\overline{h}(t)) = \overline{h}(h(t)) = t$.
 
 From here on, $\mathcal{R}_{m}\in\mathbb{R}^{m\times m}$ denotes a \emph{finite
 Riordan matrix}, namely a chunk of the infinite matrix $\mathcal{R}$ composed
-of the first $m$ rows and the first $m$ columns, see \cite{LUZON2016239} for a
-study of finite Riordan matrices. Due to its triangular shape, $\mathcal{R}_{m}$ admits the
-characteristic polynomial $p(\lambda) = \det{\left(\mathcal{R}_{m}-\lambda\,I_{m}
-\right)} = \left(\lambda_{1}-\lambda \right)^{m}$, so
-$\sigma(\mathcal{R}_{m})= \lbrace \lambda_{1} \rbrace$ entails $\nu=1$ and
-eigenvalue $\lambda_{1}$ gets multiplicity $m_{1}=m$; usually, functions $d$
-and $h$ satisfy $d(0)=1$ and $h'(0)=1$ respectively, therefore $\lambda_{1}=1$.
-We relax the condition $\lambda_{1}=1$ in order to use $\lambda_{1}$ as a pure
-symbol to spot structures with respect to $\lambda_{1}$ and, lately, perform
-the substitution to specialize non-ground terms.
+of the first $m$ rows and the first $m$ columns, see \citep{LUZON2016239} for a
+study of finite Riordan matrices. Due to its triangular shape,
+$\mathcal{R}_{m}$ admits the characteristic polynomial $p(\lambda) =
+\det{\left(\mathcal{R}_{m}-\lambda\,I_{m} \right)} = \left(\lambda_{1}-\lambda
+\right)^{m}$, so $\sigma(\mathcal{R}_{m})= \lbrace \lambda_{1} \rbrace$ entails
+$\nu=1$ and eigenvalue $\lambda_{1}$ gets multiplicity $m_{1}=m$; usually,
+functions $d$ and $h$ satisfy $d(0)=1$ and $h'(0)=1$ respectively, therefore
+$\lambda_{1}=1$.  We relax the condition $\lambda_{1}=1$ in order to use
+$\lambda_{1}$ as a pure symbol to spot structures with respect to $\lambda_{1}$
+and, lately, perform the substitution to specialize non-ground terms.
 
 \begin{lemma}
 Let $\mathcal{R}$ be a Riordan array and $m_{1}\in\mathbb{N}$, then a base of \textit{generalized
@@ -60,21 +30,25 @@ $\Phi_{i,j}$ in matrix notation
 \label{eq:Ez-product}
     \left[\begin{matrix}1 &  &  &  &  &  &  & \\- \lambda_{1} & 1 &  &  &  &  &  & \\\frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 &  &  &  &  & \\- \frac{\lambda_{1}^{3}}{6} & \frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 &  &  &  & \\\frac{\lambda_{1}^{4}}{24} & - \frac{\lambda_{1}^{3}}{6} & \frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 &  &  & \\- \frac{\lambda_{1}^{5}}{120} & \frac{\lambda_{1}^{4}}{24} & - \frac{\lambda_{1}^{3}}{6} & \frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 &  & \\\frac{\lambda_{1}^{6}}{720} & - \frac{\lambda_{1}^{5}}{120} & \frac{\lambda_{1}^{4}}{24} & - \frac{\lambda_{1}^{3}}{6} & \frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 & \\- \frac{\lambda_{1}^{7}}{5040} & \frac{\lambda_{1}^{6}}{720} & - \frac{\lambda_{1}^{5}}{120} & \frac{\lambda_{1}^{4}}{24} & - \frac{\lambda_{1}^{3}}{6} & \frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 \\ \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots  \end{matrix}\right] \left[\begin{matrix}1\\z\\\frac{z^{2}}{2!}\\\frac{z^{3}}{3!}\\\frac{z^{4}}{4!}\\\frac{z^{5}}{5!}\\\frac{z^{6}}{6!}\\\frac{z^{7}}{7!}\\\vdots\end{matrix}\right] = \left[\begin{matrix}\phi_{ 1, 1 }{\left (z \right )}\\\phi_{ 1, 2 }{\left (z \right )}\\\phi_{ 1, 3 }{\left (z \right )}\\\phi_{ 1, 4 }{\left (z \right )}\\\phi_{ 1, 5 }{\left (z \right )}\\\phi_{ 1, 6 }{\left (z \right )}\\\phi_{ 1, 7 }{\left (z \right )}\\\phi_{ 1, 8 }{\left (z \right )}\\\vdots\end{matrix}\right]
 \end{equation}
-where the generic coefficient $d_{n,k}$ has the closed form $d_{n,k} =
-\frac{\left(-\lambda_{1}\right)^{n-k}}{\left(n-k\right)!}$, with $k\leq n$;
-therefore, we define
+where the generic coefficient $d_{n,k}$ has the closed form $\displaystyle
+d_{n,k} =~\frac{\left(-\lambda_{1}\right)^{n-k}}{\left(n-k\right)!}$, with
+$k\leq n$; therefore, we define
 \begin{displaymath}
-  \Phi_{1,j}(z) = \sum_{k=0}^{j-1}{\frac{(-\lambda_{1})^{j-1-k}}{(j-1-k)!}\frac{z^{k}}{k!}}
-                = \frac{1}{(j-1)!}\sum_{k=0}^{j-1}{{ {j-1}\choose{k} }{z^{k}}{(-\lambda_{1})^{j-1-k}}}
-                = \frac{\left(z-\lambda_{1}\right)^{j-1}}{(j-1)!}
+\begin{split}
+  \Phi_{1,j}(z) &= \sum_{k=0}^{j-1}{\frac{(-\lambda_{1})^{j-1-k}}{(j-1-k)!}\frac{z^{k}}{k!}}\\
+                &= \frac{1}{(j-1)!}\sum_{k=0}^{j-1}{{ {j-1}\choose{k} }{z^{k}}{(-\lambda_{1})^{j-1-k}}}
+                 = \frac{\left(z-\lambda_{1}\right)^{j-1}}{(j-1)!}\\
+\end{split}
 \end{displaymath}
-which are required to satisfy the set of constraints $ \left.
-\frac{\partial^{(r-1)}{\Phi_{1,j}}}{\partial{z}} \right|_{z=\lambda_{1}} =
-\delta_{j,r}$ where $r \in \lbrace 1, \ldots, m_{1} \rbrace $, obtained by
-instantiating Equation \ref{eq:Phi-polys-defining-constraints}.
-We proceed by cases: if $j<r$ then it holds because the derivative vanishes, if
-$j=r$ then it holds because the derivative equals $1$; otherwise, if $j>r$
-then
+which are required to satisfy the set of constraints 
+\begin{displaymath}
+ \left.  \frac{\partial^{(r-1)}{\Phi_{1,j}}}{\partial{z}} \right|_{z=\lambda_{1}} =
+\delta_{j,r}\quad\text{where}\quad r \in \lbrace 1, \ldots, m_{1} \rbrace , 
+\end{displaymath}
+obtained by instantiating Equation \ref{eq:Phi-polys-defining-constraints}.  We
+proceed by cases, (i)~if $j<r$ then it holds because the derivative vanishes,
+(ii)~if $j=r$ then it holds because the derivative equals $1$; otherwise,
+(iii)~if $j>r$ then
 \begin{displaymath}
     \left. \frac{\partial^{(r-1)}{\Phi_{1,j}}}{\partial{z}^{r-1}}
     \right|_{z=\lambda_{1}} = 

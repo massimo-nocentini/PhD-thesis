@@ -3,9 +3,11 @@
 \label{thm:exp-Hermite-interpolating-poly}
 Let $f(z)=e^{\alpha z}$, where $\alpha\in\mathbb{Q}$, and $\mathcal{R}$ be a Riordan array; then 
 \begin{equation}
-  E_{m}(z) = e^{\alpha} \sum_{j=0}^{m-1}{\frac{\alpha^{j}}{j!}\left(z-1\right)^{j}}
-  \quad\text{and, explicitly,}\quad
-  E_{m}(z) = e^{\alpha}\sum_{k=0}^{m-1}{\left(\sum_{j=k}^{m-1}{\frac{(-\alpha)^{j}}{j!}{{j}\choose{k}}}\right)(-z)^{k}}
+\begin{split}
+  E_{m}(z) &= e^{\alpha} \sum_{j=0}^{m-1}{\frac{\alpha^{j}}{j!}\left(z-1\right)^{j}}
+  \quad\text{and, explicitly,}\\
+  E_{m}(z) &= e^{\alpha}\sum_{k=0}^{m-1}{\left(\sum_{j=k}^{m-1}{\frac{(-\alpha)^{j}}{j!}{{j}\choose{k}}}\right)(-z)^{k}}
+\end{split}
 \end{equation}
 are both Hermite interpolating polynomials of the exponential function for the minor
 $\mathcal{R}_{m}, m\in\mathbb{N}$.
@@ -18,14 +20,18 @@ The closed form of $j$th derivative of function $f$ is
 \end{displaymath}
 therefore, restoring $\lambda_{1}=1$ in
 \begin{displaymath}
-  E_{m}(z) = \sum_{j=1}^{m}{ \left. \alpha^{j-1} e^{\alpha z} \right|_{z=1}\Phi_{1,j}(z)}
-       = e^{\alpha}\sum_{j=1}^{m}{\frac{\alpha^{j-1}}{(j-1)!} \left(z-\lambda_{1}\right)^{j-1}}
-       = e^{\alpha}\sum_{j=0}^{m-1}{\frac{\alpha^{j}}{j!} \left(z-\lambda_{1}\right)^{j}}
+\begin{split}
+  E_{m}(z)  &= \sum_{j=1}^{m}{ \left. \alpha^{j-1} e^{\alpha z} \right|_{z=1}\Phi_{1,j}(z)}\\
+            &= e^{\alpha}\sum_{j=1}^{m}{\frac{\alpha^{j-1}}{(j-1)!} \left(z-\lambda_{1}\right)^{j-1}}
+             = e^{\alpha}\sum_{j=0}^{m-1}{\frac{\alpha^{j}}{j!} \left(z-\lambda_{1}\right)^{j}}
+\end{split}
 \end{displaymath}
 proves the first identity. On the other hand,
 \begin{displaymath}
-  E_{m}(z) = e^{\alpha}\sum_{j=1}^{m}{\sum_{k=0}^{j-1}{\frac{(-\alpha)^{j-1}}{(j-1)!}{{j-1}\choose{k}}(-z)^{k}}} 
-       = e^{\alpha}\sum_{k=0}^{m-1}{\left(\sum_{j=k+1}^{m}{\frac{(-\alpha)^{j-1}}{(j-1)!}{{j-1}\choose{k}}}\right)(-z)^{k}}
+\begin{split}
+  E_{m}(z)  &= e^{\alpha}\sum_{j=1}^{m}{\sum_{k=0}^{j-1}{\frac{(-\alpha)^{j-1}}{(j-1)!}{{j-1}\choose{k}}(-z)^{k}}} \\
+            &= e^{\alpha}\sum_{k=0}^{m-1}{\left(\sum_{j=k+1}^{m}{\frac{(-\alpha)^{j-1}}{(j-1)!}{{j-1}\choose{k}}}\right)(-z)^{k}}
+\end{split}
 \end{displaymath}
 and moving the index $j$ in the inner summation backward by $1$ closes the proof.
 \end{proof}

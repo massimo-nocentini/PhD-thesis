@@ -28,8 +28,10 @@ We are now ready to apply this framework to matrices in the Riordan group.
 
 In this section we instantiate the abstract framework just described to functions
 \begin{displaymath}
-f(z)=z^{r},\,{f(z)=\frac{1}{z}},\,{f(z)=\sqrt{z}},\,{f(z)=e^{\alpha z}},\,
-{f(z)=\log{z}},\,{f(z)=\sin{z}},\,{f(z)=\cos{z}}; 
+\begin{split}
+f(z)&=z^{r},\,{f(z)=\frac{1}{z}},\,{f(z)=\sqrt{z}},\,{f(z)=e^{\alpha z}},\\
+f(z)&=log\,{z},\,f(z)=sin\,{z}\quad\text{and}\quad f(z)=cos\,{z},
+\end{split}
 \end{displaymath}
 where $r,\alpha\in\mathbb{R}$; in parallel, we construct and show corresponding
 Hermite interpolating polynomials in a sequence of theorems, respectively.
@@ -55,7 +57,7 @@ we report its derivation for completeness.
 \input{Riordan-matrices-functions/function-sqrt.tex}
 
 Matrix exponentiation is a well studied problem \cite{MOLERLOAN2003}, here
-we show another way in the Riordan arrays domain. 
+we show another way in the Riordan arrays domain.
 
 \input{Riordan-matrices-functions/function-exp.tex}
 
@@ -86,19 +88,17 @@ concerning binomial coefficients, Catalan and Stirling numbers, respectively.
 \input{Riordan-matrices-functions/case-study-stirling-II.tex}
 
 The matrix $\mathcal{S}_{8}$ is related to matrix $e^{\mathcal{P}_{8}}$ known as
-$A056857$ in the Online Encyclopedia of Integer Sequences \cite{OEIS} by the
+$A056857$ in the Online Encyclopedia of Integer Sequences \citep{OEIS} by the
 identity $ e^{\mathcal{P}_{8}}=e\cdot\left(\mathcal{S}_{8}\cdot
 \mathcal{P}_{8}\cdot \mathcal{S}_{8}^{-1}\right)$, more connections
-involving these matrices can be found in \cite{CHEON200149}; additionally, we report
+involving these matrices can be found in \citep{CHEON200149}; additionally, we report
 sine and cosine function applications in Section \ref{subsec:sines-cosines}.
 
 For the sake of completeness, an Hermite interpolating polynomial $g$ could
 also be studied by relaxing the condition $\lambda=1$ thus considering
 $\hat{g}(z,\lambda)$ which subsumes $g(z)=\hat{g}(z,1)$. Here are two of these
-augmented polynomials interpolating the inverse and logarithm functions, respectively
+augmented polynomials interpolating the inverse and logarithm functions,
 \begin{displaymath}
-\small
-\begin{tabu}{cc}
 \begin{split}
 \hat{I}_{8}{\left (z, \lambda \right )} &= - \frac{z^{7}}{\lambda^{8}} \\
 &+ z^{6} \left(\frac{1}{\lambda^{7}} + \frac{7}{\lambda^{8}}\right) \\
@@ -107,9 +107,11 @@ augmented polynomials interpolating the inverse and logarithm functions, respect
 &+ z^{3} \left(- \frac{1}{\lambda^{4}} - \frac{4}{\lambda^{5}} - \frac{10}{\lambda^{6}} - \frac{20}{\lambda^{7}} - \frac{35}{\lambda^{8}}\right) \\
 &+ z^{2} \left(\frac{1}{\lambda^{3}} + \frac{3}{\lambda^{4}} + \frac{6}{\lambda^{5}} + \frac{10}{\lambda^{6}} + \frac{15}{\lambda^{7}} + \frac{21}{\lambda^{8}}\right) \\
 &+ z \left(- \frac{1}{\lambda^{2}} - \frac{2}{\lambda^{3}} - \frac{3}{\lambda^{4}} - \frac{4}{\lambda^{5}} - \frac{5}{\lambda^{6}} - \frac{6}{\lambda^{7}} - \frac{7}{\lambda^{8}}\right) \\
-&+ \frac{1}{\lambda} + \frac{1}{\lambda^{2}} + \frac{1}{\lambda^{3}} + \frac{1}{\lambda^{4}} + \frac{1}{\lambda^{5}} + \frac{1}{\lambda^{6}} + \frac{1}{\lambda^{7}} + \frac{1}{\lambda^{8}},
+&+ \frac{1}{\lambda} + \frac{1}{\lambda^{2}} + \frac{1}{\lambda^{3}} + \frac{1}{\lambda^{4}} + \frac{1}{\lambda^{5}} + \frac{1}{\lambda^{6}} + \frac{1}{\lambda^{7}} + \frac{1}{\lambda^{8}}
 \end{split}
-&
+\end{displaymath}
+and
+\begin{displaymath}
 \begin{split}
 \hat{L}_{8}{\left (z,\lambda \right )} &= \frac{z^{7}}{7 \lambda^{7}} \\
 &+ z^{6} \left(- \frac{1}{6 \lambda^{6}} - \frac{1}{\lambda^{7}}\right) \\
@@ -119,9 +121,9 @@ augmented polynomials interpolating the inverse and logarithm functions, respect
 &+ z^{2} \left(- \frac{1}{2 \lambda^{2}} - \frac{1}{\lambda^{3}} - \frac{3}{2 \lambda^{4}} - \frac{2}{\lambda^{5}} - \frac{5}{2 \lambda^{6}} - \frac{3}{\lambda^{7}}\right) \\
 &+ z \left(\frac{1}{\lambda} + \frac{1}{\lambda^{2}} + \frac{1}{\lambda^{3}} + \frac{1}{\lambda^{4}} + \frac{1}{\lambda^{5}} + \frac{1}{\lambda^{6}} + \frac{1}{\lambda^{7}}\right) \\
 &+ \log{\left (\lambda \right )} - \frac{1}{\lambda} - \frac{1}{2 \lambda^{2}} - \frac{1}{3 \lambda^{3}} - \frac{1}{4 \lambda^{4}} - \frac{1}{5 \lambda^{5}} - \frac{1}{6 \lambda^{6}} - \frac{1}{7 \lambda^{7}}.
-\end{split}\\
-\end{tabu}
+\end{split}
 \end{displaymath}
+respectively.
 
 \section{Jordan canonical form}
 

@@ -48,16 +48,18 @@ X = \left[\begin{matrix}- \frac{\left(\lambda_{2} - 1\right) \alpha_{0}}{\lambda
 \quad\text{and}\quad J = \left[\begin{matrix}\lambda_{1} & 0\\0 & \lambda_{2}\end{matrix}\right].
 \end{displaymath}
 Let $\boldsymbol{v} = \left[\begin{array}{c}1\\1\end{array}\right]$ in
+$\displaystyle \mathcal{F}^{r} = \left(X\,J\,X^{-1}\right)^{r} = X\,J^{r}\,X^{-1} = X\,\left[\begin{matrix}\lambda_{1}^{r} & 0\\0 & \lambda_{2}^{r}\end{matrix}\right]\,X^{-1} $
+where $\displaystyle X = \left[\begin{matrix}\frac{- \lambda_{2} + 2}{\lambda_{1} - \lambda_{2}} & \frac{\lambda_{1} - 2}{\lambda_{1} - \lambda_{2}}\\\frac{- \lambda_{2} + 1}{\lambda_{1} - \lambda_{2}} & \frac{\lambda_{1} - 1}{\lambda_{1} - \lambda_{2}}\end{matrix}\right]$,
+so matrices $\mathcal{F}^{r}$ and $X\,J^{r}\,X^{-1}$, whose columns are
 \begin{displaymath}
-\mathcal{F}^{r} = \left(X\,J\,X^{-1}\right)^{r} = X\,J^{r}\,X^{-1} = X\,\left[\begin{matrix}\lambda_{1}^{r} & 0\\0 & \lambda_{2}^{r}\end{matrix}\right]\,X^{-1}
-\quad\text{and}\quad X = \left[\begin{matrix}\frac{- \lambda_{2} + 2}{\lambda_{1} - \lambda_{2}} & \frac{\lambda_{1} - 2}{\lambda_{1} - \lambda_{2}}\\\frac{- \lambda_{2} + 1}{\lambda_{1} - \lambda_{2}} & \frac{\lambda_{1} - 1}{\lambda_{1} - \lambda_{2}}\end{matrix}\right],
-\end{displaymath}
-so matrices $\mathcal{F}^{r}$ and
-\begin{displaymath}
-X\,J^{r}\,X^{-1} = \left[\begin{matrix}\frac{2^{- r} \left(\left(1 + \sqrt{5}\right)^{r} \left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(- \sqrt{5} + 1\right)^{r} \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)} & \frac{2^{- r} \left(- \left(1 + \sqrt{5}\right)^{r} + \left(- \sqrt{5} + 1\right)^{r}\right) \left(\lambda_{1} - 2\right) \left(\lambda_{2} - 2\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)}\\\frac{2^{- r} \left(\left(1 + \sqrt{5}\right)^{r} - \left(- \sqrt{5} + 1\right)^{r}\right) \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 1\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)} & \frac{2^{- r} \left(- \left(1 + \sqrt{5}\right)^{r} \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right) + \left(- \sqrt{5} + 1\right)^{r} \left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right)\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)}\end{matrix}\right]
+\begin{split}
+X\,J^{r}\,X^{-1}\boldsymbol{e}_{0}  &= \left[\begin{matrix}\frac{2^{- r} \left(\left(1 + \sqrt{5}\right)^{r} \left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(- \sqrt{5} + 1\right)^{r} \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)} \\\frac{2^{- r} \left(\left(1 + \sqrt{5}\right)^{r} - \left(- \sqrt{5} + 1\right)^{r}\right) \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 1\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)}  \end{matrix}\right]\quad\text{and}\\
+X\,J^{r}\,X^{-1}\boldsymbol{e}_{1}  &= \left[\begin{matrix}\frac{2^{- r} \left(- \left(1 + \sqrt{5}\right)^{r} + \left(- \sqrt{5} + 1\right)^{r}\right) \left(\lambda_{1} - 2\right) \left(\lambda_{2} - 2\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)}\\\frac{2^{- r} \left(- \left(1 + \sqrt{5}\right)^{r} \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right) + \left(- \sqrt{5} + 1\right)^{r} \left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right)\right)}{\left(\lambda_{1} - 2\right) \left(\lambda_{2} - 1\right) - \left(\lambda_{1} - 1\right) \left(\lambda_{2} - 2\right)}\end{matrix}\right],
+\end{split}
 \end{displaymath}
 are \textit{similar}; by the way, substitution $r=8$ yields
 \begin{displaymath}
 X J^{8} X^{-1} = \left[\begin{matrix}34 & 21\\21 & 13\end{matrix}\right]
 \end{displaymath}
 as required.
+\vfill

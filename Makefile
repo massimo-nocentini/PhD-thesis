@@ -1,5 +1,5 @@
 
-do: unittests
+do: #unittests
 	lualatex -shell-escape PhD-thesis.tex
 
 dependencies:
