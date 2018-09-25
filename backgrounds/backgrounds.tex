@@ -25,9 +25,8 @@ The most simple example of Riordan matrix is the \textit{Pascal triangle}
 $$\mathcal{R}\left(\frac{1}{1-t}, \frac{t}{1-t}\right)\quad\text{where}\quad
 d_{n,k}={n\choose k};$$ moreover, another remarkable matrix is the
 \textit{Catalan triangle}
-$$\mathcal{R}\left(\frac{1-\sqrt{1-4\,t}}{2\,t}, \frac{1-\sqrt{1-4\,t}}{2\,t}\right)
-\quad\text{where}$$
-$$d_{n,k}={{2n-k}\choose{n-k}} - {{2n-k}\choose{n-k-1}}.$$
+$$\mathcal{R}\left(\frac{1-\sqrt{1-4\,t}}{2\,t}, \frac{1-\sqrt{1-4\,t}}{2\,t}\right),$$
+$$\text{where}\quad d_{n,k}={{2n-k}\choose{n-k}} - {{2n-k}\choose{n-k-1}}.$$
 
 Some of their properties  and recent applications can be found
 in \citep{LUZON201475,MRSV97}. In particular, we recall that the bivariate generating
@@ -128,13 +127,19 @@ Introduction of \verb|Eq|, \verb|solve| and \verb|symbols| functions:
 >>> a, t = symbols('a t')
 >>> a_def = Eq(a, 3)
 >>> at_eq = Eq(a+5*t, 1/(1-t))
->>> sols = [Eq(t, s) for s in solve(at_eq, t)]
->>> a_def, at_eq, sols
+>>> a_def, at_eq
 \end{minted}
 \begin{displaymath}
 \left(
-a=3,\quad a + 5 t = \frac{1}{- t + 1}, \quad \left [ t = - \frac{a}{10} - \frac{1}{10} \sqrt{a^{2} + 10 a + 5} + \frac{1}{2}, \quad t = - \frac{a}{10} + \frac{1}{10} \sqrt{a^{2} + 10 a + 5} + \frac{1}{2}\right ]
+a=3,\quad a + 5 t = \frac{1}{- t + 1}
 \right)
+\end{displaymath}
+\begin{minted}[fontsize=\small]{python}
+>>> sols = [Eq(t, s) for s in solve(at_eq, t)]
+>>> sols
+\end{minted}
+\begin{displaymath}
+\left [ t = - \frac{a}{10} - \frac{1}{10} \sqrt{a^{2} + 10 a + 5} + \frac{1}{2}, \quad t = - \frac{a}{10} + \frac{1}{10} \sqrt{a^{2} + 10 a + 5} + \frac{1}{2}\right ]
 \end{displaymath}
 \end{example}
 
@@ -274,6 +279,7 @@ The Pascal triangle built using closed generating functions:
 \left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\1 & 2 & 1 &   &   &   &   &   &   &  \\1 & 3 & 3 & 1 &   &   &   &   &   &  \\1 & 4 & 6 & 4 & 1 &   &   &   &   &  \\1 & 5 & 10 & 10 & 5 & 1 &   &   &   &  \\1 & 6 & 15 & 20 & 15 & 6 & 1 &   &   &  \\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1 &   &  \\1 & 8 & 28 & 56 & 70 & 56 & 28 & 8 & 1 &  \\1 & 9 & 36 & 84 & 126 & 126 & 84 & 36 & 9 & 1\end{matrix}\right]
 \end{displaymath}
 \end{example}
+\vfill
 
 \subsection{Recurrence ctor}
 
@@ -332,6 +338,7 @@ array, here is its definition with two helper \verb|ctor|s:
 }
 
 implemented according to \citep{barry2017riordan}, page $215$.
+\vfill
 
 \subsection{$A$ and $Z$ sequences ctor}
 

@@ -3,16 +3,52 @@ We begin this section with necessary definitions about Jordan canonical forms
 to help the computation of matrices functions.
 
 Let $A\in\mathbb{R}^{m\times m}$ be a square matrix and $\Phi_{i,j}
-\in\prod_{m-1}$ a generalized Lagrange base; according to \citep{LT2002},
-$Z_{i,j}^{[A]} = \Phi_{i,j}(A)$ is a \textit{component matrix} of $A$ (from
-here on, we just write $Z_{i,j}$ to keep clean the notation when no confusion
-arises). Let $\boldsymbol{v}\in\mathbb{R}^{m}$ be a \textit{non-zero} vector to
+\in\prod_{m-1}$ a generalized Lagrange base, so $Z_{i,j}^{[A]} = \Phi_{i,j}(A)$
+denotes the $j$-th \textit{component matrix} of $A$ relative to its $i$-th
+eigenvalue (from here on, we just write $Z_{i,j}$ to keep clean the notation
+when no confusion arises). Proofs of the following component matrices's
+properties
+\begin{itemize}
+\item they are linearly independent and don't depend on function $f$,
+\item they commute respect the product, $Z_{ij}Z_{kr}= Z_{kr}Z_{ij}$,
+\item $Z_{ij}Z_{kr}=O$ if $i\neq k$,
+\item $Z_{i1}Z_{ij}=Z_{ij}$ if $j > 0 $,
+\item $Z_{i2}Z_{ij}=jZ_{i,j+1}$ if $j > 0 $,
+\item $Z_{ij}=\frac{Z_{i2}^{j-1}}{(j-1)!}$ if $j > 1 $,
+\item $Z_{i2}^{m_{i}}=O$ for $i\in\lbrace 1,\ldots,\nu\rbrace$,
+\item $I = \sum_{i=1}^{\nu}{Z_{i1}}$ from $f(z)=1$, and
+\item $Z_{i2} = Z_{i1}(A-\lambda_{i}I)$ from $f(z)=z-\lambda_{i}$, for
+        $i\in\lbrace 1,\ldots,\nu\rbrace$,
+\end{itemize}
+can be found in \citep{BT1998, LT2002}.
+
+\begin{example}
+Component matrices relative to $\mathcal{P}_{8}$ are
+\begin{displaymath}
+Z_{1,1} = \left[\begin{matrix}1 &  &  &  &  &  &  & \\ & 1 &  &  &  &  &  & \\ &  & 1 &  &  &  &  & \\ &  &  & 1 &  &  &  & \\ &  &  &  & 1 &  &  & \\ &  &  &  &  & 1 &  & \\ &  &  &  &  &  & 1 & \\ &  &  &  &  &  &  & 1\end{matrix}\right], \quad Z_{1,2} = \left[\begin{matrix} &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\1 & 2 &  &  &  &  &  & \\1 & 3 & 3 &  &  &  &  & \\1 & 4 & 6 & 4 &  &  &  & \\1 & 5 & 10 & 10 & 5 &  &  & \\1 & 6 & 15 & 20 & 15 & 6 &  & \\1 & 7 & 21 & 35 & 35 & 21 & 7 & \end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+Z_{1,3} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\3 & 3 &  &  &  &  &  & \\7 & 12 & 6 &  &  &  &  & \\15 & 35 & 30 & 10 &  &  &  & \\31 & 90 & 105 & 60 & 15 &  &  & \\63 & 217 & 315 & 245 & 105 & 21 &  & \end{matrix}\right], \quad Z_{1,4} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\6 & 4 &  &  &  &  &  & \\25 & 30 & 10 &  &  &  &  & \\90 & 150 & 90 & 20 &  &  &  & \\301 & 630 & 525 & 210 & 35 &  &  & \end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+Z_{1,5} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\10 & 5 &  &  &  &  &  & \\65 & 60 & 15 &  &  &  &  & \\350 & 455 & 210 & 35 &  &  &  & \end{matrix}\right], \quad Z_{1,6} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\15 & 6 &  &  &  &  &  & \\140 & 105 & 21 &  &  &  &  & \end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+Z_{1,7} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\21 & 7 &  &  &  &  &  & \end{matrix}\right]
+\quad\text{and}\quad Z_{1,8} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \end{matrix}\right];
+\end{displaymath}
+in parallel; corresponding matrices for $\mathcal{C}_{8}$ and $\mathcal{S}_{8}$
+can be computed in a similar way.
+\end{example}
+
+Let $\boldsymbol{v}\in\mathbb{R}^{m}$ be a \textit{non-zero} vector to
 define a set of subspaces
 \begin{displaymath}
 \mathcal{M}_{i} = \left\lbrace \boldsymbol{x}_{i,j} = Z_{i,2}^{j-1}\,Z_{i,1}\,\boldsymbol{v},\,j\in\lbrace1,\ldots,m_{i}\rbrace\right\rbrace, \quad i\in \lbrace 1,\ldots,\nu \rbrace,
 \end{displaymath}
 where $dim(\mathcal{M}_{i})=m_{i}$; moreover, vectors $\boldsymbol{x}_{i,j}$ are
 linearly independent, therefore $\mathcal{M}_{q}\cap\mathcal{M}_{w}=\emptyset$ if $q\neq w$.
+
 \begin{lemma}
 Let $\lambda_{i}\in\sigma(A)$, then vectors
 $\boldsymbol{x}_{i,j}\in\mathcal{M}_{i}$ satisfy the recurrence relation
@@ -27,7 +63,7 @@ A\,\boldsymbol{x}_{i,m_{i}} &= \lambda_{i}\,\boldsymbol{x}_{i,m_{i}} \\
 Component matrices commute with respect to matrix product, namely
 $Z_{ij}Z_{kr}= Z_{kr}Z_{ij}$; moreover, identities $Z_{i2} =
 Z_{i1}(A-\lambda_{i}I)$, $Z_{i,2}^{m_{i}}=O$ and $Z_{i1}Z_{ij}=Z_{ij}$ also
-hold. 
+hold.
 
 Let $ j\in \lbrace 1,\ldots,m_{i}-1 \rbrace $ in the first equation of
 \begin{displaymath}
@@ -36,8 +72,8 @@ Let $ j\in \lbrace 1,\ldots,m_{i}-1 \rbrace $ in the first equation of
 Z_{i,2}\,\boldsymbol{x}_{i,m_{i}} &=  Z_{i,2}\,Z_{i,2}^{m_{i}-1}\,Z_{i,1}\,\boldsymbol{v} = Z_{i,2}^{m_{i}}\,Z_{i,1}\,\boldsymbol{v} = \boldsymbol{0};
 \end{split}
 \end{displaymath}
-moreover, proofs of component matrices's properties can be found in \citep{BT1998, LT2002}.
 \end{proof}
+
 The recurrence relation can be rewritten in matrix notation as $A\,X_{i} = X_{i}\,J_{i}$ where
 \begin{displaymath}
 \begin{split}
@@ -66,9 +102,42 @@ J = \left[ \begin{array}{ccc}
 \end{displaymath}
 with respect to vector $\boldsymbol{v}\in\mathbb{R}^{m}$; finally, if $X$ is
 non-singular then matrices $A$ and $X^{-1}\,A\,X = J$ are \textit{similar}, $A
-\sim_{X} J$ in symbols. This derivations allow us to compute functions of
-matrices in a easier way, with the help of the following 
-\begin{lemma} Let $f$ be a function defined on $\sigma(A)$ and $g$ the 
+\sim_{X} J$ in symbols.
+
+\begin{example}
+$\mathcal{P}_{8}$'s component matrices are used to build the set of
+\textit{generalized eigenvectors}
+\begin{displaymath}
+\boldsymbol{x}_{1,1} = \left[\begin{matrix}\alpha_{0}\\\alpha_{1}\\\alpha_{2}\\\alpha_{3}\\\alpha_{4}\\\alpha_{5}\\\alpha_{6}\\\alpha_{7}\end{matrix}\right], \quad \boldsymbol{x}_{1,2} = \left[\begin{matrix}0\\\alpha_{0}\\\alpha_{0} + 2 \alpha_{1}\\\alpha_{0} + 3 \alpha_{1} + 3 \alpha_{2}\\\alpha_{0} + 4 \alpha_{1} + 6 \alpha_{2} + 4 \alpha_{3}\\\alpha_{0} + 5 \alpha_{1} + 10 \alpha_{2} + 10 \alpha_{3} + 5 \alpha_{4}\\\alpha_{0} + 6 \alpha_{1} + 15 \alpha_{2} + 20 \alpha_{3} + 15 \alpha_{4} + 6 \alpha_{5}\\\alpha_{0} + 7 \alpha_{1} + 21 \alpha_{2} + 35 \alpha_{3} + 35 \alpha_{4} + 21 \alpha_{5} + 7 \alpha_{6}\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+\boldsymbol{x}_{1,3} = \left[\begin{matrix}0\\0\\2 \alpha_{0}\\6 \alpha_{0} + 6 \alpha_{1}\\14 \alpha_{0} + 24 \alpha_{1} + 12 \alpha_{2}\\30 \alpha_{0} + 70 \alpha_{1} + 60 \alpha_{2} + 20 \alpha_{3}\\62 \alpha_{0} + 180 \alpha_{1} + 210 \alpha_{2} + 120 \alpha_{3} + 30 \alpha_{4}\\126 \alpha_{0} + 434 \alpha_{1} + 630 \alpha_{2} + 490 \alpha_{3} + 210 \alpha_{4} + 42 \alpha_{5}\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+\boldsymbol{x}_{1,4} = \left[\begin{matrix}0\\0\\0\\6 \alpha_{0}\\36 \alpha_{0} + 24 \alpha_{1}\\150 \alpha_{0} + 180 \alpha_{1} + 60 \alpha_{2}\\540 \alpha_{0} + 900 \alpha_{1} + 540 \alpha_{2} + 120 \alpha_{3}\\1806 \alpha_{0} + 3780 \alpha_{1} + 3150 \alpha_{2} + 1260 \alpha_{3} + 210 \alpha_{4}\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+\boldsymbol{x}_{1,5} = \left[\begin{matrix}0\\0\\0\\0\\24 \alpha_{0}\\240 \alpha_{0} + 120 \alpha_{1}\\1560 \alpha_{0} + 1440 \alpha_{1} + 360 \alpha_{2}\\8400 \alpha_{0} + 10920 \alpha_{1} + 5040 \alpha_{2} + 840 \alpha_{3}\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+\boldsymbol{x}_{1,6} = \left[\begin{matrix}0\\0\\0\\0\\0\\120 \alpha_{0}\\1800 \alpha_{0} + 720 \alpha_{1}\\16800 \alpha_{0} + 12600 \alpha_{1} + 2520 \alpha_{2}\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+\boldsymbol{x}_{1,7} = \left[\begin{matrix}0\\0\\0\\0\\0\\0\\720 \alpha_{0}\\15120 \alpha_{0} + 5040 \alpha_{1}\end{matrix}\right]
+\quad\text{and}\quad \boldsymbol{x}_{1,8} = \left[\begin{matrix}0\\0\\0\\0\\0\\0\\0\\5040 \alpha_{0}\end{matrix}\right],
+\end{displaymath}
+where $\boldsymbol{v} = [\alpha_{0}, \ldots, \alpha_{7}]^{T} \in \mathbb{C}^{8}$;
+finally, consecutive composition of previous vectors yields the matrix 
+$$X = \left[\boldsymbol{x}_{1,1}\quad\boldsymbol{x}_{1,2}\quad
+\boldsymbol{x}_{1,3}\quad\boldsymbol{x}_{1,4}\quad
+\boldsymbol{x}_{1,5}\quad\boldsymbol{x}_{1,6}\quad\boldsymbol{x}_{1,7}\quad
+\boldsymbol{x}_{1,8}\right]$$ 
+which is the most abstract matrix such that $\mathcal{P}_{8} \sim_{X} J$.
+\end{example}
+
+This derivations allow us to compute functions of
+matrices in a easier way, with the help of the following
+\begin{lemma} Let $f$ be a function defined on $\sigma(A)$ and $g$ the
 corresponding Hermite interpolating polynomial. Then $ A \sim_{X} J \rightarrow
 g(A) \sim_{X} g(J) $, for a matrix $X$ which depends on a arbitrary vector
 $\boldsymbol{v}\in\mathbb{R}^{m}$.
@@ -86,7 +155,7 @@ finding matrices $X$ and $J$; second, compute $g(J)$; third, multiply it by $X$
 on the left side and by $X^{-1}$ on the right side. Now, to study the
 application of $f$ to $J$ we can focus on the application of $f$ to the Jordan
 block $J_{i}$ due to the block-wise structure of matrix $J$ and, lately,
-compose results block-wise as well. 
+compose results block-wise as well.
 \iffalse % \begin{displaymath} {{{
 f(J) = \left[ \begin{array}{ccc}
         f(J_{1}) \\
@@ -129,8 +198,8 @@ reduces to matrices $X = X_{1}$ and $J = J_{1}$ because of the unique
 eigenvalue $\lambda_{1}$ of algebraic multiplicity $m_{1} = m$.
 
 \begin{example}
-Let $\mathcal{P}\sim_{X}J$, then Pascal triangle's inverse 
-$\mathcal{P}^{-1}$ can be computed by 
+Let $\mathcal{P}\sim_{X}J$, then Pascal triangle's inverse
+$\mathcal{P}^{-1}$ can be computed by
 \iffalse % \begin{displaymath} {{{
 \scriptsize
 \left[\begin{matrix}\frac{1}{\lambda_{1}} & 0 & 0 & 0 & 0 & 0 & 0 & 0\\- \frac{1}{\lambda_{1}^{2}} & \frac{1}{\lambda_{1}} & 0 & 0 & 0 & 0 & 0 & 0\\- \frac{1}{\lambda_{1}^{2}} + \frac{2}{\lambda_{1}^{3}} & - \frac{2}{\lambda_{1}^{2}} & \frac{1}{\lambda_{1}} & 0 & 0 & 0 & 0 & 0\\- \frac{1}{\lambda_{1}^{2}} + \frac{6}{\lambda_{1}^{3}} - \frac{6}{\lambda_{1}^{4}} & - \frac{3}{\lambda_{1}^{2}} + \frac{6}{\lambda_{1}^{3}} & - \frac{3}{\lambda_{1}^{2}} & \frac{1}{\lambda_{1}} & 0 & 0 & 0 & 0\\- \frac{1}{\lambda_{1}^{2}} + \frac{14}{\lambda_{1}^{3}} - \frac{36}{\lambda_{1}^{4}} + \frac{24}{\lambda_{1}^{5}} & - \frac{4}{\lambda_{1}^{2}} + \frac{24}{\lambda_{1}^{3}} - \frac{24}{\lambda_{1}^{4}} & - \frac{6}{\lambda_{1}^{2}} + \frac{12}{\lambda_{1}^{3}} & - \frac{4}{\lambda_{1}^{2}} & \frac{1}{\lambda_{1}} & 0 & 0 & 0\\- \frac{1}{\lambda_{1}^{2}} + \frac{30}{\lambda_{1}^{3}} - \frac{150}{\lambda_{1}^{4}} + \frac{240}{\lambda_{1}^{5}} - \frac{120}{\lambda_{1}^{6}} & - \frac{5}{\lambda_{1}^{2}} + \frac{70}{\lambda_{1}^{3}} - \frac{180}{\lambda_{1}^{4}} + \frac{120}{\lambda_{1}^{5}} & - \frac{10}{\lambda_{1}^{2}} + \frac{60}{\lambda_{1}^{3}} - \frac{60}{\lambda_{1}^{4}} & - \frac{10}{\lambda_{1}^{2}} + \frac{20}{\lambda_{1}^{3}} & - \frac{5}{\lambda_{1}^{2}} & \frac{1}{\lambda_{1}} & 0 & 0\\- \frac{1}{\lambda_{1}^{2}} + \frac{62}{\lambda_{1}^{3}} - \frac{540}{\lambda_{1}^{4}} + \frac{1560}{\lambda_{1}^{5}} - \frac{1800}{\lambda_{1}^{6}} + \frac{720}{\lambda_{1}^{7}} & - \frac{6}{\lambda_{1}^{2}} + \frac{180}{\lambda_{1}^{3}} - \frac{900}{\lambda_{1}^{4}} + \frac{1440}{\lambda_{1}^{5}} - \frac{720}{\lambda_{1}^{6}} & - \frac{15}{\lambda_{1}^{2}} + \frac{210}{\lambda_{1}^{3}} - \frac{540}{\lambda_{1}^{4}} + \frac{360}{\lambda_{1}^{5}} & - \frac{20}{\lambda_{1}^{2}} + \frac{120}{\lambda_{1}^{3}} - \frac{120}{\lambda_{1}^{4}} & - \frac{15}{\lambda_{1}^{2}} + \frac{30}{\lambda_{1}^{3}} & - \frac{6}{\lambda_{1}^{2}} & \frac{1}{\lambda_{1}} & 0\\- \frac{1}{\lambda_{1}^{2}} + \frac{126}{\lambda_{1}^{3}} - \frac{1806}{\lambda_{1}^{4}} + \frac{8400}{\lambda_{1}^{5}} - \frac{16800}{\lambda_{1}^{6}} + \frac{15120}{\lambda_{1}^{7}} - \frac{5040}{\lambda_{1}^{8}} & - \frac{7}{\lambda_{1}^{2}} + \frac{434}{\lambda_{1}^{3}} - \frac{3780}{\lambda_{1}^{4}} + \frac{10920}{\lambda_{1}^{5}} - \frac{12600}{\lambda_{1}^{6}} + \frac{5040}{\lambda_{1}^{7}} & - \frac{21}{\lambda_{1}^{2}} + \frac{630}{\lambda_{1}^{3}} - \frac{3150}{\lambda_{1}^{4}} + \frac{5040}{\lambda_{1}^{5}} - \frac{2520}{\lambda_{1}^{6}} & - \frac{35}{\lambda_{1}^{2}} + \frac{490}{\lambda_{1}^{3}} - \frac{1260}{\lambda_{1}^{4}} + \frac{840}{\lambda_{1}^{5}} & - \frac{35}{\lambda_{1}^{2}} + \frac{210}{\lambda_{1}^{3}} - \frac{210}{\lambda_{1}^{4}} & - \frac{21}{\lambda_{1}^{2}} + \frac{42}{\lambda_{1}^{3}} & - \frac{7}{\lambda_{1}^{2}} & \frac{1}{\lambda_{1}}\end{matrix}\right]
@@ -174,7 +243,7 @@ implies $Y\,X^{-1}\,g(A)\,X\,Y^{-1} = g(B)$, as required.
 \begin{example}
 Pascal and Catalan triangles are similar with respect to
 $\mathcal{P} \sim_{X\,Y^{-1}}\mathcal{C}$ and $\mathcal{C}
-\sim_{Y\,X^{-1}}\mathcal{P}$, where 
+\sim_{Y\,X^{-1}}\mathcal{P}$, where
 \begin{displaymath}
 Y = \beta_{0} \left[\begin{matrix}1 &  &  &  &  &  &  & \\0 & 1 &  &  &  &  &  & \\0 & 2 & 2 &  &  &  &  & \\0 & 5 & 11 & 6 &  &  &  & \\0 & 14 & 52 & 62 & 24 &  &  & \\0 & 42 & 238 & 470 & 394 & 120 &  & \\0 & 132 & 1084 & 3176 & 4348 & 2844 & 720 & \\0 & 429 & 4956 & 20323 & 40562 & 42874 & 23148 & 5040\end{matrix}\right]
 \end{displaymath}
@@ -191,7 +260,7 @@ $\mathcal{C} \sim_{Y_{\boldsymbol{\beta}}\,\left(X_{\boldsymbol{\alpha}}\right)^
 \begin{displaymath}
 {Y_{\boldsymbol{\beta}}\,\left(X_{\boldsymbol{\alpha}}\right)^{-1}} = \frac{\beta_{0}}{\alpha_{0}} \left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 1 & 1 & 0 & 0 & 0 & 0 & 0\\0 & \frac{3}{2} & \frac{5}{2} & 1 & 0 & 0 & 0 & 0\\0 & \frac{8}{3} & 6 & \frac{13}{3} & 1 & 0 & 0 & 0\\0 & \frac{31}{6} & \frac{175}{12} & \frac{89}{6} & \frac{77}{12} & 1 & 0 & 0\\0 & \frac{157}{15} & \frac{215}{6} & \frac{281}{6} & \frac{175}{6} & \frac{87}{10} & 1 & 0\\0 & \frac{649}{30} & \frac{1767}{20} & \frac{851}{6} & 115 & \frac{1501}{30} & \frac{223}{20} & 1\end{matrix}\right]
 \end{displaymath}
-as required. 
+as required.
 \fi
 % }}}
 
@@ -205,7 +274,7 @@ Riordan arrays, in the next theorem we show a connection to this result.
 Let $A$ be a Riordan matrix, $\boldsymbol{b}$ a vector and $A\,X = X\,J$ be the
 $A$'s Jordan canonical form built on matrices $J$ and $X$ depending on
 $\boldsymbol{b}$.  Let $f$ be a function  defined on $\sigma(A)$, then
-$f(A)\cdot\boldsymbol{b} = X\,f(J)\,\boldsymbol{e}_{0}$. 
+$f(A)\cdot\boldsymbol{b} = X\,f(J)\,\boldsymbol{e}_{0}$.
 \end{theorem}
 \begin{proof}
 Observe that

@@ -30,9 +30,9 @@ $\Phi_{i,j}$ in matrix notation
 \label{eq:Ez-product}
     \left[\begin{matrix}1 &  &  &  &  &  &  & \\- \lambda_{1} & 1 &  &  &  &  &  & \\\frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 &  &  &  &  & \\- \frac{\lambda_{1}^{3}}{6} & \frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 &  &  &  & \\\frac{\lambda_{1}^{4}}{24} & - \frac{\lambda_{1}^{3}}{6} & \frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 &  &  & \\- \frac{\lambda_{1}^{5}}{120} & \frac{\lambda_{1}^{4}}{24} & - \frac{\lambda_{1}^{3}}{6} & \frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 &  & \\\frac{\lambda_{1}^{6}}{720} & - \frac{\lambda_{1}^{5}}{120} & \frac{\lambda_{1}^{4}}{24} & - \frac{\lambda_{1}^{3}}{6} & \frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 & \\- \frac{\lambda_{1}^{7}}{5040} & \frac{\lambda_{1}^{6}}{720} & - \frac{\lambda_{1}^{5}}{120} & \frac{\lambda_{1}^{4}}{24} & - \frac{\lambda_{1}^{3}}{6} & \frac{\lambda_{1}^{2}}{2} & - \lambda_{1} & 1 \\ \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots  \end{matrix}\right] \left[\begin{matrix}1\\z\\\frac{z^{2}}{2!}\\\frac{z^{3}}{3!}\\\frac{z^{4}}{4!}\\\frac{z^{5}}{5!}\\\frac{z^{6}}{6!}\\\frac{z^{7}}{7!}\\\vdots\end{matrix}\right] = \left[\begin{matrix}\phi_{ 1, 1 }{\left (z \right )}\\\phi_{ 1, 2 }{\left (z \right )}\\\phi_{ 1, 3 }{\left (z \right )}\\\phi_{ 1, 4 }{\left (z \right )}\\\phi_{ 1, 5 }{\left (z \right )}\\\phi_{ 1, 6 }{\left (z \right )}\\\phi_{ 1, 7 }{\left (z \right )}\\\phi_{ 1, 8 }{\left (z \right )}\\\vdots\end{matrix}\right]
 \end{equation}
-where the generic coefficient $d_{n,k}$ has the closed form $\displaystyle
-d_{n,k} =~\frac{\left(-\lambda_{1}\right)^{n-k}}{\left(n-k\right)!}$, with
-$k\leq n$; therefore, we define
+where the generic coefficient $d_{n,k}$ has the closed form
+$$ d_{n,k} =~\frac{\left(-\lambda_{1}\right)^{n-k}}{\left(n-k\right)!},\quad k\leq n;$$ 
+therefore, we define
 \begin{displaymath}
 \begin{split}
   \Phi_{1,j}(z) &= \sum_{k=0}^{j-1}{\frac{(-\lambda_{1})^{j-1-k}}{(j-1-k)!}\frac{z^{k}}{k!}}\\
