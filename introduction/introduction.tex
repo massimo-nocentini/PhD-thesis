@@ -36,4 +36,73 @@ we deepen into
 
 \end{description}
 
+Another force that drove our work is a pedagogical approach to problem solving,
+hence we preferred to refine a first, naive solution over and over to cut away
+unnecessary details and complexities; moreover, we don't seek for efficiency in
+all cases in favor of simple and beauty definitions. This methodology allows us
+to use many programming languages and environments to support theoretical
+derivations and this dissertation collects this heterogeneous pool of techniques.
+
+
+\section*{Structure}
+
+This dissertation has 5 main chapters that rely on the first one, which
+introduces basic definitions needed by the following ones; so, except for the
+former, the others can be read in any order, precisely
+\begin{itemize}
+\item Chapter \ref{ch:backgrounds} quickly recalls the theory characterizing
+the Riordan group and provides a set of constructors to define those matrices
+programmatically, after the introduction of the symbolic module Sympy
+implemented on top of the Python programming language. Moreover, it shows our
+programming style which is based on consecutive manipulation of symbolic
+equations, as mush as possible close to paper and pencil derivations.
+\item Chapter \ref{ch:Riordan-matrices-function} presents a theoretical and
+practical framework that lifts a scalar function to a matrix function, toward
+application to Riordan matrices. To the best of our knowledge, this is the
+first implementation that allows the user to perform its computations fully
+symbolic, postponing to the end the substitution of ground values to fill
+matrices with numbers. Moreover, the Jordan Canonical Form of Riordan matrices
+is also studied.
+\item Chapter \ref{ch:algebraic-gfs-languages-avoiding-Riordan-patterns}
+studies the enumeration of languages of binary words avoiding a given pattern,
+provided that some contraints over the structure of each word are taken into
+account.  In particular, when the pattern to avoid is a Riordan pattern then
+the problem can be solved using Riordan arrays, deriving new series
+developments about enumerations with respect to the number of $1$-bits and to
+the length. Finally, some combinatorial interpretations are shown, at least for
+simpler families of languages.
+\item Chapter \ref{ch:OEIS:tools} implements a suite of tools that interact with
+the Online Encyclopedia of Integer Sequences; in particular, a (i)~crawler fetches
+sequences and their cross references recursively, using asynchronous primitive
+to optimize network delays, a (ii)~(pretty) printer for the fetched sequences that
+allows the user to filter section to be rendered both in the terminal and in
+web interfaces and, finally, a (ii)~grapher that draw graphs where vertices
+are sequences and edges are references among them.
+\item Chapter \ref{ch:queens-tilings-polyominoes} is an exercise in
+backtracking techniques to solve tiling and placement problems; for the sake of
+efficiency, bit masking manipulation and encodings are used. Moreover, it
+provides an implementation of a classic enumeration methodology that allows us
+to clearly show generations of combinatorial objects starting from concise and
+recursive symbolic definitions; eventually, counting all of them is a check of
+the correctness of our implementation.
+\item Chapter \ref{ch:scilp} proposes an extension to the tactic mechanism
+actually present in the HOL Light theorem prover inspired to the relational
+paradigm. This prototype makes explicit use of meta-variables to support
+substitutions and allows backtracking facilities during the interactive proof
+process; nonetheless, the proposed generalization offers compositionality as
+the current system does. This extension is stressed against an evaluator for a
+subset of the Lisp language, to find a \textit{quine} program, eventually.
+\end{itemize}
+
+\section*{Typographical and typesetting conventions}
+
+This dissertation is typesetted using the \LaTeX\,'s style \verb|tufte-book|,
+which splits each page into two columns: the left-most is greater in width and
+holds the main body, while the right-most is lesser and holds captions,
+contextual data and code comments; in particular, code chunks are printed in
+\verb|verbatim| and highlighted wherever possible, while outputs that denote
+mathematical objects are printed in math style, as usual.
+
+
+
 
