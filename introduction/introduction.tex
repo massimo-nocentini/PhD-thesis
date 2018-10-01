@@ -2,11 +2,18 @@
 
 
 \textit{Combinatorics. Logic. Programming.} This dissertation is an attempt to
-explore how each entity relates to the others. Our research field concerns
-(i)~the manipulation of \textit{Riordan arrays} both as standalone objects
-deserving attention by their own and as tools to study other combinatorial
-structures; (ii)~the \textit{practice of programming} that exposes our way of 
-thinking to its paradigms, functional and relational in particular, and 
+explore how each entity relates to the others. Seen as a set of rules that
+characterize our methodology, we apply and use them to study the topic of
+\textit{infinite~sequences}.  Our approach is two-fold, it allows us, first, to
+prove theoretical results about them; second, to built an orbit around them
+composed of side-track techniques that helps our main goal, such as programming
+techniques and logical reasoning.
+
+In particular, the research field of interest concerns (i)~the manipulation of
+a set of matrices that can be algebraically defined, which deserve interest
+both as standalone objects and as tools to study other combinatorial
+structures; (ii)~the \textit{practice of programming} that exposes our way of
+thinking to its paradigms, functional and relational in particular, and
 (iii)~the rigor and power of \textit{mechanized logic}.
 
 In normal conditions, it is hard to tackle a problem in our context with both
@@ -35,6 +42,13 @@ we deepen into
     theorem prover based on Higher Order Logic.
 
 \end{description}
+
+Even though abstract reasoning took place for the majority of time, we make
+some room for practical stuff; in particular, we would like to provide a suite
+of tools that helps interacting with the Online Encyclopedia of Integer
+Sequences, to automate fetching, printing and graphing the networks they
+compose. Moreover, some practice with bitmasking and backtracking techniques is
+done to show some interesting tiling and enumeration problems.
 
 Another force that drove our work is a pedagogical approach to problem solving,
 hence we preferred to refine a first, naive solution over and over to cut away
@@ -94,6 +108,9 @@ the current system does. This extension is stressed against an evaluator for a
 subset of the Lisp language, to find a \textit{quine} program, eventually.
 \end{itemize}
 
+Moreover, a final paragraph concludes with a quick summary of our main results
+and the bibliography ends this dissertation.
+
 \section*{Typographical and typesetting conventions}
 
 This dissertation is typesetted using the \LaTeX\,'s style \verb|tufte-book|,
@@ -101,7 +118,9 @@ which splits each page into two columns: the left-most is greater in width and
 holds the main body, while the right-most is lesser and holds captions,
 contextual data and code comments; in particular, code chunks are printed in
 \verb|verbatim| and highlighted wherever possible, while outputs that denote
-mathematical objects are printed in math style, as usual.
+mathematical objects are printed in math style, as usual -- when their size
+overflows over the right column we prefer to allow it to take the entire
+page width for the sake of clarity.
 
 
 

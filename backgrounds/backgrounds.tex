@@ -349,6 +349,8 @@ arrays by their $Z$ and $A$ sequences; here it is,
     \inputminted[fontsize=\small,stripnl=false,firstline=47, lastline=78]{python}{deps/simulation-methods/src/sequences.py}
 }
 
+\vfill
+
 \begin{example}
 Again the Pascal triangle built using $A$ and $Z$ sequences
 \begin{minted}[fontsize=\small]{python}
@@ -369,9 +371,8 @@ Again the Pascal triangle built using $A$ and $Z$ sequences
 \end{displaymath}
 \end{example}
 
-
 \begin{example}
-Catalan triangle built using $A$ and $Z$ sequences, which are equal for this array:
+Catalan triangle built using $A$ and $Z$ sequences,
 \begin{minted}[fontsize=\small]{python}
 >>> A_ones = Eq(A(t), 1/(1-t)) # A is defined as in the previous example
 >>> R = Matrix(10, 10, riordan_matrix_by_AZ_sequences(10, (A_ones, A_ones)))
@@ -382,9 +383,8 @@ Catalan triangle built using $A$ and $Z$ sequences, which are equal for this arr
 \end{displaymath}
 \end{example}
 
-
 \begin{example}
-Symbolic Riordan arrays built using $A$ and $Z$ sequences, which are equal in this case:
+Symbolic Riordan arrays built using $A$ and $Z$ sequences,
 \begin{minted}[fontsize=\small]{python}
 >>> dim = 5
 >>> a = IndexedBase('a')
