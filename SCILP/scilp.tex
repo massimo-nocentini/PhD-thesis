@@ -1,5 +1,94 @@
 
-\section{Introduction}
+This chapter studies an embedded Domain Specific Language for logic
+programming.  First, we give a quick introduction of \textit{$\mu$Kanren}, a
+purely functional implementation of this language and, second, we extend the
+HOL Light theorem prover in order to introduce the relation paradigm in its
+tactics mechanism.
+
+\section{$\mu$Kanren and relational programming}
+
+The central tenet of relational programming is that \textit{programs
+corresponds to relations that generalize mathematical functions}; our interest
+here is to deepen our understanding of the underlying structures and data
+structures of languages in the \textit{miniKanren} family. The main reference
+that drive our work is \citep{Friedman:Reasoned:Schemer} and more details are
+discussed in the dissertation \citep{Byrd:PhD}.
+
+The heavy use of higher order functions, infinite streams of objects,
+unification \`a-la Robinson makes possible to implement $\mu$Kanren
+\citep{Hemann:muKanren}, a purely functional core of miniKanren; we repeat the
+exercise of writing it using different programming languages, in particular using
+\begin{description}
+\item[Python] 
+    we provide both a complete implementation of the abstract definition and a
+    test suite that stress our version against \textit{all} questions in the
+    reference book. Moreover, we characterize our code with a \textit{fair}
+    enumeration strategy based on the \textit{dovetail} techniques used in the
+    enumeration of the rationals; precisely, the monadic function
+    \verb|mplus(streams, interleaving)| enumerates the states space
+    \verb|streams|, using different strategies according to the argument
+    \verb|interleaving|.
+
+    In order to understand states enumeration can be helpful to use a matrix,
+    where we associate a row to each stream of states α belonging to
+    \verb|streams|, which is an \verb|iter| object over a \textit{countably},
+    possibly infinite, set of \textit{states streams}, the matrix could have infinite
+    rows.  In parallel, since each states stream α lying on a row is a \textit{iter}
+    object over a \textit{countably}, possibly infinite, set of \textit{satisfying states}, the
+    matrix could have infinite columns; therefore, the matrix we are building
+    could be infinite in both dimensions. So, let \verb|streams| be represented as follows:
+    \begin{displaymath}
+        \left(\begin{array}{ccccc}        
+        s_{00} & s_{01} & s_{02} & s_{03} & \ldots \\
+        s_{10} & s_{11} & s_{12} & \ldots &        \\
+        s_{20} & s_{21} & \ldots &        &        \\
+        s_{30} & \ldots &        &        &        \\
+        \ldots &        &        &        &        \\
+        \end{array}\right)
+    \end{displaymath}
+    \textit{dovetail} techniques enumerates by interleaving \verb|state|
+    objects lying on the same \textit{rising diagonal}, resulting in a
+    \textit{fair scheduler} in the sense that \textit{every} satisfying
+    \verb|state| object will be reached, eventually. For the sake of clarity,
+    enumeration proceeds as follows: 
+    \begin{displaymath}
+    s_{00}, s_{10}, s_{01}, s_{20}, s_{11}, s_{02}, s_{30}, s_{21},
+    s_{12}, s_{03}, \ldots
+    \end{displaymath}
+    providing a \textit{fair} and \textit{complete} enumeration strategy;
+    precisely,
+    \begin{minted}[fontsize=\small]{python}
+    def mplus(streams, interleaving):
+        
+        if interleaving:
+
+            try: α = next(streams)
+            except StopIteration: return
+            else: S = [α]
+
+            while S:
+
+                for j in reversed(range(len(S))):
+                    β = S[j]
+                    try: s = next(β)
+                    except StopIteration: del S[j]
+                    else: yield s
+
+                try: α = next(streams)
+                except StopIteration: pass
+                else: S.append(α)
+
+        else:
+
+            for α in streams: yield from α
+
+    \end{minted}
+\item[Scheme]    
+\item[Smalltalk]    
+\item[OCaml]    
+\end{description}
+
+\section{Toward certified computation}
 \label{sec:introduction}
 
 Theorem provers are employed to construct logically verified truths.
