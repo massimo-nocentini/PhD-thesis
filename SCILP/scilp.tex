@@ -19,7 +19,7 @@ unification \`a-la Robinson makes possible to implement $\mu$Kanren
 \citep{Hemann:muKanren}, a purely functional core of miniKanren; we repeat the
 exercise of writing it using different programming languages, in particular using
 \begin{description}
-\item[Python] 
+\item[Python]
     we provide both a complete implementation of the abstract definition and a
     test suite that stress our version against \textit{all} questions in the
     reference book. Moreover, we characterize our code with a \textit{fair}
@@ -38,7 +38,7 @@ exercise of writing it using different programming languages, in particular usin
     matrix could have infinite columns; therefore, the matrix we are building
     could be infinite in both dimensions. So, let \verb|streams| be represented as follows:
     \begin{displaymath}
-        \left(\begin{array}{ccccc}        
+        \left(\begin{array}{ccccc}
         s_{00} & s_{01} & s_{02} & s_{03} & \ldots \\
         s_{10} & s_{11} & s_{12} & \ldots &        \\
         s_{20} & s_{21} & \ldots &        &        \\
@@ -50,7 +50,7 @@ exercise of writing it using different programming languages, in particular usin
     objects lying on the same \textit{rising diagonal}, resulting in a
     \textit{fair scheduler} in the sense that \textit{every} satisfying
     \verb|state| object will be reached, eventually. For the sake of clarity,
-    enumeration proceeds as follows: 
+    enumeration proceeds as follows:
     \begin{displaymath}
     s_{00}, s_{10}, s_{01}, s_{20}, s_{11}, s_{02}, s_{30}, s_{21},
     s_{12}, s_{03}, \ldots
@@ -59,7 +59,7 @@ exercise of writing it using different programming languages, in particular usin
     precisely,
     \begin{minted}[fontsize=\small]{python}
     def mplus(streams, interleaving):
-        
+
         if interleaving:
 
             try: α = next(streams)
@@ -81,11 +81,60 @@ exercise of writing it using different programming languages, in particular usin
         else:
 
             for α in streams: yield from α
-
     \end{minted}
-\item[Scheme]    
-\item[Smalltalk]    
-\item[OCaml]    
+
+\item[Scheme] we provide our implementation using the same language that
+original authors use for their canonical version. We diverge from them in the
+way we represent substitutions, choosing a \textit{union-find}  data structure
+that allows us to maintain a balanced tree that keeps track of the unification
+relation. The overhead work that was necessary to implement a fully-flagged
+$\mu$Kanren yield a Scheme library to define and manipulate infinite streams of
+objects, an a direct use of it is for Riordan arrays definitions, such as
+\vfill
+\begin{minted}[fontsize=\small]{scheme}
+(test '((1)
+        (1 1)
+        (1 2 1)
+        (1 3 3 1)
+        (1 4 6 4 1)
+        (1 5 10 10 5 1)
+        (1 6 15 20 15 6 1)
+        (1 7 21 35 35 21 7 1)
+        (1 8 28 56 70 56 28 8 1)
+        (1 9 36 84 126 126 84 36 9 1))
+ ((list○take 10) (riordan-array stream:1s stream:1s)))
+\end{minted}
+lying on the procedural abstraction \verb|riordan-array| that consumes two
+formal power series and produces a stream of lists, each one denoting a
+triangle's row; its definition is clear and elegant,
+\begin{minted}[fontsize=\small]{scheme}
+(define riordan-array
+ (Λ (d h)
+  (stream:dest/car+cdr (d ∅)
+   ((dcar dcdr) (stream:cons
+                 (list dcar)
+                 ((stream:zip-with cons)
+                  dcdr (riordan-array (series:× d h) h)))))))
+\end{minted}
+where \verb|stream:×| denotes the \textit{series convolution operator} and
+the syntactic form \verb|Λ| is defined as
+\begin{minted}[fontsize=\small]{scheme}
+(define-syntax Λ
+ (syntax-rules ()
+  ((Λ args body ...)
+   (lambda args (delay-force (begin body ...))))))
+\end{minted}
+
+\item[Smalltalk] this implementation is an exercise in object-oriented
+programming and its coding has been driven by a test-first approach
+\citep{beck:TDD}, this is a vanilla port of the standard one.
+
+\item[OCaml] finally, this version is preparatory for the extension of the HOL
+Light theorem prover which we are going to describe in the rest of this
+chapter.
+
+All previous prototypes can be found in \citep{Nocentini:kanrens}.
+
 \end{description}
 
 \section{Toward certified computation}
@@ -116,13 +165,12 @@ We say that our approach is \emph{semi-certified} because
   ensured by a meta-reasoning.
 \end{itemize}
 
-At the present stage, our implementation is intended to be a test bed
-for experiments and further investigation on this reasoning paradigm.
+At the present stage, our implementation \citep{Maggesi:Nocentini:kanrenlight}
+is intended to be a test bed for experiments and further investigation on this
+reasoning paradigm.
 
-Our code is freely available from a shared
-repository\footnote{\url{https://github.com/massimo-nocentini/kanren-light}}.
 
-\section{An simple example}
+\section{A simple example}
 \label{sec:an-simple-example}
 
 To give the flavor of our framework, we show how to perform simple
@@ -132,21 +180,21 @@ Consider first the problem of computing the concatenation of two lists
 \verb|[1; 2]| and \verb|[3]|.  One natural way to approach this
 problem is by using rewriting.  In HOL Light, this can be done by using
 \emph{conversions} with the command
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # REWRITE_CONV [APPEND] `APPEND [1;2] [3]`;;
-\end{verbatim}
+\end{minted}
 where the theorem
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # APPEND;;
 val it : thm =
   |- (!l. APPEND [] l = l) /\
      (!h t l. APPEND (h :: t) l = h :: APPEND t l)
-\end{verbatim}
+\end{minted}
 gives the recursive equations for the operator \verb|APPEND|.
 
 Our implementation allows us to address the same problem from a
 logical point of view.  We start by proving two theorems
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # APPEND_NIL;;
 val it : thm = |- !l. APPEND [] l = l
 
@@ -154,39 +202,39 @@ val it : thm = |- !l. APPEND [] l = l
 val it : thm =
   |- !x xs ys zs. APPEND xs ys = zs
                   ==> APPEND (x :: xs) ys = x :: zs
-\end{verbatim}
+\end{minted}
 that gives the logical rules that characterize the \verb|APPEND|
 operator.  Then we define a \emph{solver}
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 let APPEND_SLV : solver =
   REPEAT_SLV (CONCAT_SLV (ACCEPT_SLV APPEND_NIL)
                          (RULE_SLV APPEND_CONS));;
-\end{verbatim}
+\end{minted}
 which implements the most obvious strategy for proving a relation of
 the form \verb|`APPEND x y = z`| by structural analysis on the list
 \verb|`x`|.  The precise meaning of the above code will be clear later
 in this note; however, this can be seen as the direct translation of
 the Prolog program
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 append([],X,X).
 append([X|Xs],Ys,[X|Zs]) :- append(Xs,Ys,Zs).
-\end{verbatim}
+\end{minted}
 
 Then, the problem of concatenating the two lists is described by the
 term
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 `??x. APPEND [1;2] [3] = x`
-\end{verbatim}
+\end{minted}
 where the binder \verb|`(??)`| is a syntactic variant of the usual
 existential quantifier \verb|`(?)`|, which introduces the
 \emph{meta-variables} of the \emph{query}.
 
 The following command
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 list_of_stream
   (solve APPEND_SLV
          `??x. APPEND [1; 2] [3] = x`);;
-\end{verbatim}
+\end{minted}
 runs the search process where the \verb|solve| function starts the
 proof search and produces a stream (i.e., a lazy list) of
 \emph{solutions} and the outermost \verb|list_of_stream| transform the
@@ -195,10 +243,10 @@ stream into a list.
 The output of the previous command is a single solution which is
 represented by a pair where the first element is the instantiation for
 the meta-variable \verb|`x`|and the second element is a HOL theorem
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 val it : (term list * thm) list =
   [([`x = [1; 2; 3]`], |- APPEND [1; 2] [3] = [1; 2; 3])]
-\end{verbatim}
+\end{minted}
 
 Now comes the interesting part: as in logic programs, our search
 strategy (i.e., the \verb|APPEND_SLV| solver) can be used for backward
@@ -207,7 +255,7 @@ reasoning.
 Consider the variation of the above problem where we want to enumerate
 all possible splits of the list \verb|[1; 2; 3]|.  This can be done by
 simply changing the goal term in the previous query:
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # list_of_stream
     (solve APPEND_SLV
            `??x y. APPEND x y = [1;2;3]`);;
@@ -221,27 +269,26 @@ val it : (term list * thm) list =
     |- APPEND [1; 2] [3] = [1; 2; 3]);
    ([`x = [1; 2; 3]`; `y = []`],
     |- APPEND [1; 2; 3] [] = [1; 2; 3])]
-\end{verbatim}
+\end{minted}
 
 \section{A library of solvers}
 \label{sec:library-solvers}
 
-Our framework is based on ML procedures called \emph{solvers}.
-Solvers generalizes classical HOL tactics in two ways: (i) they
-facilitate the manipulation of meta-variables in the goal\footnote{The
-  tactic mechanism currently implemented in HOL Light already provides
-  basic support for meta-variables in goals.  However, it seems to be
-  used only internally in the implementation of the intuitionistic
-  tautology prover \texttt{ITAUT\_TAC}.}; (ii) they allows to backtrack
-during the proof search.
+Our framework is based on ML procedures called \emph{solvers}.  Solvers
+generalizes classical HOL tactics in two ways: (i) they facilitate the
+manipulation of meta-variables in the goal; (ii) they allows to backtrack
+during the proof search. We observe that the tactic mechanism currently
+implemented in HOL Light already provides basic support for meta-variables in
+goals; however, it seems to be used only internally in the implementation of
+the intuitionistic tautology prover \texttt{ITAUT\_TAC}. 
 
-We provide a library of basic solvers.  They usually have a name that
-ends in \verb|_SLV| as, for instance, \verb|REFL_SLV|.
+We provide a library of basic solvers, they usually have a name that ends in
+\verb|_SLV| as, for instance, \verb|REFL_SLV|.
 
 Every HOL tactic can be `promoted' into a solver using the ML function
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 TACTIC_SLV : tactic -> solver
-\end{verbatim}
+\end{minted}
 A partial list of solvers approximately corresponding to classical HOL
 tactics are \verb|ACCEPT_SLV|, \verb|NO_SLV|, \verb|REFL_SLV|,
 \verb|RULE_SLV| (corresponding to \verb|MATCH_MP_TAC|).
@@ -260,9 +307,9 @@ solutions.
 
 One example of (2) is the \verb|REFL_SLV| solver: when it is applied
 to the goal
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 ?- x + 1 = 1 + x
-\end{verbatim}
+\end{minted}
 where \verb|x| is a meta-variable, closes the goal by augmenting the
 instantiation with the substitution $\mathtt{1}/\mathtt{x}$ and
 producing the theorem \verb!|- 1 + 1 = 1 + 1!.  Observe that the
@@ -294,26 +341,26 @@ capture the most common enumeration patterns.  In this synthetic note,
 we give a brief list of those combinators without an explicit
 description. However, we hope that the reader can guess the actual
 behaviour from both their name and their ML type:
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 COLLECT_SLV : solver list -> solver
 MAP_COLLECT_SLV : ('a->solver) -> 'a list -> solver
 COLLECT_ASSUM_SLV : thm_solver -> solver
 COLLECT_X_ASSUM_SLV : thm_solver -> solver
-\end{verbatim}
+\end{minted}
 
 %% Solver 'bilanciati'?
 %% % let MPLUS_SLV (slv1:solver) (slv2:solver) : solver =
 %% %   fun g -> mplusf (slv1 g) (fun _ -> slv2 g);;
-%% 
+%%
 %% % let INTERLEAVE_SLV (slvl:solver list) : solver =
 %% %   if slvl = [] then NO_SLV else end_itlist MPLUS_SLV slvl;;
-%% 
+%%
 %% % let MAP_INTERLEAVE_SLV (slvf:'a->solver) (lst:'a list) : solver =
 %% %   INTERLEAVE_SLV (map slvf lst);;
-%% 
+%%
 %% % let INTERLEAVE_ASSUM_SLV (tslv:thm_solver) : solver =
 %% %   fun (mvs,(asl,w) as g) -> MAP_INTERLEAVE_SLV (tslv o snd) asl g;;
-%% 
+%%
 %% % let INTERLEAVE_X_ASSUM_SLV (tslv:thm_solver) : solver =
 %% %   INTERLEAVE_ASSUM_SLV (fun th -> UNDISCH_THEN_SLV (concl th) tslv);;
 
@@ -325,69 +372,69 @@ a call to \verb|top_thms()|.
 
 Here is an example of interaction.  We first introduce the goal,
 notice the use of the binder \verb|(??)| for the meta-variable \verb|x|:
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # gg `??x. 2 + 2 = x`;;
-val it : mgoalstack = 
+val it : mgoalstack =
 `2 + 2 = x`
-\end{verbatim}
+\end{minted}
 one possible solution is by using reflexivity, closing the proof
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # ee REFL_SLV;;
-val it : mgoalstack = 
-\end{verbatim}
+val it : mgoalstack =
+\end{minted}
 we can now form the resulting theorem
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # list_of_stream(top_thms());;
 val it : thm list = [|- 2 + 2 = 2 + 2]
-\end{verbatim}
+\end{minted}
 
 Now, if one want to find a different solution, we can restore the
 initial state
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # bb();;
-val it : mgoalstack = 
+val it : mgoalstack =
 `2 + 2 = x`
-\end{verbatim}
+\end{minted}
 then use a different solver, for instance by unifying with the
 equation \verb?|- 2 + 2 = 4?
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # ee (ACCEPT_SLV(ARITH_RULE `2 + 2 = 4`));;
-val it : mgoalstack = 
-\end{verbatim}
+val it : mgoalstack =
+\end{minted}
 and, again, take the resulting theorem
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # list_of_stream(top_thms());;
 val it : thm list = [|- 2 + 2 = 4]
-\end{verbatim}
+\end{minted}
 
 Finally, we can change the proof strategy to find both solutions by
 using backtracking
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # bb();;
-val it : mgoalstack = 
+val it : mgoalstack =
 `2 + 2 = x`
 
 # ee (CONCAT_SLV REFL_SLV (ACCEPT_SLV(ARITH_RULE `2 + 2 = 4`)));;
-val it : mgoalstack = 
+val it : mgoalstack =
 # list_of_stream(top_thms());;
 val it : thm list = [|- 2 + 2 = 2 + 2; |- 2 + 2 = 4]
-\end{verbatim}
+\end{minted}
 
 The function
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 solve : solver -> term -> (term list * thm) stream
-\end{verbatim}
+\end{minted}
 runs the proof search non interactively and produces a list of
 solutions as already shown in Section~\ref{sec:an-simple-example}.  In
 this last case it would be
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # list_of_stream
     (solve (CONCAT_SLV REFL_SLV (ACCEPT_SLV(ARITH_RULE `2 + 2 = 4`)))
            `??x. 2 + 2 = x`);;
 val it : (term list * thm) list =
   [([`x = 2 + 2`], |- 2 + 2 = 2 + 2);
    ([`x = 4`], |- 2 + 2 = 4)]
-\end{verbatim}
+\end{minted}
 
 %\section{Advanced solvers}
 %\label{sec:advanced-solvers}
@@ -410,27 +457,27 @@ the general methodology.
 
 First, we need to extend our HOL Light environment with an object
 datatype \verb|sexp| for encoding S-expressions.
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 let sexp_INDUCT,sexp_RECUR = define_type
   "sexp = Symbol string
         | List (sexp list)";;
-\end{verbatim}
+\end{minted}
 For instance the sexp \verb|(list a (quote b))| is represented as HOL
 term with
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 `List [Symbol "list";
        Symbol "a";
        List [Symbol "quote";
              Symbol "b"]]`
-\end{verbatim}
+\end{minted}
 This syntactic representation can be hard to read and gets quickly
 cumbersome as the size of the terms grows.  Hence, we also introduce a
 notation for concrete sexp terms, which is activated by the syntactic
 pattern \verb|'(|\ldots\verb|)|.  For instance, the above example
 is written in the HOL concrete syntax for terms as
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 `'(list a (quote b))`
-\end{verbatim}
+\end{minted}
 
 With this setup, we can easily specify the evaluation rules for our
 minimal lisp-like language.  This is an inductive predicate with rules
@@ -439,7 +486,7 @@ abstractions; (iv) lists; (v) unary applications.  We define a ternary
 predicate \verb|`|$\mathtt{EVAL}\ e\ x\ y\mathtt{}$\verb|`|, where $e$
 is a variable environment expressed as associative list, $x$ is the
 input program and $y$ is the result of the evaluation.
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 let EVAL_RULES,EVAL_INDUCT,EVAL_CASES = new_inductive_definition
   `(!e q. EVAL e (List [Symbol "quote"; q]) q) /\
    (!e a x. RELASSOC a e x ==> EVAL e (Symbol a) x) /\
@@ -451,12 +498,12 @@ let EVAL_RULES,EVAL_INDUCT,EVAL_CASES = new_inductive_definition
       EVAL e f (List [Symbol "lambda"; List[Symbol v]; b]) /\
       EVAL e x x' /\ EVAL (CONS (x',v) e) b y
       ==> EVAL e (List [f; x]) y)`;;
-\end{verbatim}
+\end{minted}
 
 We now use our framework for running a certified evaluation process
 for this language.  First, we define a solver for a single step of
 computation.
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 let STEP_SLV : solver =
   COLLECT_SLV
     [CONJ_SLV;
@@ -467,24 +514,24 @@ let STEP_SLV : solver =
      RULE_SLV EVAL_APP;
      ACCEPT_SLV ALL2_NIL;
      RULE_SLV ALL2_CONS];;
-\end{verbatim}
+\end{minted}
 In the above code, we collect the solutions of several different
 solvers.  Other than the five rules of the \verb|EVAL| predicate, we
 include specific solvers for conjunctions and for the two predicates
 \verb|REL_ASSOC| and \verb|ALL2|.
 
 The top-level recursive solver for the whole evaluation predicate is now easy to define:
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 let rec EVAL_SLV : solver =
    fun g -> CONCAT_SLV ALL_SLV (THEN_SLV STEP_SLV EVAL_SLV) g;;
-\end{verbatim}
+\end{minted}
 
 Let us make a simple test.  The evaluation of the expression
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 ((lambda (x) (list x x x)) (list))
-\end{verbatim}
+\end{minted}
 can by obtained as follows:
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # get (solve EVAL_SLV
              `??ret. EVAL []
                           '((lambda (x) (list x x x)) (list))
@@ -493,7 +540,7 @@ can by obtained as follows:
 val it : term list * thm =
   ([`ret = '(() () ())`],
    |- EVAL [] '((lambda (x) (list x x x)) (list)) '(() () ()))
-\end{verbatim}
+\end{minted}
 
 Again, we can use the declarative nature of logic programs to run the
 computation backwards.  For instance, one intriguing exercise is the
@@ -501,7 +548,7 @@ generation of quine programs, that is, programs that evaluates to
 themselves.  In our formalization, they are those terms $q$ satisfying
 the relation \verb|`EVAL|~\verb|[]|~$q$~$q$\verb|`|.  The following command
 computes the first two quines found by our solver.
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # let sols = solve EVAL_SLV `??q. EVAL [] q q`);;
 # take 2 sols;;
 
@@ -532,40 +579,40 @@ val it : (term list * thm) list =
         List
         [Symbol "lambda"; List [Symbol _3220800];
          List [Symbol "list"; Symbol _3220800; Symbol _3220800]]]))]
-\end{verbatim}
+\end{minted}
 
 One can easily observe that any lambda expression is trivially a quine
 for our language.  This is indeed the first solution found by our
 search:
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 ([`q = List (Symbol "lambda" :: _3149670)`],
  |- EVAL []
          (List (Symbol "lambda" :: _3149670))
          (List (Symbol "lambda" :: _3149670)))
-\end{verbatim}
+\end{minted}
 
 The second solution is more interesting.  Unfortunately it is
 presented in a form that is hard to decipher.  A simple trick can help
 us to present this term as a concrete sexp term: it is enough to
 replace the HOL generated variable (\verb|`_3149670`|) with a concrete
 string.  This can be done by an ad hoc substitution.
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 # let [_; i2,s2] = take 2 sols;;
 # vsubst [`"x"`,hd (frees (rand (hd i2)))] (hd i2);;
 
 val it : term =
   `q = '((lambda (x) (list x x)) (lambda (x) (list x x)))`
-\end{verbatim}
+\end{minted}
 
 If we take one more solution from \verb|sols| stream, we get a new
 quine, which, interestingly enough, is precisely the one obtained in
 \citep{Byrd:2012:MLU:2661103.2661105}.
-\begin{verbatim}
+\begin{minted}[fontsize=\small]{ocaml}
 val it : term =
   `q =
    '((quote (lambda (x) (list x (list (quote quote) x))))
      (quote (quote (lambda (x) (list x (list (quote quote) x))))))`
-\end{verbatim}
+\end{minted}
 
 \section{Conclusions and future work}
 \label{sec:conclusions}
