@@ -19,3 +19,7 @@ world: clean
 	lualatex -shell-escape PhD-thesis.tex
 	lualatex -shell-escape PhD-thesis.tex
 	lualatex -shell-escape PhD-thesis.tex
+
+update-submodules:
+	git pull
+	git submodule foreach "(git checkout master; git pull)"

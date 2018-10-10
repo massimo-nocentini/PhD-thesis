@@ -1,3 +1,4 @@
+$ python3.6 graphing.py -h
 usage: graphing.py [-h] [--directed] [--cache-dir CACHE_DIR]
                    [--graphs-dir GRAPHS_DIR] [--dpi DPI] [--layout LAYOUT]
                    F
