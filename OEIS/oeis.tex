@@ -11,7 +11,7 @@ programming facilities to manipulate contents more effectively and (iii)~to
 interface with third-party software.
 
 \begin{figure}
-\includegraphics[width=15cm]{OEIS/oeis-page}
+\includegraphics[width=15cm]{deps/oeis-tools/doc/OEIS/oeis-page}
 \caption[][6cm]{The OEIS search page.}
 \label{fig:oeis:page}
 \end{figure}
@@ -49,19 +49,19 @@ up repeated lookups and to restart the fetching process from the cache already
 downloaded.
 
 The script presents a help message to explain itself:
-\VerbatimInput[fontsize=\small]{OEIS/crawler-help.txt}
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-help.txt}
 
 \begin{example}
 We illustrate a typical session where we start from scratch. First of all, we
 want to download the OEIS content about two important and nice sequences,
 namely those corresponding to the Fibonacci and Catalan numbers, respectively:
-\VerbatimInput[fontsize=\small]{OEIS/crawler-fetching-command.txt}
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-fetching-command.txt}
 After stopping the crawler, we check the content of cache with the commands
-\VerbatimInput[fontsize=\small]{OEIS/crawler-status.txt} which tell us that
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-status.txt} which tell us that
 $30$ sequences had been fetched and stored in the default directory
 \verb|./fetched/|.  Moreover, we can restart the crawler from where it was
 interrupted with the command
-\VerbatimInput[fontsize=\small]{OEIS/crawler-restarting.txt}
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-restarting.txt}
 and we check that new sequences are actually collected,
 \begin{Verbatim}[fontsize=\small]
 $ python3.6 crawling.py
@@ -79,7 +79,7 @@ shows.
 Combining the \verb|cat| command with the Python module \verb|json.tool|, that prints JSON files
 with respect to indentation, we can visualize data about the sequence of Fibonacci
 numbers as follows
-\VerbatimInput[fontsize=\small]{OEIS/crawler-A000045-chunk.txt}
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-A000045-chunk.txt}
 \end{example}
 
 
@@ -128,7 +128,7 @@ sections and (iii)~interoperability with the crawler tool by taking advantage of
 cached sequences.
 
 The script presents a help message to explain itself:
-\VerbatimInput[fontsize=\small]{OEIS/pprinting-help.txt} In the next examples
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/pprinting-help.txt} In the next examples
 we show how \verb|pprinting|'s facilities can be used to apply filters, to
 print data-only visualization and to search by an open query, respectively.
 
@@ -136,7 +136,7 @@ print data-only visualization and to search by an open query, respectively.
 on the \verb|stdout| the pretty-printed contents about the sequence of
 Fibonacci numbers, with two filters applied that show comments made by
 prof. Barry and the first $5$ formulae only,
-\VerbatimInput[fontsize=\small]{OEIS/pprinting-A000045.txt}
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/pprinting-A000045.txt}
 other sections, such as \verb|reference| and \verb|link|, are hidden by
 default to provide a cleaner output.
 \end{example}
@@ -146,7 +146,7 @@ The following command pretty prints (i)~the first 3 sequences from our current
 cache --the result may vary if you try on your own machine--, (ii)~ranking them
 according to the most recent access time, (iii)~reporting data only and
 (iv)~limiting up to $10$ coefficients for linear sequences:
-\VerbatimInput[fontsize=\small]{OEIS/pprinting-data-only.txt}
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/pprinting-data-only.txt}
 \end{example}
 
 \begin{example}
@@ -154,7 +154,7 @@ The following command pretty prints (i)~response about the open query
 "\verb|pascal triangle|", (ii)~using $2$-dimension representation for matrices
 in \verb|data| sections and (iii)~reports the first $2$ sequences in the
 returned list only,
-\VerbatimInput[fontsize=\small]{OEIS/pprinting-pascal-matrix.txt}
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/pprinting-pascal-matrix.txt}
 \end{example}
 
 In parallel of the textual interface, we develop pretty printing functions that
@@ -172,7 +172,7 @@ array representation for matrices.
 \vfill
 
 \begin{figure}
-\includegraphics{OEIS/notebook-fibonacci}
+\includegraphics{deps/oeis-tools/doc/OEIS/notebook-fibonacci}
 \caption{This screenshot shows search results about the Fibonacci numbers where
 (i)~the section about comments is filtered such that the word "\emph{binomial}"
 has to appear in their text and (ii)~the section about formulae is hidden.}
@@ -180,14 +180,14 @@ has to appear in their text and (ii)~the section about formulae is hidden.}
 \end{figure}
 
 \begin{figure}
-\includegraphics{OEIS/notebook-catalan}
+\includegraphics{deps/oeis-tools/doc/OEIS/notebook-catalan}
 \caption{This screenshot shows search results of a query using a subsequence,
 showing \emph{data} sections only.}
 \label{fig:oeis:notebook:catalan}
 \end{figure}
 
 \begin{figure}
-\includegraphics{OEIS/notebook-pascal}
+\includegraphics{deps/oeis-tools/doc/OEIS/notebook-pascal}
 \caption{This screenshot shows search results of an open query using the
 "\emph{pascal}" keyword, representing the \emph{data} section as a
 $2$-dimensional array.  }
@@ -204,7 +204,7 @@ Python module \verb|networkx|, having different layouts according to a set of
 drawing algorithms.
 
 It presents a help message to explain itself:
-\VerbatimInput[fontsize=\small]{OEIS/graphing-help.txt}
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/graphing-help.txt}
 
 \begin{example}
 The following command draws the graph shown in Figure
@@ -217,7 +217,7 @@ in order to emphasize most referenced sequences.
 \end{example}
 
 \begin{figure}
-\includegraphics{OEIS/graph1}
+\includegraphics{deps/oeis-tools/doc/OEIS/graph1}
 \caption{Sequences network where vertices are emphasized according to the
 number of incoming connections.}
 \label{fig:oeis:sequences:network}
@@ -245,7 +245,7 @@ sequences.
 
 \begin{figure}
 %\begin{sideways}
-\includegraphics[width=15cm, height=15cm]{OEIS/points}
+\includegraphics[width=15cm, height=15cm]{deps/oeis-tools/doc/OEIS/points}
 \caption[][8cm]{Sequences network abstracting over identifier to spot the underlying
 structure.}
 %\end{sideways}
@@ -280,8 +280,8 @@ finally, the more we crawl, the more graphs are effective and accurate.
 
 \begin{figure}
 \begin{sideways}
-%\includegraphics[width=20cm, height=20cm]{OEIS/labels}
-\includegraphics[width=25cm, height=25cm]{OEIS/coloured}
+%\includegraphics[width=20cm, height=20cm]{deps/oeis-tools/doc/OEIS/labels}
+\includegraphics[width=25cm, height=25cm]{deps/oeis-tools/doc/OEIS/coloured}
 \caption{Sequences network with labelel vertices, here we see that the sequence
 of \textit{Fibonacci numbers} (\url{https://oeis.org/A000045}) and of
 \textit{Catalan numbers} (\url{https://oeis.org/A000108}) are the two central
@@ -300,7 +300,7 @@ set} using the \textit{red} color.
 
 \begin{figure}
 \hspace{-3cm}
-\includegraphics[width=20cm, height=20cm]{OEIS/circular}
+\includegraphics[width=20cm, height=20cm]{deps/oeis-tools/doc/OEIS/circular}
 \caption{A bigger sequences network composed of $419$ sequences; here the
 sequence of \textit{Fibonacci numbers} is denoted by $\alpha$ and the sequence
 of \textit{Catalan numbers} is denoted by $\beta$, respectively.}
@@ -334,7 +334,7 @@ dynamically.
 \iffalse
 
 \begin{figure}
-\includegraphics{OEIS/fibonacci-catalan}
+\includegraphics{deps/oeis-tools/doc/OEIS/fibonacci-catalan}
 \caption{Sequences network fetched by commands issued in the discussed session.}
 \label{fig:oeis:sequences:network}
 \end{figure}
