@@ -16,7 +16,20 @@ interface with third-party software.
 \label{fig:oeis:page}
 \end{figure}
 
-The description of each tool is addressed in the following sections, respectively.
+Looking for similar approaches in the recent literature,
+\citep{Nguyen_miningthe} mines the OEIS for new mathematical identities,
+discussing how to store, compare and match integer sequences toward the
+formalization of some conjectures; on the other hand, searching the word
+"\textit{oeis}" in GitHub returns one hundred repositories, the majority of
+them (i)~host simple implementations of scripts that download data about a
+given sequence, targeting all major programming languages. Moreover,
+\citep{weidmann:sequencer} is a project that identifies number sequences given
+a list of numbers and gives a formula that generates them.
+
+Our approach complements the former ones because it provides a
+\textit{recursive} and \textit{asynchronous} fetching process, vanilla data
+storage in JSON files and visualization of sequences' relations; the
+description of each tool is addressed in the following sections, respectively.
 
 \section{The Crawler}
 
@@ -115,10 +128,9 @@ sections and (iii)~interoperability with the crawler tool by taking advantage of
 cached sequences.
 
 The script presents a help message to explain itself:
-\VerbatimInput[fontsize=\small]{OEIS/pprinting-help.txt}
-In the next examples we show how \verb|pprinting|'s facilities about
-filters application, data-only visualization and search by an open query,
-respectively.
+\VerbatimInput[fontsize=\small]{OEIS/pprinting-help.txt} In the next examples
+we show how \verb|pprinting|'s facilities can be used to apply filters, to
+print data-only visualization and to search by an open query, respectively.
 
 \begin{example} Typing the following command into a shell, it outputs
 on the \verb|stdout| the pretty-printed contents about the sequence of
