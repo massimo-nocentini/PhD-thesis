@@ -8,69 +8,101 @@ language, giving a taste of our programming style.
 
 \section{Riordan Arrays, formally}
 
-A \textit{Riordan array} is an infinite lower triangular array
-$(d_{n,k} )_{n,k \in \mathbb{N}},$ defined by a pair of formal power series
-$(d(t),h(t)),$ such that $d(0)\neq 0, h(0)=0, h^\prime(0)\neq0$ and the generic
-element $d_{n,k}$ is the coefficient of monomial $t^{n}$ in the series
-expansion of $d(t)h(t)^{k}$, formally
-\begin{displaymath}
-    d_{n,k}=[t^n]d(t)h(t)^k, \qquad n,k \geq 0
+A \textit{Riordan array} is an infinite lower triangular array $(d_{n,k} )_{n,k
+\in \mathbb{N}},$ defined by a pair of formal power series $(d(t),h(t))$ such
+that\newline\noindent$d(0)\neq 0, h(0)=0$ and $h^\prime(0)\neq 0$; furthermore,
+each element \begin{displaymath}
+    d_{n,k}=[t^n]d(t)h(t)^k, \qquad n,k \geq 0,
 \end{displaymath}
-where $d_{n,k}=0$ for $k>n.$ These arrays were introduced in
-\citep{SHAPIRO1991229}, with the aim of defining a class of infinite lower
-triangular arrays and since then they have attracted, and continue to attract,
-a lot of attention in the literature.
-
-The most simple example of Riordan matrix is the \textit{Pascal triangle}
-$$\mathcal{R}\left(\frac{1}{1-t}, \frac{t}{1-t}\right)\quad\text{where}\quad
-d_{n,k}={n\choose k};$$ moreover, another remarkable matrix is the
-\textit{Catalan triangle}
-$$\mathcal{R}\left(\frac{1-\sqrt{1-4\,t}}{2\,t}, \frac{1-\sqrt{1-4\,t}}{2\,t}\right),$$
-$$\text{where}\quad d_{n,k}={{2n-k}\choose{n-k}} - {{2n-k}\choose{n-k-1}}.$$
-
-Some of their properties  and recent applications can be found
-in \citep{LUZON201475,MRSV97}. In particular, we recall that the bivariate generating
-function enumerating the sequence $(d_{n,k} )_{n,k \in\mathbb{N}}$ is
+is the coefficient of monomial $t^{n}$ in the series
+expansion of $d(t)h(t)^{k}$ %where $d_{n,k}=0$ for $k>n$,
+and the bivariate generating function
 \begin{equation}
     \label{bgf}
     R(t,w) = \sum_{n,k \in\mathbb{N}}{d_{n,k} t^n w^k} = {d(t) \over 1-wh(t)}
 \end{equation}
+enumerates the sequence $(d_{n,k})_{n,k \in\mathbb{N}}$.
 
-An important property of Riordan array concerns the computation of
-combinatorial sums.  In particular we have the following result (see, e.g.,
-\citep{LUZON2012631,Merlini:2009:CSI:2653507.2654195,SPRUGNOLI1994267}):
+These arrays were introduced in \citep{SHAPIRO1991229}, with the aim of
+defining a class of infinite, lower triangular arrays and since then they have
+attracted, and continue to attract, a lot of attention in the literature and
+recent applications can be found in \citep{LUZON201475}.
+
+\begin{example}
+The most simple Riordan matrix could be the \textit{Pascal triangle}
+$$\mathcal{R}\left(\frac{1}{1-t}, \frac{t}{1-t}\right)\quad\text{where}\quad
+d_{n,k}={n\choose k};$$ moreover, another remarkable matrix is the
+\textit{Catalan triangle}
+$$\mathcal{R}\left(\frac{1-\sqrt{1-4\,t}}{2\,t}, \frac{1-\sqrt{1-4\,t}}{2\,t}\right)$$
+where $\displaystyle d_{n,k}={{2n-k}\choose{n-k}} - {{2n-k}\choose{n-k-1}}$.
+\end{example}
+\newpage
+
+An important property of Riordan arrays concerns the computation of
+combinatorial sums; precisely, it is encoded by the identity
 \begin{equation}
     \label{somme}
     \sum_{k=0}^n d_{n,k}f_k=[t^n]d(t)f(h(t))
 \end{equation}
-that is, every combinatorial sum involving a Riordan array can be computed by
+and it is deeply commented in
+\citep{LUZON2012631,Merlini:2009:CSI:2653507.2654195,SPRUGNOLI1994267}.
+It states that every combinatorial sum involving a Riordan array can be computed by
 extracting the coefficient of $t^n$ from the series expansion of $d(t)f(h(t))$,
-where $f(t)=\mathcal{G}(f_k)=\sum_{k\geq 0}f_kt^k$ is the generating function of the
-sequence $(f_k)_{k \in\mathbb{N}}$ and the symbol $\mathcal{G}$ denotes the generating function
-operator. Due to its importance, relation (\ref{somme}) is often called the
-\textit{fundamental rule} of Riordan arrays.  Along the paper, the notation
-$(f_k)_{k}$ will be used as an abbreviation of $(f_k)_{k\in\mathbb{N}}.$
+where $f(t)=\mathcal{G}(f_k)=\sum_{k\geq 0}f_kt^k$ denotes the generating function
+of the sequence $(f_k)_{k \in\mathbb{N}}$ and the symbol $\mathcal{G}$
+denotes the generating function operator. Due to its importance, relation
+(\ref{somme}) is commonly known as the \textit{fundamental rule} of Riordan arrays.
+For short and when no confusion arises, the notation $(f_k)_{k}$ will be used
+as an abbreviation of $(f_k)_{k\in\mathbb{N}}$.
 
 As it is well-known (see, e.g., \citep{LUZON201475,MRSV97,SHAPIRO1991229}),
 Riordan arrays constitute an \textit{algebraic group} with respect to the usual
-row-by-column product between matrices; formally, the product of two Riordan
-arrays $D_1(d_1(t),\ h_1(t))$ and $D_2(d_2(t),\ h_2(t))$ is defined as
+row-by-column product between matrices; formally, the group operation $\cdot$ applied
+to two Riordan arrays $D_1(d_1(t),\ h_1(t))$ and $D_2(d_2(t),\ h_2(t))$ is
+carried out as
 \begin{displaymath}
   D_1 \cdot D_2 =(d_1(t)d_2(h_1(t)),\ h_2(h_1(t))).
 \end{displaymath}
 Moreover, the Riordan array $I = (1,\ t)$ acts as the identity element and the
-inverse of $D =(d(t), h(t))$ is the Riordan array:
+inverse of $D =(d(t), h(t))$ is the Riordan array
 $$
 D^{-1} = \left( \frac{1}{d(\overline{h}(t))},
   \overline{h}(t) \right)
 $$
-where $\overline{h}(t)$ is the compositional inverse of $h(t)$.
+where $\overline{h}(t)$ denotes the compositional inverse of $h(t)$.
+
+An equivalent characterization of a each matrix $\mathcal{R}(d(t), h(t))$ in
+the Riordan group is given by two sequences of coefficients
+$\left(a_{n}\right)_{n\in\mathbb{N}}$  and
+$\left(z_{n}\right)_{n\in\mathbb{N}}$ called $A$-sequence and $Z$-sequence,
+respectively. The former one can be used to define every
+coefficient $d_{n,k}$ with $k>0$,
+\begin{displaymath}
+    d_{n+1, k+1} = a_{0}d_{n,k} + a_{1}d_{n,k+1} + a_{2}d_{n,k+2} + \ldots + a_{j}d_{n,k+j} + \ldots %+ a_{j+1}d_{n,k+j+1} + \cdots
+\end{displaymath}
+where the sum is finite because exists $j\in\mathbb{N}$ such that $n=k+j$; on
+the other hand, the latter one can be used to define every coefficient
+$d_{n,0}$ lying on the first column,
+\begin{displaymath}
+    d_{n+1, 0} = z_{0}d_{n,0} + z_{1}d_{n,1} + z_{2}d_{n,2} + \ldots + z_{n}d_{n,n}
+\end{displaymath}
+where the sum is finite because $d_{n,k+j}=0$ for $j>n-k$.
+
+Moreover, let $A(t)$ and $Z(t)$ be the generating functions of the $A$-sequence
+and $Z$-sequence respectively, then relations
+\begin{displaymath}
+    h(t) = tA(h(t)) \quad\text{and}\quad d(t)=\frac{d_{0,0}}{1-tZ(h(t))}
+\end{displaymath}
+connect them with functions $d(t)$ and $h(t)$, where $d_{0,0}$ is the very
+first element of $\mathcal{R}$; for the sake of completeness,
+\citep{MRSV97} collects more alternative characterizations.
 
 \section{Symbolic computation}
 
-The main part of symbolic computation supporting the topics discussed in this
-dissertation has been coded using the Python language, relying on the module
-\verb|sympy| for what concerns mathematical stuff. Quoting from \url{http://www.sympy.org/}:
+The main part of the symbolic computations supporting the topics discussed in
+this dissertation has been coded using the Python language, relying on the
+module \verb|sympy| for what concerns mathematical stuff. Quoting from
+\url{http://www.sympy.org/}:
 \begin{center}
 \textit{ ``SymPy is a Python library for symbolic mathematics. It aims to
 become a full-featured computer algebra system (CAS) while keeping the code as
@@ -79,17 +111,17 @@ simple as possible in order to be comprehensible and easily extensible.''}
 The paper \citep{10.7717/peerj-cs.103} explains it and many other resources can
 be found online; for example, a comprehensive documentation is
 \citep{sympy:doc} and a well written, understandable tutorial
-\citep{sympy:tutorial} is provided by the development team.
+\citep{sympy:tutorial} is provided by the original development team.
 
 Here we avoid to duplicate the tutorial with similar examples, instead we state
 the methodology used while coding our definitions. Python is a very expressive
 language allowing programmers to use both the object-oriented and functional
-paradigms. It is easily extendible by means of \textit{modules} and
-\verb|sympy| is an example that targets manipulation of symbolic terms.
-Contrary to other software like Maple and Mathematica which ship with their own
-languages, \verb|sympy| is implemented entirely in Python, allowing a
-transparent and easy integration in other Python programs, as we will see in
-later chapters.
+paradigms. It can tackle different application domains by means of
+\textit{modules} and \verb|sympy| is an example that targets the manipulation
+of symbolic terms.  Contrary to other proprietary software like Maple and
+Mathematica which ship their own languages, \verb|sympy| is implemented
+entirely in Python, allowing a transparent and easy integration in other Python
+programs, as we will see in later chapters.
 
 The main point to grasp in our opinion is the difference between the
 \textit{meta language}, which is Python, and the \textit{object language},
@@ -118,8 +150,8 @@ line holding code to be executed, (ii)~\verb|...| then it is a
 
 A second fundamental methodology that we embrace in our symbolic manipulations is
 \textit{equational reasoning}, namely we use equations denoted by \verb|Eq| objects
-to express identity to reason about, used both to define things and
-to solve with respect to a symbol.
+to express identities to reason about, used both to define things and
+to be solved with respect to a desired symbol.
 \begin{example}
 Introduction of \verb|Eq|, \verb|solve| and \verb|symbols| functions:
 \begin{minted}[fontsize=\small]{python}
@@ -203,20 +235,29 @@ of the concepts seen in the previous section; in particular, we provide
 some strategies to build Riordan arrays, to find corresponding production
 matrices and their group inverse elements, respectively.
 
-First of all we introduce function symbols \verb|d_fn| and \verb|h_fn|
-to denote arbitrary symbolic functions $d$ and $h$, respectively:
+First of all we introduce (i)~\textit{function symbols} \verb|d_fn| and
+\verb|h_fn| to denote arbitrary symbolic functions $d$ and $h$,
+(ii)~\textit{indexed symbols} \verb|d| and \verb|h| to denote arbitrary
+symbolic and indexed coefficients
 \begin{minted}[fontsize=\small]{python}
 >>> d_fn, h_fn = Function('d'), Function('h')
 >>> d, h = IndexedBase('d'), IndexedBase('h')
 \end{minted}
-
-To build Riordan matrices we use \verb|Matrix| objects; in particular, the
-expression \verb|Matrix(r, c, ctor)| denotes a matrix with \verb|r| rows and
-\verb|c| columns; finally, \verb|ctor| is a \textit{callable} object consuming
-two arguments $n$ and $k$, the row and column coordinates of each coefficient
-$d_{n,k}$ in the matrix, respectively. We call it \verb|ctor|, abbreviation of
-\textit{constructor}, because it allows us to code the definition of each
-coefficient with a Python callable object.
+respectively. To build Riordan matrices we use \verb|Matrix| objects; in
+particular, the expression \verb|Matrix(r, c, ctor)| denotes a matrix with
+\verb|r| rows and \verb|c| columns where each coefficient $d_{n,k}$ in the
+matrix is defined according to \verb|ctor| which is a \textit{callable}
+\marginnote{From the official doc at
+\url{https://docs.python.org/3/library/functions.html\#callable}:
+\texttt{callable(object)} return \texttt{True} if the \texttt{object} argument
+appears callable, \texttt{False} if not. If this returns true, it is still
+possible that a call fails, but if it is false, calling object will never
+succeed. Note that classes are callable (calling a class returns a new
+instance); instances are callable if their class has a \texttt{\_\_call\_\_}
+method.} object consuming two arguments $n$ and $k$, its row and column
+coordinates.  We call it \verb|ctor| as abbreviation for \textit{constructor},
+because it allows us to code the definition of each coefficient with a Python
+callable object.
 
 Here we show how to build a pure symbolic matrix:
 \begin{minted}[fontsize=\small]{python}
@@ -279,7 +320,6 @@ The Pascal triangle built using closed generating functions:
 \left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\1 & 2 & 1 &   &   &   &   &   &   &  \\1 & 3 & 3 & 1 &   &   &   &   &   &  \\1 & 4 & 6 & 4 & 1 &   &   &   &   &  \\1 & 5 & 10 & 10 & 5 & 1 &   &   &   &  \\1 & 6 & 15 & 20 & 15 & 6 & 1 &   &   &  \\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1 &   &  \\1 & 8 & 28 & 56 & 70 & 56 & 28 & 8 & 1 &  \\1 & 9 & 36 & 84 & 126 & 126 & 84 & 36 & 9 & 1\end{matrix}\right]
 \end{displaymath}
 \end{example}
-\vfill
 
 \subsection{Recurrence ctor}
 
@@ -348,8 +388,6 @@ arrays by their $Z$ and $A$ sequences; here it is,
 \notbreakable{
     \inputminted[fontsize=\small,stripnl=false,firstline=47, lastline=78]{python}{deps/simulation-methods/src/sequences.py}
 }
-
-\vfill
 
 \begin{example}
 Again the Pascal triangle built using $A$ and $Z$ sequences
@@ -467,7 +505,15 @@ diagonal is an \textit{arithmetic progression}, for more on this see
 }
 
 \begin{example}
-\url{https://oeis.org/A021009}
+In this example we explore an exponential Riordan array starting from the
+generating functions of the Pascal triangle. Surprisingly the array we get back
+is known in the OEIS (\url{https://oeis.org/A021009}) and looking for some
+comments we quote the observation\newline
+\begin{center} 
+\textit{"the generalized Riordan array $(e^x, x)$ with respect
+to\newline the sequence $n!$ is Pascal's triangle A007318"} 
+\end{center} 
+by Peter Bala.
 \begin{minted}[fontsize=\small]{python}
 >>> d_series, h_series = Eq(d_fn(t), 1/(1-t)), Eq(h_fn(t), t/(1-t))
 >>> d_series, h_series
@@ -493,33 +539,33 @@ diagonal is an \textit{arithmetic progression}, for more on this see
 >>> inspect(R)
 nature(is_ordinary=False, is_exponential=True)
 \end{minted}
+%More surprisingly, the same array is used in \citep{barry2017riordan} as a case study.
 \end{example}
 
 \subsection{Group inverse elements}
 
-In this final section we show how to compute the compositional inverse of
-a function and then apply this procedure to find the inverse of a given
-Riordan array.
-
-Your task is to find the compositional inverse of Pascal array's $h$ function
+In this final section we show how to compute the compositional inverse of a
+function and then apply this procedure to find the inverse of a given Riordan
+array. By small steps, your task is to find the compositional inverse of
+Pascal array's $h$ function
 \begin{displaymath}
-h(t)= \frac{t}{1-t}
+h(t)= \frac{t}{1-t},
 \end{displaymath}
-namely, you want to find a function $\bar{h}$ such that $\bar{h}(h(t))=t$.
+namely you want to find a function $\bar{h}$ such that $\bar{h}(h(t))=t$.
 Starting from this very last identity we use the substitution notation
 \begin{displaymath}
 \bar{h}(h(t)) = t \leftrightarrow \left[ \bar{h}(y) = t\, | \, y = h(t) \right]
 \end{displaymath}
-reducing the original problem to solve $y = h(t)$ with respect to $t$;
-formally, using the definition of $h$ we rewrite
+that allows us to reduce the original problem to solve $y = h(t)$ with respect
+to $t$; formally, using the definition of $h$ we rewrite
 \begin{displaymath}
-y = \frac{t}{1-t} \quad\text{that implies}\quad t = \frac{y}{1+y}
+y = \frac{t}{1-t} \quad\text{that implies}\quad t = \frac{y}{1+y}.
 \end{displaymath}
-which can be put back in $\bar{h}(y) = t$ yielding
+The latter identity can be used back in $\bar{h}(y) = t$ as substitution for $t$,
 \begin{displaymath}
-\bar{h}(y)= \frac{y}{1+y}.
+\bar{h}(y)= \frac{y}{1+y}
 \end{displaymath}
-The following code implements this procedure:
+as required. The following code implements this procedure:
 
 \notbreakable{
     \inputminted[fontsize=\small,stripnl=false,firstline=209, lastline=225, mathescape=true]{python}{deps/simulation-methods/src/sequences.py}
