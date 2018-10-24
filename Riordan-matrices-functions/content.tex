@@ -14,14 +14,14 @@ canonical forms and case studies are given.
 
 \section{Introduction}
 
-\label{sec:introduction}
+\label{sec:matrices:functions:introduction}
 \input{Riordan-matrices-functions/introduction.tex}
 
 \section{Basic definitions and notations}
 
 \input{Riordan-matrices-functions/matrix-functions.tex}
 
-We are now ready to apply this framework to matrices in the Riordan group.
+Now we apply this framework to matrices in the Riordan group.
 
 \section{Riordan matrices}
 
@@ -82,8 +82,9 @@ logarithm function.
 \begin{remark}
 For the sake of completeness, an Hermite interpolating polynomial $g$ could
 also be studied by relaxing the condition $\lambda=1$ thus considering
-$\hat{g}(z,\lambda)$ which subsumes $g(z)=\hat{g}(z,1)$. Here are two of these
-augmented polynomials interpolating the inverse and logarithm functions,
+$\hat{g}(z,\lambda)$ which subsumes $g(z)=\hat{g}(z,1)$. Here are one of these
+augmented polynomials interpolating the $log$ function
+\iffalse
 \begin{displaymath}
 \begin{split}
 \hat{I}_{8}{\left (z, \lambda \right )} &= - \frac{z^{7}}{\lambda^{8}} \\
@@ -97,6 +98,7 @@ augmented polynomials interpolating the inverse and logarithm functions,
 \end{split}
 \end{displaymath}
 and
+\fi
 \begin{displaymath}
 \begin{split}
 \hat{L}_{8}{\left (z,\lambda \right )} &= \frac{z^{7}}{7 \lambda^{7}} \\
@@ -106,10 +108,9 @@ and
 &+ z^{3} \left(\frac{1}{3 \lambda^{3}} + \frac{1}{\lambda^{4}} + \frac{2}{\lambda^{5}} + \frac{10}{3 \lambda^{6}} + \frac{5}{\lambda^{7}}\right) \\
 &+ z^{2} \left(- \frac{1}{2 \lambda^{2}} - \frac{1}{\lambda^{3}} - \frac{3}{2 \lambda^{4}} - \frac{2}{\lambda^{5}} - \frac{5}{2 \lambda^{6}} - \frac{3}{\lambda^{7}}\right) \\
 &+ z \left(\frac{1}{\lambda} + \frac{1}{\lambda^{2}} + \frac{1}{\lambda^{3}} + \frac{1}{\lambda^{4}} + \frac{1}{\lambda^{5}} + \frac{1}{\lambda^{6}} + \frac{1}{\lambda^{7}}\right) \\
-&+ log{\left (\lambda \right )} - \frac{1}{\lambda} - \frac{1}{2 \lambda^{2}} - \frac{1}{3 \lambda^{3}} - \frac{1}{4 \lambda^{4}} - \frac{1}{5 \lambda^{5}} - \frac{1}{6 \lambda^{6}} - \frac{1}{7 \lambda^{7}},
+&+ log{\left (\lambda \right )} - \frac{1}{\lambda} - \frac{1}{2 \lambda^{2}} - \frac{1}{3 \lambda^{3}} - \frac{1}{4 \lambda^{4}} - \frac{1}{5 \lambda^{5}} - \frac{1}{6 \lambda^{6}} - \frac{1}{7 \lambda^{7}}.
 \end{split}
 \end{displaymath}
-respectively.
 \end{remark}
 
 Finally, we show two theorem concerning trigonometric functions $\sin$ and
@@ -118,8 +119,6 @@ $\cos$, respectively.
 \input{Riordan-matrices-functions/function-sin.tex}
 
 \input{Riordan-matrices-functions/function-cos.tex}
-
-
 
 \subsection{Case studies}
 
@@ -133,27 +132,58 @@ concerning binomial coefficients, Catalan and Stirling numbers, respectively.
 
 \input{Riordan-matrices-functions/case-study-catalan.tex}
 
+We report a last case study about the triangle of Stirling numbers of the
+$II$-kind; finally, we conclude with a summary table reporting the application
+of trigonometric functions to all three matrices.
+
 \input{Riordan-matrices-functions/case-study-stirling-II.tex}
 
-The matrix $\mathcal{S}_{8}$ is related to matrix $e^{\mathcal{P}_{8}}$ known as
-$A056857$ in the Online Encyclopedia of Integer Sequences \citep{OEIS} by the
-identity $ e^{\mathcal{P}_{8}}=e\cdot\left(\mathcal{S}_{8}\cdot
-\mathcal{P}_{8}\cdot \mathcal{S}_{8}^{-1}\right)$, more connections
-involving these matrices can be found in \citep{CHEON200149}; additionally, we report
-sine and cosine function applications 
-$sin{\mathcal{P}_{8}}$,\,$cos{\mathcal{P}_{8}}$,\,$sin{\mathcal{C}_{8}}$,\,$cos{\mathcal{C}_{8}}$
-,\,$sin{\mathcal{S}_{8}}$ and $cos{\mathcal{S}_{8}}$
-in the following left-rotated tables, respectively.
 
-%\label{subsec:sines-cosines}
-\vspace*{-1cm}
+We report sine and cosine function applications in Table
+\ref{table:sin:cos:matrices:functions}; finally, Equation
+\ref{eq:matrices:functions:sin:cos:identity} shows that the identity
+$sin^{2}\,z + cos^{2}\,z=1$ is preserved by the framework of matrices functions
+and even more trigonometric identities can be checked; for example, the
+polynomial
+\begin{displaymath}
+\begin{split}
+{SS_{ 8 }}{\left (z \right )} &= - \frac{z^{7}}{5040} cos{\left (2 \right )} + z^{6} \left(- \frac{1}{720} sin{\left (2 \right )} + \frac{1}{360} cos{\left (2 \right )}\right) \\
+    &+ z^{5} \left(- \frac{1}{120} cos{\left (2 \right )} + \frac{1}{60} sin{\left (2 \right )}\right) + z^{4} \left(- \frac{1}{24} sin{\left (2 \right )} - \frac{1}{36} cos{\left (2 \right )}\right) \\
+    &+ z^{3} \left(- \frac{1}{9} sin{\left (2 \right )} + \frac{1}{18} cos{\left (2 \right )}\right)  + z^{2} \left(\frac{7}{15} cos{\left (2 \right )} + \frac{1}{6} sin{\left (2 \right )}\right) \\
+    &+ z \left(- \frac{19}{45} cos{\left (2 \right )} + \frac{14}{15} sin{\left (2 \right )}\right) - \frac{19}{45} sin{\left (2 \right )} - \frac{286}{315} cos{\left (2 \right )}
+\end{split}
+\end{displaymath}
+interpolates the function $f(\theta)=sin(2\,\theta)$
+which allows us to check the identity $sin(2\,\theta)=2\,sin\theta\,cos\theta$ 
+for a Riordan matrix $\theta$, formally $SS(\theta)~=~2\,S(\theta)\,C(\theta)$.
+
+% a comment about the correct definition of the Lagrange base. {{{
+\iffalse
+In the same spirit, many other functions and their relations with already
+studied ones could be an interesting field of investigation -- we would recall
+that before starting the lifting process of a scalar function, the user
+has to pay attention to the correct definition of the generalized Lagrange base
+because it all depends on the eigenvalues of the matrix under study.
+\fi
+% }}}
+
+\vfill
+
+\begin{table}
+%\vspace*{-1cm}
+    \caption[][-1cm]{$sin{\mathcal{P}_{8}}$,$cos{\mathcal{P}_{8}}$,$sin{\mathcal{C}_{8}}$,$cos{\mathcal{C}_{8}}$,
+$sin{\mathcal{S}_{8}}$ and $cos{\mathcal{S}_{8}}$}
 \input{Riordan-matrices-functions/sines-and-cosines.tex}
+\label{table:sin:cos:matrices:functions}
+\end{table}
 
 
 \section{Jordan canonical form}
 
 \input{Riordan-matrices-functions/jordan-form.tex}
 \input{Riordan-matrices-functions/case-study-fibonacci.tex}
+
+\vfill
 
 \section{Conclusions}
 

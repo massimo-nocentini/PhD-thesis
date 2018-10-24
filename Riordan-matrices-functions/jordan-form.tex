@@ -6,8 +6,9 @@ Let $A\in\mathbb{R}^{m\times m}$ be a square matrix and $\Phi_{i,j}
 \in\prod_{m-1}$ a generalized Lagrange base, so $Z_{i,j}^{[A]} = \Phi_{i,j}(A)$
 denotes the $j$-th \textit{component matrix} of $A$ relative to its $i$-th
 eigenvalue (from here on, we just write $Z_{i,j}$ to keep clean the notation
-when no confusion arises). Proofs of the following component matrices's
-properties
+when no confusion arises). 
+
+Component matrices enjoy the properties
 \begin{itemize}
 \item they are linearly independent and don't depend on function $f$,
 \item they commute respect the product, $Z_{ij}Z_{kr}= Z_{kr}Z_{ij}$,
@@ -20,7 +21,8 @@ properties
 \item $Z_{i2} = Z_{i1}(A-\lambda_{i}I)$ from $f(z)=z-\lambda_{i}$, for
         $i\in\lbrace 1,\ldots,\nu\rbrace$,
 \end{itemize}
-can be found in \citep{BT1998, LT2002}.
+whose proofs can be found in \citep{BT1998, LT2002} together with more
+arguments and applications.
 
 \begin{example}
 Component matrices relative to $\mathcal{P}_{8}$ are
@@ -37,8 +39,8 @@ Z_{1,5} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  
 Z_{1,7} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\21 & 7 &  &  &  &  &  & \end{matrix}\right]
 \quad\text{and}\quad Z_{1,8} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \end{matrix}\right];
 \end{displaymath}
-in parallel; corresponding matrices for $\mathcal{C}_{8}$ and $\mathcal{S}_{8}$
-can be computed in a similar way.
+in parallel; corresponding component matrices for $\mathcal{C}_{8}$ and
+$\mathcal{S}_{8}$ can be computed in a similar way.
 \end{example}
 
 Let $\boldsymbol{v}\in\mathbb{R}^{m}$ be a \textit{non-zero} vector to
@@ -51,56 +53,64 @@ linearly independent, therefore $\mathcal{M}_{q}\cap\mathcal{M}_{w}=\emptyset$ i
 
 \begin{lemma}
 Let $\lambda_{i}\in\sigma(A)$, then vectors
-$\boldsymbol{x}_{i,j}\in\mathcal{M}_{i}$ satisfy the recurrence relation
+$\boldsymbol{x}_{i,j}\in\mathcal{M}_{i}$ satisfy the recurrences
 \begin{displaymath}
 \begin{split}
 A\,\boldsymbol{x}_{i,j} &= \lambda_{i}\,\boldsymbol{x}_{i,j} + \boldsymbol{x}_{i,j+1} , \quad j\in \lbrace 1,\ldots,m_{i}-1 \rbrace  \\
-A\,\boldsymbol{x}_{i,m_{i}} &= \lambda_{i}\,\boldsymbol{x}_{i,m_{i}} \\
+A\,\boldsymbol{x}_{i,m_{i}} &= \lambda_{i}\,\boldsymbol{x}_{i,m_{i}};
 \end{split}
 \end{displaymath}
+for this reason, they are also called \textit{generalized eigenvectors}.
 \end{lemma}
 \begin{proof}
-Component matrices commute with respect to matrix product, namely
-$Z_{ij}Z_{kr}= Z_{kr}Z_{ij}$; moreover, identities $Z_{i2} =
-Z_{i1}(A-\lambda_{i}I)$, $Z_{i,2}^{m_{i}}=O$ and $Z_{i1}Z_{ij}=Z_{ij}$ also
-hold.
-
-Let $ j\in \lbrace 1,\ldots,m_{i}-1 \rbrace $ in the first equation of
+Recall that $Z_{i2} = Z_{i,1}\,(A-\lambda_{i}I)$, then let $ j\in \lbrace
+1,\ldots,m_{i}-1 \rbrace $ in
 \begin{displaymath}
 \begin{split}
-\boldsymbol{x}_{i,j+1} &= Z_{i,2}^{j}\,Z_{i,1}\,\boldsymbol{v} = Z_{i,2}\,Z_{i,2}^{j-1}\,Z_{i,1}\,\boldsymbol{v} =  Z_{i,2}\,\boldsymbol{x}_{i,j}=A\,\boldsymbol{x}_{i,j} - \lambda_{i}\,\boldsymbol{x}_{i,j},  \\
-Z_{i,2}\,\boldsymbol{x}_{i,m_{i}} &=  Z_{i,2}\,Z_{i,2}^{m_{i}-1}\,Z_{i,1}\,\boldsymbol{v} = Z_{i,2}^{m_{i}}\,Z_{i,1}\,\boldsymbol{v} = \boldsymbol{0};
+\boldsymbol{x}_{i,j+1} &= Z_{i,2}^{j}\,Z_{i,1}\,\boldsymbol{v} = Z_{i,2}^{j-1}\,Z_{i,2}\,Z_{i,1}\,\boldsymbol{v} \\
+    &= Z_{i,2}^{j-1}\,Z_{i,1}\,Z_{i,2}\,\boldsymbol{v} 
+    = Z_{i,2}^{j-1}\,Z_{i,1}\,Z_{i,1}\,(A-\lambda_{i}I)\,\boldsymbol{v} \\
+    &= Z_{i,2}^{j-1}\,Z_{i,1}\,(A-\lambda_{i}I)\,\boldsymbol{v} 
+    = (A-\lambda_{i}I)\,Z_{i,2}^{j-1}\,Z_{i,1}\,\boldsymbol{v} \\
+    &= (A-\lambda_{i}I)\,\boldsymbol{x}_{i,j}
 \end{split}
 \end{displaymath}
+where the facts (i)~$Z_{ij}Z_{kr}= Z_{kr}Z_{ij}$, (ii)~$Z_{i1}Z_{ij}=Z_{ij}$
+and (iii)~the linear independence of component matrices justify the derivation
+steps in the branches above, respectively. This proves the first recurrence; on
+the other hand, consider
+\begin{displaymath}
+Z_{i,2}\,\boldsymbol{x}_{i,m_{i}} =  Z_{i,2}\,Z_{i,2}^{m_{i}-1}\,Z_{i,1}\,\boldsymbol{v} = Z_{i,2}^{m_{i}}\,Z_{i,1}\,\boldsymbol{v} = \boldsymbol{0}
+\end{displaymath}
+which holds because $Z_{i,2}^{m_{i}}=O$, proving the second recurrence.
 \end{proof}
 
-The recurrence relation can be rewritten in matrix notation as $A\,X_{i} = X_{i}\,J_{i}$ where
+\newpage
+
+The recurrences can be merged in matrix notation as $A\,X_{i} = X_{i}\,J_{i}$
+where $\displaystyle X_{i}  = \left[\boldsymbol{x}_{i,1},\ldots,\boldsymbol{x}_{i,m_{i}}
+\right]\in\mathbb{R}^{m\times m_{i}}$ and
 \begin{displaymath}
-\begin{split}
-X_{i}   &= \left[\boldsymbol{x}_{i,1},\ldots,\boldsymbol{x}_{i,m_{i}} \right]\in\mathbb{R}^{m\times m_{i}}\quad\text{and} \\
-J_{i}   &= \left[ \begin{array}{cccc}
+J_{i}   = \left[ \begin{array}{cccc}
     \lambda_{i} \\
     1 & \lambda_{i} \\
       & \ddots & \ddots \\
       & & 1 &\lambda_{i} \\
-\end{array} \right] \in\mathbb{R}^{m_{i}\times m_{i}}.
-\end{split}
+\end{array} \right] \in\mathbb{R}^{m_{i}\times m_{i}};
 \end{displaymath}
-Under this point of view, vectors $\boldsymbol{x}_{i,j}\in\mathcal{M}_{i}$ are
-called \textit{generalized eigenvectors} ($\boldsymbol{x}_{i,m_{i}}$ is an
-eigenvector, as usual) relative to $A$'s eigenvalue $\lambda_{i}$; at last,
-$J_{i}$ is called \textit{Jordan block}.  Collecting matrices $X_{i}$ and
-$J_{i}$ for $i\in \lbrace 1,\ldots,\nu \rbrace$, the \textit{Jordan canonical
-form} of $A$ is defined by the relation $A\,X = X\, J$, where
+at last, each $J_{i}$ is called the \textit{Jordan block} of the eigenvalue
+$\lambda_{i}$.  Collecting matrices $X_{i}$ and $J_{i}$ for $i\in \lbrace
+1,\ldots,\nu \rbrace$, the \textit{Jordan canonical form} of $A$ is defined by
+the relation $A\,X = X\, J$, where $\displaystyle X =
+\left[X_{1},\ldots,X_{\nu} \right]\in\mathbb{R}^{m\times m}$ and
 \begin{displaymath}
-X = \left[X_{1},\ldots,X_{\nu} \right]\in\mathbb{R}^{m\times m} \quad\text{and}\quad
 J = \left[ \begin{array}{ccc}
     J_{1} \\
       & \ddots \\
       & & J_{\nu} \\
-\end{array} \right] \in\mathbb{R}^{m\times m},
+\end{array} \right] \in\mathbb{R}^{m\times m}
 \end{displaymath}
-with respect to vector $\boldsymbol{v}\in\mathbb{R}^{m}$; finally, if $X$ is
+with respect to an arbitrary vector $\boldsymbol{v}\in\mathbb{R}^{m}$; finally, if $X$ is
 non-singular then matrices $A$ and $X^{-1}\,A\,X = J$ are \textit{similar}, $A
 \sim_{X} J$ in symbols.
 
@@ -127,12 +137,15 @@ $\mathcal{P}_{8}$'s component matrices are used to build the set of
 \quad\text{and}\quad \boldsymbol{x}_{1,8} = \left[\begin{matrix}0\\0\\0\\0\\0\\0\\0\\5040 \alpha_{0}\end{matrix}\right],
 \end{displaymath}
 where $\boldsymbol{v} = [\alpha_{0}, \ldots, \alpha_{7}]^{T} \in \mathbb{C}^{8}$;
-finally, consecutive composition of previous vectors yields the matrix 
+finally, column composition of previous vectors yields the matrix
 $$X = \left[\boldsymbol{x}_{1,1}\quad\boldsymbol{x}_{1,2}\quad
 \boldsymbol{x}_{1,3}\quad\boldsymbol{x}_{1,4}\quad
 \boldsymbol{x}_{1,5}\quad\boldsymbol{x}_{1,6}\quad\boldsymbol{x}_{1,7}\quad
-\boldsymbol{x}_{1,8}\right]$$ 
+\boldsymbol{x}_{1,8}\right]$$
 which is the most abstract matrix such that $\mathcal{P}_{8} \sim_{X} J$.
+In fact, it shows that there are \textit{uncountably many} matrices $\hat{X}$
+such that $\mathcal{P}_{8} \sim_{\hat{X}} J$ by choosing different real values for
+the components of the vector $\boldsymbol{v}$.
 \end{example}
 
 This derivations allow us to compute functions of
@@ -149,6 +162,7 @@ $g$ is a linear combination of powers being a polynomial,
 $\left(X^{-1}\,A\,X\right)^{i} = X^{-1}\,A^{i}\,X$ entails $X^{-1}\,g(A)\,X =
 g(J)$, as required.
 \end{proof}
+
 Previous lemma ensures that $A \sim_{X} J\rightarrow g(A) = X\,g(J)\,X^{-1}$
 and allows us to compute $f(A)$: in words, the procedure consists of, first,
 finding matrices $X$ and $J$; second, compute $g(J)$; third, multiply it by $X$
@@ -222,6 +236,7 @@ J^{-1} = \left[\begin{matrix}\frac{1}{\lambda_{1}} & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
 The following theorem uses the property that any two Riordan arrays
 share the same matrix $J$ in their Jordan canonical forms to state that they
 are combination the one of the other.
+
 \begin{theorem}
 Let $A$ and $B$ be two Riordan matrices and let $A\,X = X\,J$ and $B\,Y= Y\,J$
 be their Jordan canonical forms, respectively, where matrices $X$ and $Y$ depend
@@ -235,6 +250,8 @@ entails $Y\,X^{-1}\,A\,X\,Y^{-1} = B$. Finally, let $g$ be the Hermite
 interpolating polynomial of $f$, then $g(Y\,X^{-1}\,A\,X\,Y^{-1}) = g(B)$
 implies $Y\,X^{-1}\,g(A)\,X\,Y^{-1} = g(B)$, as required.
 \end{proof}
+
+\vfill
 
 \begin{example}
 Pascal and Catalan triangles are similar with respect to

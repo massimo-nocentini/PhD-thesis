@@ -1,6 +1,7 @@
 
 \begin{example}
-Let $\mathcal{P}$ be the matrix of binomial coefficients, also known as the \textit{Pascal matrix},
+Let $\mathcal{P}$ be the matrix of binomial coefficients, also known as the
+\textit{Pascal matrix},
 \begin{displaymath}
 %\mathcal{P}_{m}=\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\1 & 3 & 3 & 1 & 0 & 0 & 0 & 0\\1 & 4 & 6 & 4 & 1 & 0 & 0 & 0\\1 & 5 & 10 & 10 & 5 & 1 & 0 & 0\\1 & 6 & 15 & 20 & 15 & 6 & 1 & 0\\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1\end{matrix}\right]
 \mathcal{P}_{8}=\left[\begin{matrix}1 &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &  \\1 & 2 & 1 &   &   &   &   &  \\1 & 3 & 3 & 1 &   &   &   &  \\1 & 4 & 6 & 4 & 1 &   &   &  \\1 & 5 & 10 & 10 & 5 & 1 &   &  \\1 & 6 & 15 & 20 & 15 & 6 & 1 &  \\1 & 7 & 21 & 35 & 35 & 21 & 7 & 1\end{matrix}\right]
@@ -22,23 +23,45 @@ where $\displaystyle\mathcal{P}^{2} = \Ra\left(\frac{1}{1-2\,t},\frac{t}{1-2\,t}
 %\left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\-1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\1 & -2 & 1 & 0 & 0 & 0 & 0 & 0\\-1 & 3 & -3 & 1 & 0 & 0 & 0 & 0\\1 & -4 & 6 & -4 & 1 & 0 & 0 & 0\\-1 & 5 & -10 & 10 & -5 & 1 & 0 & 0\\1 & -6 & 15 & -20 & 15 & -6 & 1 & 0\\-1 & 7 & -21 & 35 & -35 & 21 & -7 & 1\end{matrix}\right]
 \mathcal{P}_{8}^{-1} = I_{8}\left( \mathcal{P}_{8}\right) = \left[\begin{matrix}1 &   &   &   &   &   &   &  \\-1 & 1 &   &   &   &   &   &  \\1 & -2 & 1 &   &   &   &   &  \\-1 & 3 & -3 & 1 &   &   &   &  \\1 & -4 & 6 & -4 & 1 &   &   &  \\-1 & 5 & -10 & 10 & -5 & 1 &   &  \\1 & -6 & 15 & -20 & 15 & -6 & 1 &  \\-1 & 7 & -21 & 35 & -35 & 21 & -7 & 1\end{matrix}\right]
 \end{displaymath}
-where $\displaystyle\mathcal{P}^{-1} = \Ra\left(\frac{1}{1+t},\frac{t}{1+t} \right)$,
-correspond to the product and inverse operations in the Riordan group defined
-in Equation \ref{eq:Riordan-group-ops}, respectively. Additionally, matrices
-$e^{\mathcal{P}_{8}}= E_{8}\left( \mathcal{P}_{8}\right) $ and
-$log{\mathcal{P}_{8}}= L_{8}\left( \mathcal{P}_{8}\right) $, defined by
+where $\displaystyle\mathcal{P}^{-1} = \Ra\left(\frac{1}{1+t},\frac{t}{1+t}
+\right)$, correspond to the product and inverse operations in the Riordan group
+defined in Equations \ref {eq:riordan:group:op} and
+\ref{eq:riordan:group:inverse}, respectively. Additionally, matrices
+$e^{\mathcal{P}_{8}}= E_{8}\left( \mathcal{P}_{8}\right) $, which is known as
+$A056857$ in the Online Encyclopedia of Integer Sequences \citep{OEIS}, and
+$log{\mathcal{P}_{8}}= L_{8}\left( \mathcal{P}_{8}\right) $ defined by
 \begin{displaymath}
 %e \left[\begin{matrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 1 & 0 & 0 & 0 & 0 & 0 & 0\\2 & 2 & 1 & 0 & 0 & 0 & 0 & 0\\5 & 6 & 3 & 1 & 0 & 0 & 0 & 0\\15 & 20 & 12 & 4 & 1 & 0 & 0 & 0\\52 & 75 & 50 & 20 & 5 & 1 & 0 & 0\\203 & 312 & 225 & 100 & 30 & 6 & 1 & 0\\877 & 1421 & 1092 & 525 & 175 & 42 & 7 & 1\end{matrix}\right]
 e^{\mathcal{P}_{8}} = e \left[\begin{matrix}1 &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &  \\2 & 2 & 1 &   &   &   &   &  \\5 & 6 & 3 & 1 &   &   &   &  \\15 & 20 & 12 & 4 & 1 &   &   &  \\52 & 75 & 50 & 20 & 5 & 1 &   &  \\203 & 312 & 225 & 100 & 30 & 6 & 1 &  \\877 & 1421 & 1092 & 525 & 175 & 42 & 7 & 1\end{matrix}\right]
 \end{displaymath}
 \begin{displaymath}
 %log = \left[\begin{matrix}0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\1 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 2 & 0 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 3 & 0 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 4 & 0 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 5 & 0 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 6 & 0 & 0\\0 & 0 & 0 & 0 & 0 & 0 & 7 & 0\end{matrix}\right]
-\text{and}\quad log{\mathcal{P}_{8}} = \left[\begin{matrix} 0 &   &   &   &   &   &   &  \\1 & 0   &   &   &   &   &   &  \\  & 2 &  0  &   &   &   &   &  \\  &   & 3 &  0  &   &   &   &  \\  &   &   & 4 &  0  &   &   &  \\  &   &   &   & 5 &  0  &   &  \\  &   &   &   &   & 6 &  0  &  \\  &   &   &   &   &   & 7 &  0 \end{matrix}\right],
+\text{and}\quad log{\mathcal{P}_{8}} = \left[\begin{matrix} 0 &   &   &   &   &   &   &  \\1 & 0   &   &   &   &   &   &  \\  & 2 &  0  &   &   &   &   &  \\  &   & 3 &  0  &   &   &   &  \\  &   &   & 4 &  0  &   &   &  \\  &   &   &   & 5 &  0  &   &  \\  &   &   &   &   & 6 &  0  &  \\  &   &   &   &   &   & 7 &  0 \end{matrix}\right]
 \end{displaymath}
-have eigenvalues $e$ and $0$; therefore, in order to check (expected)
-identities $log{e^{\mathcal{P}_{8}}} = e^{log{\mathcal{P}_{8}}} =
+have eigenvalues $e$ and $0$; therefore, in order to check the (expected)
+identities $log\left(e^{\mathcal{P}_{8}}\right) = e^{log{\mathcal{P}_{8}}} =
 \mathcal{P}_{8}$ it is required to compute new Hermite interpolating
 polynomials  using Theorem \ref{thm:Hermite-interpolating-polynomial-Riordan} on
 eigenvalues $\lambda_{1}=0$ and $\lambda_{1}=e$, in place of $L_{8}(z)$ and
 $E_{8}(z)$ which depend on eigenvalue $\lambda=1$ instead.
+
+For the sake of completeness, in order to recover $\mathcal{P}_{8}$ back from
+$log{\mathcal{P}_{8}}$ we have to (i)~to find its spectrum
+\begin{displaymath}
+\sigma{\left ({L_{ 8 }}{\left (\mathcal{P}_{ 8 } \right )} \right )} = \left ( \left \{ 1 : \left ( \lambda_{1}, \quad m_{1}\right )\right \}, \quad \left \{ \lambda_{1} : 0\right \}, \quad \left \{ m_{1} : 8\right \}\right ),
+\end{displaymath}
+(ii)~to compute the generalized Lagrange base
+\begin{displaymath}
+\begin{split}
+\Phi_{ 1, 1 }{\left (z \right )} &= 1, \Phi_{ 1, 2 }{\left (z \right )} = z, \Phi_{ 1, 3 }{\left (z \right )} = \frac{z^{2}}{2}, \Phi_{ 1, 4 }{\left (z \right )} = \frac{z^{3}}{6},\\
+\Phi_{ 1, 5 }{\left (z \right )} &= \frac{z^{4}}{24}, \Phi_{ 1, 6 }{\left (z \right )} = \frac{z^{5}}{120}, \Phi_{ 1, 7 }{\left (z \right )} = \frac{z^{6}}{720}, \Phi_{ 1, 8 }{\left (z \right )} = \frac{z^{7}}{5040}
+\end{split}
+\end{displaymath}
+and (iii)~to build the Hermite interpolating polynomial
+\begin{displaymath}
+{E_{ 8 }}{\left (z \right )} = \frac{\alpha^{7} z^{7}}{5040} + \frac{\alpha^{6} z^{6}}{720} + \frac{\alpha^{5} z^{5}}{120} + \frac{\alpha^{4} z^{4}}{24} + \frac{\alpha^{3} z^{3}}{6} + \frac{\alpha^{2} z^{2}}{2} + \alpha z + 1
+\end{displaymath}
+that interpolates the function $f(z)=e^{\alpha\,z}$, which is different from
+the corresponding polynomials show in Equation
+\ref{eq:exp:interpolating:polynomial} ; finally, $\alpha=1$ closes.
 \end{example}

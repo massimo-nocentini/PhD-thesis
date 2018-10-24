@@ -60,15 +60,16 @@ Riordan arrays constitute an \textit{algebraic group} with respect to the usual
 row-by-column product between matrices; formally, the group operation $\cdot$ applied
 to two Riordan arrays $D_1(d_1(t),\ h_1(t))$ and $D_2(d_2(t),\ h_2(t))$ is
 carried out as
-\begin{displaymath}
+\begin{equation}
   D_1 \cdot D_2 =(d_1(t)d_2(h_1(t)),\ h_2(h_1(t))).
-\end{displaymath}
+  \label{eq:riordan:group:op}
+\end{equation}
 Moreover, the Riordan array $I = (1,\ t)$ acts as the identity element and the
 inverse of $D =(d(t), h(t))$ is the Riordan array
-$$
-D^{-1} = \left( \frac{1}{d(\overline{h}(t))},
-  \overline{h}(t) \right)
-$$
+\begin{equation}
+D^{-1} = \left( \frac{1}{d(\overline{h}(t))}, \overline{h}(t) \right)
+  \label{eq:riordan:group:inverse}
+\end{equation}
 where $\overline{h}(t)$ denotes the compositional inverse of $h(t)$.
 
 An equivalent characterization of a each matrix $\mathcal{R}(d(t), h(t))$ in

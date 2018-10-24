@@ -5,7 +5,10 @@ generalized Lagrange base will be carried out using the Horner algorithm for
 the sake of efficiency. Let $m=8$, each polynomial can be written in abstract
 form as
 \begin{displaymath}
-\Phi_{i,j}{\left (z \right )} = z^{7} \phi_{i,j,0} + z^{6} \phi_{i,j,1} + z^{5} \phi_{i,j,2} + z^{4} \phi_{i,j,3} + z^{3} \phi_{i,j,4} + z^{2} \phi_{i,j,5} + z \phi_{i,j,6} + \phi_{i,j,7}
+\begin{split}
+\Phi_{i,j}{\left (z \right )} &= z^{7} \phi_{i,j,0} + z^{6} \phi_{i,j,1} + z^{5} \phi_{i,j,2} + z^{4} \phi_{i,j,3} \\
+    &+ z^{3} \phi_{i,j,4} + z^{2} \phi_{i,j,5} + z \phi_{i,j,6} + \phi_{i,j,7}
+\end{split}
 \end{displaymath}
 and can be computed as
 \begin{displaymath}
@@ -15,15 +18,15 @@ where each coefficient $\phi_{i,j,k}\in\mathbb{R}$ has to be interpreted as
 $\phi_{i,j,k}\,I$, namely a $0$-filled matrix with $\phi_{i,j,k}$ on the main
 diagonal. Such approach requires $m-2$ matrix products and $m-1$ additions.  We
 use this scheme in all subsequent polynomial evaluations to a Riordan matrix.
-\\
-First of all, we list Hermite interpolating polynomials for the following functions:
+
+First of all, we list Hermite interpolating polynomials for the
 \begin{description}
 \item[$r$-th power function]
 \begin{displaymath}
 \footnotesize
     \begin{split}
-        P_{8}\left (z \right )  &= \left(z - 1\right)^{7} {\binom{r}{7}} + \left(z - 1\right)^{6} {\binom{r}{6}} + \left(z - 1\right)^{5} {\binom{r}{5}} + \left(z - 1\right)^{4} {\binom{r}{4}}
-                            + \left(z - 1\right)^{3} {\binom{r}{3}} + \left(z - 1\right)^{2} {\binom{r}{2}} + \left(z - 1\right) {\binom{r}{1}} + {\binom{r}{0}} \\
+        P_{8}\left (z \right )  &= \left(z - 1\right)^{7} {\binom{r}{7}} + \left(z - 1\right)^{6} {\binom{r}{6}} + \left(z - 1\right)^{5} {\binom{r}{5}} + \left(z - 1\right)^{4} {\binom{r}{4}}\\
+                            &+ \left(z - 1\right)^{3} {\binom{r}{3}} + \left(z - 1\right)^{2} {\binom{r}{2}} + \left(z - 1\right) {\binom{r}{1}} + {\binom{r}{0}} \\
                             &= z^{7} {\binom{r}{7}} \\
                             &+ z^{6} \left({\binom{r}{6}} - 7 {\binom{r}{7}}\right) \\
                             &+ z^{5} \left({\binom{r}{5}} - 6 {\binom{r}{6}} + 21 {\binom{r}{7}}\right) \\
@@ -46,17 +49,17 @@ First of all, we list Hermite interpolating polynomials for the following functi
 \begin{displaymath}
 \footnotesize
     \begin{split}
-        R_{8}{\left (z \right )}  &= \frac{33}{2048} \left(z - 1\right)^{7} - \frac{21}{1024} \left(z - 1\right)^{6} + \frac{7}{256} \left(z - 1\right)^{5} - \frac{5}{128} \left(z - 1\right)^{4}
-                              + \frac{1}{16} \left(z - 1\right)^{3} - \frac{1}{8} \left(z - 1\right)^{2} + \frac{1}{2}(z-1) + 1 \\
+        R_{8}{\left (z \right )}  &= \frac{33}{2048} \left(z - 1\right)^{7} - \frac{21}{1024} \left(z - 1\right)^{6} + \frac{7}{256} \left(z - 1\right)^{5} - \frac{5}{128} \left(z - 1\right)^{4}\\
+                              &+ \frac{1}{16} \left(z - 1\right)^{3} - \frac{1}{8} \left(z - 1\right)^{2} + \frac{1}{2}(z-1) + 1 \\
                               &= \frac{33 z^{7}}{2048} - \frac{273 z^{6}}{2048} + \frac{1001 z^{5}}{2048} - \frac{2145 z^{4}}{2048} + \frac{3003 z^{3}}{2048} - \frac{3003 z^{2}}{2048} + \frac{3003 z}{2048} + \frac{429}{2048};
     \end{split}
 \end{displaymath}
 \item[exponential function]
-\begin{displaymath}
+\begin{equation}
 \footnotesize
     \begin{split}
-        E_{8}{\left (z \right )}    &= e^{\alpha} \left(\frac{\alpha^{7} }{5040} \left(z - 1\right)^{7} + \frac{\alpha^{6} }{720} \left(z - 1\right)^{6} + \frac{\alpha^{5} }{120} \left(z - 1\right)^{5} + \frac{\alpha^{4} }{24} \left(z - 1\right)^{4}\right.
-                                + \left. \frac{\alpha^{3} }{6} \left(z - 1\right)^{3} + \frac{\alpha^{2} }{2} \left(z - 1\right)^{2} + \alpha \left(z - 1\right)  + 1\right)\\
+        E_{8}{\left (z \right )}    &= e^{\alpha} \left(\frac{\alpha^{7} }{5040} \left(z - 1\right)^{7} + \frac{\alpha^{6} }{720} \left(z - 1\right)^{6} + \frac{\alpha^{5} }{120} \left(z - 1\right)^{5} + \frac{\alpha^{4} }{24} \left(z - 1\right)^{4}\right.\\
+                                &+ \left. \frac{\alpha^{3} }{6} \left(z - 1\right)^{3} + \frac{\alpha^{2} }{2} \left(z - 1\right)^{2} + \alpha \left(z - 1\right)  + 1\right)\\
                                 &= e^{\alpha}\left(\frac{\alpha^{7} z^{7}}{5040}\right. \\
                                 &+ \frac{\alpha^{6} z^{6}}{720} \left(- \alpha + 1\right) \\
                                 &+ \frac{\alpha^{5} z^{5}}{240} \left(\alpha^{2} - 2 \alpha + 2\right) \\
@@ -68,7 +71,8 @@ First of all, we list Hermite interpolating polynomials for the following functi
         \left.E_{8}{\left (z \right )}\right|_{\alpha=1} &= e \left(\frac{z^{7}}{5040} + \frac{z^{5}}{240} + \frac{z^{4}}{72} + \frac{z^{3}}{16} + \frac{11 z^{2}}{60} + \frac{53 z}{144} + \frac{103}{280}\right)\quad\text{and}\\
         \left.E_{8}{\left (z \right )}\right|_{\alpha=-1} &=\frac{1}{e} \left( - \frac{z^{7}}{5040} + \frac{z^{6}}{360} - \frac{z^{5}}{48} + \frac{z^{4}}{9}\right. - \left.\frac{65 z^{3}}{144} + \frac{163 z^{2}}{120} - \frac{1957 z}{720} + \frac{685}{252}\right);
     \end{split}
-\end{displaymath}
+    \label{eq:exp:interpolating:polynomial}
+\end{equation}
 \item[logarithm function]
 \begin{displaymath}
 \footnotesize
