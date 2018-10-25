@@ -38,22 +38,29 @@
 %}}}
 
 \linespread{1.1}
-\pagestyle{empty}
+\pagestyle{myheadings}
 
 \thispagestyle{empty}
 \newgeometry{top=3cm,bottom=2cm}
+\begin{titlingpage}
 \begin{center}
+
+% individual logos {{{
+\iffalse
 \newsavebox{\logounifi}
 \savebox{\logounifi}{\includegraphics[height=7\baselineskip]{logos/logo_unifi}}
 \newsavebox{\logounipg}
 \savebox{\logounipg}{\includegraphics[height=7\baselineskip]{logos/logo_unipg}}
 \newsavebox{\logoindam}
 \savebox{\logoindam}{\includegraphics[height=7\baselineskip]{logos/logo_indam}}
+\fi
+% }}}
 
 %\includegraphics[width = 0.3\linewidth]{LogoUnifi.pdf}
-\vspace{-4cm}\hspace{-1cm}\usebox{\logounifi}\hfill\usebox{\logoindam}\hfill\usebox{\logounipg} \\%\includegraphics[natwidth=1, width = 1\linewidth]{logo.JPG}
-\par\par
-\vspace{5mm}
+%\vspace{-4cm}\hspace{-1cm}\usebox{\logounifi}\hfill\usebox{\logoindam}\hfill\usebox{\logounipg} \\
+\vspace{-4cm}\includegraphics{logos/logo.jpeg}
+\par%\par
+%\vspace{5mm}
 { %\small %Consorzio  Interuniversitario per l'alta Formazione in Matematica\\
 Universit\`a di Firenze, Universit\`a di Perugia, INdAM  consorziate nel {\small CIAFM}\\}
 %Sede amministrativa Universit\`a di Firenze\\
@@ -97,7 +104,7 @@ Settore Scientifico Disciplinare INF/$01$
 
 \normalsize
 \hspace{1cm}\begin{minipage}{0.42\linewidth}
-\textbf{Dottorando}:
+\textbf{Dottorando}
 \\
 {Massimo Nocentini}
 \end{minipage}
@@ -125,4 +132,5 @@ Settore Scientifico Disciplinare INF/$01$
 Anni 2015/2018
 
 \end{center}
+\end{titlingpage}
 \restoregeometry
