@@ -14,3 +14,5 @@
 
 _minted-PhD-thesis/
 */__pycache__/
+
+.DS_Store

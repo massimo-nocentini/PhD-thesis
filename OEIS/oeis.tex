@@ -66,22 +66,22 @@ up repeated lookups and to restart the fetching process from the cache already
 downloaded.
 
 The script presents a help message to explain itself:
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-help.txt}
+\VerbatimInput[baselinestretch=0.8]{deps/oeis-tools/doc/OEIS/crawler-help.txt}
 
 \begin{example}
 We illustrate a typical session where we start from scratch. First of all, we
 want to download the OEIS content about two important and nice sequences,
 namely those corresponding to the Fibonacci and Catalan numbers, respectively
 identified by labels $A000045$ and $A000108$:
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-fetching-command.txt}
+\VerbatimInput[baselinestretch=0.8]{deps/oeis-tools/doc/OEIS/crawler-fetching-command.txt}
 After stopping the crawler, we check the content of the cache with the commands
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-status.txt} 
+\VerbatimInput[baselinestretch=0.8]{deps/oeis-tools/doc/OEIS/crawler-status.txt} 
 which tell us that $30$ sequences had been fetched and stored in the default
 directory \verb|./fetched/|.  Moreover, we can restart the crawler from where
 it was interrupted with the command
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-restarting.txt}
+\VerbatimInput[baselinestretch=0.8]{deps/oeis-tools/doc/OEIS/crawler-restarting.txt}
 and we check that new sequences are actually collected,
-\begin{Verbatim}[fontsize=\small]
+\begin{Verbatim}[baselinestretch=0.8]
 $ python3.6 crawling.py
 50 sequences in cache ./fetched/
 354 sequences in fringe for restarting
@@ -97,16 +97,16 @@ tool available in our working environment, as the next example shows.
 Combining the \verb|cat| command with the Python module \verb|json.tool|, that
 prints JSON files with respect to indentation, we can visualize data about the
 sequence of Fibonacci numbers as follows
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-A000045-chunk.txt}
+\VerbatimInput[baselinestretch=0.8]{deps/oeis-tools/doc/OEIS/crawler-A000045-chunk.txt}
 \end{example}
 
 \begin{figure}
 \includegraphics{deps/oeis-tools/doc/OEIS/json-structure}
 \caption{The complete structure of the JSON encoding of OEIS content about the
-sequence $A000045$; in particular, the property \texttt{xref} is left expanded
-because of its important in the recursive behaviour of the crawler, namely
-every label in this section bacomes a candidate sequence for the fetching
-process.}
+sequence $A000045$; in particular, the property \texttt{xref}, highlighted in
+\textcolor{blue}{blue}, is left expanded because of its important in the
+recursive behaviour of the crawler, namely every label in this section bacomes
+a candidate sequence for the fetching process.}
 \label{fig:json-structure}
 \end{figure}
 
@@ -114,27 +114,28 @@ Our implementation takes strong inspiration from
 \citep{VANROSSUM:DAVIS:async:await} and provides the following abstractions:
 
 \begin{description}
-\item[\texttt{reader}] objects, that have the responsibility to be \textit{asynchronous
-iterators} in the sense that they have to respond to the message
-\verb|__anext__|, where the computation waits asynchronously for incoming data
-from the \verb|self.read| coroutine. The code
-\inputminted[fontsize=\small,stripnl=false,firstline=28,lastline=39]
+
+\item[\texttt{reader}] objects, that have the responsibility to be
+\textit{asynchronous iterators} in the sense that they have to respond to the
+message \verb|__anext__|, where the computation waits asynchronously for
+incoming data from the \verb|self.read| coroutine. The following code
+implements the description precisely,
+\inputminted[stripnl=false,firstline=28,lastline=39,baselinestretch=0.8]
 {python}{deps/oeis-tools/src/crawling.py} 
-implements the description precisely.
 
 \item[\texttt{fetcher}] objects have the responsibilities (i)~to create a socket with
 OEIS server, (ii)~to establish a working connection, (iii)~to send an HTTP \verb|GET|
 request for the desired sequence, (iv)~to wait for the fetching process completes
 and (v)~to close the socket and signal that the it ends successfully.
 A literal translation follows,
-\inputminted[fontsize=\small,stripnl=false,firstline=41,lastline=86]
+\inputminted[stripnl=false,firstline=41,lastline=86,baselinestretch=0.8]
     {python}{deps/oeis-tools/src/crawling.py}
 
 \item[\texttt{crawler}] objects have the responsibilities (i)~to keep a queue of task,
 one for each candidate sequence, (ii)~to put each ready task into the
 scheduling process and (iii)~to reclaim memory for the completed ones and
 (iv)~to deque them, eventually; again, its code follows
-\inputminted[fontsize=\small,stripnl=false,firstline=89,lastline=117]
+\inputminted[stripnl=false,firstline=89,lastline=117,baselinestretch=0.8]
     {python}{deps/oeis-tools/src/crawling.py}
 
 \end{description}
@@ -142,7 +143,7 @@ scheduling process and (iii)~to reclaim memory for the completed ones and
 \iffalse
 Finally, the function \verb|oeis| puts all together and it is the main
 interface exported by the \verb|crawling| module:
-\inputminted[fontsize=\small,stripnl=false,firstline=195,lastline=221]
+\inputminted[stripnl=false,firstline=195,lastline=221,baselinestretch=0.8]
     {python}{deps/oeis-tools/src/crawling.py}
 \fi
 
@@ -151,13 +152,13 @@ interface exported by the \verb|crawling| module:
 The script \verb|pprinting.py| provides a proxy for searching into the OEIS,
 therefore it shows exactly the same contents you see from usual web interface
 on \url{http://oeis.org}; additionally, it provides (i)~tabular representations
-of \verb|data| sections in \textit{one and two dimensions} using list and
-matrix notations, respectively, (ii)~filtering capabilities on most response's
-sections and (iii)~interoperability with the crawler tool by taking advantage of
-cached sequences.
+of \verb|data| sections in \textit{one} and \textit{two} dimensions using
+\textit{list} and \textit{matrix} notations, respectively, (ii)~filtering
+capabilities on most response's sections and (iii)~interoperability with the
+crawler tool by taking advantage of cached sequences.
 
 The script presents a help message to explain itself:
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/pprinting-help.txt} In the next examples
+\VerbatimInput[baselinestretch=0.8]{deps/oeis-tools/doc/OEIS/pprinting-help.txt} In the next examples
 we show how \verb|pprinting|'s facilities can be used to apply filters, to
 print data-only visualization and to search by an open query, respectively.
 
@@ -165,7 +166,7 @@ print data-only visualization and to search by an open query, respectively.
 on the \verb|stdout| the pretty-printed contents about the sequence of
 Fibonacci numbers, with two filters applied that show comments made by
 prof. Barry and the first $5$ formulae only,
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/pprinting-A000045.txt}
+\VerbatimInput[baselinestretch=0.8]{deps/oeis-tools/doc/OEIS/pprinting-A000045.txt}
 other sections, such as \verb|reference| and \verb|link|, are hidden by
 default to provide a cleaner output.
 \end{example}
@@ -175,49 +176,48 @@ The following command pretty prints (i)~the first 3 sequences from our current
 cache --the result may vary if you try on your own machine--, (ii)~ranking them
 according to the most recent access time, (iii)~reporting data only and
 (iv)~limiting up to $10$ coefficients for linear sequences:
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/pprinting-data-only.txt}
+\VerbatimInput[baselinestretch=0.8]{deps/oeis-tools/doc/OEIS/pprinting-data-only.txt}
 \end{example}
 
 \begin{example}
-The following command pretty prints (i)~response about the open query
-"\verb|pascal triangle|", (ii)~using $2$-dimension representation for matrices
-in \verb|data| sections and (iii)~reports the first $2$ sequences in the
-returned list only,
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/pprinting-pascal-matrix.txt}
+The following command pretty prints the responses about the \textit{open query}
+"\verb|pascal triangle|", using $2$-dimension representation for matrices
+in \verb|data| sections, and reports the first $2$ sequences only,
+\VerbatimInput[baselinestretch=0.8]{deps/oeis-tools/doc/OEIS/pprinting-pascal-matrix.txt}
 \end{example}
 
-In parallel of the textual interface, we develop pretty printing functions that
-integrates in Jupyter notebooks. The aim remains the same, namely to present
-contents taken from the OEIS targeting a different environment that accepts
-their representation; this is the time of a dynamic web interface that allows
-us to evaluate Python code on the fly. Using Jupyter's Markdown language to
-write textual content, we propose another view of the same data, as shown in
-Figures \ref{fig:oeis:notebook:fibonacci}, \ref{fig:oeis:notebook:catalan} and
+In parallel of the terminal interface, we develop pretty printing functions
+that integrates in Jupyter notebooks. The aim remains the same, namely to
+present contents taken from the OEIS targeting a different environment that
+accepts their representation; this is the time of a dynamic web interface that
+allows us to evaluate Python code on the fly. Using the Markdown language
+(\url{https://daringfireball.net/projects/markdown/}) to write textual content,
+we propose another view of the same data, as shown in Figures
+\ref{fig:oeis:notebook:fibonacci}, \ref{fig:oeis:notebook:catalan} and
 \ref{fig:oeis:notebook:pascal}; in particular, we take advantage of
-(i)~hyper-references to make sequences labels clickable to quickly visit them
-in a new tab, (ii)~font styles to emphasize words in italics and
-(iii)~bold-face and to render math notations properly such as $2$-dimensional
-array representation for matrices.
-\vfill
+(i)~hyper-references to make labels of sequences clickable to quickly visit
+them, (ii)~font styles to emphasize words in italics and bold-face and (iii)~to
+render math expressions properly, such as $2$-dimensional array representation
+for matrices.
 
 \begin{figure}
-\includegraphics{deps/oeis-tools/doc/OEIS/notebook-fibonacci}
-\caption{This screenshot shows search results about the Fibonacci numbers where
+\includegraphics[width=.7\pagewidth]{deps/oeis-tools/doc/OEIS/notebook-fibonacci}
+\caption[][10.5cm]{This screenshot shows search results about the Fibonacci numbers where
 (i)~the section about comments is filtered such that the word "\emph{binomial}"
 has to appear in their text and (ii)~the section about formulae is hidden.}
 \label{fig:oeis:notebook:fibonacci}
 \end{figure}
 
 \begin{figure}
-\includegraphics{deps/oeis-tools/doc/OEIS/notebook-catalan}
-\caption{This screenshot shows search results of a query using a subsequence,
+\includegraphics[width=.7\pagewidth]{deps/oeis-tools/doc/OEIS/notebook-catalan}
+\caption[][8.5cm]{This screenshot shows search results of a query using a subsequence,
 showing \emph{data} sections only.}
 \label{fig:oeis:notebook:catalan}
 \end{figure}
 
 \begin{figure}
-\includegraphics{deps/oeis-tools/doc/OEIS/notebook-pascal}
-\caption{This screenshot shows search results of an open query using the
+\includegraphics[width=.7\pagewidth]{deps/oeis-tools/doc/OEIS/notebook-pascal}
+\caption[][10cm]{This screenshot shows search results of an open query using the
 "\emph{pascal}" keyword, representing the \emph{data} section as a
 $2$-dimensional array.  }
 \label{fig:oeis:notebook:pascal}
@@ -233,13 +233,13 @@ Python module \verb|networkx|, having different layouts according to a set of
 drawing algorithms.
 
 It presents a help message to explain itself:
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/graphing-help.txt}
+\VerbatimInput[baselinestretch=0.8]{deps/oeis-tools/doc/OEIS/graphing-help.txt}
 
 \begin{example}
 The following command draws the graph shown in Figure
 \ref{fig:oeis:sequences:network}, where the width of each vertex grows
 according to the number of its \textit{incoming} connections,
-\begin{Verbatim}[fontsize=\small]
+\begin{Verbatim}[baselinestretch=0.8]
 $ python3.6 graphing.py --layout FRUCHTERMAN-REINGOLD graph.png
 \end{Verbatim}
 in order to emphasize most referenced sequences.
@@ -369,12 +369,12 @@ dynamically.
 \end{figure}
 
 \notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=31,lastline=44]
+    \inputminted[stripnl=false,firstline=31,lastline=44]
         {python}{deps/oeis-tools/src/graphing.py}
 }
 
 \notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=46,lastline=76]
+    \inputminted[stripnl=false,firstline=46,lastline=76]
         {python}{deps/oeis-tools/src/graphing.py}
 }
 
