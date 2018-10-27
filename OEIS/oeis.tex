@@ -1,42 +1,59 @@
 
+In this chapter we present a suite of software tools that allows us to interact
+with the \textit{Online Encyclopedia of Integer Sequences}; in particular,
+(i)~a \textit{crawler} fetches sequences recursively and asynchronously, (ii)~a
+\textit{pretty printer} represents the same data stored in the online archive
+using two different formats, namely the old UNIX console and modern Jupyter
+notebooks, (iii)~a \textit{grapher} shows connections among sequences by using
+graph structures.
+
+\section{Introduction}
+
 The \textit{Online Encyclopedia of Integer Sequences} \citep{OEIS} is an online
 database of sequences of numbers that collects any kind of data regarding them.
 It was founded by N.~J.~A.~Sloane in $1964$ and since then has been, and
 continue to be, updated constantly by contributions of many users. Despite of
-its powerful searching mechanisms, starting at \url{https://oeis.org/} and
+its powerful searching mechanisms, which starts at \url{https://oeis.org/} and
 shown in Figure \ref{fig:oeis:page}, we design a parallel \textit{suite of
 software tools} that satisfies the necessities (i)~to search the OEIS offline
-by downloading repeated searches, (ii)~to work in the console to use
-programming facilities to manipulate contents more effectively and (iii)~to
-interface with third-party software.
+by automating repeated searches, (ii)~to work in a UNIX console in order to use
+its programming facilities for a more efficient manipulation of textual
+contents and (iii)~to interface with third-party software.
 
 \begin{figure}
-\includegraphics[width=15cm]{deps/oeis-tools/doc/OEIS/oeis-page}
-\caption[][6cm]{The OEIS search page.}
+\includegraphics{deps/oeis-tools/doc/OEIS/oeis-page}
+\caption{The OEIS search page and results for a query concerning the sequence
+$(0,1,1,2,3,5,8,13,21,34)$.}
 \label{fig:oeis:page}
 \end{figure}
 
-Looking for similar approaches in the recent literature,
-\citep{Nguyen_miningthe} mines the OEIS for new mathematical identities,
-discussing how to store, compare and match integer sequences toward the
-formalization of some conjectures; on the other hand, searching the word
-"\textit{oeis}" in GitHub returns one hundred repositories, the majority of
-them (i)~host simple implementations of scripts that download data about a
-given sequence, targeting all major programming languages. Moreover,
-\citep{weidmann:sequencer} is a project that identifies number sequences given
-a list of numbers and gives a formula that generates them.
+A similar approach in the recent literature is \citep{Nguyen_miningthe} that
+mines the OEIS for new mathematical identities, discussing how to store,
+compare and match integer sequences toward the formalization of some
+conjectures; on the other hand, searching the word "\textit{oeis}" in GitHub
+returns one hundred repositories, the majority of them (i)~host simple
+implementations of scripts that download data about a desired sequence
+targeting all major programming languages. Moreover, \citep{weidmann:sequencer}
+is a project that tries to deduce closed formulae that generates a given list
+of numbers.
 
-Our approach complements the former ones because it provides a
-\textit{recursive} and \textit{asynchronous} fetching process, vanilla data
-storage in JSON files and visualization of sequences' relations; the
-description of each tool is addressed in the following sections, respectively.
+Our approach complements the existing ones by providing a \textit{recursive}
+and \textit{asynchronous} fetching process, vanilla data storage in JSON files
+and visualization of relations among sequences; the description of each tool is
+addressed in the following sections, respectively.
+
+The present suite of tools had been shown at an open school on Combinatorial
+Method in the analysis of Algorithms and Data Structures in Korea
+\citep{Nocentini:korea}; moreover, all the sources that implements the
+applications can be found online in the repository
+\url{https://github.com/massimo-nocentini/oeis-tools}.
 
 \section{The Crawler}
 
 The script \verb|crawling.py| implements a bot that given a sequence identifier
-in the form $Axxxxxx$, where $x$s are digits, issues an HTTP request to the
+in the form $Axxxxxx$, where $x$s are digits, it issues an HTTP request to the
 main OEIS server and waits for a response; once it is received, the bot stores
-it locally and, looking into the response's \verb|xref| section that contains a
+data locally and, looking into the response's \verb|xref| section that contains a
 set of other sequences identifiers, repeats its behaviour on each one of them,
 recursively.  Such a bot is commonly known as \emph{crawler}.
 
@@ -54,13 +71,14 @@ The script presents a help message to explain itself:
 \begin{example}
 We illustrate a typical session where we start from scratch. First of all, we
 want to download the OEIS content about two important and nice sequences,
-namely those corresponding to the Fibonacci and Catalan numbers, respectively:
+namely those corresponding to the Fibonacci and Catalan numbers, respectively
+identified by labels $A000045$ and $A000108$:
 \VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-fetching-command.txt}
-After stopping the crawler, we check the content of cache with the commands
-\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-status.txt} which tell us that
-$30$ sequences had been fetched and stored in the default directory
-\verb|./fetched/|.  Moreover, we can restart the crawler from where it was
-interrupted with the command
+After stopping the crawler, we check the content of the cache with the commands
+\VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-status.txt} 
+which tell us that $30$ sequences had been fetched and stored in the default
+directory \verb|./fetched/|.  Moreover, we can restart the crawler from where
+it was interrupted with the command
 \VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-restarting.txt}
 and we check that new sequences are actually collected,
 \begin{Verbatim}[fontsize=\small]
@@ -71,40 +89,51 @@ $ python3.6 crawling.py
 as desired.
 \end{example}
 
-Having contents stored in JSON files allows us to inspect and manipulate them
-using every tool available in our working environment, as the next example
-shows.
+Having contents stored in JSON files, whose structure is presented in Figure
+\ref{fig:json-structure}, allows us to inspect and manipulate them using every
+tool available in our working environment, as the next example shows.
 
 \begin{example}
-Combining the \verb|cat| command with the Python module \verb|json.tool|, that prints JSON files
-with respect to indentation, we can visualize data about the sequence of Fibonacci
-numbers as follows
+Combining the \verb|cat| command with the Python module \verb|json.tool|, that
+prints JSON files with respect to indentation, we can visualize data about the
+sequence of Fibonacci numbers as follows
 \VerbatimInput[fontsize=\small]{deps/oeis-tools/doc/OEIS/crawler-A000045-chunk.txt}
 \end{example}
 
+\begin{figure}
+\includegraphics{deps/oeis-tools/doc/OEIS/json-structure}
+\caption{The complete structure of the JSON encoding of OEIS content about the
+sequence $A000045$; in particular, the property \texttt{xref} is left expanded
+because of its important in the recursive behaviour of the crawler, namely
+every label in this section bacomes a candidate sequence for the fetching
+process.}
+\label{fig:json-structure}
+\end{figure}
 
 Our implementation takes strong inspiration from
-\citep{VANROSSUM:DAVIS:async:await} and provides the following main abstractions:
+\citep{VANROSSUM:DAVIS:async:await} and provides the following abstractions:
 
 \begin{description}
-\item[reader] objects, that have the responsibility to be \textit{asynchronous
-iterators}, having to respond to the message \verb|__anext__| where the
-computation waits asynchronously for incoming data from the \verb|self.read|
-coroutine. The code
+\item[\texttt{reader}] objects, that have the responsibility to be \textit{asynchronous
+iterators} in the sense that they have to respond to the message
+\verb|__anext__|, where the computation waits asynchronously for incoming data
+from the \verb|self.read| coroutine. The code
 \inputminted[fontsize=\small,stripnl=false,firstline=28,lastline=39]
-{python}{deps/oeis-tools/src/crawling.py} implements the description precisely.
+{python}{deps/oeis-tools/src/crawling.py} 
+implements the description precisely.
 
-\item[fetcher] objects have the responsibilities to (i)~create a socket with
-OEIS server, (ii)~establish a working connection, (iii)~send an HTTP \verb|GET|
-request for the desired sequence, (iv)~wait for the fetching process completes
-and (v)~close the socket and signal that the work ends successfully.
+\item[\texttt{fetcher}] objects have the responsibilities (i)~to create a socket with
+OEIS server, (ii)~to establish a working connection, (iii)~to send an HTTP \verb|GET|
+request for the desired sequence, (iv)~to wait for the fetching process completes
+and (v)~to close the socket and signal that the it ends successfully.
+A literal translation follows,
 \inputminted[fontsize=\small,stripnl=false,firstline=41,lastline=86]
     {python}{deps/oeis-tools/src/crawling.py}
 
-\item[crawler] objects have the responsibilities (i)~to keep a queue of task,
+\item[\texttt{crawler}] objects have the responsibilities (i)~to keep a queue of task,
 one for each candidate sequence, (ii)~to put each ready task into the
-scheduling process and (iii)~to reclaim memory for completed task and,
-eventually, (iv)~to deque them.
+scheduling process and (iii)~to reclaim memory for the completed ones and
+(iv)~to deque them, eventually; again, its code follows
 \inputminted[fontsize=\small,stripnl=false,firstline=89,lastline=117]
     {python}{deps/oeis-tools/src/crawling.py}
 
