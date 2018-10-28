@@ -480,7 +480,8 @@ Build the triangle of Stirling numbers of the II kind:
 \end{displaymath}
 \begin{minted}[baselinestretch=0.8]{python}
 >>> R = matrix(10, 10, riordan_matrix_exponential(
-...                     riordan_matrix_by_convolution(10, d_series, h_series)))
+...                     riordan_matrix_by_convolution(
+...                       10, d_series, h_series)))
 >>> R
 \end{minted}
 \begin{displaymath}
@@ -526,7 +527,8 @@ by Peter Bala.
 \end{displaymath}
 \begin{minted}[baselinestretch=0.8]{python}
 >>> R = matrix(10, 10, riordan_matrix_exponential(
-...                     riordan_matrix_by_convolution(10, d_series, h_series)))
+...                     riordan_matrix_by_convolution(
+...                       10, d_series, h_series)))
 >>> R
 \end{minted}
 \begin{displaymath}
@@ -564,11 +566,9 @@ to $t$; formally, using the definition of $h$ we rewrite
 \begin{displaymath}
 y = \frac{t}{1-t} \quad\text{that implies}\quad t = \frac{y}{1+y}.
 \end{displaymath}
-The latter identity can be used back in $\bar{h}(y) = t$ as substitution for $t$,
-\begin{displaymath}
-\bar{h}(y)= \frac{y}{1+y}
-\end{displaymath}
-as required. The following code implements this procedure:
+The latter identity can be used back in $\bar{h}(y) = t$ as substitution for
+$t$ yielding $\displaystyle \bar{h}(y)= \frac{y}{1+y} $ as required; this
+procedure is promptly implemented as
 \inputminted[baselinestretch=0.8,stripnl=false,firstline=212, lastline=229, mathescape=true]
     {python}{deps/simulation-methods/src/sequences.py}
 \inputminted[baselinestretch=0.8,stripnl=false,firstline=231, lastline=254, mathescape=true]
@@ -593,7 +593,8 @@ Compositional inverse of Catalan tringle's $h$ generating function:
 \left ( g{\left (t \right )} = \frac{1}{2} \sqrt{4 t^{2} - 4 t + 1} + \frac{1}{2}, \quad f{\left (t \right )} = t \left(- t + 1\right)\right )
 \end{displaymath}
 \begin{minted}[baselinestretch=0.8]{python}
->>> R = Matrix(10, 10, riordan_matrix_by_convolution(10, C_inverse[0], C_inverse[1]))
+>>> R = Matrix(10, 10, riordan_matrix_by_convolution(
+...                     10, C_inverse[0], C_inverse[1]))
 >>> R
 \end{minted}
 \begin{displaymath}

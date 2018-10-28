@@ -3,9 +3,9 @@
 First of all, we introduce basic bitwise tricks and programming idioms that
 will be useful for the understanding of the upcoming content, which heavily lies
 on those techniques for the sake of efficency:
-\inputminted[fontsize=\small,stripnl=false]{python}{backtracking/bits_clean.py}
+\inputminted[baselinestretch=0.8,stripnl=false]{python}{backtracking/bits_clean.py}
 \begin{margintable}[-3cm]
-\inputminted[fontsize=\footnotesize,stripnl=false]{python}{backtracking/bits_clean_test.py}
+\inputminted[baselinestretch=0.8,stripnl=false]{python}{backtracking/bits_clean_test.py}
 \caption{Uses of bitmasking functions.}
 \end{margintable}
 Many other techniques can be found in \citep{Warren:2012:HD:2462741}.
@@ -58,19 +58,18 @@ where rows and cols indexes range in $\lbrace 0,\ldots,n-1 \rbrace$; in both
 cases, it is necessary a bitmask $2n-1$ bits long. Here's the code:
 
 \notbreakable{
-    \inputminted[fontsize=\small,firstline=3,lastline=28]{python}{backtracking/queens.py}
+    \inputminted[baselinestretch=0.8,firstline=3,lastline=28]{python}{backtracking/queens.py}
 }
 
 \begin{example}
 We show solutions for the $5$-Queens problem with
-\inputminted[fontsize=\small,]{python}{backtracking/5queens-enumeration-snippet.py}
-\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
+\inputminted[baselinestretch=0.8]{python}{backtracking/5queens-enumeration-snippet.py}
+\begin{Verbatim}[baselinestretch=0.1]
 |Q| | | | |  |Q| | | | |  | | |Q| | |  | | | |Q| |  | | | |Q| |
 | | | |Q| |  | | |Q| | |  |Q| | | | |  |Q| | | | |  | |Q| | | |
 | |Q| | | |  | | | | |Q|  | | | |Q| |  | | |Q| | |  | | | | |Q|
 | | | | |Q|  | |Q| | | |  | |Q| | | |  | | | | |Q|  | | |Q| | |
 | | |Q| | |  | | | |Q| |  | | | | |Q|  | |Q| | | |  |Q| | | | |
-
 
 
 | |Q| | | |  | | | | |Q|  | |Q| | | |  | | | | |Q|  | | |Q| | |
@@ -82,25 +81,26 @@ We show solutions for the $5$-Queens problem with
 \end{example}
 
 In these examples the following pretty printer is used to print solutions
-\inputminted[fontsize=\small,firstline=30, lastline=39]{python}{backtracking/queens.py}
+\inputminted[baselinestretch=0.8,firstline=30, lastline=39]
+    {python}{backtracking/queens.py}
 \noindent drawing them in pure ASCII notation, bare minimal.
 
 Enumerating all solutions for different integers $n$ we get the known sequence
 \url{http://oeis.org/A000170}, which starts with
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> [len(list(queens(i))) for i in range(1,13)]
 [1, 0, 0, 2, 10, 4, 40, 92, 352, 724, 2680, 14200]
 \end{minted}
-%\inputminted[fontsize=\footnotesize,firstline=117, lastline=119]{python}{backtracking/queens.py}
+%\inputminted[baselinestretch=0.8,firstline=117, lastline=119]{python}{backtracking/queens.py}
 
 \begin{example}
 We tackle the more complex $24$-Queens problem providing a
 solution as follows:
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> more_queens = queens(24)
 >>> print(pretty(next(more_queens)))
 \end{minted}
-\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
+\begin{Verbatim}[baselinestretch=0.1]
 |Q| | | | | | | | | | | | | | | | | | | | | | | |
 | | | |Q| | | | | | | | | | | | | | | | | | | | |
 | |Q| | | | | | | | | | | | | | | | | | | | | | |
@@ -180,39 +180,41 @@ to shapes and their orientations as well. We answer to each one in turn:
     a shape orientation will be placed in the next \textit{free} cell in the
     board, every orientation should be relative to the anchor provided.
     The anchor is \textit{always} given with respect to position \verb|(r,c)|:
-    \begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
+    \begin{Verbatim}[baselinestretch=0.8]
         *                     (r-2,c+2)
         *   ->                (r-1,c+2)
     * * *       (r,c) (r,c+1) (r, c+2)
     \end{Verbatim}
     so the orientation is coded as the \textit{tuple}
-    \verb|((r,c), (r,c+1), (r-2,c+2), (r-1,c+2), (r, c+2))|, in the given order,
-    where pairs are listed according to the order \textit{top to bottom} and,
-    when rows are exausted go up to the top of the next column and repeat, so then
-    \textit{left to right}.
+    \begin{Verbatim}[baselinestretch=0.8]
+    ((r,c), (r,c+1), (r-2,c+2), (r-1,c+2), (r, c+2))
+    \end{Verbatim}
+    in the given order, where pairs are listed according to the order
+    \textit{top to bottom} and, when rows are exausted go up to the top of the
+    next column and repeat, so then \textit{left to right}.
 
 \end{itemize}
 
 In order to structure our thoughts, we start with the definition of the shape
-concept as a \verb|namedtuple| object:
-\inputminted[fontsize=\small,stripnl=false,firstline=4, lastline=6]{python}{backtracking/polyominoes.py}
-that allows us to define the backtracking algorithm:
-
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=8, lastline=60]{python}{backtracking/polyominoes.py}
-}
+concept as a \verb|namedtuple| object
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=4, lastline=6]{python}{backtracking/polyominoes.py}
+\noindent that allows us to define the backtracking algorithm
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=8, lastline=60]
+    {python}{backtracking/polyominoes.py}
 
 \subsection{Pentominoes}
 
-We start with a relatively simple set of shapes, those composed of $5$ unit cells
-and commonly known as \textit{pentominoes}.
-According to our encoding, we introduce shapes with their orientations;
-for example, here is the definition of the \verb|V_shape|:
-\inputminted[fontsize=\small,stripnl=false,firstline=193, lastline=205]{python}{backtracking/polyominoes.py}
+We start with a relatively simple set of shapes, those composed of $5$ unit
+cells and commonly known as \textit{pentominoes}.  According to our encoding,
+we introduce shapes with their orientations; for example, here is the
+definition of the \verb|V_shape|:
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=193, lastline=205]
+    {python}{backtracking/polyominoes.py}
 
-\begin{margintable}
-\inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
-\begin{Verbatim}[baselinestretch=0.1, fontsize=\footnotesize]
+\begin{margintable}[-2cm]
+\inputminted[baselinestretch=0.8]
+    {python}{backtracking/pentominoes-regular-snippet.py}
+\begin{Verbatim}[baselinestretch=0.1]
 ┌─────────────────────┐
 │ β δ δ δ ε ε ι ι ι ι │
 │ β δ θ δ α ε ε λ λ ι │
@@ -269,7 +271,7 @@ using the \texttt{shapes} collection of pieces.}
 With the current setup we can define the complete set of shapes and,
 consequently, the generator over the solution space for the tiling of a board
 $6\times 10$ having $1$ piece of each shape, respectively.
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> '''
 ... X:      I:  V:      U:    W:      T:
 ...   *     *   *       * *   *       * * *
@@ -303,7 +305,7 @@ providing the \textit{keyword} arguments \verb|availables| and
 \verb|(k, v)| objects, where \verb|k| denotes the shape's name and \verb|v|
 denotes its pieces availability; for the latter, provide a list of
 positions that should be avoided in the placement process. An example follows,
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> dim = (6,10)
 >>> tilings = polyominoes(
 ...     dim, shapes,
@@ -315,8 +317,8 @@ positions that should be avoided in the placement process. An example follows,
 and some tilings are shown in Table \ref{tbl:pentominoes:with:restrictions}.
 
 \begin{margintable}%[-5cm]
-\inputminted[fontsize=\footnotesize,]{python}{backtracking/pentominoes-regular-snippet.py}
-\begin{Verbatim}[baselinestretch=0.1, fontsize=\footnotesize]
+\inputminted[baselinestretch=0.8]{python}{backtracking/pentominoes-regular-snippet.py}
+\begin{Verbatim}[baselinestretch=0.1]
 ┌─────────────────────┐
 │   γ γ γ δ δ δ ζ ζ ζ │
 │   ι ι γ δ   δ λ ζ   │
@@ -387,7 +389,7 @@ We reproduce the tiling using the \verb|Y| polyomino and we check that its
 order is actually 10 in tailing a board $5\times 10$; in order to show this
 fact we give 10 copies of the \verb|Y_shape| object, each one with one piece
 available, respectively; although there are many other solution,
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> Y_shapes = [
 ...     shape_spec(name="{}_{}".format(Y_shape.name, i),
 ...                isomorphisms=Y_shape.isomorphisms)
@@ -397,7 +399,7 @@ available, respectively; although there are many other solution,
 >>> Y_tilings = polyominoes(dim, Y_shapes, availables='ones')
 >>> print(pretty(next(Y_tilings)))
 \end{minted}
-\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
+\begin{Verbatim}[baselinestretch=0.1]
 ┌─────────────────────┐
 │ α γ γ γ γ ζ ι ι ι ι │
 │ α α δ γ ζ ζ ζ ζ ι κ │
@@ -407,7 +409,6 @@ available, respectively; although there are many other solution,
 └─────────────────────┘
 \end{Verbatim}
 the one shown above closes the request.
-\vfill
 
 \subsection{Fibonacci's tilings}
 
@@ -416,13 +417,12 @@ In this section we take into account a smaller set of shapes, composed of
 increasing number of rows; eventually, enumerations of tilings for greater
 boards are counted by known sequences in the OEIS.
 
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false, firstline=514,lastline=530]{python}{backtracking/polyominoes.py}
-}
+\inputminted[baselinestretch=0.8,stripnl=false, firstline=514,lastline=530]
+    {python}{backtracking/polyominoes.py}
 
 Tiling greater boards, ascending ordered according to the
 number of rows, we enumerate the sequences
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> [ [len(list(polyominoes(dim=(j,i),
 ...                         shapes=fibonacci_shapes,
 ...                         availables='inf')))
@@ -442,7 +442,7 @@ which counts Fibonacci's numbers, the number of matchings in graphs $P_2 \times
 P_n$, $P_{3} \times P_{n}$, $P_{4} \times P_{n}$ and $P_{5} \times P_{n}$,
 respectively. For the sake of clarity, the $f_{6} = 13$ ways to tile a
 simple board $1\times 6$ are:
-\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
+\begin{Verbatim}[baselinestretch=0.1]
 ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
 │ α α α α α α │  │ α α α α β β │  │ α α α β β α │  │ α α β β α α │
 └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘
@@ -467,12 +467,8 @@ according to their \textit{semiperimeter}, which equals the sum of their
 heights and widths; for the sake of clarity, both
 \citep{delest1993enumeration,delest:enumeration:pp} are extensive studies.
 
-We report in Table \ref{tbl:parallelogram:polyominoes}
-a collection of parallelogram polyominoes generated by function
-implemented by us and available in the appendix \footnote{really? Remember to
-put it there or at least add a reference}.
 \begin{table}
-\begin{Verbatim}[baselinestretch=0.5, fontsize=\small]
+\begin{Verbatim}[baselinestretch=0.5]
  ▢ ▢ ▢    ▢ ▢ ▢      ▢ ▢        ▢ ▢        ▢ ▢ ▢ ▢    ▢ ▢ ▢
  ▢ ▢ ▢    ▢ ▢ ▢      ▢ ▢ ▢      ▢ ▢        ▢ ▢ ▢ ▢    ▢ ▢ ▢
  ▢ ▢ ▢      ▢ ▢      ▢ ▢ ▢      ▢ ▢                       ▢
@@ -520,11 +516,12 @@ which are $42$ in total, the $6$th Catalan number.}
 \end{table}
 
 \begin{example}
-The introduced set of $42$ parallelogram polyominoes can be used to tile a
-board $16\times 16$; precisely, using the enumerator \verb|polyominoes| again,
-we show the first incomplete and the first complete tilings,
+The set of $42$ parallelogram polyominoes shown in Table
+\ref{tbl:parallelogram:polyominoes} can be used to tile a board $16\times 16$;
+precisely, using the enumerator \verb|polyominoes| again, we show the first
+incomplete and the first complete tilings,
 \iffalse
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> size = 16
 >>> dim = (size, size)
 >>> polys_sols = polyominoes(dim, parallelogram_polyominoes,
@@ -535,7 +532,8 @@ we show the first incomplete and the first complete tilings,
 >>> print(next(pretty_tilings))
 \end{minted}
 \fi
-\begin{Verbatim}[baselinestretch=0.1, fontsize=\small]
+\vfill
+\begin{Verbatim}[baselinestretch=0.1]
  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 |     |   | |_    |_ _ _ _ _| |●    |     |   | |_    | |_  |_ _    |
 |     |   |   |_  |   |   | |   |   |     |   |   |_  |   |_ _ _|_ _|
@@ -627,50 +625,39 @@ active sites, respectively.
 In the following examples we apply this methodology to build and enumerate
 known classes of combinatorial objects.
 
-\newpage
-
 \begin{example}[Binary trees]
 Their class is encoded by
+\emph{
+\inputminted[baselinestretch=0.8, stripnl=false, firstline=167, lastline=174]
+    {python}{backtracking/ECO.py}}
+\noindent and enumerated in Table \ref{tbl:eco:binary:trees}.
 
-\notbreakable{
-    \inputminted[fontsize=\small,
-                 stripnl=false,
-                 firstline=167,
-                 lastline=172]
-                {python}{backtracking/ECO.py}
-}
-and enumerated in Table \ref{tbl:eco:binary:trees}.
-
-\begin{margintable}
+\begin{margintable}[-17cm]
 According to the symbolic equation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
 ★  =   ●
       ★ ★
 \end{Verbatim}
-the enumeration process starts with
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
-            ★
-\end{Verbatim}
-and enumerates the (i) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+symbol \verb|★| enumerates the (i) generation
+\begin{Verbatim}[baselinestretch=0.5]
             ●
            ★ ★
 \end{Verbatim}
 the (ii) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
          ●     ●
         ● ★     ●
        ★ ★     ★ ★
 \end{Verbatim}
 the (iii) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
    ●      ●      ●      ●     ●
   ● ★    ● ★    ● ●      ●     ●
  ● ★      ●      ★ ★    ● ★     ●
 ★ ★      ★ ★           ★ ★     ★ ★
 \end{Verbatim}
 the (iv) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
     ●       ●        ●        ●
    ● ★     ● ★      ● ★      ● ●
   ● ★     ● ★      ● ●      ● ★ ★
@@ -712,39 +699,33 @@ structure symbol and the collection of shape's \textit{active sites}.
 
 \begin{example}[Dyck paths]
 Their class is encoded by
+\emph{
+\inputminted[baselinestretch=0.8,
+             stripnl=false,
+             firstline=193,
+             lastline=200]
+            {python}{backtracking/ECO.py}}
+\noindent and enumerated in Table \ref{tbl:eco:dyck:paths}.
 
-\notbreakable{
-    \inputminted[fontsize=\small,
-                 stripnl=false,
-                 firstline=191,
-                 lastline=196]
-                {python}{backtracking/ECO.py}
-}
-and enumerated in Table \ref{tbl:eco:dyck:paths}.
-
-\begin{margintable}
+\begin{margintable}[-8cm]
 \noindent According to the symbolic equation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
      ★
 ★ = / ★
 \end{Verbatim}
-the enumeration process starts with
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
-★
-\end{Verbatim}
-and enumerates the (i) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+symbol \verb|★| enumerates the (i) generation
+\begin{Verbatim}[baselinestretch=0.5]
  ★
 / ★
 \end{Verbatim}
 the (ii) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
   ★
  / ★          ★
 /   ★      / / ★
 \end{Verbatim}
 the (iii) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
    ★
   / ★          ★
  /   ★      / / ★      /   ★
@@ -755,7 +736,7 @@ the (iii) generation
 / /   ★    / / / ★
 \end{Verbatim}
 the (iv) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
     ★
    / ★            ★
   /   ★        / / ★        /   ★
@@ -766,7 +747,6 @@ the (iv) generation
   /              / ★            ★
  /     ★      / /   ★      / / / ★
 /     / ★    /       ★    /       ★
-
 
                    ★
  / /   ★      /   / ★       /     ★
@@ -798,15 +778,13 @@ at the same distance from the $x$ axis.
 
 
 \begin{example}[Balanced Parens] Their class is encoded by
-
-\notbreakable{
-    \inputminted[fontsize=\small,
-                 stripnl=false,
-                 firstline=211,
-                 lastline=216]
-                {python}{backtracking/ECO.py}
-}
-and enumerated in Table \ref{tbl:eco:balanced:parens}.
+\emph{
+\inputminted[baselinestretch=0.8,
+             stripnl=false,
+             firstline=215,
+             lastline=222]
+            {python}{backtracking/ECO.py}}
+\noindent and enumerated in Table \ref{tbl:eco:balanced:parens}.
 \end{example}
 
 Both the previous examples and the next one enumerate classes of objects
@@ -814,31 +792,26 @@ counted by \textit{Catalan numbers} and each class obeys to the succession rule
 $(1) \hookrightarrow (2)$ and $(k) \hookrightarrow (2)\cdots(k+1)$, where
 $k>1$.
 
-\newpage
 \begin{example}[Steep parallelograms polyominoes] They are a refinement of
 parallelogram polyominoes because the lower border of those polyominoes has no
 pair of consecutive horizontal steps. Their class is encoded by
 
-\begin{margintable}
+\begin{margintable}[-17cm]
 \noindent According to the symbolic equation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
 ★ = (★)★
 \end{Verbatim}
-the enumeration process starts with
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
-★
-\end{Verbatim}
-and enumerates the (i) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+symbol \verb|★| enumerates the (i) generation
+\begin{Verbatim}[baselinestretch=0.5]
 (★ ★
 \end{Verbatim}
 the (ii) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
 ((★ ★ ★
 (  (★ ★
 \end{Verbatim}
 the (iii) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
 (((★ ★ ★ ★
 ((  (★ ★ ★
 ((    (★ ★
@@ -846,7 +819,7 @@ the (iii) generation
 (  (  (★ ★
 \end{Verbatim}
 the (iv) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
 ((((★ ★ ★ ★ ★
 (((  (★ ★ ★ ★
 (((    (★ ★ ★
@@ -866,36 +839,32 @@ the (iv) generation
 \label{tbl:eco:balanced:parens}
 \end{margintable}
 
-\begin{margintable}
+\begin{margintable}[-3cm]
 \noindent According to the mutually symbolic equations
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
     ☆           ☆
 ★ = ▢       ☆ = ▢ ★
 \end{Verbatim}
-the enumeration process starts with
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
-★
-\end{Verbatim}
-and enumerates the (i) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+symbol \verb|★| enumerates the (i) generation
+\begin{Verbatim}[baselinestretch=0.5]
 ☆
 ▢
 \end{Verbatim}
 the (ii) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
 ☆
 ▢ ★
 ▢
 \end{Verbatim}
 the (iii) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
 ☆
 ▢ ★      ☆
 ▢ ★    ▢ ▢
 ▢      ▢
 \end{Verbatim}
 the (iv) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
 ☆
 ▢ ★      ☆             ☆
 ▢ ★    ▢ ▢    ▢ ☆      ▢ ★
@@ -926,14 +895,13 @@ where the symbol \verb|◐| means the sovrapposition of symbols \verb|▢| and
 \label{tbl:eco:steep:parallelograms}
 \end{margintable}
 
-\notbreakable{
-    \inputminted[fontsize=\small,
-                 stripnl=false,
-                 firstline=301,
-                 lastline=309]
-                {python}{backtracking/ECO.py}
-}
-and enumerated in Table \ref{tbl:eco:steep:parallelograms}.
+\emph{
+\inputminted[baselinestretch=0.8,
+             stripnl=false,
+             firstline=310,
+             lastline=321]
+            {python}{backtracking/ECO.py}}
+\noindent and enumerated in Table \ref{tbl:eco:steep:parallelograms}.
 \end{example}
 
 In \citep{BARCUCCI199821} it is proved that steep parallelogram polyominoes are
@@ -946,26 +914,24 @@ and $(k) \hookrightarrow (1)\cdots(k-1)(k+1)$, where $k>1$.
 \begin{example}[Rabbits] These shapes encode that (i) a couple of young rabbits
 \verb|○| gets old and becomes \verb|●| which, in turn, (ii) gives birth to a
 couple of young rabbits and gets older. 
-
-\notbreakable{
-    \inputminted[fontsize=\small,
-                 stripnl=false,
-                 firstline=283,
-                 lastline=291]
-                {python}{backtracking/ECO.py}
-}
+\emph{
+\inputminted[baselinestretch=0.8,
+             stripnl=false,
+             firstline=289,
+             lastline=300]
+            {python}{backtracking/ECO.py}}
 \end{example}
-The complete enumeration contains doubles, so we report the set of those
+\noindent The complete enumeration contains doubles, so we report the set of those
 structures that is actually counted by the \textit{Fibonacci numbers};
 according to the mutually symbolic equations,
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
      ★
 ☆ = ○       ★ = ●☆
                  ★
 \end{Verbatim}
 the enumeration process starts with \verb|☆| and enumerates the (i), (ii),
 (iii) and (iv) generations
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
     |       |     ★         |     ●☆          
  ★  |   ●☆  |   ●○     ●    |   ●○ ★     ●  ★     ● 
 ○   |  ○ ★  |  ○ ★    ○ ●☆  |  ○        ○ ●○     ○ ●
@@ -973,7 +939,7 @@ the enumeration process starts with \verb|☆| and enumerates the (i), (ii),
     |       |               |                       ★
 \end{Verbatim}
 and, finally, the (v) generation
-\begin{Verbatim}[baselinestretch=0.5,fontsize=\footnotesize]
+\begin{Verbatim}[baselinestretch=0.5]
      ★
    ●○       ●              
  ●○ ★     ●○ ●☆     ●  ●☆      ●         ●

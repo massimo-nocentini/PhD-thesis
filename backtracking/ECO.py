@@ -166,8 +166,10 @@ def make_pretty(dim, joiner='', separator=',', empty=' '):
 """
 binary_tree_shapes = {
     'bintree': lambda r, c: Anchor(symbol='●', stars=[
-        Star(row=r+1, col=c-1, offsets=None, link='bintree', symbol='★'),
-        Star(row=r+1, col=c+1, offsets=None, link='bintree', symbol='★'),
+        Star(row=r+1, col=c-1, offsets=None,
+             link='bintree', symbol='★'),
+        Star(row=r+1, col=c+1, offsets=None,
+             link='bintree', symbol='★'),
     ]),
 }
 
@@ -190,8 +192,10 @@ ternary_tree_shapes = {
 """
 dyck_path_shapes = {
     'dick': lambda r, c: Anchor(symbol='/', stars=[
-        Star(row=r-1, col=c+1, offsets=(0, 2), link='dick', symbol='★'),
-        Star(row=r,   col=c+2, offsets=None,   link='dick', symbol='★'),
+        Star(row=r-1, col=c+1, offsets=(0, 2),
+             link='dick', symbol='★'),
+        Star(row=r,   col=c+2, offsets=None,
+             link='dick', symbol='★'),
     ]),
 }
 
@@ -210,8 +214,10 @@ ballot_shapes = {
 """
 balanced_parens_shapes = {
     'parens': lambda r, c: Anchor(symbol='(', stars=[
-        Star(row=r, col=c+1, offsets=(0, 3), link='parens', symbol='★'),
-        Star(row=r, col=c+3, offsets=None,   link='parens', symbol='★'),
+        Star(row=r, col=c+1, offsets=(0, 3),
+             link='parens', symbol='★'),
+        Star(row=r, col=c+3, offsets=None,
+             link='parens', symbol='★'),
     ]),
 }
 
@@ -282,11 +288,14 @@ blocks_shapes = {
 """
 rabbits_shapes = {
     'young': lambda r, c: Anchor(symbol='○', stars=[
-        Star(row=r-1, col=c+1, offsets=None, link='senior', symbol='★'),
+        Star(row=r-1, col=c+1, offsets=None, 
+             link='senior', symbol='★'),
     ]),
     'senior': lambda r, c: Anchor(symbol='●', stars=[
-        Star(row=r,   col=c+1, offsets=None, link='young',  symbol='▲'),
-        Star(row=r+1, col=c+1, offsets=None, link='senior', symbol='★'),
+        Star(row=r,   col=c+1, offsets=None, 
+             link='young',  symbol='▲'),
+        Star(row=r+1, col=c+1, offsets=None, 
+             link='senior', symbol='★'),
     ]),
 }
 
@@ -300,11 +309,14 @@ rabbits_shapes = {
 """
 steep_shapes = {
     'one_star': lambda r, c: Anchor(symbol='▢', stars=[
-        Star(row=r-1, col=c, offsets=None, link='two_stars', symbol='☆'),
+        Star(row=r-1, col=c, offsets=None, 
+             link='two_stars', symbol='☆'),
     ]),
     'two_stars': lambda r, c: Anchor(symbol='▢', stars=[
-        Star(row=r-1, col=c,   offsets=None, link='two_stars', symbol='☆'),
-        Star(row=r,   col=c+1, offsets=None, link='one_star',  symbol='★'),
+        Star(row=r-1, col=c,   offsets=None, 
+             link='two_stars', symbol='☆'),
+        Star(row=r,   col=c+1, offsets=None, 
+             link='one_star',  symbol='★'),
     ]),
 }
 
