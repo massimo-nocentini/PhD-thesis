@@ -130,7 +130,7 @@ which is the mathematical expressions denoted by \verb|sympy| objects.
 \begin{example}
 \verb|Symbol| is a fundamental class of objects that introduces arbitrary
 mathematical symbols.
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> from sympy import Symbol
 >>> a_sym = Symbol('a')
 >>> a_sym
@@ -154,7 +154,7 @@ to express identities to reason about, used both to define things and
 to be solved with respect to a desired symbol.
 \begin{example}
 Introduction of \verb|Eq|, \verb|solve| and \verb|symbols| functions:
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> from sympy import Eq, solve, symbols
 >>> a, t = symbols('a t')
 >>> a_def = Eq(a, 3)
@@ -166,62 +166,64 @@ Introduction of \verb|Eq|, \verb|solve| and \verb|symbols| functions:
 a=3,\quad a + 5 t = \frac{1}{- t + 1}
 \right)
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> sols = [Eq(t, s) for s in solve(at_eq, t)]
 >>> sols
 \end{minted}
 \begin{displaymath}
-\left [ t = - \frac{a}{10} - \frac{1}{10} \sqrt{a^{2} + 10 a + 5} + \frac{1}{2}, \quad t = - \frac{a}{10} + \frac{1}{10} \sqrt{a^{2} + 10 a + 5} + \frac{1}{2}\right ]
+\begin{array}{c}
+\left [ t = - \frac{a}{10} - \frac{1}{10} \sqrt{a^{2} + 10 a + 5} + \frac{1}{2}, \right . \\
+\left. t = - \frac{a}{10} + \frac{1}{10} \sqrt{a^{2} + 10 a + 5} + \frac{1}{2}\right ]
+\end{array}
 \end{displaymath}
 \end{example}
 
 Due to the importance of equations in our code, we introduce two
 helper functions. First, \verb|define| builds a definition:
-
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,lastline=9]{python}{deps/simulation-methods/src/commons.py}
-}
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=5,lastline=10]
+    {python}{deps/simulation-methods/src/commons.py}
 
 \begin{example}
 Introduction of \verb|Function| objects:
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> from sympy import Function, sqrt
 >>> f = Function('f')
 >>> f(3)
 f(3)
 >>> t = symbols('t')
->>> define(let=f(t), be=(1-sqrt(1-4*t))/(2*t))
+>>> define(let=f(t), be=(1-sqrt(1-4*t))/(2*t), ctor=FEq)
 \end{minted}
 \begin{displaymath}
 f{\left (t \right )} = \frac{1}{2 t} \left(- \sqrt{- 4 t + 1} + 1\right)
 \end{displaymath}
 \end{example}
 
-Second, \verb|lift_to_Lambda| promotes an equation as a \verb|callable| object
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=11, lastline=18]{python}{deps/simulation-methods/src/commons.py}
-}
+The keyword argument \verb|ctor=FEq| asks \verb|define| to promote
+the equation we are defining as a \verb|callable| object by means of
+the \verb|FEq| class,
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=46, lastline=78]
+    {python}{deps/simulation-methods/src/commons.py}
+\noindent which provides methods that allows it to be used as a substitution
+too; in turn, it depends on
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=12, lastline=19]
+    {python}{deps/simulation-methods/src/commons.py}
 
 \begin{example}
 Introduction of \verb|IndexedBase| objects:
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> from commons import lift_to_Lambda
 >>> from sympy import IndexedBase
 >>> a = IndexedBase('a')
 >>> aeq = Eq(a[n], n+a[n-1])
->>> with lift_to_Lambda(aeq, return_eq=True) as aEQ:
-...     arec = aEQ(n+1)
->>> arec
+>>> aeq(n+1)
 \end{minted}
 \begin{displaymath}
     a_{n + 1} = n + a_{n} + 1
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> b = Function('b')
 >>> beq = Eq(b(n), n+b(n-1))
->>> with lift_to_Lambda(beq, return_eq=True) as bEQ:
-...     brec = bEQ(n+1)
->>> brec
+>>> beq(n+1)
 \end{minted}
 \begin{displaymath}
     b{\left (n + 1 \right )} = n + b{\left (n \right )} + 1
@@ -239,7 +241,7 @@ First of all we introduce (i)~\textit{function symbols} \verb|d_fn| and
 \verb|h_fn| to denote arbitrary symbolic functions $d$ and $h$,
 (ii)~\textit{indexed symbols} \verb|d| and \verb|h| to denote arbitrary
 symbolic and indexed coefficients
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> d_fn, h_fn = Function('d'), Function('h')
 >>> d, h = IndexedBase('d'), IndexedBase('h')
 \end{minted}
@@ -260,7 +262,7 @@ because it allows us to code the definition of each coefficient with a Python
 callable object.
 
 Here we show how to build a pure symbolic matrix:
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> from sympy import Matrix
 >>> rows, cols = 5, 5
 >>> ctor = lambda i,j: d[i,j]
@@ -280,12 +282,12 @@ The following definition implements a ctor that allows us to build Riordan
 arrays by convolution of their $d$ and $h$ functions; here it is,
 
 \notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=26, lastline=45]{python}{deps/simulation-methods/src/sequences.py}
+    \inputminted[baselinestretch=0.8,stripnl=false,firstline=26, lastline=45]{python}{deps/simulation-methods/src/sequences.py}
 }
 
 \begin{example}
 Symbolic Riordan array built by two polynomials with symbolic coefficients:
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> d_series = Eq(d_fn(t), 1+sum(d[i]*t**i for i in range(1,m)))
 >>> h_series = Eq(h_fn(t), t*(1+sum(h[i]*t**i for i in range(1,m-1)))).expand()
 >>> d_series, h_series
@@ -293,7 +295,7 @@ Symbolic Riordan array built by two polynomials with symbolic coefficients:
 \begin{displaymath}
 \left ( d{\left (t \right )} = t^{4} d_{4} + t^{3} d_{3} + t^{2} d_{2} + t d_{1} + 1, \quad h{\left (t \right )} = t^{4} h_{3} + t^{3} h_{2} + t^{2} h_{1} + t\right )
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> R = Matrix(m, m, riordan_matrix_by_convolution(m, d_series, h_series))
 >>> R
 \end{minted}
@@ -304,7 +306,7 @@ Symbolic Riordan array built by two polynomials with symbolic coefficients:
 
 \begin{example}
 The Pascal triangle built using closed generating functions:
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> d_series = Eq(d_fn(t), 1/(1-t))
 >>> h_series = Eq(h_fn(t), t*d_series.rhs)
 >>> d_series, h_series
@@ -312,7 +314,7 @@ The Pascal triangle built using closed generating functions:
 \begin{displaymath}
 \left ( d{\left (t \right )} = \frac{1}{1-t}, \quad h{\left (t \right )} = \frac{t}{1-t}\right )
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> R = Matrix(10, 10, riordan_matrix_by_convolution(10, d_series, h_series))
 >>> R
 \end{minted}
@@ -326,9 +328,8 @@ The Pascal triangle built using closed generating functions:
 The following definition implements a ctor that allows us to build Riordan
 arrays by a recurrence relation over coefficients $d_{n+1, k+1}$; here it is,
 
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=81, lastline=105, mathescape=true]{python}{deps/simulation-methods/src/sequences.py}
-}
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=81, lastline=107, mathescape=true]
+    {python}{deps/simulation-methods/src/sequences.py}
 
 \begin{example}
 Symbolic Riordan Array built according to the recurrence:
@@ -338,7 +339,7 @@ d_{n+1, 0} &= \bar{b}\,d_{n, 0} + c\,d_{n,1}, \quad n \in\mathbb{N} \\
 d_{n+1, k+1} &= a\,d_{n, k} + b\,d_{n, k} + c\,d_{n,k+1}, \quad n,k \in\mathbb{N}
 \end{split}
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> dim = 5
 >>> a, b, b_bar, c = symbols(r'a b \bar{b} c')
 >>> M = Matrix(dim, dim,
@@ -352,14 +353,14 @@ d_{n+1, k+1} &= a\,d_{n, k} + b\,d_{n, k} + c\,d_{n,k+1}, \quad n,k \in\mathbb{N
 \footnotesize
 \left[\begin{matrix}1 &   &   &   &  \\\bar{b} & a &   &   &  \\\bar{b}^{2} + a c & \bar{b} a + a b & a^{2} &   &  \\\bar{b}^{3} + 2 \bar{b} a c + a b c & \bar{b}^{2} a + \bar{b} a b + 2 a^{2} c + a b^{2} & \bar{b} a^{2} + 2 a^{2} b & a^{3} &  \\\bar{b}^{4} + 3 \bar{b}^{2} a c + 2 \bar{b} a b c + 2 a^{2} c^{2} + a b^{2} c & \bar{b}^{3} a + \bar{b}^{2} a b + 3 \bar{b} a^{2} c + \bar{b} a b^{2} + 5 a^{2} b c + a b^{3} & \bar{b}^{2} a^{2} + 2 \bar{b} a^{2} b + 3 a^{3} c + 3 a^{2} b^{2} & \bar{b} a^{3} + 3 a^{3} b & a^{4}\end{matrix}\right]
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> production_matrix(M)
 \end{minted}
 \begin{displaymath}
 \left[\begin{matrix}\bar{b} & a &   &  \\c & b & a &  \\  & c & b & a\\  &   & c & b\end{matrix}\right]
 \end{displaymath}
 Forcing $a=1$ and $\bar{b} = b$ yield the easier matrix \verb|Msubs|
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> Msubs = M.subs({a:1, b_bar:b})
 >>> Msubs, production_matrix(Msubs)
 \end{minted}
@@ -373,25 +374,32 @@ Previous examples uses the function \verb|production_matrix| to compute the
 \textit{production matrix} \citep{DEUTSCH2005101,Deutsch2009} of a Riordan
 array, here is its definition with two helper \verb|ctor|s:
 
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=160, lastline=178]{python}{deps/simulation-methods/src/sequences.py}
-}
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=159, lastline=180]{python}{deps/simulation-methods/src/sequences.py}
 
-implemented according to \citep[page~$215$]{barry2017riordan}.
-\vfill
+\noindent implemented according to \citep[page~$215$]{barry2017riordan}.
 
 \subsection{$A$ and $Z$ sequences ctor}
 
 The following definition implements a ctor that allows us to build Riordan
 arrays by their $Z$ and $A$ sequences; here it is,
-
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=47, lastline=78]{python}{deps/simulation-methods/src/sequences.py}
-}
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=47, lastline=78]
+    {python}{deps/simulation-methods/src/sequences.py}
+in words, (i)~it destructs \verb|seqs| into objs denoting Z and A seqs,
+promoting both of them as callables, (ii)~it introduces the formal variable \verb|t|,
+(iii)~it performs two Taylor expansions with respect to \verb|t|.
+In order to build the resulting matrix, it
+visits each cell according to the order given by \verb|lattice| then
+if the cell lies not on the first column, it combines using \verb|A_series| coefficients
+up to the cell in position \verb|(k-1, dim-1)|;
+otherwise, %if the cell lies on the first column,
+it combine using \verb|Z_series| coefficients up to the cell in position
+\verb|(k-1, dim-1)|. Finally, it stores the combination and
+if some post processing is desired, it does so; at last,
+it returns a lambda that uses the computed matrix \verb|R|.
 
 \begin{example}
 Again the Pascal triangle built using $A$ and $Z$ sequences
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> A, Z = Function('A'), Function('Z')
 >>> A_eq = Eq(A(t), 1 + t)
 >>> Z_eq = Eq(Z(t),1)
@@ -400,7 +408,7 @@ Again the Pascal triangle built using $A$ and $Z$ sequences
 \begin{displaymath}
 \left ( A{\left (t \right )} = t + 1, \quad Z{\left (t \right )} = 1\right )
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> R = Matrix(10, 10, riordan_matrix_by_AZ_sequences(10, (Z_eq, A_eq)))
 >>> R, production_matrix(R)
 \end{minted}
@@ -411,7 +419,7 @@ Again the Pascal triangle built using $A$ and $Z$ sequences
 
 \begin{example}
 Catalan triangle built using $A$ and $Z$ sequences,
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> A_ones = Eq(A(t), 1/(1-t)) # A is defined as in the previous example
 >>> R = Matrix(10, 10, riordan_matrix_by_AZ_sequences(10, (A_ones, A_ones)))
 >>> R, production_matrix(R)
@@ -423,7 +431,7 @@ Catalan triangle built using $A$ and $Z$ sequences,
 
 \begin{example}
 Symbolic Riordan arrays built using $A$ and $Z$ sequences,
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> dim = 5
 >>> a = IndexedBase('a')
 >>> A_gen = Eq(A(t), sum((a[j] if j else 1)*t**j for j in range(dim)))
@@ -434,7 +442,7 @@ Symbolic Riordan arrays built using $A$ and $Z$ sequences,
 \footnotesize
 \left[\begin{matrix}1 &   &   &   &  \\1 & 1 &   &   &  \\a_{1} + 1 & a_{1} + 1 & 1 &   &  \\a_{1}^{2} + 2 a_{1} + a_{2} + 1 & a_{1}^{2} + 2 a_{1} + a_{2} + 1 & 2 a_{1} + 1 & 1 &  \\a_{1}^{3} + 3 a_{1}^{2} + 3 a_{1} a_{2} + 3 a_{1} + 2 a_{2} + a_{3} + 1 & a_{1}^{3} + 3 a_{1}^{2} + 3 a_{1} a_{2} + 3 a_{1} + 2 a_{2} + a_{3} + 1 & 3 a_{1}^{2} + 3 a_{1} + 2 a_{2} + 1 & 3 a_{1} + 1 & 1\end{matrix}\right]
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> z = IndexedBase('z')
 >>> A_gen = Eq(A(t), sum((a[j] if j else 1)*t**j for j in range(dim)))
 >>> Z_gen = Eq(Z(t), sum((z[j] if j else 1)*t**j for j in range(dim)))
@@ -445,7 +453,7 @@ Symbolic Riordan arrays built using $A$ and $Z$ sequences,
 \footnotesize
 \left[\begin{matrix}1 &   &   &   &  \\1 & 1 &   &   &  \\z_{1} + 1 & a_{1} + 1 & 1 &   &  \\a_{1} z_{1} + 2 z_{1} + z_{2} + 1 & a_{1}^{2} + a_{1} + a_{2} + z_{1} + 1 & 2 a_{1} + 1 & 1 &  \\ \left(\begin{split} a_{1}^{2} z_{1} &+ 2 a_{1} z_{1} + 2 a_{1} z_{2} + a_{2} z_{1} +\\ z_{1}^{2} &+ 3 z_{1} + 2 z_{2} + z_{3} + 1\end{split}\right) & a_{1}^{3} + a_{1}^{2} + 3 a_{1} a_{2} + 2 a_{1} z_{1} + a_{1} + a_{2} + a_{3} + 2 z_{1} + z_{2} + 1 & 3 a_{1}^{2} + 2 a_{1} + 2 a_{2} + z_{1} + 1 & 3 a_{1} + 1 & 1\end{matrix}\right]
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> production_matrix(R), production_matrix(Raz)
 \end{minted}
 \begin{displaymath}
@@ -457,14 +465,12 @@ Symbolic Riordan arrays built using $A$ and $Z$ sequences,
 
 The following definition implements a ctor that allows us to build an
 exponential Riordan array; here it is,
-
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=23, lastline=24]{python}{deps/simulation-methods/src/sequences.py}
-}
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=23, lastline=24]
+    {python}{deps/simulation-methods/src/sequences.py}
 
 \begin{example}
 Build the triangle of Stirling numbers of the II kind:
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> d_series = Eq(d_fn(t), 1)
 >>> h_series = Eq(h_fn(t), exp(t)-1)
 >>> d_series, h_series
@@ -472,7 +478,7 @@ Build the triangle of Stirling numbers of the II kind:
 \begin{displaymath}
 \left ( d{\left (t \right )} = 1, \quad h{\left (t \right )} = e^{t} - 1\right )
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> R = matrix(10, 10, riordan_matrix_exponential(
 ...                     riordan_matrix_by_convolution(10, d_series, h_series)))
 >>> R
@@ -480,29 +486,26 @@ Build the triangle of Stirling numbers of the II kind:
 \begin{displaymath}
 \left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\  & 1 &   &   &   &   &   &   &   &  \\  & 1 & 1 &   &   &   &   &   &   &  \\  & 1 & 3 & 1 &   &   &   &   &   &  \\  & 1 & 7 & 6 & 1 &   &   &   &   &  \\  & 1 & 15 & 25 & 10 & 1 &   &   &   &  \\  & 1 & 31 & 90 & 65 & 15 & 1 &   &   &  \\  & 1 & 63 & 301 & 350 & 140 & 21 & 1 &   &  \\  & 1 & 127 & 966 & 1701 & 1050 & 266 & 28 & 1 &  \\  & 1 & 255 & 3025 & 7770 & 6951 & 2646 & 462 & 36 & 1\end{matrix}\right]
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> production_matrix(R), production_matrix(R, exp=True)
 \end{minted}
 \begin{displaymath}
 \left ( \left[\begin{matrix}0 & 1 &   &   &   &   &   &   &  \\  & 1 & 1 &   &   &   &   &   &  \\  &   & 2 & 1 &   &   &   &   &  \\  &   &   & 3 & 1 &   &   &   &  \\  &   &   &   & 4 & 1 &   &   &  \\  &   &   &   &   & 5 & 1 &   &  \\  &   &   &   &   &   & 6 & 1 &  \\  &   &   &   &   &   &   & 7 & 1\\  &   &   &   &   &   &   &   & 8\end{matrix}\right], \quad \left[\begin{matrix}0 & 1 &   &   &   &   &   &   &  \\  & 1 & 2 &   &   &   &   &   &  \\  &   & 2 & 3 &   &   &   &   &  \\  &   &   & 3 & 4 &   &   &   &  \\  &   &   &   & 4 & 5 &   &   &  \\  &   &   &   &   & 5 & 6 &   &  \\  &   &   &   &   &   & 6 & 7 &  \\  &   &   &   &   &   &   & 7 & 8\\  &   &   &   &   &   &   &   & 8\end{matrix}\right]\right )
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> inspect(R)
 nature(is_ordinary=False, is_exponential=True)
 \end{minted}
 \end{example}
 In the above example we introduced another function \verb|inspect| that studies
-the type of array it consumes. Before reporting its definition, together with
-the helper \verb|is_arithmetic_progression|, we remark that the matrix on the
-left is an usual production matrix (which tells us that $d_{6,4} = d_{5,3} +
-4d_{5,4} = 25 + 4\cdot 10 = 65$, for example); on the other hand, the matrix on
-right helps to decide if the array is an exponential one by proving that each
-diagonal is an \textit{arithmetic progression}, for more on this see
-\citep{barry2017riordan}.
-
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=181, lastline=206]{python}{deps/simulation-methods/src/sequences.py}
-}
+the type of array it consumes. Before reporting its definition we remark that
+the matrix on the left is an usual production matrix (which tells us that
+$d_{6,4} = d_{5,3} + 4d_{5,4} = 25 + 4\cdot 10 = 65$, for example); on the
+other hand, the matrix on right helps to decide if the array is an exponential
+one by proving that each diagonal is an \textit{arithmetic progression}, for
+more on this see \citep{barry2017riordan}.
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=183, lastline=209]
+    {python}{deps/simulation-methods/src/sequences.py}
 
 \begin{example}
 In this example we explore an exponential Riordan array starting from the
@@ -514,14 +517,14 @@ comments we quote the observation\newline
 to\newline the sequence $n!$ is Pascal's triangle A007318"} 
 \end{center} 
 by Peter Bala.
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> d_series, h_series = Eq(d_fn(t), 1/(1-t)), Eq(h_fn(t), t/(1-t))
 >>> d_series, h_series
 \end{minted}
 \begin{displaymath}
 \left ( d{\left (t \right )} = \frac{1}{1-t}, \quad h{\left (t \right )} = \frac{t}{1-t}\right )
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> R = matrix(10, 10, riordan_matrix_exponential(
 ...                     riordan_matrix_by_convolution(10, d_series, h_series)))
 >>> R
@@ -529,13 +532,13 @@ by Peter Bala.
 \begin{displaymath}
 \left[\begin{matrix}1 &   &   &   &   &   &   &   &   &  \\1 & 1 &   &   &   &   &   &   &   &  \\2 & 4 & 1 &   &   &   &   &   &   &  \\6 & 18 & 9 & 1 &   &   &   &   &   &  \\24 & 96 & 72 & 16 & 1 &   &   &   &   &  \\120 & 600 & 600 & 200 & 25 & 1 &   &   &   &  \\720 & 4320 & 5400 & 2400 & 450 & 36 & 1 &   &   &  \\5040 & 35280 & 52920 & 29400 & 7350 & 882 & 49 & 1 &   &  \\40320 & 322560 & 564480 & 376320 & 117600 & 18816 & 1568 & 64 & 1 &  \\362880 & 3265920 & 6531840 & 5080320 & 1905120 & 381024 & 42336 & 2592 & 81 & 1\end{matrix}\right]
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> production_matrix(R), production_matrix(R, exp=True)
 \end{minted}
 \begin{displaymath}
 \left ( \left[\begin{matrix}1 & 1 &   &   &   &   &   &   &  \\1 & 3 & 1 &   &   &   &   &   &  \\  & 4 & 5 & 1 &   &   &   &   &  \\  &   & 9 & 7 & 1 &   &   &   &  \\  &   &   & 16 & 9 & 1 &   &   &  \\  &   &   &   & 25 & 11 & 1 &   &  \\  &   &   &   &   & 36 & 13 & 1 &  \\  &   &   &   &   &   & 49 & 15 & 1\\  &   &   &   &   &   &   & 64 & 17\end{matrix}\right], \quad \left[\begin{matrix}1 & 1 &   &   &   &   &   &   &  \\1 & 3 & 2 &   &   &   &   &   &  \\  & 2 & 5 & 3 &   &   &   &   &  \\  &   & 3 & 7 & 4 &   &   &   &  \\  &   &   & 4 & 9 & 5 &   &   &  \\  &   &   &   & 5 & 11 & 6 &   &  \\  &   &   &   &   & 6 & 13 & 7 &  \\  &   &   &   &   &   & 7 & 15 & 8\\  &   &   &   &   &   &   & 8 & 17\end{matrix}\right]\right )
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> inspect(R)
 nature(is_ordinary=False, is_exponential=True)
 \end{minted}
@@ -566,18 +569,14 @@ The latter identity can be used back in $\bar{h}(y) = t$ as substitution for $t$
 \bar{h}(y)= \frac{y}{1+y}
 \end{displaymath}
 as required. The following code implements this procedure:
-
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=209, lastline=225, mathescape=true]{python}{deps/simulation-methods/src/sequences.py}
-}
-
-\notbreakable{
-    \inputminted[fontsize=\small,stripnl=false,firstline=227, lastline=249, mathescape=true]{python}{deps/simulation-methods/src/sequences.py}
-}
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=212, lastline=229, mathescape=true]
+    {python}{deps/simulation-methods/src/sequences.py}
+\inputminted[baselinestretch=0.8,stripnl=false,firstline=231, lastline=254, mathescape=true]
+    {python}{deps/simulation-methods/src/sequences.py}
 
 \begin{example}
 Compositional inverse of Catalan tringle's $h$ generating function:
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> catalan_term = (1-sqrt(1-4*t))/(2*t)
 >>> d_series = Eq(d_fn(t), catalan_term)
 >>> h_series = Eq(h_fn(t), t*catalan_term)
@@ -586,14 +585,14 @@ Compositional inverse of Catalan tringle's $h$ generating function:
 \begin{displaymath}
 \left ( h{\left (t \right )} = - \frac{1}{2} \sqrt{- 4 t + 1} + \frac{1}{2}, \quad \bar{ h }{\left (y \right )} = - y \left(y - 1\right)\right )
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> C_inverse = group_inverse(d_series, h_series, post=radsimp)
 >>> C_inverse
 \end{minted}
 \begin{displaymath}
 \left ( g{\left (t \right )} = \frac{1}{2} \sqrt{4 t^{2} - 4 t + 1} + \frac{1}{2}, \quad f{\left (t \right )} = t \left(- t + 1\right)\right )
 \end{displaymath}
-\begin{minted}[fontsize=\small]{python}
+\begin{minted}[baselinestretch=0.8]{python}
 >>> R = Matrix(10, 10, riordan_matrix_by_convolution(10, C_inverse[0], C_inverse[1]))
 >>> R
 \end{minted}
