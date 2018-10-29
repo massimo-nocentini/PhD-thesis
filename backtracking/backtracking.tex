@@ -1,4 +1,13 @@
 
+This chapter solves placement and tiling problems by means of the
+\textit{backtracking} programming technique. Our approach has an educational
+component in the sense that we aim to code as clean as possible, relying on
+\textit{bitmasking} manipulation to balance efficiency drawback due to vanilla
+implementations. We will tackle the $8$-Queens problem, tilings using
+\textit{pentominoes} and \textit{parallelogram polyominoes}; for what concerns
+placement problems, we will show an implementation of the \textit{ECO}
+methodology in order to enumerate classes of objects that obeys particular
+symbolic equations.
 
 First of all, we introduce basic bitwise tricks and programming idioms that
 will be useful for the understanding of the upcoming content, which heavily lies
@@ -13,15 +22,17 @@ Many other techniques can be found in \citep{Warren:2012:HD:2462741}.
 
 \section{The $n$-Queens problem}
 
-In this section we provide a pythonic implementation of the $n$-Queens problem,
-using the approach described in Chapter $3$ of \citep{RuskeyCombGen}; additionally,
-many resources talks about this problem, see the survey \citep{BELL20091}.
+The $n$-Queens problem is a well known problem in computer science and it is
+often used as a "benchmark" to test efficiency of new heuristics and
+approaches; many resources talks about it, see the survey \citep{BELL20091}.
+In this section we provide a pythonic implementation of an algorithm using the
+idea described in Chapter $3$ of \citep{RuskeyCombGen}.
 
 We use three \textit{bit masks}, namely integers, to represent whether a row, a
 raising $\nearrow$ and a falling $\searrow$ diagonals are \textit{under attack}
 by an already placed queen, instead of three boolean arrays.  It is sufficient
 to use \textit{one} bit only to represent that a cell on a diagonal is under
-attack, namely to each diagonal is associated one bit according to:
+attack, hence to each diagonal is associated one bit according to:
 \begin{itemize}
 \item if such diagonal is \textit{raising}, call it $d_\nearrow$, then
   \begin{displaymath}
@@ -38,14 +49,14 @@ attack, namely to each diagonal is associated one bit according to:
   \end{displaymath}
   in words, the difference of the column and row
   indices is constant along falling diagonals. Therefore diagonal $d_\searrow$
-  is associated to the bit in position  $c_{1}-r_{1}$, of a suitable bitmask $p$.
+  is associated to the bit in position  $c_{1}-r_{1}$ of a suitable bitmask $p$.
   In order to be consistent, if $c_{1}-r_{1} < 0$ then take the difference modulo
   $2n-1$, where $n$ is the number of rows (and columns), formally
   \begin{displaymath}
   p_{-1}\,p_{-2}\,\ldots\,p_{-(n-1)} \rightarrow_{\equiv_{2n-1}}
   p_{2n-2}\,p_{2n-3}\,\ldots\,p_{n}
   \end{displaymath}
-  entails that
+  which entails that
   \begin{displaymath}
   \left(p_{n-1}\,p_{n-2}\,\ldots\,p_{0}p_{-1}\,p_{-2}\,\ldots\,p_{-(n-1)}\right)_{2}
   \end{displaymath}
@@ -55,14 +66,16 @@ attack, namely to each diagonal is associated one bit according to:
   \end{displaymath}
 \end{itemize}
 where rows and cols indexes range in $\lbrace 0,\ldots,n-1 \rbrace$; in both
-cases, it is necessary a bitmask $2n-1$ bits long. Here's the code:
+cases, it is necessary a bitmask $2n-1$ bits long. 
 
-\notbreakable{
-    \inputminted[baselinestretch=0.8,firstline=3,lastline=28]{python}{backtracking/queens.py}
-}
+The function \verb|queens| is a Python generator of solutions for the $n$-Queens problem,
+\inputminted[baselinestretch=0.8,firstline=3,lastline=28]
+    {python}{backtracking/queens.py}
+\noindent and it returns \textit{all} the solution to the given problem when
+required to do so, as the next example shows.
 
 \begin{example}
-We show solutions for the $5$-Queens problem with
+Solutions to the $5$-Queens problem are
 \inputminted[baselinestretch=0.8]{python}{backtracking/5queens-enumeration-snippet.py}
 \begin{Verbatim}[baselinestretch=0.1]
 |Q| | | | |  |Q| | | | |  | | |Q| | |  | | | |Q| |  | | | |Q| |
@@ -80,13 +93,13 @@ We show solutions for the $5$-Queens problem with
 \end{Verbatim}
 \end{example}
 
-In these examples the following pretty printer is used to print solutions
+In these examples the following pretty printer is used to represent solutions
+drawing them in bare minimal ASCII,
 \inputminted[baselinestretch=0.8,firstline=30, lastline=39]
     {python}{backtracking/queens.py}
-\noindent drawing them in pure ASCII notation, bare minimal.
 
 Enumerating all solutions for different integers $n$ we get the known sequence
-\url{http://oeis.org/A000170}, which starts with
+\url{http://oeis.org/A000170}, 
 \begin{minted}[baselinestretch=0.8]{python}
 >>> [len(list(queens(i))) for i in range(1,13)]
 [1, 0, 0, 2, 10, 4, 40, 92, 352, 724, 2680, 14200]
@@ -94,12 +107,13 @@ Enumerating all solutions for different integers $n$ we get the known sequence
 %\inputminted[baselinestretch=0.8,firstline=117, lastline=119]{python}{backtracking/queens.py}
 
 \begin{example}
-We tackle the more complex $24$-Queens problem providing a
-solution as follows:
+We tackle the more complex $24$-Queens problem, whose first solution is about
+$3$ seconds away 
 \begin{minted}[baselinestretch=0.8]{python}
 >>> more_queens = queens(24)
 >>> print(pretty(next(more_queens)))
 \end{minted}
+\vfill
 \begin{Verbatim}[baselinestretch=0.1]
 |Q| | | | | | | | | | | | | | | | | | | | | | | |
 | | | |Q| | | | | | | | | | | | | | | | | | | | |
@@ -134,27 +148,28 @@ In this section we play with some problems concerning \textit{polyominoes},
 formalized and introduced by prof. Solomon Golomb in \citep{Golomb:1996}.  Our
 aim is to provide an \textit{generic} algorithm that consumes a board where it
 is possible to place some pieces and produces a collection of (possibly
-complete) tiling of the board. Therefore we (i)~describe how boards are
-encoded, (ii)~how shapes can be defined and (iii) the fundamental concept of
-\textit{anchor} that allows us to bookkeep the next \text{free} cell in the
+\textit{incomplete}) tilings of the board. Therefore we describe (i)~how boards
+are encoded, (ii)~how shapes can be defined and (iii) the fundamental concept
+of \textit{anchor} that allows us to bookkeep the next \text{free} cell in the
 board. Our implementation is coded in Python and has an educational flavor;
 additionally, for more puzzles and problems solved using the same language see
 \citep{Goodger:polyominoes}, while \citep{knuth:dancing:links} popularize the
 idea of \citep{HITOTUMATU1979174} about a clever use of doubly linked lists to
-tackle combinatorial enumeration via depth-first search and backtracking.
+tackle combinatorial enumerations via depth-first searches and backtracking.
 
 \subsection{Boards, shapes, anchors for backtracking}
 
-Maybe the hardest part in understanding concerns the representation of the board and
-the state (free or occupied) of each cell; moreover, the same question applies
-to shapes and their orientations as well. We answer to each one in turn:
+Maybe the hardest part in the understanding concerns the representations of
+both the board and the state (free or occupied) of each cell; moreover, the
+same difficulty arises for shapes and their orientations as well. We answer to
+each question in turn:
 \begin{itemize}
     \item a \textit{board} with $r$ rows and $c$ columns is represented by an
     \textit{integer} with $rc$ bits; this is because we want to use bit masking
     techniques and it is efficient to find the \textit{next free} cell (using
     the utility function \verb|low_bit|), which correspond to the position of
-    the first bit $1$ from the right, namely the right-most $1$ in the least
-    significant part.
+    the first bit $1$ from the right, namely the right-most $1$ in its least
+    significant part. Here it is,
     \begin{displaymath}
     \begin{array}{c|c|c|c|c}
     0 & r & 2r & \ldots & (c-1)r \\
@@ -177,8 +192,8 @@ to shapes and their orientations as well. We answer to each one in turn:
     \textit{each isomorphism is a sequence of positions too}.
 
     \item an \textit{anchor} is the position in which the top-left cell of
-    a shape orientation will be placed in the next \textit{free} cell in the
-    board, every orientation should be relative to the anchor provided.
+    a shape orientation will be placed in the next \textit{free} cell of the
+    board and every orientation should be relative to the anchor provided.
     The anchor is \textit{always} given with respect to position \verb|(r,c)|:
     \begin{Verbatim}[baselinestretch=0.8]
         *                     (r-2,c+2)
@@ -190,8 +205,8 @@ to shapes and their orientations as well. We answer to each one in turn:
     ((r,c), (r,c+1), (r-2,c+2), (r-1,c+2), (r, c+2))
     \end{Verbatim}
     in the given order, where pairs are listed according to the order
-    \textit{top to bottom} and, when rows are exausted go up to the top of the
-    next column and repeat, so then \textit{left to right}.
+    \textit{top to bottom} then \textit{left to right}, namely when rows are
+    exhausted repeat from to the top of the next column.
 
 \end{itemize}
 
@@ -211,7 +226,7 @@ definition of the \verb|V_shape|:
 \inputminted[baselinestretch=0.8,stripnl=false,firstline=193, lastline=205]
     {python}{backtracking/polyominoes.py}
 
-\begin{margintable}[-2cm]
+\begin{margintable}
 \inputminted[baselinestretch=0.8]
     {python}{backtracking/pentominoes-regular-snippet.py}
 \begin{Verbatim}[baselinestretch=0.1]
@@ -269,7 +284,7 @@ using the \texttt{shapes} collection of pieces.}
 \label{tbl:pentominoes}
 \end{margintable}
 With the current setup we can define the complete set of shapes and,
-consequently, the generator over the solution space for the tiling of a board
+consequently, the generator over the solution space for the tilings of a board
 $6\times 10$ having $1$ piece of each shape, respectively.
 \begin{minted}[baselinestretch=0.8]{python}
 >>> '''
@@ -299,7 +314,7 @@ collections of multiple occurrences of the same greek letters.
 
 It is possible to taylor the enumeration with respect to (i)~the number of
 available pieces for each shape and to (ii)~forbidden placements on the board.
-Both of them can easy achieved by tuning the application of \verb|polyominoes|
+Both of them can be easy achieved by tuning the application of \verb|polyominoes|
 providing the \textit{keyword} arguments \verb|availables| and
 \verb|forbidden|, respectively. For the former, provide a dictionary of
 \verb|(k, v)| objects, where \verb|k| denotes the shape's name and \verb|v|
@@ -316,6 +331,11 @@ positions that should be avoided in the placement process. An example follows,
 \end{minted}
 and some tilings are shown in Table \ref{tbl:pentominoes:with:restrictions}.
 
+\vfill
+\subsection{Polyomino's order}
+
+In the exercise 7 of his book, Ruskey asks to find the \textit{order} of some
+polyomino, defined according to
 \begin{margintable}%[-5cm]
 \inputminted[baselinestretch=0.8]{python}{backtracking/pentominoes-regular-snippet.py}
 \begin{Verbatim}[baselinestretch=0.1]
@@ -374,20 +394,15 @@ have $3$ pieces for each shape and forbidden cells should be left blank.}
 \label{tbl:pentominoes:with:restrictions}
 \end{margintable}
 
-\subsection{Polyomino's order}
-
-In the exercise 7 of his book, Ruskey asks to find the \textit{order} of some
-polyomino, defined according to
-
 \begin{definition}
 The order of a polyomino $P$ is the smallest number of $P$ copies that will
 perfectly fit into a rectangle board, where rotations and reflections of $P$
 are allowed.
 \end{definition}
 
-We reproduce the tiling using the \verb|Y| polyomino and we check that its
-order is actually 10 in tailing a board $5\times 10$; in order to show this
-fact we give 10 copies of the \verb|Y_shape| object, each one with one piece
+We take into account the \verb|Y| polyomino and we check that its order is
+actually $10$ in tailing a board $5\times 10$; in order to show this fact, we
+give $10$ copies of the \verb|Y_shape| object, each one with one piece
 available, respectively; although there are many other solution,
 \begin{minted}[baselinestretch=0.8]{python}
 >>> Y_shapes = [
@@ -408,7 +423,7 @@ available, respectively; although there are many other solution,
 │ β β β β ε θ θ θ θ κ │
 └─────────────────────┘
 \end{Verbatim}
-the one shown above closes the request.
+the one shown above solves the problem.
 
 \subsection{Fibonacci's tilings}
 
@@ -624,7 +639,7 @@ active sites, respectively.
 
 In the following examples we apply this methodology to build and enumerate
 known classes of combinatorial objects.
-
+\newpage
 \begin{example}[Binary trees]
 Their class is encoded by
 \emph{
@@ -632,7 +647,7 @@ Their class is encoded by
     {python}{backtracking/ECO.py}}
 \noindent and enumerated in Table \ref{tbl:eco:binary:trees}.
 
-\begin{margintable}[-17cm]
+\begin{margintable}%[-17cm]
 According to the symbolic equation
 \begin{Verbatim}[baselinestretch=0.5]
 ★  =   ●
@@ -707,7 +722,7 @@ Their class is encoded by
             {python}{backtracking/ECO.py}}
 \noindent and enumerated in Table \ref{tbl:eco:dyck:paths}.
 
-\begin{margintable}[-8cm]
+\begin{margintable}%[-8cm]
 \noindent According to the symbolic equation
 \begin{Verbatim}[baselinestretch=0.5]
      ★
@@ -768,7 +783,7 @@ the (iv) generation
 
 Previous example spots a feature provided by \verb|Star| objects,
 namely the capability to shift part of the structure in order to make
-room for local expansion; this is achieved by the keyword argument
+room for local expansions; this is achieved by the keyword argument
 \verb|offset|, which has to be a pair \verb|(or, oc)| where components
 are integers that denote row and column offsets, respectively.
 For the Dyck paths shape, we provide \verb|offset=(0,2)| for the topmost
@@ -796,7 +811,7 @@ $k>1$.
 parallelogram polyominoes because the lower border of those polyominoes has no
 pair of consecutive horizontal steps. Their class is encoded by
 
-\begin{margintable}[-17cm]
+\begin{margintable}%[-17cm]
 \noindent According to the symbolic equation
 \begin{Verbatim}[baselinestretch=0.5]
 ★ = (★)★
@@ -839,7 +854,7 @@ the (iv) generation
 \label{tbl:eco:balanced:parens}
 \end{margintable}
 
-\begin{margintable}[-3cm]
+\begin{margintable}%[-3cm]
 \noindent According to the mutually symbolic equations
 \begin{Verbatim}[baselinestretch=0.5]
     ☆           ☆
@@ -949,3 +964,17 @@ and, finally, the (v) generation
                                              ★
 \end{Verbatim}
 as required.
+
+\section*{Conclusions}
+
+This chapter has presented an extensive exercise in coding, practicing with
+backtracking programming techniques; in particular, vanilla implementations
+pair with bitmasking techniques to speed up computation, keeping elegance and
+clarity at the same time.
+
+We strive to write generic algorithms that works in different contexts ranging
+from the placement problems, such as the $n$-Queens problem, to tiling problems
+using different shapes; moreover, the same minimal and open approach allows us
+to tackle enumeration tasks starting from simple but powerful specifications of
+classes of combinatorial objects and a well known enumeration method called ECO
+has been fully implemented.
