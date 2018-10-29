@@ -1,7 +1,7 @@
 
 \begin{theorem}
 \label{thm:sin-Hermite-interpolating-polys}
-Let $f(z)=sin\,{z}$ and $\mathcal{R}$ be a Riordan array; then 
+Let $f_{1}(z)=sin\,{z}$, $f_{2}(z)=cos\,{z}$ and $\mathcal{R}$ be a Riordan array; then 
 \begin{equation}
   \label{eq:sin-Hermite-interpolating-poly}
   \begin{split}
@@ -9,12 +9,20 @@ Let $f(z)=sin\,{z}$ and $\mathcal{R}$ be a Riordan array; then
             &+ cos\,{1}\,\sum_{k=0}^{2\,\left\lfloor \frac{m}{2} \right\rfloor-1}{\left(\sum_{j=\left\lfloor \frac{k}{2}\right\rfloor}^{\left\lfloor \frac{m}{2} \right\rfloor -1}{\frac{(-1)^{3j+1}}{(2j + 1)!} {2j+1\choose k}}\right){(-z)^{k}}}
   \end{split}
 \end{equation}
-is an Hermite interpolating polynomial, explicitly written, of the sine
-function for the minor $\mathcal{R}_{m}, m\in\mathbb{N}$.
+and
+\begin{equation}
+  \begin{split}
+  \label{eq:cos-Hermite-interpolating-poly-implicit}
+  C_{m}(z)  &= cos\,{1}\,\sum_{k=0}^{2\,\left\lceil \frac{m}{2} \right\rceil-2}{\left(\sum_{j=\left\lceil \frac{k}{2}\right\rceil}^{\left\lceil \frac{m}{2} \right\rceil -1}{\frac{(-1)^{3j}}{(2j)!}{2j\choose k}}\right) {(-z)^{k}}}\\
+            &+ sin\,{1}\,\sum_{k=0}^{2\,\left\lfloor \frac{m}{2} \right\rfloor-1}{\left(\sum_{j=\left\lfloor \frac{k}{2}\right\rfloor}^{\left\lfloor \frac{m}{2} \right\rfloor -1}{\frac{(-1)^{3j+2}}{(2j + 1)!} {2j+1\choose k}}\right){(-z)^{k}}}
+  \end{split}
+\end{equation}
+are Hermite interpolating polynomials, explicitly written, of the sine and
+cosine functions for the minor $\mathcal{R}_{m}, m\in\mathbb{N}$, respectively.
 \end{theorem}
 
 \begin{proof}
-The closed form of the $j$-th derivative of function $f$ is
+The closed form of the $j$-th derivative of function $f_1$ is
 $$\frac{\partial^{(j)}{f}(z)}{\partial{z}^{j}} = \alpha_{j}sin\,{z} +
 \alpha_{j-1}cos\,{z}, \quad 0<j\in\mathbb{N},$$ where
 $\alpha_{2k} = (-1)^{k}$ and $\alpha_{2k+1} = 0$ for $k\in\mathbb{N}$, with 

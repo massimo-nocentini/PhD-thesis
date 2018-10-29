@@ -6,7 +6,7 @@ Let $A\in\mathbb{R}^{m\times m}$ be a square matrix and $\Phi_{i,j}
 \in\prod_{m-1}$ a generalized Lagrange base, so $Z_{i,j}^{[A]} = \Phi_{i,j}(A)$
 denotes the $j$-th \textit{component matrix} of $A$ relative to its $i$-th
 eigenvalue (from here on, we just write $Z_{i,j}$ to keep clean the notation
-when no confusion arises). 
+when no confusion arises).
 
 Component matrices enjoy the properties
 \begin{itemize}
@@ -27,13 +27,22 @@ arguments and applications.
 \begin{example}
 Component matrices relative to $\mathcal{P}_{8}$ are
 \begin{displaymath}
-Z_{1,1} = \left[\begin{matrix}1 &  &  &  &  &  &  & \\ & 1 &  &  &  &  &  & \\ &  & 1 &  &  &  &  & \\ &  &  & 1 &  &  &  & \\ &  &  &  & 1 &  &  & \\ &  &  &  &  & 1 &  & \\ &  &  &  &  &  & 1 & \\ &  &  &  &  &  &  & 1\end{matrix}\right], \quad Z_{1,2} = \left[\begin{matrix} &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\1 & 2 &  &  &  &  &  & \\1 & 3 & 3 &  &  &  &  & \\1 & 4 & 6 & 4 &  &  &  & \\1 & 5 & 10 & 10 & 5 &  &  & \\1 & 6 & 15 & 20 & 15 & 6 &  & \\1 & 7 & 21 & 35 & 35 & 21 & 7 & \end{matrix}\right],
+Z_{1,1} = \left[\begin{matrix}1 &  &  &  &  &  &  & \\ & 1 &  &  &  &  &  & \\ &  & 1 &  &  &  &  & \\ &  &  & 1 &  &  &  & \\ &  &  &  & 1 &  &  & \\ &  &  &  &  & 1 &  & \\ &  &  &  &  &  & 1 & \\ &  &  &  &  &  &  & 1\end{matrix}\right],
 \end{displaymath}
 \begin{displaymath}
-Z_{1,3} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\3 & 3 &  &  &  &  &  & \\7 & 12 & 6 &  &  &  &  & \\15 & 35 & 30 & 10 &  &  &  & \\31 & 90 & 105 & 60 & 15 &  &  & \\63 & 217 & 315 & 245 & 105 & 21 &  & \end{matrix}\right], \quad Z_{1,4} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\6 & 4 &  &  &  &  &  & \\25 & 30 & 10 &  &  &  &  & \\90 & 150 & 90 & 20 &  &  &  & \\301 & 630 & 525 & 210 & 35 &  &  & \end{matrix}\right],
+Z_{1,2} = \left[\begin{matrix} &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\1 & 2 &  &  &  &  &  & \\1 & 3 & 3 &  &  &  &  & \\1 & 4 & 6 & 4 &  &  &  & \\1 & 5 & 10 & 10 & 5 &  &  & \\1 & 6 & 15 & 20 & 15 & 6 &  & \\1 & 7 & 21 & 35 & 35 & 21 & 7 & \end{matrix}\right],
 \end{displaymath}
 \begin{displaymath}
-Z_{1,5} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\10 & 5 &  &  &  &  &  & \\65 & 60 & 15 &  &  &  &  & \\350 & 455 & 210 & 35 &  &  &  & \end{matrix}\right], \quad Z_{1,6} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\15 & 6 &  &  &  &  &  & \\140 & 105 & 21 &  &  &  &  & \end{matrix}\right],
+Z_{1,3} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\3 & 3 &  &  &  &  &  & \\7 & 12 & 6 &  &  &  &  & \\15 & 35 & 30 & 10 &  &  &  & \\31 & 90 & 105 & 60 & 15 &  &  & \\63 & 217 & 315 & 245 & 105 & 21 &  & \end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+Z_{1,4} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\6 & 4 &  &  &  &  &  & \\25 & 30 & 10 &  &  &  &  & \\90 & 150 & 90 & 20 &  &  &  & \\301 & 630 & 525 & 210 & 35 &  &  & \end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+Z_{1,5} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\10 & 5 &  &  &  &  &  & \\65 & 60 & 15 &  &  &  &  & \\350 & 455 & 210 & 35 &  &  &  & \end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+Z_{1,6} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\15 & 6 &  &  &  &  &  & \\140 & 105 & 21 &  &  &  &  & \end{matrix}\right],
 \end{displaymath}
 \begin{displaymath}
 Z_{1,7} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\21 & 7 &  &  &  &  &  & \end{matrix}\right]
@@ -42,6 +51,8 @@ Z_{1,7} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  
 in parallel; corresponding component matrices for $\mathcal{C}_{8}$ and
 $\mathcal{S}_{8}$ can be computed in a similar way.
 \end{example}
+
+\newpage
 
 Let $\boldsymbol{v}\in\mathbb{R}^{m}$ be a \textit{non-zero} vector to
 define a set of subspaces
@@ -68,9 +79,9 @@ Recall that $Z_{i2} = Z_{i,1}\,(A-\lambda_{i}I)$, then let $ j\in \lbrace
 \begin{displaymath}
 \begin{split}
 \boldsymbol{x}_{i,j+1} &= Z_{i,2}^{j}\,Z_{i,1}\,\boldsymbol{v} = Z_{i,2}^{j-1}\,Z_{i,2}\,Z_{i,1}\,\boldsymbol{v} \\
-    &= Z_{i,2}^{j-1}\,Z_{i,1}\,Z_{i,2}\,\boldsymbol{v} 
+    &= Z_{i,2}^{j-1}\,Z_{i,1}\,Z_{i,2}\,\boldsymbol{v}
     = Z_{i,2}^{j-1}\,Z_{i,1}\,Z_{i,1}\,(A-\lambda_{i}I)\,\boldsymbol{v} \\
-    &= Z_{i,2}^{j-1}\,Z_{i,1}\,(A-\lambda_{i}I)\,\boldsymbol{v} 
+    &= Z_{i,2}^{j-1}\,Z_{i,1}\,(A-\lambda_{i}I)\,\boldsymbol{v}
     = (A-\lambda_{i}I)\,Z_{i,2}^{j-1}\,Z_{i,1}\,\boldsymbol{v} \\
     &= (A-\lambda_{i}I)\,\boldsymbol{x}_{i,j}
 \end{split}
@@ -85,7 +96,31 @@ Z_{i,2}\,\boldsymbol{x}_{i,m_{i}} =  Z_{i,2}\,Z_{i,2}^{m_{i}-1}\,Z_{i,1}\,\bolds
 which holds because $Z_{i,2}^{m_{i}}=O$, proving the second recurrence.
 \end{proof}
 
-\newpage
+\begin{example}
+$\mathcal{P}_{8}$'s component matrices are used to build the set of
+\textit{generalized eigenvectors}
+\begin{displaymath}
+\boldsymbol{x}_{1,1} = \left[\begin{matrix}\alpha_{0}\\\alpha_{1}\\\alpha_{2}\\\alpha_{3}\\\alpha_{4}\\\alpha_{5}\\\alpha_{6}\\\alpha_{7}\end{matrix}\right], \quad \boldsymbol{x}_{1,2} = \left[\begin{matrix}0\\\alpha_{0}\\\alpha_{0} + 2 \alpha_{1}\\\alpha_{0} + 3 \alpha_{1} + 3 \alpha_{2}\\\alpha_{0} + 4 \alpha_{1} + 6 \alpha_{2} + 4 \alpha_{3}\\\alpha_{0} + 5 \alpha_{1} + 10 \alpha_{2} + 10 \alpha_{3} + 5 \alpha_{4}\\\alpha_{0} + 6 \alpha_{1} + 15 \alpha_{2} + 20 \alpha_{3} + 15 \alpha_{4} + 6 \alpha_{5}\\\alpha_{0} + 7 \alpha_{1} + 21 \alpha_{2} + 35 \alpha_{3} + 35 \alpha_{4} + 21 \alpha_{5} + 7 \alpha_{6}\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+\boldsymbol{x}_{1,3} = \left[\begin{matrix}0\\0\\2 \alpha_{0}\\6 \alpha_{0} + 6 \alpha_{1}\\14 \alpha_{0} + 24 \alpha_{1} + 12 \alpha_{2}\\30 \alpha_{0} + 70 \alpha_{1} + 60 \alpha_{2} + 20 \alpha_{3}\\62 \alpha_{0} + 180 \alpha_{1} + 210 \alpha_{2} + 120 \alpha_{3} + 30 \alpha_{4}\\126 \alpha_{0} + 434 \alpha_{1} + 630 \alpha_{2} + 490 \alpha_{3} + 210 \alpha_{4} + 42 \alpha_{5}\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+\boldsymbol{x}_{1,4} = \left[\begin{matrix}0\\0\\0\\6 \alpha_{0}\\36 \alpha_{0} + 24 \alpha_{1}\\150 \alpha_{0} + 180 \alpha_{1} + 60 \alpha_{2}\\540 \alpha_{0} + 900 \alpha_{1} + 540 \alpha_{2} + 120 \alpha_{3}\\1806 \alpha_{0} + 3780 \alpha_{1} + 3150 \alpha_{2} + 1260 \alpha_{3} + 210 \alpha_{4}\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+\boldsymbol{x}_{1,5} = \left[\begin{matrix}0\\0\\0\\0\\24 \alpha_{0}\\240 \alpha_{0} + 120 \alpha_{1}\\1560 \alpha_{0} + 1440 \alpha_{1} + 360 \alpha_{2}\\8400 \alpha_{0} + 10920 \alpha_{1} + 5040 \alpha_{2} + 840 \alpha_{3}\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+\boldsymbol{x}_{1,6} = \left[\begin{matrix}0\\0\\0\\0\\0\\120 \alpha_{0}\\1800 \alpha_{0} + 720 \alpha_{1}\\16800 \alpha_{0} + 12600 \alpha_{1} + 2520 \alpha_{2}\end{matrix}\right],
+\end{displaymath}
+\begin{displaymath}
+\boldsymbol{x}_{1,7} = \left[\begin{matrix}0\\0\\0\\0\\0\\0\\720 \alpha_{0}\\15120 \alpha_{0} + 5040 \alpha_{1}\end{matrix}\right]
+\quad\text{and}\quad \boldsymbol{x}_{1,8} = \left[\begin{matrix}0\\0\\0\\0\\0\\0\\0\\5040 \alpha_{0}\end{matrix}\right],
+\end{displaymath}
+where $\boldsymbol{v} = [\alpha_{0}, \ldots, \alpha_{7}]^{T} \in \mathbb{C}^{8}$.
+\label{example:pascal:generalized:eigenvectors}
+\end{example}
 
 The recurrences can be merged in matrix notation as $A\,X_{i} = X_{i}\,J_{i}$
 where $\displaystyle X_{i}  = \left[\boldsymbol{x}_{i,1},\ldots,\boldsymbol{x}_{i,m_{i}}
@@ -114,39 +149,18 @@ with respect to an arbitrary vector $\boldsymbol{v}\in\mathbb{R}^{m}$; finally, 
 non-singular then matrices $A$ and $X^{-1}\,A\,X = J$ are \textit{similar}, $A
 \sim_{X} J$ in symbols.
 
-\begin{example}
-$\mathcal{P}_{8}$'s component matrices are used to build the set of
-\textit{generalized eigenvectors}
-\begin{displaymath}
-\boldsymbol{x}_{1,1} = \left[\begin{matrix}\alpha_{0}\\\alpha_{1}\\\alpha_{2}\\\alpha_{3}\\\alpha_{4}\\\alpha_{5}\\\alpha_{6}\\\alpha_{7}\end{matrix}\right], \quad \boldsymbol{x}_{1,2} = \left[\begin{matrix}0\\\alpha_{0}\\\alpha_{0} + 2 \alpha_{1}\\\alpha_{0} + 3 \alpha_{1} + 3 \alpha_{2}\\\alpha_{0} + 4 \alpha_{1} + 6 \alpha_{2} + 4 \alpha_{3}\\\alpha_{0} + 5 \alpha_{1} + 10 \alpha_{2} + 10 \alpha_{3} + 5 \alpha_{4}\\\alpha_{0} + 6 \alpha_{1} + 15 \alpha_{2} + 20 \alpha_{3} + 15 \alpha_{4} + 6 \alpha_{5}\\\alpha_{0} + 7 \alpha_{1} + 21 \alpha_{2} + 35 \alpha_{3} + 35 \alpha_{4} + 21 \alpha_{5} + 7 \alpha_{6}\end{matrix}\right],
-\end{displaymath}
-\begin{displaymath}
-\boldsymbol{x}_{1,3} = \left[\begin{matrix}0\\0\\2 \alpha_{0}\\6 \alpha_{0} + 6 \alpha_{1}\\14 \alpha_{0} + 24 \alpha_{1} + 12 \alpha_{2}\\30 \alpha_{0} + 70 \alpha_{1} + 60 \alpha_{2} + 20 \alpha_{3}\\62 \alpha_{0} + 180 \alpha_{1} + 210 \alpha_{2} + 120 \alpha_{3} + 30 \alpha_{4}\\126 \alpha_{0} + 434 \alpha_{1} + 630 \alpha_{2} + 490 \alpha_{3} + 210 \alpha_{4} + 42 \alpha_{5}\end{matrix}\right],
-\end{displaymath}
-\begin{displaymath}
-\boldsymbol{x}_{1,4} = \left[\begin{matrix}0\\0\\0\\6 \alpha_{0}\\36 \alpha_{0} + 24 \alpha_{1}\\150 \alpha_{0} + 180 \alpha_{1} + 60 \alpha_{2}\\540 \alpha_{0} + 900 \alpha_{1} + 540 \alpha_{2} + 120 \alpha_{3}\\1806 \alpha_{0} + 3780 \alpha_{1} + 3150 \alpha_{2} + 1260 \alpha_{3} + 210 \alpha_{4}\end{matrix}\right],
-\end{displaymath}
-\begin{displaymath}
-\boldsymbol{x}_{1,5} = \left[\begin{matrix}0\\0\\0\\0\\24 \alpha_{0}\\240 \alpha_{0} + 120 \alpha_{1}\\1560 \alpha_{0} + 1440 \alpha_{1} + 360 \alpha_{2}\\8400 \alpha_{0} + 10920 \alpha_{1} + 5040 \alpha_{2} + 840 \alpha_{3}\end{matrix}\right],
-\end{displaymath}
-\begin{displaymath}
-\boldsymbol{x}_{1,6} = \left[\begin{matrix}0\\0\\0\\0\\0\\120 \alpha_{0}\\1800 \alpha_{0} + 720 \alpha_{1}\\16800 \alpha_{0} + 12600 \alpha_{1} + 2520 \alpha_{2}\end{matrix}\right],
-\end{displaymath}
-\begin{displaymath}
-\boldsymbol{x}_{1,7} = \left[\begin{matrix}0\\0\\0\\0\\0\\0\\720 \alpha_{0}\\15120 \alpha_{0} + 5040 \alpha_{1}\end{matrix}\right]
-\quad\text{and}\quad \boldsymbol{x}_{1,8} = \left[\begin{matrix}0\\0\\0\\0\\0\\0\\0\\5040 \alpha_{0}\end{matrix}\right],
-\end{displaymath}
-where $\boldsymbol{v} = [\alpha_{0}, \ldots, \alpha_{7}]^{T} \in \mathbb{C}^{8}$;
-finally, column composition of previous vectors yields the matrix
-$$X = \left[\boldsymbol{x}_{1,1}\quad\boldsymbol{x}_{1,2}\quad
+\begin{remark}
+Column composition of vectors in \ref{example:pascal:generalized:eigenvectors}
+yields the matrix
+$\displaystyle X = \left[\boldsymbol{x}_{1,1}\quad\boldsymbol{x}_{1,2}\quad
 \boldsymbol{x}_{1,3}\quad\boldsymbol{x}_{1,4}\quad
 \boldsymbol{x}_{1,5}\quad\boldsymbol{x}_{1,6}\quad\boldsymbol{x}_{1,7}\quad
-\boldsymbol{x}_{1,8}\right]$$
+\boldsymbol{x}_{1,8}\right]$
 which is the most abstract matrix such that $\mathcal{P}_{8} \sim_{X} J$.
 In fact, it shows that there are \textit{uncountably many} matrices $\hat{X}$
 such that $\mathcal{P}_{8} \sim_{\hat{X}} J$ by choosing different real values for
 the components of the vector $\boldsymbol{v}$.
-\end{example}
+\end{remark}
 
 This derivations allow us to compute functions of
 matrices in a easier way, with the help of the following

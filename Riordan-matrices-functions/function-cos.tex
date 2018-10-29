@@ -1,4 +1,5 @@
 
+\iffalse
 \begin{theorem}
 \label{thm:cos-Hermite-interpolating-polys}
 Let $f(z)=cos\,{z}$ and $\mathcal{R}$ be a Riordan array; then 
@@ -12,9 +13,10 @@ Let $f(z)=cos\,{z}$ and $\mathcal{R}$ be a Riordan array; then
 is an Hermite interpolating polynomial, explicitly written, of the cosine
 function for the minor $\mathcal{R}_{m}, m\in\mathbb{N}$.
 \end{theorem}
+\fi
 
 \begin{proof}
-The closed form of the $j$-th derivative of function $f$ is
+The closed form of the $j$-th derivative of function $f_{2}$ is
 $$\frac{\partial^{(j)}{f}(z)}{\partial{z}^{j}} = \alpha_{j+1}sin\,{z} +
 \alpha_{j}cos\,{z}, \quad j\in\mathbb{N},$$ where coefficients $\alpha_{i}$
 are defined in the sine function's proof, hence 
@@ -22,15 +24,15 @@ are defined in the sine function's proof, hence
 \begin{split}
   C_{m}(z) &= \sum_{j=1}^{m}{ \left. \left(\alpha_{j}sin\,{z} + \alpha_{j-1}cos\,{z}\right) \right|_{z=1}\Phi_{1,j}(z)} \\
        &= sin\,{1}\,\sum_{j=1}^{m}{ \alpha_{j}\Phi_{1,j}(z)} + cos\,{1}\,\sum_{j=1}^{m}{ \alpha_{j-1}\Phi_{1,j}(z)} \\
-       &= cos\,{1}\,\sum_{j=1}^{\left\lceil \frac{m}{2} \right\rceil}{ (-1)^{j-1}\Phi_{1,2j-1}(z)} 
+       &= cos\,{1}\,\sum_{j=1}^{\left\lceil \frac{m}{2} \right\rceil}{ (-1)^{j-1}\Phi_{1,2j-1}(z)}
         + sin\,{1}\,\sum_{j=1}^{\left\lfloor \frac{m}{2} \right\rfloor}{ (-1)^{j}\Phi_{1,2j}(z)} \\
        %&= cos\,{1}\,\sum_{j=1}^{\left\lceil \frac{m}{2} \right\rceil}{\sum_{k=0}^{2j-2}{ (-1)^{j-1}\frac{(-1)^{2j-2-k}}{(2j-2-k)!}\frac{z^{k}}{k!}} }
        % + sin\,{1}\,\sum_{j=1}^{\left\lfloor \frac{m}{2} \right\rfloor}{\sum_{k=0}^{2j-1}{ (-1)^{j}\frac{(-1)^{2j-1-k}}{(2j-1-k)!}\frac{z^{k}}{k!}}} \\
-       &= cos\,{1}\,\sum_{j=1}^{\left\lceil \frac{m}{2} \right\rceil}{\sum_{k=0}^{2j-2}{ \frac{(-1)^{3j-3}}{k!(2j-2-k)!}{(-z)^{k}}} }
-       + sin\,{1}\,\sum_{j=1}^{\left\lfloor \frac{m}{2} \right\rfloor}{\sum_{k=0}^{2j-1}{ \frac{(-1)^{3j-1}}{k!(2j-1-k)!}{(-z)^{k}}}}; \\
+       &= cos\,{1}\,\sum_{j=1}^{\left\lceil \frac{m}{2} \right\rceil}{\sum_{k=0}^{2j-2}{ \frac{(-1)^{3j-3}}{k!(2j-2-k)!}{(-z)^{k}}} }\\
+       &+ sin\,{1}\,\sum_{j=1}^{\left\lfloor \frac{m}{2} \right\rfloor}{\sum_{k=0}^{2j-1}{ \frac{(-1)^{3j-1}}{k!(2j-1-k)!}{(-z)^{k}}}}; \\
 \end{split}
 \end{displaymath}
-finally, repeating manipulations done in the previous proof we rewrite
+\noindent finally, repeating manipulations done in the previous proof we rewrite
 \begin{displaymath}
 \begin{split}
   C_{m}(z)  &= cos\,{1}\,\sum_{k=0}^{2 \left\lceil \frac{m}{2} \right\rceil-2}{\left(\sum_{j=1+\left\lceil \frac{k}{2}\right\rceil}^{\left\lceil \frac{m}{2} \right\rceil}{\frac{(-1)^{3j-3}}{(2j-2)!}{2j-2\choose k}}\right) {(-z)^{k}}}\\
