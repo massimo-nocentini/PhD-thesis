@@ -2,41 +2,42 @@
 This chapter studies an embedded Domain Specific Language for logic
 programming.  First, we give a quick introduction of \textit{$\mu$Kanren}, a
 purely functional implementation of this language and, second, we extend the
-HOL Light theorem prover in order to introduce the relation paradigm in its
+HOL Light theorem prover in order to introduce the relational paradigm in its
 tactics mechanism.
 
 \section{$\mu$Kanren and relational programming}
 
 The central tenet of relational programming is that \textit{programs
 corresponds to relations that generalize mathematical functions}; our interest
-here is to deepen our understanding of the underlying structures and data
+here is to deepen our understanding of the underlying concepts and data
 structures of languages in the \textit{miniKanren} family. The main reference
-that drive our work is \citep{Friedman:Reasoned:Schemer} and more details are
-discussed in the dissertation \citep{Byrd:PhD}.
+that drives our work is \citep{Friedman:Reasoned:Schemer} and advanced topics
+are discussed in Byrd's dissertation \citep{Byrd:PhD}.
 
-The heavy use of higher order functions, infinite streams of objects,
+The heavy use of higher order functions, infinite streams of objects and
 unification \`a-la Robinson makes possible to implement $\mu$Kanren
 \citep{Hemann:muKanren}, a purely functional core of miniKanren; we repeat the
-exercise of writing it using different programming languages, in particular using
+exercise of coding it using different programming languages, in particular
 \begin{description}
 \item[Python]
     we provide both a complete implementation of the abstract definition and a
-    test suite that stress our version against \textit{all} questions in the
+    test suite that stresses our functions against \textit{all} questions in the
     reference book. Moreover, we characterize our code with a \textit{fair}
     enumeration strategy based on the \textit{dovetail} techniques used in the
-    enumeration of the rationals; precisely, the monadic function
+    enumeration of the Rationals numbers; precisely, the monadic function
     \verb|mplus(streams, interleaving)| enumerates the states space
     \verb|streams|, using different strategies according to the argument
     \verb|interleaving|.
 
-    In order to understand states enumeration can be helpful to use a matrix,
-    where we associate a row to each stream of states α belonging to
-    \verb|streams|, which is an \verb|iter| object over a \textit{countably},
-    possibly infinite, set of \textit{states streams}, the matrix could have infinite
-    rows.  In parallel, since each states stream α lying on a row is a \textit{iter}
-    object over a \textit{countably}, possibly infinite, set of \textit{satisfying states}, the
-    matrix could have infinite columns; therefore, the matrix we are building
-    could be infinite in both dimensions. So, let \verb|streams| be represented as follows:
+    In order to understand states enumeration can be helpful to use a "matrix
+    notation", that associates a row to each stream α of states in
+    \verb|streams|, which is an \textit{iterable} object over a \textit{countably},
+    possibly infinite, set of \textit{states streams}, so the matrix could have
+    infinite rows.  In parallel, since each states stream α lying on a row is an
+    \textit{iterable} object over a \textit{countably}, possibly infinite, set of
+    \textit{satisfying states}, the matrix could have infinite columns too;
+    therefore, the matrix we are building could be infinite in both dimensions.
+    So, let \verb|streams| be represented as
     \begin{displaymath}
         \left(\begin{array}{ccccc}
         s_{00} & s_{01} & s_{02} & s_{03} & \ldots \\
@@ -46,18 +47,19 @@ exercise of writing it using different programming languages, in particular usin
         \ldots &        &        &        &        \\
         \end{array}\right)
     \end{displaymath}
-    \textit{dovetail} techniques enumerates by interleaving \verb|state|
+    where each $s_{i,j}$ is a state that carries a substitution which satisfies
+    the relation under study.  Such states are visited according to the
+    \textit{dovetail} techniques which enumerates by interleaving \verb|state|
     objects lying on the same \textit{rising diagonal}, resulting in a
-    \textit{fair scheduler} in the sense that \textit{every} satisfying
+    \textit{fair, complete scheduler} in the sense that \textit{every} satisfying
     \verb|state| object will be reached, eventually. For the sake of clarity,
-    enumeration proceeds as follows:
+    enumeration proceeds as follows
     \begin{displaymath}
     s_{00}, s_{10}, s_{01}, s_{20}, s_{11}, s_{02}, s_{30}, s_{21},
     s_{12}, s_{03}, \ldots
     \end{displaymath}
-    providing a \textit{fair} and \textit{complete} enumeration strategy;
-    precisely,
-    \begin{minted}[fontsize=\small]{python}
+    with respect to its implementation
+    \begin{minted}[baselinestretch=0.8]{python}
     def mplus(streams, interleaving):
 
         if interleaving:
@@ -85,13 +87,12 @@ exercise of writing it using different programming languages, in particular usin
 
 \item[Scheme] we provide our implementation using the same language that
 original authors use for their canonical version. We diverge from them in the
-way we represent substitutions, choosing a \textit{union-find}  data structure
-that allows us to maintain a balanced tree that keeps track of the unification
-relation. The overhead work that was necessary to implement a fully-flagged
+way we represent substitutions, choosing an \textit{union-find}  data structure
+that allows us to maintain a balanced tree to track associations.
+The overhead work that was necessary to implement a fully-flagged
 $\mu$Kanren yield a Scheme library to define and manipulate infinite streams of
-objects, an a direct use of it is for Riordan arrays definitions, such as
-\vfill
-\begin{minted}[fontsize=\small]{scheme}
+objects, and this allows us to have another way to define Riordan arrays for free, such as
+\begin{minted}[baselinestretch=0.8]{scheme}
 (test '((1)
         (1 1)
         (1 2 1)
@@ -106,8 +107,8 @@ objects, an a direct use of it is for Riordan arrays definitions, such as
 \end{minted}
 lying on the procedural abstraction \verb|riordan-array| that consumes two
 formal power series and produces a stream of lists, each one denoting a
-triangle's row; its definition is clear and elegant,
-\begin{minted}[fontsize=\small]{scheme}
+triangle's row; its definition is clear and elegant in our opinion,
+\begin{minted}[baselinestretch=0.8]{scheme}
 (define riordan-array
  (Λ (d h)
   (stream:dest/car+cdr (d ∅)
@@ -117,8 +118,9 @@ triangle's row; its definition is clear and elegant,
                   dcdr (riordan-array (series:× d h) h)))))))
 \end{minted}
 where \verb|stream:×| denotes the \textit{series convolution operator} and
-the syntactic form \verb|Λ| is defined as
-\begin{minted}[fontsize=\small]{scheme}
+the syntactic abstraction \verb|Λ| is defined as an "augmented lambda" form
+that allows us to define delayed by means of \verb|delay-force|,
+\begin{minted}[baselinestretch=0.8]{scheme}
 (define-syntax Λ
  (syntax-rules ()
   ((Λ args body ...)
@@ -127,15 +129,150 @@ the syntactic form \verb|Λ| is defined as
 
 \item[Smalltalk] this implementation is an exercise in object-oriented
 programming and its coding has been driven by a test-first approach
-\citep{beck:TDD}, this is a vanilla port of the standard one.
+\citep{beck:TDD} and it is a literal port of the canonical one.
 
 \item[OCaml] finally, this version is preparatory for the extension of the HOL
 Light theorem prover which we are going to describe in the rest of this
 chapter.
 
-All previous prototypes can be found in \citep{Nocentini:kanrens}.
-
 \end{description}
+
+All these prototypes can be found in \citep{Nocentini:kanrens} and some
+examples follows using the Scheme implementation to show the power of the
+present paradigm.
+
+\begin{example} The \textit{context free grammar} $\mathcal{D}$
+that defines the set of \textit{Dyck paths}
+\begin{displaymath}
+\mathcal{D} = \varepsilon\,|\,\circ\,\mathcal{D}\,\bullet\,\mathcal{D}
+\end{displaymath}
+is encoded in the relation \verb|dyckº| defined by the $\mu$Kanren goal
+\begin{minted}[baselinestretch=0.8]{scheme}
+(define dyckº
+ (lambda (α)
+  (condº/§
+   ((nullº α))
+   ((fresh (β γ) (∧
+                  (dyckº β)
+                  (dyckº γ)
+                  (appendº `(○ . ,β) `(● . ,γ) α)))))))
+\end{minted}
+and an enumeration is reported in Table \ref{tbl:kanren:dyck:path}.
+\begin{margintable}
+\begin{minted}[baselinestretch=0.8]{scheme}
+        (()
+         (○ ●)
+         (○ ○ ● ●)
+         (○ ● ○ ●)
+         (○ ○ ○ ● ● ●)
+         (○ ● ○ ○ ● ●)
+         (○ ○ ● ● ○ ●)
+         (○ ● ○ ● ○ ●)
+         (○ ○ ● ○ ● ●)
+         (○ ● ○ ○ ○ ● ● ●)
+         (○ ○ ● ● ○ ○ ● ●)
+         (○ ● ○ ● ○ ○ ● ●)
+         (○ ○ ○ ● ● ● ○ ●)
+         (○ ● ○ ○ ● ● ○ ●)
+         (○ ○ ● ● ○ ● ○ ●)
+         (○ ● ○ ● ○ ● ○ ●)
+         (○ ○ ○ ○ ● ● ● ●)
+         (○ ● ○ ○ ● ○ ● ●)
+         (○ ○ ● ● ○ ○ ○ ● ● ●)
+         (○ ● ○ ● ○ ○ ○ ● ● ●)
+         (○ ○ ○ ● ● ● ○ ○ ● ●)
+         (○ ● ○ ○ ● ● ○ ○ ● ●)
+         (○ ○ ● ● ○ ● ○ ○ ● ●)
+         (○ ● ○ ● ○ ● ○ ○ ● ●)
+         (○ ○ ● ○ ● ● ○ ●)
+         (○ ● ○ ○ ○ ● ● ● ○ ●)
+         (○ ○ ● ● ○ ○ ● ● ○ ●)
+         (○ ● ○ ● ○ ○ ● ● ○ ●)
+         (○ ○ ○ ● ● ● ○ ● ○ ●)
+         (○ ● ○ ○ ● ● ○ ● ○ ●)
+         (○ ○ ● ● ○ ● ○ ● ○ ●)
+         (○ ● ○ ● ○ ● ○ ● ○ ●)
+         (○ ○ ● ○ ○ ● ● ●)
+         (○ ● ○ ○ ○ ○ ● ● ● ●)
+         (○ ○ ● ● ○ ○ ● ○ ● ●)
+         (○ ● ○ ● ○ ○ ● ○ ● ●)
+         (○ ○ ○ ● ● ● ○ ○ ○ ● ● ●)
+         (○ ● ○ ○ ● ● ○ ○ ○ ● ● ●)
+         (○ ○ ● ● ○ ● ○ ○ ○ ● ● ●)
+         (○ ● ○ ● ○ ● ○ ○ ○ ● ● ●)
+         (○ ○ ● ○ ● ● ○ ○ ● ●)
+         (○ ● ○ ○ ○ ● ● ● ○ ○ ● ●))
+\end{minted}
+\caption{First $42$ Dyck paths enumerated by relation \texttt{dyckº}.}
+\label{tbl:kanren:dyck:path}
+\end{margintable}
+\end{example}
+
+\begin{example}
+The recurrence relation for the Fibonacci numbers
+\begin{displaymath}
+f_{n+2} = f_{n+1} + f_{n}, \quad n \geq 0
+\end{displaymath}
+is encoded in the relation \verb|fibonacciº| defined by the goal
+\begin{minted}[baselinestretch=0.8]{scheme}
+(define fibonacciº
+ (lambda (depth n α)
+  (cond
+   ((zero? depth) (≡ α (list n)))
+   (else (fresh (β γ)
+          (∧
+           (fibonacciº (sub1 depth) (sub1 n) β)
+           (fibonacciº (sub1 depth) (sub2 n) γ)
+           (appendº β γ α)))))))
+\end{minted}
+which enumerates the following identities
+\begin{displaymath}
+    \begin{array}{c}
+      f_{n+2} = f_{n} + f_{n+1} \\
+      f_{n+2} = f_{n-2} + 2\,f_{n-1} + f_{n}  \\
+      f_{n+2} = f_{n-4} + 3\,f_{n-3} + 3\,f_{n-2} + f_{n-1} \\
+      f_{n+2} = f_{n-6} + 4\,f_{n-5} + 6\,f_{n-4} + 4\,f_{n-3} + f_{n-2} \\
+      f_{n+2} = f_{n-8} + 5\,f_{n-7} + 10\,f_{n-6} + 10\,f_{n-5} + 5\,f_{n-4} + f_{n-3} \\
+      f_{n+2} = f_{n-10} + 6\,f_{n-9} +15\,f_{n-8} + 20\,f_{n-7} +15\,f_{n-6} + 6\,f_{n-5} + f_{n-4} \\
+      %((-12 1) (-11 7) (-10 21) (-9 35) (-8 35) (-7 21) (-6 7) (-5 1))
+      %((-14 1) (-13 8) (-12 28) (-11 56) (-10 70) (-9 56) (-8 28) (-7 8) (-6 1))
+    \end{array}
+\end{displaymath}
+\end{example}
+
+\begin{example}
+The recurrence relation for the Pascal triangle
+\begin{displaymath}
+\begin{split}
+d_{0,0} &= 1, \\
+d_{n+1, 0} &= d_{n,0}, \quad n \geq 0 \\
+d_{n+1, k+1} &= d_{n,k} + d_{n,k+1}, \quad n,k \geq 0 \\
+\end{split}
+\end{displaymath}
+is encoded in the relation \verb|tartagliaº| defined by the goal
+\begin{minted}[baselinestretch=0.8]{scheme}
+(define tartagliaº
+ (lambda (depth n k α)
+  (cond
+   ((zero? depth) (≡ α (list (list n k))))
+   (else (fresh (β γ)
+          (∧
+           (tartagliaº (sub1 depth) (sub1 n) (sub1 k) β)
+           (tartagliaº (sub1 depth) (sub1 n) k γ)
+           (appendº β γ α)))))))
+\end{minted}
+which enumerates the following identities
+\begin{displaymath}
+    \begin{array}{c}
+      d_{n+1,k+1} = d_{n,k+1} + d_{n,k} \\
+      d_{n+1,k+1} = d_{n-1, k+1} + 2\,d_{n-1,k} + d_{n-1,k-1}  \\
+      d_{n+1,k+1} = d_{n-2, k+1} + 3\,d_{n-2,k} + 3\,d_{n-2,k-1} + d_{n-2,k-2} \\
+      d_{n+1,k+1} = d_{n-3, k+1} + 4\,d_{n-3,k} + 6\,d_{n-3,k-1} + 4\,d_{n-3,k-2} + d_{n-2,k-3} \\
+      d_{n+1,k+1} = d_{n-4, k+1} + 5\,d_{n-4,k} + 10\,d_{n-4,k-1} + 10\,d_{n-4,k-2} + 5\,d_{n-4,k-3} + d_{n-4,k-4} \\
+      d_{n+1,k+1} = d_{n-5, k+1} + 6\,d_{n-5,k} +15\,d_{n-5,k-1} + 20\,d_{n-5,k-2} +15\,d_{n-5,k-3} + 6\,d_{n-5,k-4} + d_{n-5,k-5} \\
+    \end{array}
+\end{displaymath}
+\end{example}
 
 \section{Toward certified computation}
 \label{sec:introduction}
@@ -146,7 +283,7 @@ the derivation of formally verified theorems in the spirit of the
 logic programming paradigm.
 
 Our setup, is based on the HOL Light theorem prover, in which we
-extend the currently available tactic mechanism with three basic
+extend the currently available tactics mechanism with three basic
 features: (i)~the explicit use of meta-variables, (ii)~the ability to
 backtrack during the proof search, (iii)~a layer of tools and
 facilities to interface with the underlying proof mechanism.
@@ -180,11 +317,11 @@ Consider first the problem of computing the concatenation of two lists
 \verb|[1; 2]| and \verb|[3]|.  One natural way to approach this
 problem is by using rewriting.  In HOL Light, this can be done by using
 \emph{conversions} with the command
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # REWRITE_CONV [APPEND] `APPEND [1;2] [3]`;;
 \end{minted}
 where the theorem
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # APPEND;;
 val it : thm =
   |- (!l. APPEND [] l = l) /\
@@ -194,7 +331,7 @@ gives the recursive equations for the operator \verb|APPEND|.
 
 Our implementation allows us to address the same problem from a
 logical point of view.  We start by proving two theorems
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # APPEND_NIL;;
 val it : thm = |- !l. APPEND [] l = l
 
@@ -205,7 +342,7 @@ val it : thm =
 \end{minted}
 that gives the logical rules that characterize the \verb|APPEND|
 operator.  Then we define a \emph{solver}
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 let APPEND_SLV : solver =
   REPEAT_SLV (CONCAT_SLV (ACCEPT_SLV APPEND_NIL)
                          (RULE_SLV APPEND_CONS));;
@@ -215,14 +352,14 @@ the form \verb|`APPEND x y = z`| by structural analysis on the list
 \verb|`x`|.  The precise meaning of the above code will be clear later
 in this note; however, this can be seen as the direct translation of
 the Prolog program
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 append([],X,X).
 append([X|Xs],Ys,[X|Zs]) :- append(Xs,Ys,Zs).
 \end{minted}
 
 Then, the problem of concatenating the two lists is described by the
 term
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 `??x. APPEND [1;2] [3] = x`
 \end{minted}
 where the binder \verb|`(??)`| is a syntactic variant of the usual
@@ -230,7 +367,7 @@ existential quantifier \verb|`(?)`|, which introduces the
 \emph{meta-variables} of the \emph{query}.
 
 The following command
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 list_of_stream
   (solve APPEND_SLV
          `??x. APPEND [1; 2] [3] = x`);;
@@ -243,7 +380,7 @@ stream into a list.
 The output of the previous command is a single solution which is
 represented by a pair where the first element is the instantiation for
 the meta-variable \verb|`x`|and the second element is a HOL theorem
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 val it : (term list * thm) list =
   [([`x = [1; 2; 3]`], |- APPEND [1; 2] [3] = [1; 2; 3])]
 \end{minted}
@@ -255,7 +392,7 @@ reasoning.
 Consider the variation of the above problem where we want to enumerate
 all possible splits of the list \verb|[1; 2; 3]|.  This can be done by
 simply changing the goal term in the previous query:
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # list_of_stream
     (solve APPEND_SLV
            `??x y. APPEND x y = [1;2;3]`);;
@@ -275,18 +412,18 @@ val it : (term list * thm) list =
 \label{sec:library-solvers}
 
 Our framework is based on ML procedures called \emph{solvers}.  Solvers
-generalizes classical HOL tactics in two ways: (i) they facilitate the
-manipulation of meta-variables in the goal; (ii) they allows to backtrack
-during the proof search. We observe that the tactic mechanism currently
+generalizes classical HOL tactics in two ways, (i)~they facilitate the
+manipulation of meta-variables in the goal and (ii)~they allows us to backtrack
+during the proof search. We observe that the tactics mechanism currently
 implemented in HOL Light already provides basic support for meta-variables in
 goals; however, it seems to be used only internally in the implementation of
-the intuitionistic tautology prover \texttt{ITAUT\_TAC}. 
+the intuitionistic tautology prover \texttt{ITAUT\_TAC}.
 
-We provide a library of basic solvers, they usually have a name that ends in
-\verb|_SLV| as, for instance, \verb|REFL_SLV|.
+We provide a library of basic solvers with the convention that their names end
+in \verb|_SLV| as in \verb|REFL_SLV|, for instance.
 
 Every HOL tactic can be `promoted' into a solver using the ML function
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 TACTIC_SLV : tactic -> solver
 \end{minted}
 A partial list of solvers approximately corresponding to classical HOL
@@ -307,11 +444,11 @@ solutions.
 
 One example of (2) is the \verb|REFL_SLV| solver: when it is applied
 to the goal
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 ?- x + 1 = 1 + x
 \end{minted}
 where \verb|x| is a meta-variable, closes the goal by augmenting the
-instantiation with the substitution $\mathtt{1}/\mathtt{x}$ and
+instantiation with the substitution \verb|1/x| and
 producing the theorem \verb!|- 1 + 1 = 1 + 1!.  Observe that the
 corresponding \verb|REFL_TAC| fails in this case.
 
@@ -332,16 +469,16 @@ them, are the analogous of the corresponding tacticals:
 
 Given two solvers $s_1$ and $s_2$ the solver combinator
 \verb|CONCAT_SLV| make a new solver that collect sequentially all
-solutions of $s_1$ followed by all solution of $s_2$.  This is the
+solutions of $s_1$ followed by all solutions of $s_2$.  This is the
 most basic construction for introducing backtracking into the proof
 strategy.
 
 From \verb|CONCAT_SLV|, a number of derived combinators are defined to
-capture the most common enumeration patterns.  In this synthetic note,
+capture the most common enumeration patterns, here
 we give a brief list of those combinators without an explicit
 description. However, we hope that the reader can guess the actual
 behaviour from both their name and their ML type:
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 COLLECT_SLV : solver list -> solver
 MAP_COLLECT_SLV : ('a->solver) -> 'a list -> solver
 COLLECT_ASSUM_SLV : thm_solver -> solver
@@ -372,44 +509,44 @@ a call to \verb|top_thms()|.
 
 Here is an example of interaction.  We first introduce the goal,
 notice the use of the binder \verb|(??)| for the meta-variable \verb|x|:
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # gg `??x. 2 + 2 = x`;;
 val it : mgoalstack =
 `2 + 2 = x`
 \end{minted}
 one possible solution is by using reflexivity, closing the proof
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # ee REFL_SLV;;
 val it : mgoalstack =
 \end{minted}
 we can now form the resulting theorem
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # list_of_stream(top_thms());;
 val it : thm list = [|- 2 + 2 = 2 + 2]
 \end{minted}
 
 Now, if one want to find a different solution, we can restore the
 initial state
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # bb();;
 val it : mgoalstack =
 `2 + 2 = x`
 \end{minted}
-then use a different solver, for instance by unifying with the
+then we use a different solver that allows us to unify with the
 equation \verb?|- 2 + 2 = 4?
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # ee (ACCEPT_SLV(ARITH_RULE `2 + 2 = 4`));;
 val it : mgoalstack =
 \end{minted}
-and, again, take the resulting theorem
-\begin{minted}[fontsize=\small]{ocaml}
+and again, we take the resulting theorem
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # list_of_stream(top_thms());;
 val it : thm list = [|- 2 + 2 = 4]
 \end{minted}
 
 Finally, we can change the proof strategy to find both solutions by
 using backtracking
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # bb();;
 val it : mgoalstack =
 `2 + 2 = x`
@@ -421,13 +558,13 @@ val it : thm list = [|- 2 + 2 = 2 + 2; |- 2 + 2 = 4]
 \end{minted}
 
 The function
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 solve : solver -> term -> (term list * thm) stream
 \end{minted}
 runs the proof search non interactively and produces a list of
 solutions as already shown in Section~\ref{sec:an-simple-example}.  In
 this last case it would be
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # list_of_stream
     (solve (CONCAT_SLV REFL_SLV (ACCEPT_SLV(ARITH_RULE `2 + 2 = 4`)))
            `??x. 2 + 2 = x`);;
@@ -448,23 +585,23 @@ val it : (term list * thm) list =
 The material in this section is strongly inspired from the ingenious
 work of Byrd, Holk and Friedman about the miniKanren system
 \citep{Byrd:2012:MLU:2661103.2661105}, where the authors work with the
-semantics of the scheme language.  Here we target a lisp-like
+semantics of the Scheme programming language. Here, we target a lisp-like
 language, implemented as an object language inside the HOL prover.
-Our language is substantially simpler than the scheme language; in
+Our language is substantially simpler than Scheme; in
 particular, it uses dynamic (instead of lexical) scope for variables.
 Nonetheless, we believe that this example can suffice to illustrate
 the general methodology.
 
 First, we need to extend our HOL Light environment with an object
 datatype \verb|sexp| for encoding S-expressions.
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 let sexp_INDUCT,sexp_RECUR = define_type
   "sexp = Symbol string
         | List (sexp list)";;
 \end{minted}
 For instance the sexp \verb|(list a (quote b))| is represented as HOL
 term with
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 `List [Symbol "list";
        Symbol "a";
        List [Symbol "quote";
@@ -475,7 +612,7 @@ cumbersome as the size of the terms grows.  Hence, we also introduce a
 notation for concrete sexp terms, which is activated by the syntactic
 pattern \verb|'(|\ldots\verb|)|.  For instance, the above example
 is written in the HOL concrete syntax for terms as
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 `'(list a (quote b))`
 \end{minted}
 
@@ -483,10 +620,10 @@ With this setup, we can easily specify the evaluation rules for our
 minimal lisp-like language.  This is an inductive predicate with rules
 for: (i) quoted expressions; (ii) variables; (iii) lambda
 abstractions; (iv) lists; (v) unary applications.  We define a ternary
-predicate \verb|`|$\mathtt{EVAL}\ e\ x\ y\mathtt{}$\verb|`|, where $e$
+predicate \verb|`|$EVAL\ e\ x\ y\mathtt{}$\verb|`|, where $e$
 is a variable environment expressed as associative list, $x$ is the
 input program and $y$ is the result of the evaluation.
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 let EVAL_RULES,EVAL_INDUCT,EVAL_CASES = new_inductive_definition
   `(!e q. EVAL e (List [Symbol "quote"; q]) q) /\
    (!e a x. RELASSOC a e x ==> EVAL e (Symbol a) x) /\
@@ -503,7 +640,7 @@ let EVAL_RULES,EVAL_INDUCT,EVAL_CASES = new_inductive_definition
 We now use our framework for running a certified evaluation process
 for this language.  First, we define a solver for a single step of
 computation.
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 let STEP_SLV : solver =
   COLLECT_SLV
     [CONJ_SLV;
@@ -521,17 +658,17 @@ include specific solvers for conjunctions and for the two predicates
 \verb|REL_ASSOC| and \verb|ALL2|.
 
 The top-level recursive solver for the whole evaluation predicate is now easy to define:
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 let rec EVAL_SLV : solver =
    fun g -> CONCAT_SLV ALL_SLV (THEN_SLV STEP_SLV EVAL_SLV) g;;
 \end{minted}
 
 Let us make a simple test.  The evaluation of the expression
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 ((lambda (x) (list x x x)) (list))
 \end{minted}
-can by obtained as follows:
-\begin{minted}[fontsize=\small]{ocaml}
+can be obtained as follows:
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # get (solve EVAL_SLV
              `??ret. EVAL []
                           '((lambda (x) (list x x x)) (list))
@@ -544,11 +681,11 @@ val it : term list * thm =
 
 Again, we can use the declarative nature of logic programs to run the
 computation backwards.  For instance, one intriguing exercise is the
-generation of quine programs, that is, programs that evaluates to
+generation of \textit{quine} programs, that is, programs that evaluates to
 themselves.  In our formalization, they are those terms $q$ satisfying
 the relation \verb|`EVAL|~\verb|[]|~$q$~$q$\verb|`|.  The following command
 computes the first two quines found by our solver.
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # let sols = solve EVAL_SLV `??q. EVAL [] q q`);;
 # take 2 sols;;
 
@@ -584,7 +721,7 @@ val it : (term list * thm) list =
 One can easily observe that any lambda expression is trivially a quine
 for our language.  This is indeed the first solution found by our
 search:
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 ([`q = List (Symbol "lambda" :: _3149670)`],
  |- EVAL []
          (List (Symbol "lambda" :: _3149670))
@@ -596,7 +733,7 @@ presented in a form that is hard to decipher.  A simple trick can help
 us to present this term as a concrete sexp term: it is enough to
 replace the HOL generated variable (\verb|`_3149670`|) with a concrete
 string.  This can be done by an ad hoc substitution.
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 # let [_; i2,s2] = take 2 sols;;
 # vsubst [`"x"`,hd (frees (rand (hd i2)))] (hd i2);;
 
@@ -607,18 +744,18 @@ val it : term =
 If we take one more solution from \verb|sols| stream, we get a new
 quine, which, interestingly enough, is precisely the one obtained in
 \citep{Byrd:2012:MLU:2661103.2661105}.
-\begin{minted}[fontsize=\small]{ocaml}
+\begin{minted}[baselinestretch=0.8]{ocaml}
 val it : term =
   `q =
    '((quote (lambda (x) (list x (list (quote quote) x))))
      (quote (quote (lambda (x) (list x (list (quote quote) x))))))`
 \end{minted}
 
-\section{Conclusions and future work}
+\section*{Conclusions}
 \label{sec:conclusions}
 
 We presented a rudimentary framework implemented on top of the HOL
-Light theorem prover that enable a logic programming paradigm for
+Light theorem prover that enables a logic programming paradigm for
 proof searching.  More specifically, it facilitates the use of
 meta-variables in HOL goals and permits backtracking during the proof
 construction.
@@ -636,5 +773,5 @@ Despite the simplicity of present implementation, we have already
 shown the implementation of some paradigmatic examples of
 logic-oriented proof strategies.  In the code base, some further
 examples are included concerning a quicksort implementation and a
-simple example of logical puzzle.
+simple example of a logical puzzle.
 
