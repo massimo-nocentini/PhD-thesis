@@ -238,6 +238,9 @@ which enumerates the following identities
       %((-14 1) (-13 8) (-12 28) (-11 56) (-10 70) (-9 56) (-8 28) (-7 8) (-6 1))
     \end{array}
 \end{displaymath}
+compacted in $\displaystyle f_{n} = \sum_{i=0}^{j}{{
+{j}\choose{i} }\,f_{n-2\,j+i}}$ where
+$\displaystyle j\leq \frac{n}{2}$.
 \end{example}
 
 \begin{example}
@@ -272,6 +275,9 @@ which enumerates the following identities
       d_{n+1,k+1} = d_{n-5, k+1} + 6\,d_{n-5,k} +15\,d_{n-5,k-1} + 20\,d_{n-5,k-2} +15\,d_{n-5,k-3} + 6\,d_{n-5,k-4} + d_{n-5,k-5} \\
     \end{array}
 \end{displaymath}
+compacted in $\displaystyle { {p+m}\choose{r+m} } = \sum_{j=0}^{m-1}{{
+{m-1}\choose{j} }{ {p-1+m}\choose{r-j+m} }}$ for $p,r,m\in\mathbb{N}$
+-- recall that $\displaystyle d_{n,k}={ {n}\choose{k} }$.
 \end{example}
 
 \section{Toward certified computation}

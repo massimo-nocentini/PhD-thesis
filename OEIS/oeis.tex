@@ -10,15 +10,16 @@ graph structures.
 \section{Introduction}
 
 The \textit{Online Encyclopedia of Integer Sequences} \citep{OEIS} is an online
-database of sequences of numbers that collects any kind of data regarding them.
-It was founded by N.~J.~A.~Sloane in $1964$ and since then has been, and
-continue to be, updated constantly by contributions of many users. Despite of
-its powerful searching mechanisms, which starts at \url{https://oeis.org/} and
+database of sequences of numbers that collects any kind of data regarding them,
+available at \url{https://oeis.org/}.  It was founded by N.~J.~A.~Sloane in
+$1964$ and since then has been, and continue to be, updated constantly by
+contributions of many users. Despite of its powerful searching mechanisms,
 shown in Figure \ref{fig:oeis:page}, we design a parallel \textit{suite of
 software tools} that satisfies the necessities (i)~to search the OEIS offline
 by automating repeated searches, (ii)~to work in a UNIX console in order to use
 its programming facilities for a more efficient manipulation of textual
-contents and (iii)~to interface with third-party software.
+contents and (iii)~to interface with third-party libraries to visualize networks 
+encoding connections among sequences.
 
 \begin{figure}
 \includegraphics{deps/oeis-tools/doc/OEIS/oeis-page}
@@ -104,7 +105,7 @@ sequence of Fibonacci numbers as follows
 \includegraphics{deps/oeis-tools/doc/OEIS/json-structure}
 \caption{The complete structure of the JSON encoding of OEIS content about the
 sequence $A000045$; in particular, the property \texttt{xref}, highlighted in
-\textcolor{blue}{blue}, is left expanded because of its important in the
+\textcolor{blue}{blue}, is left expanded because of its importance in the
 recursive behaviour of the crawler, namely every label in this section bacomes
 a candidate sequence for the fetching process.}
 \label{fig:json-structure}
