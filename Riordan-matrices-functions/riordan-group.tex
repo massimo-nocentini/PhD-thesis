@@ -98,20 +98,20 @@ for \textit{any} proper Riordan array $\mathcal{R}_{8}$. Finally, let $f$ be a
 \fi
 % }}}
 
-
 \begin{remark}
-For \textit{any} Riordan array $\mathcal{R}$, the polynomial 
+For \textit{any} Riordan array $\mathcal{R}$, the polynomial
 \begin{displaymath}
-\footnotesize
+\small
 \begin{split}
-g_{8}{\left (z \right )} &= \frac{z^{7}}{5040} \left.\frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right|_{z=1} \\
-                     &+ z^{6} \left(\frac{1}{720} \left.\frac{d^{6}}{d z^{6}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{720} \left.\frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right|_{z=1}\right) \\
-                     &+ z^{5} \left(\frac{1}{120} \left.\frac{d^{5}}{d z^{5}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{120} \left.\frac{d^{6}}{d z^{6}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{240} \left.\frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right|_{z=1}\right) \\
-                     &+ z^{4} \left(\frac{1}{24} \left.\frac{d^{4}}{d z^{4}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{24} \left.\frac{d^{5}}{d z^{5}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{48} \left.\frac{d^{6}}{d z^{6}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{144} \left.\frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right|_{z=1}\right) \\
-                     &+ z^{3} \left(\frac{1}{6} \left.\frac{d^{3}}{d z^{3}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{6} \left.\frac{d^{4}}{d z^{4}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{12} \left.\frac{d^{5}}{d z^{5}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{36} \left.\frac{d^{6}}{d z^{6}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{144} \left.\frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right|_{z=1}\right) \\
-                     &+ z^{2} \left(\frac{1}{2} \left.\frac{d^{2}}{d z^{2}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{2} \left.\frac{d^{3}}{d z^{3}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{4} \left.\frac{d^{4}}{d z^{4}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{12} \left.\frac{d^{5}}{d z^{5}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{48} \left.\frac{d^{6}}{d z^{6}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{240} \left.\frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right|_{z=1}\right) \\
-                     &+ z \left(\left.\frac{d}{d z} f{\left (z \right )}\right|_{z=1} - \left.\frac{d^{2}}{d z^{2}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{2} \left.\frac{d^{3}}{d z^{3}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{6} \left.\frac{d^{4}}{d z^{4}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{24} \left.\frac{d^{5}}{d z^{5}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{120} \left.\frac{d^{6}}{d z^{6}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{720} \left.\frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right|_{z=1}\right) \\
-                     &+ f{\left (z \right )} - \left.\frac{d}{d z} f{\left (z \right )}\right|_{z=1} + \frac{1}{2} \left.\frac{d^{2}}{d z^{2}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{6} \left.\frac{d^{3}}{d z^{3}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{24} \left.\frac{d^{4}}{d z^{4}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{120} \left.\frac{d^{5}}{d z^{5}}  f{\left (z \right )}\right|_{z=1} + \frac{1}{720} \left.\frac{d^{6}}{d z^{6}}  f{\left (z \right )}\right|_{z=1} - \frac{1}{5040} \left.\frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right|_{z=1}
+g_{8}{\left (z \right )}
+    &= \frac{1}{5040} \left.\frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right|_{z=1} z^{7}\\
+    &+ \left. \left(\frac{1}{720} \frac{d^{6}}{d z^{6}}  f{\left (z \right )} - \frac{1}{720} \frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right)\right|_{z=1} z^{6} \\
+    &+ \left. \left(\frac{1}{120} \frac{d^{5}}{d z^{5}}  f{\left (z \right )} - \frac{1}{120} \frac{d^{6}}{d z^{6}}  f{\left (z \right )} + \frac{1}{240} \frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right)\right|_{z=1} z^{5}\\
+    &+ \left. \left(\frac{1}{24} \frac{d^{4}}{d z^{4}}  f{\left (z \right )} - \frac{1}{24} \frac{d^{5}}{d z^{5}}  f{\left (z \right )} + \frac{1}{48} \frac{d^{6}}{d z^{6}}  f{\left (z \right )} - \frac{1}{144} \frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right)\right|_{z=1} z^{4}\\
+    &+ \left. \left(\frac{1}{6} \frac{d^{3}}{d z^{3}}  f{\left (z \right )} - \frac{1}{6} \frac{d^{4}}{d z^{4}}  f{\left (z \right )} + \frac{1}{12} \frac{d^{5}}{d z^{5}}  f{\left (z \right )} - \frac{1}{36} \frac{d^{6}}{d z^{6}}  f{\left (z \right )} + \frac{1}{144} \frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right)\right|_{z=1} z^{3}\\
+    &+ \left. \left(\frac{1}{2} \frac{d^{2}}{d z^{2}}  f{\left (z \right )} - \frac{1}{2} \frac{d^{3}}{d z^{3}}  f{\left (z \right )} + \frac{1}{4} \frac{d^{4}}{d z^{4}}  f{\left (z \right )} - \frac{1}{12} \frac{d^{5}}{d z^{5}}  f{\left (z \right )} + \frac{1}{48} \frac{d^{6}}{d z^{6}}  f{\left (z \right )} - \frac{1}{240} \frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right)\right|_{z=1} z^{2}\\
+    &+ \left. \left(\frac{d}{d z} f{\left (z \right )} - \frac{d^{2}}{d z^{2}}  f{\left (z \right )} + \frac{1}{2} \frac{d^{3}}{d z^{3}}  f{\left (z \right )} - \frac{1}{6} \frac{d^{4}}{d z^{4}}  f{\left (z \right )} + \frac{1}{24} \frac{d^{5}}{d z^{5}}  f{\left (z \right )} - \frac{1}{120} \frac{d^{6}}{d z^{6}}  f{\left (z \right )} + \frac{1}{720} \frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right)\right|_{z=1} z\\
+    &+ \left. \left(f{\left (z \right )} - \frac{d}{d z} f{\left (z \right )} + \frac{1}{2} \frac{d^{2}}{d z^{2}}  f{\left (z \right )} - \frac{1}{6} \frac{d^{3}}{d z^{3}}  f{\left (z \right )} + \frac{1}{24} \frac{d^{4}}{d z^{4}}  f{\left (z \right )} - \frac{1}{120} \frac{d^{5}}{d z^{5}}  f{\left (z \right )} + \frac{1}{720} \frac{d^{6}}{d z^{6}}  f{\left (z \right )} - \frac{1}{5040} \frac{d^{7}}{d z^{7}}  f{\left (z \right )}\right)\right|_{z=1}
 \end{split}
 \end{displaymath}
 interpolates a function $f$ defined on $\sigma(\mathcal{R}_{8})$.

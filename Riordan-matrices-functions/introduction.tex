@@ -6,7 +6,7 @@ m}\rightarrow\mathbb{R}^{m\times m}, m\in\mathbb{N}$. Although many books
 \citep{Gantmacher1959, GL1996, HJ1991, LT1985} study this argument, our approach
 is in the spirit of \citep{Higham2008}, thus it does not include elementwise
 operations, functions producing a scalar  result (such as the trace, the
-determinant, the spectral radius, the condition number) and matrix
+determinant, the spectral radius, the condition number), or matrix
 transformations (such as the transpose, the adjugate, the slice of a
 submatrix).
 
@@ -64,13 +64,13 @@ where $I$ is the identity matrix, the $r$-th power
 with $r\in\mathbb{Q}$ and the $log$ functions are studied in details.
 
 Moreover, we show how to build matrices $X$ and $Y$ to factor pairs of Riordan
-matrices $\mathcal{R}$ and $\mathcal{S}$ in  Jordan canonical forms
-$\mathcal{R}\,X=X\,J$ and $\mathcal{S}\,Y=Y\,J$ respectively, both sharing
+matrices $\mathcal{A}$ and $\mathcal{B}$ in  Jordan canonical forms
+$\mathcal{A}\,X=X\,J$ and $\mathcal{B}\,Y=Y\,J$ respectively, both sharing
 matrix $J$ which has a simple and interesting structure. First, we study the
 application of a function $f$ to matrix $J$  to ease the computation of
-$f(\mathcal{R})$ and $f(\mathcal{S})$; second, we prove that it is always
-possible to write a Riordan array $\mathcal{R}$ as a linear transformation of
-any other Riordan array $\mathcal{S}$ by means of matrices $X$ and $Y$
+$f(\mathcal{A})$ and $f(\mathcal{B})$; second, we prove that it is always
+possible to write a Riordan array $\mathcal{A}$ as a linear transformation of
+any other Riordan array $\mathcal{B}$ by means of matrices $X$ and $Y$
 appearing in their Jordan canonical forms (in particular, there are
 \textit{uncountably many} such transformations since $X$ and $Y$ are defined on
 top of arbitrary vectors $\boldsymbol{v},\boldsymbol{w}\in\mathbb{R}^{m}$).
@@ -80,7 +80,6 @@ with the study of a matrix with at least two different eigenvalues, we show an
 example concerning the Fibonacci numbers' generator matrix.  All theorems and
 facts have been tested and confirmed by reproducible artifacts using a symbolic
 module on top of the Python programming language, fully available online in
-\citep{MN:simulation:method:repo}, while here we report the most important
-definitions only.
+\citep{MN:simulation:method:repo}.
 
 

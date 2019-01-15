@@ -48,7 +48,7 @@ Z_{1,6} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  
 Z_{1,7} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \\21 & 7 &  &  &  &  &  & \end{matrix}\right]
 \quad\text{and}\quad Z_{1,8} = \left[\begin{matrix} &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\ &  &  &  &  &  &  & \\1 &  &  &  &  &  &  & \end{matrix}\right];
 \end{displaymath}
-in parallel; corresponding component matrices for $\mathcal{C}_{8}$ and
+in parallel, corresponding component matrices for $\mathcal{C}_{8}$ and
 $\mathcal{S}_{8}$ can be computed in a similar way.
 \end{example}
 
@@ -156,17 +156,19 @@ $\displaystyle X = \left[\boldsymbol{x}_{1,1}\quad\boldsymbol{x}_{1,2}\quad
 \boldsymbol{x}_{1,3}\quad\boldsymbol{x}_{1,4}\quad
 \boldsymbol{x}_{1,5}\quad\boldsymbol{x}_{1,6}\quad\boldsymbol{x}_{1,7}\quad
 \boldsymbol{x}_{1,8}\right]$
-which is the most abstract matrix such that $\mathcal{P}_{8} \sim_{X} J$.
+which is the most abstract matrix such that $\mathcal{P}_{8}~\sim_{X}~J$.
 In fact, it shows that there are \textit{uncountably many} matrices $\hat{X}$
 such that $\mathcal{P}_{8} \sim_{\hat{X}} J$ by choosing different real values for
 the components of the vector $\boldsymbol{v}$.
 \end{remark}
 
-This derivations allow us to compute functions of
-matrices in a easier way, with the help of the following
-\begin{lemma} Let $f$ be a function defined on $\sigma(A)$ and $g$ the
-corresponding Hermite interpolating polynomial. Then $ A \sim_{X} J \rightarrow
-g(A) \sim_{X} g(J) $, for a matrix $X$ which depends on a arbitrary vector
+This derivations allow us to compute functions of matrices in a easier way,
+with the help of the following \begin{lemma} Let $f$ be a function defined on
+$\sigma(A)$ and $g$ the corresponding Hermite interpolating polynomial. Then 
+\begin{displaymath}
+A \sim_{X} J \rightarrow g(A) \sim_{X} g(J), 
+\end{displaymath}
+for a matrix $X$ which depends on an arbitrary vector
 $\boldsymbol{v}\in\mathbb{R}^{m}$.
 \end{lemma}
 \begin{proof}
@@ -196,12 +198,12 @@ f(J) = \left[ \begin{array}{ccc}
 
 \begin{remark}
 Since the Jordan block $J_{i}$ is a $m_{i}$-minor of the Riordan array $\left(\lambda_{i}+t,
-t\right)$ then it shares the same base of polynomials shown in
-\autoref{eq:generalized-Lagrange-polynomials-RA}, hence for a function $f$
-defined on $\sigma(J_{i})$, the application $f(J_{i})$ yields
+t\right)$ then it shares the same base of polynomials shown in Equation
+\ref{eq:generalized-Lagrange-polynomials-RA}, hence for a function $f$
+defined on $\sigma(J_{i})$, the application $f(J_{i})$ yields the Toeplitz matrix
 \begin{displaymath}
 \small
-f{\left (J_{i} \right )} = \left[\begin{matrix}f{\left (\lambda_{i} \right )} &  &  &  &  &  &  & \\\frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )} &  &  &  &  &  & \\\frac{1}{2} \frac{d^{2}}{d \lambda_{i}^{2}}  f{\left (\lambda_{i} \right )} & \frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )} &  &  &  &  & \\\frac{1}{6} \frac{d^{3}}{d \lambda_{i}^{3}}  f{\left (\lambda_{i} \right )} & \frac{1}{2} \frac{d^{2}}{d \lambda_{i}^{2}}  f{\left (\lambda_{i} \right )} & \frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )} &  &  &  & \\\frac{1}{24} \frac{d^{4}}{d \lambda_{i}^{4}}  f{\left (\lambda_{i} \right )} & \frac{1}{6} \frac{d^{3}}{d \lambda_{i}^{3}}  f{\left (\lambda_{i} \right )} & \frac{1}{2} \frac{d^{2}}{d \lambda_{i}^{2}}  f{\left (\lambda_{i} \right )} & \frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )} &  &  & \\\frac{1}{120} \frac{d^{5}}{d \lambda_{i}^{5}}  f{\left (\lambda_{i} \right )} & \frac{1}{24} \frac{d^{4}}{d \lambda_{i}^{4}}  f{\left (\lambda_{i} \right )} & \frac{1}{6} \frac{d^{3}}{d \lambda_{i}^{3}}  f{\left (\lambda_{i} \right )} & \frac{1}{2} \frac{d^{2}}{d \lambda_{i}^{2}}  f{\left (\lambda_{i} \right )} & \frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )} &  & \\ \vdots &  \vdots &  \vdots &  \vdots &  \vdots &  \vdots & \ddots & \\\frac{1}{(m_{i}-1)!} \frac{d^{m_{i}-1}}{d \lambda_{i}^{m_{i}-1}}  f{\left (\lambda_{i} \right )} & \frac{1}{(m_{i}-2)!} \frac{d^{m_{i}-2}}{d \lambda_{i}^{m_{i}-2}}  f{\left (\lambda_{i} \right )} & \ldots & \ldots & \ldots & \ldots & \frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )}\end{matrix}\right].
+\left[\begin{matrix}f{\left (\lambda_{i} \right )} &  &  &  &  &  &  & \\\frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )} &  &  &  &  &  & \\\frac{1}{2} \frac{d^{2}}{d \lambda_{i}^{2}}  f{\left (\lambda_{i} \right )} & \frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )} &  &  &  &  & \\\frac{1}{6} \frac{d^{3}}{d \lambda_{i}^{3}}  f{\left (\lambda_{i} \right )} & \frac{1}{2} \frac{d^{2}}{d \lambda_{i}^{2}}  f{\left (\lambda_{i} \right )} & \frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )} &  &  &  & \\\frac{1}{24} \frac{d^{4}}{d \lambda_{i}^{4}}  f{\left (\lambda_{i} \right )} & \frac{1}{6} \frac{d^{3}}{d \lambda_{i}^{3}}  f{\left (\lambda_{i} \right )} & \frac{1}{2} \frac{d^{2}}{d \lambda_{i}^{2}}  f{\left (\lambda_{i} \right )} & \frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )} &  &  & \\\frac{1}{120} \frac{d^{5}}{d \lambda_{i}^{5}}  f{\left (\lambda_{i} \right )} & \frac{1}{24} \frac{d^{4}}{d \lambda_{i}^{4}}  f{\left (\lambda_{i} \right )} & \frac{1}{6} \frac{d^{3}}{d \lambda_{i}^{3}}  f{\left (\lambda_{i} \right )} & \frac{1}{2} \frac{d^{2}}{d \lambda_{i}^{2}}  f{\left (\lambda_{i} \right )} & \frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )} &  & \\ \vdots &  \vdots &  \vdots &  \vdots &  \vdots &  \vdots & \ddots & \\\frac{1}{(m_{i}-1)!} \frac{d^{m_{i}-1}}{d \lambda_{i}^{m_{i}-1}}  f{\left (\lambda_{i} \right )} & \frac{1}{(m_{i}-2)!} \frac{d^{m_{i}-2}}{d \lambda_{i}^{m_{i}-2}}  f{\left (\lambda_{i} \right )} & \ldots & \ldots & \ldots & \ldots & \frac{d}{d \lambda_{i}} f{\left (\lambda_{i} \right )} & f{\left (\lambda_{i} \right )}\end{matrix}\right].
 \end{displaymath}
 \end{remark}
 
@@ -214,7 +216,7 @@ J_{i}^{r} \boldsymbol{e}_{1}        = \left[\begin{matrix}\frac{{\left(r\right)}
 \end{displaymath}
 \begin{displaymath}
 e^{J_{i} \alpha} \boldsymbol{e}_{1} = \left[\begin{matrix}e^{\alpha \lambda_{i}}\\\alpha e^{\alpha \lambda_{i}}\\\frac{\alpha^{2}}{2} e^{\alpha \lambda_{i}}\\\frac{\alpha^{3}}{6} e^{\alpha \lambda_{i}}\\\frac{\alpha^{4}}{24} e^{\alpha \lambda_{i}}\\\frac{\alpha^{5}}{120} e^{\alpha \lambda_{i}}\\\frac{\alpha^{6}}{720} e^{\alpha \lambda_{i}}\\\frac{\alpha^{7}}{5040} e^{\alpha \lambda_{i}}\end{matrix}\right], \quad
-log{\left (J_{i} \right )} \boldsymbol{e}_{1} = \left[\begin{matrix}\log{\left (\lambda_{i} \right )}\\\frac{1}{\lambda_{i}}\\- \frac{1}{2 \lambda_{i}^{2}}\\\frac{1}{3 \lambda_{i}^{3}}\\- \frac{1}{4 \lambda_{i}^{4}}\\\frac{1}{5 \lambda_{i}^{5}}\\- \frac{1}{6 \lambda_{i}^{6}}\\\frac{1}{7 \lambda_{i}^{7}}\end{matrix}\right],
+log{\left (J_{i} \right )} \boldsymbol{e}_{1} = \left[\begin{matrix}log{\left (\lambda_{i} \right )}\\\frac{1}{\lambda_{i}}\\- \frac{1}{2 \lambda_{i}^{2}}\\\frac{1}{3 \lambda_{i}^{3}}\\- \frac{1}{4 \lambda_{i}^{4}}\\\frac{1}{5 \lambda_{i}^{5}}\\- \frac{1}{6 \lambda_{i}^{6}}\\\frac{1}{7 \lambda_{i}^{7}}\end{matrix}\right],
 \end{displaymath}
 \begin{displaymath}
 sin\,{\left (J_{i} \right )} \boldsymbol{e}_{1} = \left[\begin{matrix}sin\,{\left (\lambda_{i} \right )}\\cos\,{\left (\lambda_{i} \right )}\\- \frac{1}{2} sin\,{\left (\lambda_{i} \right )}\\- \frac{1}{6} cos\,{\left (\lambda_{i} \right )}\\\frac{1}{24} sin\,{\left (\lambda_{i} \right )}\\\frac{1}{120} cos\,{\left (\lambda_{i} \right )}\\- \frac{1}{720} sin\,{\left (\lambda_{i} \right )}\\- \frac{1}{5040} cos\,{\left (\lambda_{i} \right )}\end{matrix}\right]
@@ -247,16 +249,18 @@ J^{-1} = \left[\begin{matrix}\frac{1}{\lambda_{1}} & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
 \end{displaymath}
 \fi
 % }}}
-The following theorem uses the property that any two Riordan arrays
-share the same matrix $J$ in their Jordan canonical forms to state that they
-are combination the one of the other.
+Considering any two Riordan arrays $A$ and $B$ such that they share the same
+matrix $J$ in their Jordan canonical forms, the next theorem states that $A$ is
+a linear transformation of $B$ and viceversa; the same transformation is
+preserved even for matrices $f(A)$ and $f(B)$ where $f$ is a function defined
+on both $\sigma(A)$ and $\sigma(B)$.   
 
 \begin{theorem}
 Let $A$ and $B$ be two Riordan matrices and let $A\,X = X\,J$ and $B\,Y= Y\,J$
 be their Jordan canonical forms, respectively, where matrices $X$ and $Y$ depend
 on complex vectors $\boldsymbol{v}$ and $\boldsymbol{w}$; then, $A
 \sim_{X\,Y^{-1}} B$. Moreover, $f(A) \sim_{X\,Y^{-1}} f(B)$ also holds, for any
-function $f$ defined on $\sigma(A)$.
+function $f$ defined on both $\sigma(A)$ and $\sigma(B)$.
 \end{theorem}
 \begin{proof}
 By transitivity of the similarity relation, $X^{-1}\,A\,X = Y^{-1}\,B\,Y$

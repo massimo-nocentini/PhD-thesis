@@ -43,7 +43,7 @@ combinatorial sums; precisely, it is encoded by the identity
     \label{somme}
     \sum_{k=0}^n d_{n,k}f_k=[t^n]d(t)f(h(t))
 \end{equation}
-and it is deeply commented in
+and it is extensively commented in
 \citep{LUZON2012631,Merlini:2009:CSI:2653507.2654195,SPRUGNOLI1994267}.
 It states that every combinatorial sum involving a Riordan array can be computed by
 extracting the coefficient of $t^n$ from the series expansion of $d(t)f(h(t))$,
@@ -384,7 +384,7 @@ The following definition implements a ctor that allows us to build Riordan
 arrays by their $Z$ and $A$ sequences; here it is,
 \inputminted[baselinestretch=0.8,stripnl=false,firstline=47, lastline=78]
     {python}{deps/simulation-methods/src/sequences.py}
-in words, (i)~it destructs \verb|seqs| into objs denoting Z and A seqs,
+in words, (i)~it deconstructs \verb|seqs| into objs denoting Z and A seqs,
 promoting both of them as callables, (ii)~it introduces the formal variable \verb|t|,
 (iii)~it performs two Taylor expansions with respect to \verb|t|.
 In order to build the resulting matrix, it
