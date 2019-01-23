@@ -18,7 +18,7 @@ thinking to its paradigms, functional and relational in particular, and
 
 In normal conditions, it is hard to tackle a problem in our context with both
 entities present at the same time; however, we sacrifice a direct approach to
-solve the given questions to take the most out of the process that uses the
+solve the given questions to get the most out of the process that uses the
 three tenets together. In this philosophy the constant delay, needed to sharpen
 our knowledge in each individual field, is balanced by the discovery of
 relations among apparently unrelated subjects that when mixed together yield
@@ -34,7 +34,7 @@ we deepen into
     and applicative points of view;
 
     \item[Programming and Logic] the study of a family of languages designed
-    for relational programming, using a general purpose inference engine to 
+    for relational programming, using a general purpose inference engine to
     perform deductions over domain specific objects;
 
     \item[Logic and Combinatorics] the formalization of proofs to which
@@ -43,7 +43,7 @@ we deepen into
 
 \end{description}
 
-Even though abstract reasoning took place for the majority of time, we make
+Even though abstract reasoning took place most of the time, we make
 some room for practical stuff; in particular, we would like to provide a suite
 of tools that helps interacting with the Online Encyclopedia of Integer
 Sequences, to automate fetching, printing and graphing the networks they
@@ -62,7 +62,7 @@ derivations and this dissertation collects this heterogeneous pool of techniques
 
 This dissertation has 5 main chapters that rely on the first one, which
 introduces basic definitions needed by the following ones; so, except for the
-former, the others can be read in any order, precisely
+first, the others can be read in any order,
 \begin{itemize}
 \item Chapter \ref{ch:backgrounds} quickly recalls the theory characterizing
 the Riordan group and provides a set of constructors to define those matrices
@@ -89,7 +89,7 @@ simpler families of languages.
 the Online Encyclopedia of Integer Sequences; in particular, a (i)~crawler fetches
 sequences and their cross references recursively, using asynchronous primitive
 to optimize network delays, a (ii)~(pretty) printer for the fetched sequences that
-allows the user to filter section to be rendered both in the terminal and in
+allows the user to filter the sections to be rendered both in the terminal and in
 web interfaces and, finally, a (iii)~grapher that draw graphs where vertices
 are sequences and edges are references among them.
 \item Chapter \ref{ch:queens-tilings-polyominoes} is an exercise in
@@ -97,15 +97,15 @@ backtracking techniques to solve tiling and placement problems; for the sake of
 efficiency, bit masking manipulation and encodings are used. Moreover, it
 provides an implementation of a classic enumeration methodology that allows us
 to clearly show generations of combinatorial objects starting from concise and
-recursive symbolic definitions; eventually, counting all of them is a check of
+recursive symbolic definitions; finally, counting all of them is a check of
 the correctness of our implementation.
 \item Chapter \ref{ch:scilp} proposes an extension to the tactic mechanism
-actually present in the HOL Light theorem prover inspired to the relational
+actually present in the HOL Light theorem prover inspired by the relational
 paradigm. This prototype makes explicit use of meta-variables to support
 substitutions and allows backtracking facilities during the interactive proof
-process; nonetheless, the proposed generalization offers compositionality as
-the current system does. This extension is stressed against an evaluator for a
-subset of the Lisp language, to find a \textit{quine} program, eventually.
+process; nonetheless, the proposed generalization offers compositionality just
+as the current system does. So this extension is stressed against an evaluator
+for a subset of the Lisp language to find a \textit{quine} program.
 \end{itemize}
 
 Moreover, a final paragraph concludes with a quick summary of our main results
