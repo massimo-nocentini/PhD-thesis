@@ -1,0 +1,238 @@
+
+\documentclass[a4paper, 10pt]{article}
+\usepackage{graphicx}
+\usepackage{euler}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{heuristica}
+\usepackage{beramono}
+\usepackage{fancyvrb}
+\usepackage{rotating}
+\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+%\usepackage{hyperref}
+
+\begin{document}
+
+
+\title{An algebraic and combinatorial study of some infinite sequences of
+	numbers supported by symbolic and logic computation}
+\author{Massimo Nocentini, PhD.\\{\small\url{massimo.nocentini@unifi.it}}\\
+	{\footnotesize{Settore Scientifico Disciplinare INF/$01$ }}}
+\date{\small Dipartimento di
+Statistica, Informatica, Applicazioni\\Viale Morgagni 65, 50134 Florence,
+Italy.\\\today.}
+
+\maketitle
+
+\begin{abstract}
+This document summarizes the content of my dissertation defended on February
+	20, 2019. My advisor was professor \textit{Donatella Merlini}\footnote{\url{donatella.merlini@unifi.it}} 
+	under the scientific coordination of professor \textit{Graziano Gentili}\footnote{\url{graziano.gentili@unifi.it}}.
+\end{abstract}
+
+\section*{Rationale}
+
+\textit{Combinatorics. Logic. Programming.} This dissertation is an attempt to
+explore how each entity relates to the others. Seen as a set of rules that
+characterize our methodology, we apply and use them to study the topic of
+\textit{infinite~sequences}.  Our approach is two-fold, it allows us, first, to
+prove theoretical results about them; second, to built an orbit around them
+composed of side-track techniques that helps our main goal, such as programming
+techniques and logical reasoning.
+
+In particular, the research field of interest concerns (i)~the manipulation of
+a set of matrices that can be algebraically defined, which deserve interest
+both as standalone objects and as tools to study other combinatorial
+structures; (ii)~the \textit{practice of programming} that exposes our way of
+thinking to its paradigms, functional and relational in particular, and
+(iii)~the rigor and power of \textit{mechanized logic}.
+
+In normal conditions, it is hard to tackle a problem in our context with both
+entities present at the same time; however, we sacrifice a direct approach to
+solve the given questions to get the most out of the process that uses the
+three tenets together. In this philosophy the constant delay, needed to sharpen
+our knowledge in each individual field, is balanced by the discovery of
+relations among apparently unrelated subjects that when mixed together yield
+nicer, more elegant and possibly unexpected solutions.
+
+For this reason we spread our focus over many topics of mathematics and
+computer science instead of composing a mono-theme discussion; pairwise,
+we deepen into
+\begin{description}
+
+    \item[Combinatorics and Programming] the implementation of enumeration
+    techniques for classes of combinatorial objects from both the algebraic
+    and applicative points of view;
+
+    \item[Programming and Logic] the study of a family of languages designed
+    for relational programming, using a general purpose inference engine to
+    perform deductions over domain specific objects;
+
+    \item[Logic and Combinatorics] the formalization of proofs to which
+    corresponds certified enumerations of classes of objects, using an extended
+    theorem prover based on Higher Order Logic.
+
+\end{description}
+
+Even though abstract reasoning took place most of the time, we make
+some room for practical stuff; in particular, we would like to provide a suite
+of tools that helps interacting with the Online Encyclopedia of Integer
+Sequences, to automate fetching, printing and graphing the networks they
+compose. Moreover, some practice with bitmasking and backtracking techniques is
+done to show some interesting tiling and enumeration problems.
+
+Another force that drove our work is a pedagogical approach to problem solving,
+hence we preferred to refine a first, naive solution over and over to cut away
+unnecessary details and complexities; moreover, we don't seek for efficiency in
+all cases in favor of simple and beauty definitions. This methodology allows us
+to use many programming languages and environments to support theoretical
+derivations and this dissertation collects this heterogeneous pool of techniques.
+
+
+\section*{Structure}
+
+This dissertation has 5 main chapters that rely on the first one, which
+introduces basic definitions needed by the following ones; so, except for the
+first, the others can be read in any order,
+\begin{itemize}
+\item Chapter 1, titled \textit{Backgrounds}, quickly recalls the theory characterizing
+the Riordan group and provides a set of constructors to define those matrices
+programmatically, after the introduction of the symbolic module Sympy
+implemented on top of the Python programming language. Moreover, it shows our
+programming style which is based on consecutive manipulation of symbolic
+equations, as mush as possible close to paper and pencil derivations.
+This chapter offers to the reader a concise review of the theory of Riordan
+Arrays by recalling definitions, characterizations and their fundamental
+properties; moreover, we pair these formal arguments with a set of software
+abstractions that allow us to mimic the theory with objects living in a
+computer. Coding our definitions using the Python programming language and
+taking advantage of the symbolic module \textit{Sympy}, we provide a coherent
+and unified environment to experiment in.
+\item Chapter 2, titled \textit{Functions and Jordan canonical
+forms of Riordan matrices}, presents a theoretical and
+practical framework that lifts a scalar function to a matrix function, toward
+application to Riordan matrices. To the best of our knowledge, this is the
+first implementation that allows the user to perform its computations fully
+symbolically, postponing to the end the substitution of ground values to fill
+matrices with numbers. Moreover, the Jordan Canonical Form of Riordan matrices
+is also studied.  This chapter is an extended version of the recently published paper
+\citep{MERLINI2019177} which collects results about
+Riordan arrays in the framework of \textit{matrix functions};  actually,
+the following methodology applies to any square matrix $m\times m$ with
+\textit{exactly one} eigenvalue $\lambda$ of \textit{algebraic}
+multiplicity $m \in\mathbb{N}$.  Generalized Lagrange bases are used to
+construct Hermite polynomials that interpolate a family of functions;
+moreover, we show a parallel application of such functions via Jordan
+canonical forms and case studies are given.
+Finally, to compare and contrast the study of a matrix with a single eigenvalue
+with the study of a matrix with at least two different eigenvalues, we show an
+example concerning the Fibonacci numbers' generator matrix.  All theorems and
+facts have been tested and confirmed by reproducible artifacts using a symbolic
+module on top of the Python programming language, fully available online in
+\citep{MN:simulation:method:repo}.
+\item Chapter 3, titled \textit{Algebraic generating functions for
+languages avoiding Riordan patterns},
+studies the enumeration of languages of binary words avoiding a given pattern,
+provided that some contraints over the structure of each word are taken into
+account.  In particular, when the pattern to avoid is a Riordan pattern then
+the problem can be solved using Riordan arrays, deriving new series
+developments about enumerations with respect to the number of $1$-bits and to
+the length. Finally, some combinatorial interpretations are shown, at least for
+simpler families of languages.  This chapter is an extended version of our paper
+\citep{Merlini:Nocentini:algebraic:gf:avoiding:patterns} that studies languages
+$\mathfrak{L}^{[\mathfrak{p}]}\subset \{0,1\}^*$ of binary words $w$ avoiding a
+given pattern $\mathfrak{p}$ such that $|w|_0\leq |w|_1$ for any $w\in
+\mathfrak{L}^{[\mathfrak{p}]},$ where  $|w|_0$ and $|w|_1$ correspond to the
+number of $1$-bits  and $0$-bits in the word $w$, respectively.  In particular,
+we concentrate on  patterns $\mathfrak{p}$ related to the concept of Riordan
+arrays. These languages are not regular and can be enumerated by algebraic
+generating functions corresponding to many integer sequences which are unknown
+in the OEIS.  We give explicit formulas for these generating functions
+expressed in terms of the autocorrelation polynomial of $\mathfrak{p}$ and also
+give explicit formulas for the coefficients of some particular patterns,
+algebraically and combinatorially.
+\item Chapter 4, titled \textit{Crawling, (pretty) printing
+and graphing the OEIS}, implements a suite of tools that interact with
+the Online Encyclopedia of Integer Sequences; in particular, a (i)~crawler fetches
+sequences and their cross references recursively, using asynchronous primitive
+to optimize network delays, a (ii)~(pretty) printer for the fetched sequences that
+allows the user to filter the sections to be rendered both in the terminal and in
+web interfaces and, finally, a (iii)~grapher that draw graphs where vertices
+are sequences and edges are references among them.
+Our approach complements the existing ones by providing a \textit{recursive}
+and \textit{asynchronous} fetching process, vanilla data storage in JSON files
+and visualization of relations among sequences; the description of each tool is
+addressed in the following sections, respectively.
+The present suite of tools had been shown at an open school on Combinatorial
+Method in the analysis of Algorithms and Data Structures in Korea
+\citep{Nocentini:korea}; moreover, all the sources that implements the
+applications can be found online in the repository
+\url{https://github.com/massimo-nocentini/oeis-tools}.
+\item Chapter 5, titled \textit{Queens, tilings, ECO
+and polyominoes}, is an exercise in
+backtracking techniques to solve tiling and placement problems; for the sake of
+efficiency, bit masking manipulation and encodings are used. Moreover, it
+provides an implementation of a classic enumeration methodology that allows us
+to clearly show generations of combinatorial objects starting from concise and
+recursive symbolic definitions; finally, counting all of them is a check of
+the correctness of our implementation.  
+Our approach has an educational component in the sense that we aim to code as
+clean as possible, relying on \textit{bitmasking} manipulation to balance
+efficiency drawback due to vanilla implementations. We will tackle the
+$8$-Queens problem, tilings using \textit{pentominoes} and
+\textit{parallelogram polyominoes}; for what concerns placement problems, we
+will show an implementation of the \textit{ECO} methodology in order to
+enumerate classes of objects that obeys particular symbolic equations.
+\item Chapter 6, titled \textit{Semi-Certified Interactive
+Logic Programming}, proposes an extension to the tactic mechanism actually
+present in the HOL Light theorem prover inspired by the relational paradigm.
+This prototype makes explicit use of meta-variables to support substitutions
+and allows backtracking facilities during the interactive proof process;
+nonetheless, the proposed generalization offers compositionality just as the
+current system does. So this extension is stressed against an evaluator for a
+subset of the Lisp language to find a \textit{quine} program.  This chapter
+studies an embedded Domain Specific Language for logic programming.  First, we
+give a quick introduction of \textit{$\mu$Kanren}, a purely functional
+implementation of this language and, second, we extend the HOL Light theorem
+prover in order to introduce the relational paradigm in its tactics mechanism.
+All these prototypes can be found in \citep{Nocentini:kanrens} and
+\citep{Maggesi:Nocentini:kanrenlight}.
+\item Chapter 7, titled \textit{Bibliography}, ends the dissertation. 
+\end{itemize}
+
+\section*{Conclusions}
+
+To conclude, this dissertation concerns, at an higher level, combinatorics and
+related algebraic methods, mechanized logic and symbolic programming.  More
+specifically, (i)~a novel symbolic implementation of the framework of matrices
+functions is developed, (ii)~new results about languages of binary words
+avoiding patterns are reported and (iii)~an extension of the HOL Light theorem
+prover is suggested to embody the relational paradigm.
+
+Along this three main targets, an educational flawor and interest in the art of
+programming emerges; it intertwines with each theoretical assertion to check
+its validity and to support our reasoning and to propose new directions and
+developments.
+
+Moreover, side tracks topics such as (i)~\textit{coinduction} that leads to
+manipulation of (possibly infinite) data structures, (ii)~\textit{equational
+reasoning} that helps the design of our symbolic programming style and
+(iii)~\textit{recursion} that appears in every aspect of our definitions, have
+been of fundamental importance in daily work.
+
+Additionally, experimenting with many programming languages, mainly Python,
+Scheme, Haskell and OCaml, allows us to refine, clear and refactor initial
+implementations, toward a sense of beauty and elegance; for this reasons, a lot
+of code appears in this dissertation.
+
+
+\bibliographystyle{plainnat}
+\bibliography{sample-base}
+
+
+
+
+\end{document}
